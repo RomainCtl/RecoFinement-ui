@@ -24,32 +24,14 @@ a:hover {
  * Base structure
  */
 
-div#main {
-  min-height: 100%;
+div.main {
+  height: 100%;
   width:100%;
   background-color: #333;
 }
 
-div#main {
-  display: -ms-flexbox;
-  display: flex;
+div.main {
   color: #fff;
   text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
   box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
-  //border: 2px red solid;
-
 }
-
-
-// .inner {
-//   border: 2px red solid;
-// }
-
-// .left-side {
-//   border: 2px purple solid;
-// }
-
-// .right-side {
-//   border: 2px #36C solid;
-
-// }

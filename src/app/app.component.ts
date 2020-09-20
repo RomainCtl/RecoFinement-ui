@@ -1,4 +1,6 @@
+import { AuthService } from './services/auth.service';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,25 +9,15 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'RecoFinement';
-  welcomeDisplayed = true;
-  loginDisplayed = false;
-  registerDisplayed = false;
 
-  toggleWelcome(): void {
-    if (this.welcomeDisplayed === true) {
-      this.welcomeDisplayed = false;
-    } else {
-      this.welcomeDisplayed = true;
+  constructor(private _auth: AuthService, private _router: Router) {
+    if (this._auth.isUserLoggedIn()) {
+      this._router.navigate(['home']);
     }
   }
 
-  showLogin(): void {
-    this.toggleWelcome();
-    this.loginDisplayed = true;
+  isSession(): boolean {
+    return this._auth.isUserLoggedIn();
   }
 
-  showRegister(): void {
-    this.toggleWelcome();
-    this.registerDisplayed = true;
-  }
 }

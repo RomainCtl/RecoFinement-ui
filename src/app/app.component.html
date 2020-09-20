@@ -1,9 +1,8 @@
- <div id="main" class="container-fluid text-center">
-  <div  class="left-side container-fluid d-flex w-100 h-100 p-5 my-auto">
-<div  class="inner w-100">
+ <div class="text-center main">
+  <div *ngIf="isSession()" class="container-fluid p-3 h-100">
+  <app-menu></app-menu>
+  </div>
+  
   <router-outlet></router-outlet>
-</div> 
-
-</div>
 
 </div>

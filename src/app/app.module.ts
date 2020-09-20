@@ -1,3 +1,4 @@
+import { HomeModule } from './home/home.module';
 import { RouterModule } from '@angular/router';
 import { AuthModule } from './auth/auth.module';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     BrowserAnimationsModule,
     AuthModule,
+    HomeModule,
     RouterModule
   ],
   providers: [],

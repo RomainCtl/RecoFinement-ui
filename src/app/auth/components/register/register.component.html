@@ -1,13 +1,16 @@
-<form class="form-signin">
+<div  class="d-flex w-100 h-100">
+<form class="form-signin" #registerForm="ngForm" (ngSubmit)="registerUser(registerForm.value)">
 
     <h1 class="h3 mb-3 font-weight-normal">Please register</h1>
     <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+    <input ngModel type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
     <label for="inputEmail" class="sr-only">Pseudo</label>
-    <input type="email" id="inputEmail" class="form-control" placeholder="Pseudo" required>
+    <input ngModel type="text" name="pseudo" id="inputPseudo" class="form-control" placeholder="Pseudo" required>
     <label for="inputPassword" class="sr-only">Password</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    <input ngModel type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
     <button class="btn btn-lg btn-primary btn-block mb-2" type="submit">Register</button>
     <a routerLink="/login">I already have an account!</a>
     <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
   </form>
+</div>
+<router-outlet name="preferences"></router-outlet>
