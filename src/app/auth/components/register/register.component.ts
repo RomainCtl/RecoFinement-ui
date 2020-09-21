@@ -23,11 +23,11 @@ export class RegisterComponent implements OnInit {
     //   }
     // );
 
-    const response: UserRegisterDtoResponse = this._auth.registerAttempt(values);
+    const response: UserRegisterDtoResponse = this._auth.register(values);
 
     if (true) {
       // tell user he is registered and ask him his content preferences
-      this._router.navigate(['preferences']);
+      this._router.navigate(['./register/preferences']);
     } else {
       // display errors on the form
     }

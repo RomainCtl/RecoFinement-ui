@@ -11,13 +11,11 @@ export class AppComponent {
   title = 'RecoFinement';
 
   constructor(private _auth: AuthService, private _router: Router) {
-    if (this._auth.isUserLoggedIn()) {
-      this._router.navigate(['home']);
-    }
   }
 
+
   isSession(): boolean {
-    return this._auth.isUserLoggedIn();
+    return this._auth.isUserLoggedIn;
   }
 
 }

@@ -1,3 +1,4 @@
+import { AuthGuard } from './../auth/auth.guard';
 import { ApplicationsComponent } from './applications/applications.component';
 import { BooksComponent } from './books/books.component';
 import { GamesComponent } from './games/games.component';
@@ -9,33 +10,43 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '',
-    component: HomeComponent
+    path: 'app/applications',
+    component: ApplicationsComponent,
+    canActivate: [AuthGuard]
   },
   {
-    path: 'musics',
-    component: MusicsComponent
+    path: 'app/books',
+    component: BooksComponent,
+    canActivate: [AuthGuard]
   },
   {
-    path: 'movies',
-    component: MoviesComponent
+    path: 'app/games',
+    component: GamesComponent,
+    canActivate: [AuthGuard]
   },
   {
-    path: 'games',
-    component: GamesComponent
+    path: 'app/movies',
+    component: MoviesComponent,
+    canActivate: [AuthGuard]
   },
   {
-    path: 'books',
-    component: BooksComponent
+    path: 'app/musics',
+    component: MusicsComponent,
+    canActivate: [AuthGuard]
   },
   {
-    path: 'applications',
-    component: ApplicationsComponent
+    path: 'app',
+    component: HomeComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forChild(routes)
+  ],
+  exports: [
+    RouterModule
+  ]
 })
 export class HomeRoutingModule { }

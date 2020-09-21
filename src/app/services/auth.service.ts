@@ -13,9 +13,17 @@ export class AuthService {
   private _registerUrl = 'http://localhost:8081/api/register';
   private _loginUrl = 'http://localhost:8081/api/login';
 
-  constructor(private http: HttpClient) { }
+  isLoggedIn = false;
 
-  registerAttempt(user: User): UserRegisterDtoResponse {
+  redirectUrl: string;
+
+  constructor(private http: HttpClient) {
+    if (sessionStorage.length > 0) {
+      this.isLoggedIn = (sessionStorage.getItem('isUserLoggedIn') === 'true');
+    }
+  }
+
+  register(user: User): UserRegisterDtoResponse {
     // return this.http.post(this._registerUrl, user);
     const response: UserRegisterDtoResponse = {
       registered: true,
@@ -24,21 +32,23 @@ export class AuthService {
     return response;
   }
 
-  loginAttempt(user: User): UserLoginDtoResponse {
+  login(): void {
     // return this.http.post(this._loginUrl, user);
-    const response: UserLoginDtoResponse = {
-      connected: true,
-      error: null
-    };
-    return response;
+    // const response: UserLoginDtoResponse = {
+    //   connected: true,
+    //   error: null
+    // };
+    this.isLoggedIn = true;
+    sessionStorage.setItem('isUserLoggedIn', 'true');
+    // return response;
   }
 
-  isUserLoggedIn(): boolean {
-    return true;
+  get isUserLoggedIn() {
+    return this.isLoggedIn;
   }
 
   logOutUser(): void {
-    // clear user session
+    this.isLoggedIn = false;
   }
 
 }

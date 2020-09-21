@@ -1,3 +1,4 @@
+import { AuthGuard } from './auth.guard';
 import { PreferencesComponent } from './components/preferences/preferences.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
@@ -14,12 +15,12 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'register',
-    component: RegisterComponent,
+    path: 'register/preferences',
+    component: PreferencesComponent
   },
   {
-    path: 'preferences',
-    component: PreferencesComponent
+    path: 'register',
+    component: RegisterComponent,
   }
 ];
 
