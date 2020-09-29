@@ -12,7 +12,8 @@ export class RatingComponent implements OnInit {
   onRatingChangeResult: RatingChangeEvent;
 
 
-  constructor() { }
+  constructor() { 
+  }
 
   ngOnInit(): void {
   }

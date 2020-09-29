@@ -8,7 +8,7 @@
        
         <div  *ngIf="showMusic" id="music" class="container">
             <div class="row">
-                <p class="font-weight-light col-12 text-center">I note my musics</p>
+                <p class="font-weight-bold col-12 text-center">I note my musics</p>
                 <ng-container *ngFor="let music of musics">
                     <app-card-preference class="col-md-2"
                         [title]="music.title"

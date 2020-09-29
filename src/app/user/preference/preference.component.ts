@@ -30,7 +30,83 @@ export class PreferenceComponent implements OnInit {
     this.musics = [
       {
         title: 'test1',
-        author: 'author 1'
+        author: 'author 1',
+        note: 4
+      },
+      {
+        title: 'test2',
+        author: 'author 1',
+        note: 1
+      },
+      {
+        title: 'test3',
+        author: 'author 1',
+        note: 0
+      },
+      {
+        title: 'test4',
+        author: 'author 1',
+        note: 4
+      },
+      {
+        title: 'test5',
+        author: 'author 1',
+        note: 5
+      },
+      {
+        title: 'test6',
+        author: 'author 1',
+        note: 0
+      },
+      {
+        title: 'test7',
+        author: 'author 1',
+        note: 3
+      },
+      {
+        title: 'test8',
+        author: 'author 1',
+        note: 0
+      },
+      {
+        title: 'test9',
+        author: 'author 1',
+        note: 0
+      },
+      {
+        title: 'test10',
+        author: 'author 1',
+        note: 4
+      },
+      {
+        title: 'test11',
+        author: 'author 1',
+        note: 4
+      },
+      {
+        title: 'test12',
+        author: 'author 1',
+        note: 1
+      },
+      {
+        title: 'test13',
+        author: 'author 1',
+        note: 3
+      },
+      {
+        title: 'test14',
+        author: 'author 1',
+        note: 2
+      },
+      {
+        title: 'test15',
+        author: 'author 1',
+        note: 5
+      },
+      {
+        title: 'test16',
+        author: 'author 1',
+        note: 3
       }
     ];
   }
