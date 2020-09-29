@@ -1,6 +1,8 @@
-<div [ngClass]="selected ? 'card mb-2 shadow-sm text-center selected' : 'card mb-2 shadow-sm text-center'" (click)="onClick()">
+<div class="card mb-2 shadow-sm text-center">
     <img class="img-fluid" src="https://i.scdn.co/image/807ee7d725a67284d5f34912ddf1033e626541de" />
     <span>{{this.title}}</span>
-    <small  [ngClass]="selected ? '' : 'text-muted'">{{this.author}}</small>
-    <p style="color: yellow;">{{preference}}</p>
+    <small  class="text-muted">{{this.author}}</small>
+    <app-rating>
+
+    </app-rating>
 </div>

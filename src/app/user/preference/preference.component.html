@@ -1,48 +1,94 @@
 <main>
-    <h1 class="text-center display-4">My preferences</h1><br />
-    <section>    
-        
-        <div class="list-group list-group-horizontal text-center col-10 offset-1 d-none d-sm-none d-md-flex" id="list-tab" role="tablist">
-            <a class="list-group-item list-group-item-action active" id="list-musics-list" data-toggle="list" href="#list-musics" role="tab" aria-controls="musics">Musics</a>
-            <a class="list-group-item list-group-item-action" id="list-movies-series-list" data-toggle="list" href="#list-movies-series" role="tab" aria-controls="movies-series">Movies & Series</a>
-            <a class="list-group-item list-group-item-action" id="list-books-list" data-toggle="list" href="#list-books" role="tab" aria-controls="books">Books</a>
-            <a class="list-group-item list-group-item-action" id="list-games-list" data-toggle="list" href="#list-games" role="tab" aria-controls="games">Games</a>
-            <a class="list-group-item list-group-item-action" id="list-applications-list" data-toggle="list" href="#list-applications" role="tab" aria-controls="applications">Applications</a>
-        </div>
+    <h1 class="text-center display-4 col-12">My preferences</h1>
+    <section>
 
         <div class="page-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
             <p class="lead">Please select media that you have already seen and/or liked. Your choices will then help us improve the recommendations made.</p>
         </div>
-
-        <div class="tab-content">
-            <div class="tab-pane fade show active" id="list-musics" role="tabpanel">
-                <div class="container">
-                    <div class="row">
-                        <ng-container *ngFor="let music of musics">
-                            <app-card-preference class="col-md-2"
-                                [title]="music.title"
-                                [author]="music.author"
-                                [preference]="checkPreference(music.title)"
-                            ></app-card-preference>
-                        </ng-container>
-                    </div>      
-                </div>
-            </div>   
-
-            <div class="tab-pane fade" id="list-movies-series" role="tabpanel">test</div>
-            <div class="tab-pane fade" id="list-books" role="tabpanel"></div>
-            <div class="tab-pane fade" id="list-games" role="tabpanel"></div>
-            <div class="tab-pane fade" id="list-applications" role="tabpanel">
+       
+        <div  *ngIf="showMusic" id="music" class="container">
+            <div class="row">
+                <p class="font-weight-light col-12 text-center">I note my musics</p>
+                <ng-container *ngFor="let music of musics">
+                    <app-card-preference class="col-md-2"
+                        [title]="music.title"
+                        [author]="music.author"
+                        [note]="music.note"
+                    ></app-card-preference>
+                </ng-container>
                 <aside class="text-center button">
-                    <button type="button" class="btn btn-primary btn-block btn-next" (click)="onSave()">I finished</button>
+                    <button type="button" class="btn btn-primary btn-block btn-next" (click)="onChange('film')">Next</button>
                 </aside>
-            </div>
+            </div>      
         </div>
-    
+
+        <div  *ngIf="showFilm" id="film" class="container">
+            <div class="row">
+                <p class="font-weight-light col-12 text-center">I note my film and series</p>
+                <ng-container *ngFor="let film of films">
+                    <app-card-preference class="col-md-2"
+                        [title]="film.title"
+                        [author]="film.author"
+                        [note]="film.note"
+                    ></app-card-preference>
+                </ng-container>
+                <aside class="text-center button">
+                    <button type="button" class="btn btn-primary btn-block btn-next" (click)="onChange('music')">Previous</button>
+                    <button type="button" class="btn btn-primary btn-block btn-next" (click)="onChange('book')">Next</button>
+                </aside>
+            </div>      
+        </div>
+  
+        <div  *ngIf="showBook" id="book" class="container">
+            <div class="row">
+                <p class="font-weight-light col-12 text-center">I note my books</p>
+                <ng-container *ngFor="let book of books">
+                    <app-card-preference class="col-md-2"
+                        [title]="book.title"
+                        [author]="book.author"
+                        [note]="book.note"
+                    ></app-card-preference>
+                </ng-container>
+                <aside class="text-center button">
+                    <button type="button" class="btn btn-primary btn-block btn-next" (click)="onChange('film')">Previous</button>
+                    <button type="button" class="btn btn-primary btn-block btn-next" (click)="onChange('game')">Next</button>
+                </aside>
+            </div>      
+        </div>
+
+        <div  *ngIf="showGame" id="game" class="container">
+            <div class="row">
+                <p class="font-weight-light col-12 text-center">I note my games</p>
+                <ng-container *ngFor="let game of games">
+                    <app-card-preference class="col-md-2"
+                        [title]="game.title"
+                        [author]="game.author"
+                        [note]="game.note"
+                    ></app-card-preference>
+                </ng-container>
+                <aside class="text-center button">
+                    <button type="button" class="btn btn-primary btn-block btn-next" (click)="onChange('book')">Previous</button>
+                    <button type="button" class="btn btn-primary btn-block btn-next" (click)="onChange('application')">Next</button>
+                </aside>
+            </div>      
+        </div>
+
+        <div  *ngIf="showApplication" id="application" class="container">
+            <div class="row">
+                <p class="font-weight-light col-12 text-center">I note my applications</p>
+                <ng-container *ngFor="let application of applications">
+                    <app-card-preference class="col-md-2"
+                        [title]="application.title"
+                        [author]="application.author"
+                        [note]="application.note"
+                    ></app-card-preference>
+                </ng-container>
+                <aside class="text-center button">
+                    <button type="button" class="btn btn-primary btn-block btn-next" (click)="onChange('game')">Previous</button>
+                    <button type="button" class="btn btn-primary btn-block btn-next">Finish</button>
+                </aside>
+            </div>      
+        </div>
+        
     </section>
 </main>
-<script>
-    $(function () {
-      $('#list-tab a:last-child').tab('show')
-    })
-  </script>

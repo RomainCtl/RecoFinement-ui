@@ -26,7 +26,6 @@ export class PreferenceService {
   }
 
   getPreferences(): string[] {
-    console.log(this.preferences);
     return this.preferences;
   }
 

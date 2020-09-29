@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PreferenceService } from 'src/app/services/user/preference.service';
 
 @Component({
   selector: 'app-card-preference',
@@ -12,19 +11,18 @@ export class CardPreferenceComponent implements OnInit {
 
   @Input() title: string;
   @Input() author: string;
-  @Input() preference: boolean;
+  @Input() note: number;
 
-  constructor(private preferencesService: PreferenceService) { }
+  constructor() { }
 
   ngOnInit(): void {
+    if (this.note == undefined) {
+      this.note = 0
+    } 
   }
 
   onClick() {
-    this.preferencesService.add(this.title);
-    if (this.selected)
-      this.selected = false;
-    else
-      this.selected = true;
+   
   }
 
 }
