@@ -33,6 +33,7 @@ export class AuthService {
     return this.cookie.check('access_token');
   }
 
+
   logout(): void {
     this.http.post(this._logoutUrl, null).toPromise().then( () => {
       document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";

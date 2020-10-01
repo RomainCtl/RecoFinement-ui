@@ -1,0 +1,9 @@
+<div class="card mb-2 shadow-sm text-center">
+    <img class="img-fluid" [src]="this.cover" />
+    <span>{{this.title}}</span>
+    <small>{{this.author}}</small>
+    <app-rating
+        [note]="this.rating == null ? 0 : this.rating"
+        [media]="this.id">
+    </app-rating>
+</div>

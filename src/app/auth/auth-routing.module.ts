@@ -1,5 +1,5 @@
+import { PreferenceComponent } from './components/preferences/preference.component';
 import { AuthGuard } from './auth.guard';
-import { PreferencesComponent } from './components/preferences/preferences.component';
 import { RegisterComponent } from './components/register/register.component';
 import { LoginComponent } from './components/login/login.component';
 import { NgModule } from '@angular/core';
@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'register/preferences',
-    component: PreferencesComponent
+    component: PreferenceComponent
   },
   {
     path: 'register',

@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
   constructor(private _auth: AuthService, private router: Router) {  }
 
   ngOnInit(): void {
-    console.log("prout ici login component");
   }
 
   login(values: UserLoginDtoRequest): void {

@@ -1,3 +1,4 @@
+import { StarRatingModule } from 'angular-star-rating';
 import { AuthGuard } from './auth/auth.guard';
 import { Interceptor } from './shared/interceptor';
 import { HttpClientModule } from '@angular/common/http';
@@ -13,14 +14,21 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieService } from 'ngx-cookie-service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
+
+
+import { NgxPaginationModule } from 'ngx-pagination';
+import { CommonModule } from '@angular/common';
+
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    StarRatingModule.forRoot(),
     AuthModule,
     HomeModule,
     RouterModule,
