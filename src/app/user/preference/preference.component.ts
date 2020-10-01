@@ -9,6 +9,9 @@ import { TrackService } from 'src/app/services/media/track.service';
 export class PreferenceComponent implements OnInit {
 
   musics = [];
+  totalMusic = 10000;
+  configMusic: any;
+
   films = [];
   books = [];
   games = [];
@@ -21,9 +24,7 @@ export class PreferenceComponent implements OnInit {
   showApplication: boolean = false;
 
   constructor(private trackService: TrackService) { 
-    this.trackService.getTracks().then(response => {
-      this.musics = response;
-    });
+    this.getTracks(1);
 
     this.films = [
       {
@@ -83,6 +84,29 @@ export class PreferenceComponent implements OnInit {
         break;
 
     }
+  }
+
+  pageChanged(event){
+    this.configMusic.currentPage = event;
+    this.getTracks(this.configMusic.currentPage)
+  }
+
+  getTracks(page: number) {
+    this.trackService.getTracks(+page).then(response => {
+      if(response.status === true) {
+        this.musics = response.content;
+      }
+    })
+    .then(()=> {
+      this.configMusic = {
+        itemsPerPage: 20,
+        currentPage: page,
+        totalItems: this.totalMusic
+      };
+    })
+    .catch(
+      // TODO get exception
+    );
   }
 
   closeAllFrame() {

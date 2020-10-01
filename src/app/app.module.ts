@@ -12,6 +12,8 @@ import { CardPreferenceComponent } from './user/preference/card-preference/card-
 import { StarRatingModule } from 'angular-star-rating';
 import { RatingComponent } from './tools/rating/rating.component';
 
+import { NgxPaginationModule } from 'ngx-pagination';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +26,7 @@ import { RatingComponent } from './tools/rating/rating.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    NgxPaginationModule,
     StarRatingModule.forRoot()
   ],
   providers: [],

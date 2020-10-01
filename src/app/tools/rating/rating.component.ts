@@ -21,7 +21,15 @@ export class RatingComponent implements OnInit {
 
   onRatingChange = ($event: RatingChangeEvent) => {
     this.note = $event.rating;
-    this.ratingService.saveRating(+this.note, +this.media);
+    this.ratingService.saveRating(+this.note, +this.media).then(response => {
+      if(!response.status) {
+        this.note = 0;
+      }
+    }).catch(
+      () => {
+        this.note = 0;
+      }
+    );
   };
 
 }

@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PreferenceComponent } from './user/preference/preference.component';
 
 const routes: Routes = [
-  { path: '', component: PreferenceComponent } // TODO add guard to get user
+  { path: '', component: PreferenceComponent }
 ];
 
 @NgModule({

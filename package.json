@@ -26,6 +26,7 @@
     "bootstrap": "^4.5.2",
     "css-star-rating": "^1.2.4",
     "jquery": "^3.5.1",
+    "ngx-pagination": "^5.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
