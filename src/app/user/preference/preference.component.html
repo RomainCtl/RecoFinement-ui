@@ -8,12 +8,14 @@
        
         <div  *ngIf="showMusic" id="music" class="container">
             <div class="row">
-                <p class="font-weight-bold col-12 text-center">I note my musics</p>
+                <p class="font-weight-bold col-12 text-center text-uppercase">musics</p>
                 <ng-container *ngFor="let music of musics">
                     <app-card-preference class="col-md-2"
+                        [id]="music.track_id"
                         [title]="music.title"
-                        [author]="music.author"
-                        [note]="music.note"
+                        [author]="music.artist_name"
+                        [rating]="music.rating"
+                        [cover]="music.covert_art_url"
                     ></app-card-preference>
                 </ng-container>
                 <aside class="text-center button">
@@ -24,12 +26,14 @@
 
         <div  *ngIf="showFilm" id="film" class="container">
             <div class="row">
-                <p class="font-weight-light col-12 text-center">I note my film and series</p>
+                <p class="font-weight-bold col-12 text-center text-uppercase">films and series</p>
                 <ng-container *ngFor="let film of films">
                     <app-card-preference class="col-md-2"
-                        [title]="film.title"
-                        [author]="film.author"
-                        [note]="film.note"
+                    [id]="film.movie_id"
+                    [title]="film.title"
+                    [author]="film.director"
+                    [rating]="film.rating"
+                    [cover]=""
                     ></app-card-preference>
                 </ng-container>
                 <aside class="text-center button">
@@ -41,12 +45,14 @@
   
         <div  *ngIf="showBook" id="book" class="container">
             <div class="row">
-                <p class="font-weight-light col-12 text-center">I note my books</p>
+                <p class="font-weight-bold col-12 text-center text-uppercase">books</p>
                 <ng-container *ngFor="let book of books">
                     <app-card-preference class="col-md-2"
-                        [title]="book.title"
-                        [author]="book.author"
-                        [note]="book.note"
+                    [id]="book.isbn"
+                    [title]="book.title"
+                    [author]="book.author"
+                    [rating]="book.rating"
+                    [cover]="book.image_url_s"
                     ></app-card-preference>
                 </ng-container>
                 <aside class="text-center button">
@@ -58,12 +64,14 @@
 
         <div  *ngIf="showGame" id="game" class="container">
             <div class="row">
-                <p class="font-weight-light col-12 text-center">I note my games</p>
+                <p class="font-weight-bold col-12 text-center text-uppercase">games</p>
                 <ng-container *ngFor="let game of games">
                     <app-card-preference class="col-md-2"
-                        [title]="game.title"
-                        [author]="game.author"
-                        [note]="game.note"
+                    [id]="game.movie_id"
+                    [title]="game.name"
+                    [author]="game.publishers"
+                    [rating]="game.rating"
+                    [cover]=""
                     ></app-card-preference>
                 </ng-container>
                 <aside class="text-center button">
@@ -73,14 +81,16 @@
             </div>      
         </div>
 
-        <div  *ngIf="showApplication" id="application" class="container">
+        <div *ngIf="showApplication" id="application" class="container">
             <div class="row">
-                <p class="font-weight-light col-12 text-center">I note my applications</p>
+                <p class="font-weight-bold col-12 text-center text-uppercase">applications</p>
                 <ng-container *ngFor="let application of applications">
                     <app-card-preference class="col-md-2"
-                        [title]="application.title"
-                        [author]="application.author"
-                        [note]="application.note"
+                        [id]="application.app_id"
+                        [title]="application.name"
+                        [author]=""
+                        [rating]="application.rating"
+                        [cover]=""
                     ></app-card-preference>
                 </ng-container>
                 <aside class="text-center button">

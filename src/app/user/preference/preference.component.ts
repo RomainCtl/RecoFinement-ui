@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TrackService } from 'src/app/services/media/track.service';
 
 @Component({
   selector: 'app-preference',
@@ -7,101 +8,54 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PreferenceComponent implements OnInit {
 
-  // gestion contexte
   musics = [];
   films = [];
   books = [];
   games = [];
   applications = [];
 
-  // gestion affichage
   showMusic: boolean = true;
   showFilm: boolean = false;
   showBook: boolean = false;
   showGame: boolean = false;
   showApplication: boolean = false;
 
-  constructor() { 
-    this.musics = [
+  constructor(private trackService: TrackService) { 
+    this.trackService.getTracks().then(response => {
+      this.musics = response;
+    });
+
+    this.films = [
       {
-        title: 'test1',
-        author: 'author 1',
-        note: 4
-      },
+        movie_id: 1,
+        title: 'movie 1',
+        director: 'director 1',
+        rating: 0
+      }
+    ];
+    this.books = [
       {
-        title: 'test2',
+        isbn: 1,
+        title: 'book 1',
         author: 'author 1',
-        note: 1
-      },
+        rating: 0,
+        image_url_s: 'https://th.bing.com/th/id/OIP.Pnhv1abLs10qfQt_9KVIqQHaLN?pid=Api&rs=1'
+
+      }
+    ];
+    this.games = [
       {
-        title: 'test3',
-        author: 'author 1',
-        note: 0
-      },
+        id: 1,
+        name: 'Game 1',
+        publishers: 'publisher 1',
+        rating: 0,
+      }
+    ];
+    this.applications = [
       {
-        title: 'test4',
-        author: 'author 1',
-        note: 4
-      },
-      {
-        title: 'test5',
-        author: 'author 1',
-        note: 5
-      },
-      {
-        title: 'test6',
-        author: 'author 1',
-        note: 0
-      },
-      {
-        title: 'test7',
-        author: 'author 1',
-        note: 3
-      },
-      {
-        title: 'test8',
-        author: 'author 1',
-        note: 0
-      },
-      {
-        title: 'test9',
-        author: 'author 1',
-        note: 0
-      },
-      {
-        title: 'test10',
-        author: 'author 1',
-        note: 4
-      },
-      {
-        title: 'test11',
-        author: 'author 1',
-        note: 4
-      },
-      {
-        title: 'test12',
-        author: 'author 1',
-        note: 1
-      },
-      {
-        title: 'test13',
-        author: 'author 1',
-        note: 3
-      },
-      {
-        title: 'test14',
-        author: 'author 1',
-        note: 2
-      },
-      {
-        title: 'test15',
-        author: 'author 1',
-        note: 5
-      },
-      {
-        title: 'test16',
-        author: 'author 1',
-        note: 3
+        app_id: 1,
+        name: "App1",
+        rating: 0
       }
     ];
   }

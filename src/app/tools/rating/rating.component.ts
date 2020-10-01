@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { RatingChangeEvent } from 'angular-star-rating';
+import { RatingService } from 'src/app/services/rating/rating.service';
 
 @Component({
   selector: 'app-rating',
@@ -12,7 +13,7 @@ export class RatingComponent implements OnInit {
   @Input() media: string;
   onRatingChangeResult: RatingChangeEvent;
 
-  constructor() { 
+  constructor(private ratingService: RatingService) { 
   }
 
   ngOnInit(): void {
@@ -20,9 +21,7 @@ export class RatingComponent implements OnInit {
 
   onRatingChange = ($event: RatingChangeEvent) => {
     this.note = $event.rating;
-    console.log("media : "+ this.media +" -> " + this.note)
-    // TODO save rating 
+    this.ratingService.saveRating(+this.note, +this.media);
   };
-
 
 }

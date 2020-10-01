@@ -9,20 +9,14 @@ export class CardPreferenceComponent implements OnInit {
 
   selected: boolean = false;
 
+  @Input() id: number;
   @Input() title: string;
   @Input() author: string;
-  @Input() note: number;
+  @Input() rating: number;
+  @Input() cover: string;
 
   constructor() { }
 
-  ngOnInit(): void {
-    if (this.note == undefined) {
-      this.note = 0
-    } 
-  }
-
-  onClick() {
-   
-  }
+  ngOnInit(): void { }
 
 }
