@@ -1,0 +1,23 @@
+<div class="container-fluid d-flex flex-column">
+    <header class="masthead mb-auto">
+        <div class="inner">
+          <h3 class="masthead-brand">ReCoFinement</h3>
+          <nav class="nav nav-masthead justify-content-center">
+            <div class="row">
+            <a class="nav-link" routerLink="/app" routerLinkActive="active">Home</a>
+            <a class="nav-link" routerLink="/app/musics" routerLinkActive="active">Musics</a>
+            <a class="nav-link" routerLink="/app/movies" routerLinkActive="active">Movies & Series</a>
+            <a class="nav-link" routerLink="/app/games" routerLinkActive="active">Games</a>
+            <a class="nav-link" routerLink="/app/books" routerLinkActive="active">Books</a>
+            <a class="nav-link" routerLink="/app/applications" routerLinkActive="active">Applications</a>
+              <div class="col">
+                <button type="button" (click)="logOut()" class="btn border-light text-danger font-weight-bolder">Log out</button>
+              </div>
+            </div>
+          </nav>
+        </div>
+    </header>
+    </div>
+    <div class="d-flex flex-column container-fluid">
+      <router-outlet></router-outlet>
+    </div>
