@@ -9,8 +9,8 @@ import { RatingChangeEvent } from 'angular-star-rating';
 export class RatingComponent implements OnInit {
 
   @Input() note: number;
+  @Input() media: string;
   onRatingChangeResult: RatingChangeEvent;
-
 
   constructor() { 
   }
@@ -20,6 +20,8 @@ export class RatingComponent implements OnInit {
 
   onRatingChange = ($event: RatingChangeEvent) => {
     this.note = $event.rating;
+    console.log("media : "+ this.media +" -> " + this.note)
+    // TODO save rating 
   };
 
 

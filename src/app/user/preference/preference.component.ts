@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { PreferenceService } from 'src/app/services/user/preference.service';
-import * as $ from 'jquery';
 
 @Component({
   selector: 'app-preference',
@@ -10,7 +8,6 @@ import * as $ from 'jquery';
 export class PreferenceComponent implements OnInit {
 
   // gestion contexte
-  preferences: string[];
   musics = [];
   films = [];
   books = [];
@@ -24,9 +21,7 @@ export class PreferenceComponent implements OnInit {
   showGame: boolean = false;
   showApplication: boolean = false;
 
-
-  constructor(private preferencesService: PreferenceService) { 
-    this.preferences = this.preferencesService.getPreferences();
+  constructor() { 
     this.musics = [
       {
         title: 'test1',
@@ -140,9 +135,4 @@ export class PreferenceComponent implements OnInit {
     this.showMusic = this.showFilm = this.showBook = this.showGame = this.showApplication = false;
   }
   
-  onSave() {
-    this.preferencesService.savePreferences().then(
-      //TODO redirection
-    )
-  }
 }
