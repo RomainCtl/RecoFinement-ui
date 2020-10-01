@@ -9,10 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private _auth: AuthService) { 
-    console.log(this._auth.isUserLoggedIn)
-
-   }
+  constructor() {  }
 
   ngOnInit(): void {
   }

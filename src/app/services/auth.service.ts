@@ -1,8 +1,10 @@
 import { UserRegisterDtoResponse } from './../shared/models/DtoResponse/user-register.model';
+import { CookieService } from 'ngx-cookie-service';
+import { UserRegisterDtoRequest } from './../shared/models/DtoRequest/user-register.model';
+import { UserLoginDtoRequest } from './../shared/models/DtoRequest/user-login.model';
+import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { User } from '../shared/models/DtoRequest/user.model';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { UserLoginDtoResponse } from '../shared/models/DtoResponse/user-login.model';
 
 @Injectable({
@@ -10,45 +12,35 @@ import { UserLoginDtoResponse } from '../shared/models/DtoResponse/user-login.mo
 })
 export class AuthService {
 
-  private _registerUrl = 'http://localhost:8081/api/register';
-  private _loginUrl = 'http://localhost:8081/api/login';
-
-  isLoggedIn = false;
+  private _registerUrl = 'http://localhost:4040/api/auth/register';
+  private _loginUrl = 'http://localhost:4040/api/auth/login';
+  private _logoutUrl = 'http://localhost:4040/api/auth/logout';
 
   redirectUrl: string;
 
-  constructor(private http: HttpClient) {
-    if (sessionStorage.length > 0) {
-      this.isLoggedIn = (sessionStorage.getItem('isUserLoggedIn') === 'true');
-    }
+  constructor(private http: HttpClient, private router: Router, private cookie: CookieService) { 
+   }
+
+  login(user: UserLoginDtoRequest): Promise<UserLoginDtoResponse> {
+    return this.http.post<UserLoginDtoResponse>(this._loginUrl, user).toPromise();
   }
 
-  register(user: User): UserRegisterDtoResponse {
-    // return this.http.post(this._registerUrl, user);
-    const response: UserRegisterDtoResponse = {
-      registered: true,
-      error: null
-    };
-    return response;
+  register(user: UserRegisterDtoRequest): Promise<UserRegisterDtoResponse> {
+    return this.http.post<UserRegisterDtoResponse>(this._registerUrl, user).toPromise();
   }
 
-  login(): void {
-    // return this.http.post(this._loginUrl, user);
-    // const response: UserLoginDtoResponse = {
-    //   connected: true,
-    //   error: null
-    // };
-    this.isLoggedIn = true;
-    sessionStorage.setItem('isUserLoggedIn', 'true');
-    // return response;
+  isUserLoggedIn(): boolean {
+    return this.cookie.check('access_token');
   }
 
-  get isUserLoggedIn() {
-    return this.isLoggedIn;
-  }
-
-  logOutUser(): void {
-    this.isLoggedIn = false;
+  logout(): void {
+    this.http.post(this._logoutUrl, null).toPromise().then( () => {
+      document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+      this.router.navigate(['login']);
+      document.location.reload();
+    }).catch(error => {
+      console.error(error);
+    });
   }
 
 }

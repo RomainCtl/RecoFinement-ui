@@ -1,9 +1,10 @@
-import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 import { UserLoginDtoResponse } from './../../../shared/models/DtoResponse/user-login.model';
+import { UserLoginDtoRequest } from '../../../shared/models/DtoRequest/user-login.model';
+import { Router } from '@angular/router';
 import { AuthService } from './../../../services/auth.service';
-import { User } from '../../../shared/models/DtoRequest/user.model';
-import { Component, OnInit } from '@angular/core';
-import { sha1 } from '@angular/compiler/src/i18n/digest';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -12,31 +13,34 @@ import { sha1 } from '@angular/compiler/src/i18n/digest';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private _auth: AuthService, private router: Router) {
-    console.log(this._auth.isUserLoggedIn)
-    if (this._auth.isUserLoggedIn) {
-      this.router.navigate(['./app']);
-    }
-   }
+  loginHttpResponse: UserLoginDtoResponse = {
+    status: true,
+    message: '',
+    user: {
+        username: '',
+        uuid: '',
+        email: ''
+    },
+    access_token: '',
+    errors: ['']
+  };
+  constructor(private _auth: AuthService, private router: Router) {  }
 
   ngOnInit(): void {
+    console.log("prout ici login component");
   }
 
-  loginUser(values: User): void {
-    // this._auth.login(values).subscribe(
-    //   result => {
-    //     console.log(result);
-    //   }
-    // );
-
-    this._auth.login();
-
-    // if (response.connected) {
-    //   //sessionStorage.setItem('User', values);
-    //   // add user to session
-    // } else {
-    //   // display error on the form
-    // }
+  login(values: UserLoginDtoRequest): void {
+    this._auth.login(values)
+    .then(
+      (result: UserLoginDtoResponse) => {
+        this.loginHttpResponse = result;
+        document.cookie = 'access_token=' + this.loginHttpResponse.access_token;
+        this.router.navigate(['app']);
+      }
+    ).catch((result: HttpErrorResponse) => {
+      this.loginHttpResponse = result.error;
+    });
   }
 
 }

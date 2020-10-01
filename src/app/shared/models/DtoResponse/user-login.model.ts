@@ -1,6 +1,11 @@
 export class UserLoginDtoResponse {
-    connected: boolean;
-    error: {
-        message: [];
+    status: boolean;
+    message: string;
+    user: {
+        username: string;
+        uuid: string;
+        email: string;
     };
+    access_token: string;
+    errors: [x: string];
 }
