@@ -1,9 +1,8 @@
-<div id="main" class="container-fluid bg-light">
-
-  <h1>Welcome!</h1>
+ <div class="text-center main">
+  <div  *ngIf="authService.isUserLoggedIn()" class="container-fluid p-3 h-100">
+    <app-menu></app-menu>
+  </div>
+  
   <router-outlet></router-outlet>
-
-  <button [routerLink]="['register']" routerLinkActive="active" type="button" class="btn btn-light">Create an account</button>
-  <button [routerLink]="['login']" routerLinkActive="active" type="button" class="btn btn-link">Sign in</button>
 
 </div>
