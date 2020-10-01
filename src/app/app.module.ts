@@ -1,3 +1,4 @@
+import { StarRatingModule } from 'angular-star-rating';
 import { AuthGuard } from './auth/auth.guard';
 import { Interceptor } from './shared/interceptor';
 import { HttpClientModule } from '@angular/common/http';
@@ -6,7 +7,6 @@ import { RouterModule } from '@angular/router';
 import { AuthModule } from './auth/auth.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,27 +14,21 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieService } from 'ngx-cookie-service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { PreferenceComponent } from './user/preference/preference.component';
-import { CardPreferenceComponent } from './user/preference/card-preference/card-preference.component';
 
-import { StarRatingModule } from 'angular-star-rating';
-import { RatingComponent } from './tools/rating/rating.component';
 
 import { NgxPaginationModule } from 'ngx-pagination';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    PreferenceComponent,
-    CardPreferenceComponent,
-    RatingComponent
+    AppComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    NgxPaginationModule,
-    StarRatingModule.forRoot()
+    StarRatingModule.forRoot(),
     AuthModule,
     HomeModule,
     RouterModule,

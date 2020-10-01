@@ -14,7 +14,7 @@
     "@angular/animations": "~10.1.2",
     "@angular/cdk": "^10.2.1",
     "@angular/common": "~10.1.2",
-    "@angular/compiler": "~10.1.2",
+    "@angular/compiler": "^10.1.2",
     "@angular/core": "~10.1.2",
     "@angular/forms": "~10.1.2",
     "@angular/localize": "~10.1.2",
@@ -26,8 +26,8 @@
     "bootstrap": "^4.5.2",
     "css-star-rating": "^1.2.4",
     "jquery": "^3.5.1",
-    "ngx-pagination": "^5.0.0",
     "ngx-cookie-service": "^10.1.1",
+    "ngx-pagination": "^5.0.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

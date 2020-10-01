@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'RecoFinement';
 
-  constructor(private _auth: AuthService, private _router: Router) { }
+  constructor(private _auth: AuthService) { }
 
   get authService(): AuthService {
     return this._auth;
