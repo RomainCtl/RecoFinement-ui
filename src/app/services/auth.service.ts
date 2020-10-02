@@ -12,6 +12,8 @@ import { UserLoginDtoResponse } from '../shared/models/DtoResponse/user-login.mo
 })
 export class AuthService {
 
+  private preferenceState: boolean = false;
+
   private _registerUrl = 'http://localhost:4040/api/auth/register';
   private _loginUrl = 'http://localhost:4040/api/auth/login';
   private _logoutUrl = 'http://localhost:4040/api/auth/logout';
@@ -33,6 +35,13 @@ export class AuthService {
     return this.cookie.check('access_token');
   }
 
+  isUserPreferencesDefined(): boolean {
+    return this.preferenceState;
+  }
+
+  setPreferences(state: boolean) {
+    this.preferenceState = state;
+  }
 
   logout(): void {
     this.http.post(this._logoutUrl, null).toPromise().then( () => {
