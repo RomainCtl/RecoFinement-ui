@@ -26,7 +26,7 @@ import { RatingComponent } from './components/preferences/rating/rating.componen
     AuthRoutingModule,
     FormsModule,
     HttpClientModule,
-    StarRatingModule.forChild(),
+    StarRatingModule.forRoot(),
     NgxPaginationModule
   ],
   exports: [

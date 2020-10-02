@@ -8,11 +8,13 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    pathMatch: 'full'
   },
   {
     path: 'register/preferences',
-    component: PreferenceComponent
+    component: PreferenceComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'register',

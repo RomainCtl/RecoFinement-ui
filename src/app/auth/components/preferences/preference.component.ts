@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { TrackService } from 'src/app/services/media/track.service';
 
 @Component({
@@ -23,7 +25,7 @@ export class PreferenceComponent implements OnInit {
   showGame: boolean = false;
   showApplication: boolean = false;
 
-  constructor(private trackService: TrackService) { 
+  constructor(private trackService: TrackService, private router: Router, private authService: AuthService) { 
     this.getTracks(1);
 
     this.films = [
@@ -82,8 +84,12 @@ export class PreferenceComponent implements OnInit {
       case 'application':
         this.showApplication = true;
         break;
-
     }
+  }
+
+  onFinish() {
+    this.authService.setPreferences(true);
+    this.router.navigate(['app/musics']);
   }
 
   pageChanged(event){
