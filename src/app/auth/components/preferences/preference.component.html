@@ -9,7 +9,7 @@
         <div  *ngIf="showMusic" id="music" class="container">
             <div class="row">
                 <p class="font-weight-bold col-12 text-center text-uppercase">musics</p>
-                <ng-container *ngFor="let music of musics | paginate: configMusic">
+                <ng-container *ngFor="let music of musics">
                     <app-card-preference class="col-md-2 text-center"
                         [id]="music.track_id"
                         [title]="music.title"
@@ -18,9 +18,6 @@
                         [cover]="music.covert_art_url == null ? 'https://cdn.pixabay.com/photo/2017/01/17/06/48/background-1986032__340.jpg' : 'https://cdn.pixabay.com/photo/2017/01/17/06/48/background-1986032__340.jpg'"
                     ></app-card-preference>
                 </ng-container>
-                <div class="col-12">
-                    <pagination-controls class="col-6 offset-3 pagination" (pageChange)="pageChanged($event)"></pagination-controls>
-                </div>
                 <aside class="text-center button">
                     <button type="button" class="btn btn-primary btn-block btn-next" (click)="onChange('film')">Next</button>
                 </aside>
@@ -30,13 +27,13 @@
         <div  *ngIf="showFilm" id="film" class="container">
             <div class="row">
                 <p class="font-weight-bold col-12 text-center text-uppercase">films and series</p>
-                <ng-container *ngFor="let film of films">
-                    <app-card-preference class="col-md-2"
-                    [id]="film.movie_id"
-                    [title]="film.title"
-                    [author]="film.director"
-                    [rating]="film.rating"
-                    [cover]=""
+                <ng-container *ngFor="let movie of movies">
+                    <app-card-preference class="col-md-2 text-center"
+                    [id]="movie.movie_id"
+                    [title]="movie.title"
+                    [author]="movie.director"
+                    [rating]="movie.rating"
+                    [cover]="'https://images.template.net/wp-content/uploads/2017/02/17221912/Printable-Blank-Movie-Poster.jpg'"
                     ></app-card-preference>
                 </ng-container>
                 <aside class="text-center button">
@@ -55,7 +52,7 @@
                     [title]="book.title"
                     [author]="book.author"
                     [rating]="book.rating"
-                    [cover]="book.image_url_s"
+                    [cover]="book.image_url_m"
                     ></app-card-preference>
                 </ng-container>
                 <aside class="text-center button">

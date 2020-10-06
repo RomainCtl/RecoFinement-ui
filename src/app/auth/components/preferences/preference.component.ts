@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { BookService } from 'src/app/services/media/book.service';
+import { MovieService } from 'src/app/services/media/movie.service';
 import { TrackService } from 'src/app/services/media/track.service';
 
 @Component({
@@ -11,10 +13,8 @@ import { TrackService } from 'src/app/services/media/track.service';
 export class PreferenceComponent implements OnInit {
 
   musics = [];
-  totalMusic = 10000;
-  configMusic: any;
-
-  films = [];
+  movies = [];
+  series = [];
   books = [];
   games = [];
   applications = [];
@@ -25,27 +25,42 @@ export class PreferenceComponent implements OnInit {
   showGame: boolean = false;
   showApplication: boolean = false;
 
-  constructor(private trackService: TrackService, private router: Router, private authService: AuthService) { 
-    this.getTracks(1);
-
-    this.films = [
-      {
-        movie_id: 1,
-        title: 'movie 1',
-        director: 'director 1',
-        rating: 0
+  constructor(private trackService: TrackService, 
+              private movieService: MovieService,
+              private bookService: BookService,
+              private router: Router, 
+              private authService: AuthService) { 
+    
+    // Get popular tracks
+    this.trackService.getPopularTracks().then(response => {
+      if(response.status === true) {
+        this.musics = response.content;
       }
-    ];
-    this.books = [
-      {
-        isbn: 1,
-        title: 'book 1',
-        author: 'author 1',
-        rating: 0,
-        image_url_s: 'https://th.bing.com/th/id/OIP.Pnhv1abLs10qfQt_9KVIqQHaLN?pid=Api&rs=1'
+    })
+    .catch(
+        err => console.error(err)
+    );
 
+    // Get popular movies
+    this.movieService.getPopularMovies().then(response => {
+      if(response.status === true) {
+        this.movies = response.content;
       }
-    ];
+    })
+    .catch(
+        err => console.error(err)
+    );
+
+     // Get popular books
+     this.bookService.getPopularBooks().then(response => {
+      if(response.status === true) {
+        this.books = response.content;
+      }
+    })
+    .catch(
+        err => console.error(err)
+    );
+
     this.games = [
       {
         id: 1,
@@ -90,29 +105,6 @@ export class PreferenceComponent implements OnInit {
   onFinish() {
     this.authService.setPreferences(true);
     this.router.navigate(['app/musics']);
-  }
-
-  pageChanged(event){
-    this.configMusic.currentPage = event;
-    this.getTracks(this.configMusic.currentPage)
-  }
-
-  getTracks(page: number) {
-    this.trackService.getTracks(+page).then(response => {
-      if(response.status === true) {
-        this.musics = response.content;
-      }
-    })
-    .then(()=> {
-      this.configMusic = {
-        itemsPerPage: 20,
-        currentPage: page,
-        totalItems: this.totalMusic
-      };
-    })
-    .catch(
-      // TODO get exception
-    );
   }
 
   closeAllFrame() {
