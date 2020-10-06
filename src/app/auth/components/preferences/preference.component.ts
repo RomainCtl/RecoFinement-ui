@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { ApplicationService } from 'src/app/services/media/application.service';
 import { BookService } from 'src/app/services/media/book.service';
 import { GameService } from 'src/app/services/media/game.service';
 import { MovieService } from 'src/app/services/media/movie.service';
@@ -30,6 +31,7 @@ export class PreferenceComponent implements OnInit {
               private movieService: MovieService,
               private bookService: BookService,
               private gameService: GameService,
+              private applicationService: ApplicationService,
               private router: Router, 
               private authService: AuthService) { 
     
@@ -73,13 +75,15 @@ export class PreferenceComponent implements OnInit {
         err => console.error(err)
     );
 
-    this.applications = [
-      {
-        app_id: 1,
-        name: "App1",
-        rating: 0
+    // Get popular applications
+    this.applicationService.getPopularApplications().then(response => {
+      if(response.status === true) {
+        this.applications = response.content;
       }
-    ];
+    })
+    .catch(
+        err => console.error(err)
+    );
   }
 
   ngOnInit(): void {
