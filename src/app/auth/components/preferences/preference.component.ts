@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { BookService } from 'src/app/services/media/book.service';
+import { GameService } from 'src/app/services/media/game.service';
 import { MovieService } from 'src/app/services/media/movie.service';
 import { TrackService } from 'src/app/services/media/track.service';
 
@@ -28,6 +29,7 @@ export class PreferenceComponent implements OnInit {
   constructor(private trackService: TrackService, 
               private movieService: MovieService,
               private bookService: BookService,
+              private gameService: GameService,
               private router: Router, 
               private authService: AuthService) { 
     
@@ -51,8 +53,8 @@ export class PreferenceComponent implements OnInit {
         err => console.error(err)
     );
 
-     // Get popular books
-     this.bookService.getPopularBooks().then(response => {
+    // Get popular books
+    this.bookService.getPopularBooks().then(response => {
       if(response.status === true) {
         this.books = response.content;
       }
@@ -61,14 +63,16 @@ export class PreferenceComponent implements OnInit {
         err => console.error(err)
     );
 
-    this.games = [
-      {
-        id: 1,
-        name: 'Game 1',
-        publishers: 'publisher 1',
-        rating: 0,
+    // Get popular games
+    this.gameService.getPopularGames().then(response => {
+      if(response.status === true) {
+        this.games = response.content;
       }
-    ];
+    })
+    .catch(
+        err => console.error(err)
+    );
+
     this.applications = [
       {
         app_id: 1,
