@@ -1,0 +1,10 @@
+#musicImage {
+    width:200px;
+    height:200px;
+}
+
+.product-meta span:not(:last-child)::after {
+    content: ",";
+    margin-right: 2px;
+    color: #949cb0;
+}

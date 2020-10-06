@@ -9,6 +9,12 @@ a:hover {
   color: #fff;
 }
 
+:focus {
+  outline-style: none;
+  box-shadow: none;
+  border-color: transparent;
+}
+
 /* Custom default button */
 .btn-secondary,
 .btn-secondary:hover,

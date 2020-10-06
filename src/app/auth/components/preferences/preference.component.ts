@@ -87,23 +87,23 @@ export class PreferenceComponent implements OnInit {
     }
   }
 
-  onFinish() {
+  onFinish(): void {
     this.authService.setPreferences(true);
-    this.router.navigate(['app/musics']);
+    this.router.navigate(['app']);
   }
 
-  pageChanged(event){
+  pageChanged(event): void {
     this.configMusic.currentPage = event;
-    this.getTracks(this.configMusic.currentPage)
+    this.getTracks(this.configMusic.currentPage);
   }
 
-  getTracks(page: number) {
+  getTracks(page: number): void {
     this.trackService.getTracks(+page).then(response => {
-      if(response.status === true) {
+      if (response.status === true) {
         this.musics = response.content;
       }
     })
-    .then(()=> {
+    .then(() => {
       this.configMusic = {
         itemsPerPage: 20,
         currentPage: page,
@@ -115,8 +115,8 @@ export class PreferenceComponent implements OnInit {
     );
   }
 
-  closeAllFrame() {
+  closeAllFrame(): void {
     this.showMusic = this.showFilm = this.showBook = this.showGame = this.showApplication = false;
   }
-  
+
 }

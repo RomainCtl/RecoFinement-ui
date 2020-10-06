@@ -13,8 +13,6 @@ export class AppComponent {
 
   constructor(private _auth: AuthService) { }
 
-  get authService(): AuthService {
-    return this._auth;
-  }
+
 
 }
