@@ -1,5 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { AuthService } from 'src/app/services/auth.service';
 import { ApplicationService } from 'src/app/services/media/application.service';
 import { BookService } from 'src/app/services/media/book.service';
@@ -36,54 +38,47 @@ export class PreferenceComponent implements OnInit {
               private authService: AuthService) { 
     
     // Get popular tracks
-    this.trackService.getPopularTracks().then(response => {
-      if(response.status === true) {
-        this.musics = response.content;
-      }
-    })
-    .catch(
+    this.trackService.getPopularTracks()
+      .then(response => {
+        if(response.status === true) {
+          this.musics = response.content;
+        }
+      })
+      .then(() => {
+        // Get popular movies
+        this.movieService.getPopularMovies().then(response => {
+          if(response.status === true) {
+            this.movies = response.content;
+          }
+        })
+        .then(() => {
+          // Get popular books
+          this.bookService.getPopularBooks().then(response => {
+            if(response.status === true) {
+              this.books = response.content;
+            }
+          })
+          .then(() => {
+            // Get popular games
+            this.gameService.getPopularGames().then(response => {
+              if(response.status === true) {
+                this.games = response.content;
+              }
+            })
+            .then(() => {
+              // Get popular applications
+              this.applicationService.getPopularApplications().then(response => {
+                if(response.status === true) {
+                  this.applications = response.content;
+                }
+              })
+            })
+          })
+        })
+      })
+      .catch(
         err => console.error(err)
-    );
-
-    // Get popular movies
-    this.movieService.getPopularMovies().then(response => {
-      if(response.status === true) {
-        this.movies = response.content;
-      }
-    })
-    .catch(
-        err => console.error(err)
-    );
-
-    // Get popular books
-    this.bookService.getPopularBooks().then(response => {
-      if(response.status === true) {
-        this.books = response.content;
-      }
-    })
-    .catch(
-        err => console.error(err)
-    );
-
-    // Get popular games
-    this.gameService.getPopularGames().then(response => {
-      if(response.status === true) {
-        this.games = response.content;
-      }
-    })
-    .catch(
-        err => console.error(err)
-    );
-
-    // Get popular applications
-    this.applicationService.getPopularApplications().then(response => {
-      if(response.status === true) {
-        this.applications = response.content;
-      }
-    })
-    .catch(
-        err => console.error(err)
-    );
+      );
   }
 
   ngOnInit(): void {
