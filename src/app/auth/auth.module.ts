@@ -1,4 +1,3 @@
-import { NgxPaginationModule } from 'ngx-pagination';
 import { StarRatingModule } from 'angular-star-rating';
 import { CardPreferenceComponent } from './components/preferences/card-preference/card-preference.component';
 import { NgModule } from '@angular/core';
@@ -26,8 +25,7 @@ import { RatingComponent } from './components/preferences/rating/rating.componen
     AuthRoutingModule,
     FormsModule,
     HttpClientModule,
-    StarRatingModule.forRoot(),
-    NgxPaginationModule
+    StarRatingModule.forRoot()
   ],
   exports: [
     LoginComponent,
