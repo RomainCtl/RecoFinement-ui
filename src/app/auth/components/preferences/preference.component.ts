@@ -23,6 +23,9 @@ export class PreferenceComponent implements OnInit {
   games = [];
   applications = [];
 
+  internalError: string = 'An error was encountered during data recovery';
+  internalErrorStatus: boolean = false;
+
   showMusic: boolean = true;
   showFilm: boolean = false;
   showBook: boolean = false;
@@ -77,7 +80,9 @@ export class PreferenceComponent implements OnInit {
         })
       })
       .catch(
-        err => console.error(err)
+        () => {
+          this.internalErrorStatus = true
+        }
       );
   }
 

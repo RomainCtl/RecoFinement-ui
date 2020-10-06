@@ -4,6 +4,9 @@
 
         <div class="page-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
             <p class="lead">Please select media that you have already seen and/or liked. Your choices will then help us improve the recommendations made.</p>
+            <div *ngIf="this.internalErrorStatus" class="alert alert-danger" role="alert">
+                {{ this.internalError }}
+            </div>
         </div>
        
         <div  *ngIf="showMusic" id="music" class="container">
