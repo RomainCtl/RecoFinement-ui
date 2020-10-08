@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CardPreferenceComponent implements OnInit {
 
-  selected: boolean = false;
+  selected = false;
 
   @Input() id: number;
   @Input() title: string;

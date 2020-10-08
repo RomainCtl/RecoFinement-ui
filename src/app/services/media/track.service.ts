@@ -6,11 +6,11 @@ import { Injectable } from '@angular/core';
 })
 export class TrackService {
 
-  private urlGetPopularTracks: string = "http://127.0.0.1:4040/api/track?page=1";
+  private urlGetPopularTracks = 'http://127.0.0.1:4040/api/track?page=1';
 
   constructor(private httpClient: HttpClient) { }
 
-  getPopularTracks() {
-    return this.httpClient.get<any>(this.urlGetPopularTracks).toPromise()
+  getPopularTracks(): Promise<any> {
+    return this.httpClient.get<any>(this.urlGetPopularTracks).toPromise();
   }
 }

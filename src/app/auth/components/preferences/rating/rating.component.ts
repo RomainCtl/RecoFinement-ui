@@ -13,7 +13,7 @@ export class RatingComponent implements OnInit {
   @Input() media: string;
   onRatingChangeResult: RatingChangeEvent;
 
-  constructor(private ratingService: RatingService) { 
+  constructor(private ratingService: RatingService) {
   }
 
   ngOnInit(): void {
@@ -22,7 +22,7 @@ export class RatingComponent implements OnInit {
   onRatingChange = ($event: RatingChangeEvent) => {
     this.note = $event.rating;
     this.ratingService.saveRating(+this.note, +this.media).then(response => {
-      if(!response.status) {
+      if (!response.status) {
         this.note = 0;
       }
     }).catch(
@@ -30,6 +30,5 @@ export class RatingComponent implements OnInit {
         this.note = 0;
       }
     );
-  };
-
+  }
 }

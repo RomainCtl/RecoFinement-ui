@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -23,65 +22,65 @@ export class PreferenceComponent implements OnInit {
   games = [];
   applications = [];
 
-  internalError: string = 'An error was encountered during data recovery';
-  internalErrorStatus: boolean = false;
+  internalError = 'An error was encountered during data recovery';
+  internalErrorStatus = false;
 
-  showMusic: boolean = true;
-  showFilm: boolean = false;
-  showBook: boolean = false;
-  showGame: boolean = false;
-  showApplication: boolean = false;
+  showMusic = true;
+  showFilm = false;
+  showBook = false;
+  showGame = false;
+  showApplication = false;
 
-  constructor(private trackService: TrackService, 
+  constructor(private trackService: TrackService,
               private movieService: MovieService,
               private bookService: BookService,
               private gameService: GameService,
               private applicationService: ApplicationService,
-              private router: Router, 
-              private authService: AuthService) { 
-    
+              private router: Router,
+              private authService: AuthService) {
+
     // Get popular tracks
     this.trackService.getPopularTracks()
       .then(response => {
-        if(response.status === true) {
+        if (response.status === true) {
           this.musics = response.content;
         }
       })
       .then(() => {
         // Get popular movies
         this.movieService.getPopularMovies().then(response => {
-          if(response.status === true) {
+          if (response.status === true) {
             this.movies = response.content;
           }
         })
         .then(() => {
           // Get popular books
           this.bookService.getPopularBooks().then(response => {
-            if(response.status === true) {
+            if (response.status === true) {
               this.books = response.content;
             }
           })
           .then(() => {
             // Get popular games
             this.gameService.getPopularGames().then(response => {
-              if(response.status === true) {
+              if (response.status === true) {
                 this.games = response.content;
               }
             })
             .then(() => {
               // Get popular applications
               this.applicationService.getPopularApplications().then(response => {
-                if(response.status === true) {
+                if (response.status === true) {
                   this.applications = response.content;
                 }
-              })
-            })
-          })
-        })
+              });
+            });
+          });
+        });
       })
       .catch(
         () => {
-          this.internalErrorStatus = true
+          this.internalErrorStatus = true;
         }
       );
   }
@@ -89,9 +88,9 @@ export class PreferenceComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onChange(id: string) {
+  onChange(id: string): void {
     this.closeAllFrame();
-    switch(id) {
+    switch (id) {
       case 'music':
         this.showMusic = true;
         break;
@@ -110,13 +109,13 @@ export class PreferenceComponent implements OnInit {
     }
   }
 
-  onFinish() {
+  onFinish(): void {
     this.authService.setPreferences(true);
     this.router.navigate(['app/musics']);
   }
 
-  closeAllFrame() {
+  closeAllFrame(): void {
     this.showMusic = this.showFilm = this.showBook = this.showGame = this.showApplication = false;
   }
-  
+
 }
