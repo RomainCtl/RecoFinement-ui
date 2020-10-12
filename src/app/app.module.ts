@@ -1,4 +1,3 @@
-// import { StarRatingModule } from 'angular-star-rating';
 import { AuthGuard } from './auth/auth.guard';
 import { Interceptor } from './shared/interceptor';
 import { HttpClientModule } from '@angular/common/http';
@@ -25,7 +24,6 @@ import { CommonModule } from '@angular/common';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    // StarRatingModule.forRoot(),
     AuthModule,
     HomeModule,
     RouterModule,

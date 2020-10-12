@@ -1,0 +1,9 @@
+<h1 mat-dialog-title><b>Preferences confirmation</b></h1>
+<mat-dialog-content>
+  <p>You have reached the end of entering preferences.</p>
+  <p>Are you sure of your preferences?</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-raised-button (click)="onNoClick()">No</button>
+  <button mat-raised-button cdkFocusInitial (click)="onConfirmationPreferences()" color="primary">Yes</button>
+</mat-dialog-actions>

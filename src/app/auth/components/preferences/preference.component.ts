@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { AuthService } from 'src/app/services/auth.service';
 import { ApplicationService } from 'src/app/services/media/application.service';
 import { BookService } from 'src/app/services/media/book.service';
 import { GameService } from 'src/app/services/media/game.service';
 import { MovieService } from 'src/app/services/media/movie.service';
+import { SerieService } from 'src/app/services/media/serie.service';
 import { TrackService } from 'src/app/services/media/track.service';
+
+import { MatDialog } from '@angular/material/dialog';
+import { DialogConfirmationComponent } from './dialog-confirmation/dialog-confirmation.component';
 
 @Component({
   selector: 'app-preference',
@@ -25,19 +27,13 @@ export class PreferenceComponent implements OnInit {
   internalError = 'An error was encountered during data recovery';
   internalErrorStatus = false;
 
-  showMusic = true;
-  showFilm = false;
-  showBook = false;
-  showGame = false;
-  showApplication = false;
-
   constructor(private trackService: TrackService,
               private movieService: MovieService,
+              private serieService: SerieService,
               private bookService: BookService,
               private gameService: GameService,
               private applicationService: ApplicationService,
-              private router: Router,
-              private authService: AuthService) {
+              public dialog: MatDialog) {
 
     // Get popular tracks
     this.trackService.getPopularTracks()
@@ -54,25 +50,33 @@ export class PreferenceComponent implements OnInit {
           }
         })
         .then(() => {
-          // Get popular books
-          this.bookService.getPopularBooks().then(response => {
+          // Get popular series
+          this.serieService.getPopularSeries().then(response => {
             if (response.status === true) {
-              this.books = response.content;
+              this.series = response.content;
             }
           })
           .then(() => {
-            // Get popular games
-            this.gameService.getPopularGames().then(response => {
+            // Get popular books
+            this.bookService.getPopularBooks().then(response => {
               if (response.status === true) {
-                this.games = response.content;
+                this.books = response.content;
               }
             })
             .then(() => {
-              // Get popular applications
-              this.applicationService.getPopularApplications().then(response => {
+              // Get popular games
+              this.gameService.getPopularGames().then(response => {
                 if (response.status === true) {
-                  this.applications = response.content;
+                  this.games = response.content;
                 }
+              })
+              .then(() => {
+                // Get popular applications
+                this.applicationService.getPopularApplications().then(response => {
+                  if (response.status === true) {
+                    this.applications = response.content;
+                  }
+                });
               });
             });
           });
@@ -88,34 +92,8 @@ export class PreferenceComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onChange(id: string): void {
-    this.closeAllFrame();
-    switch (id) {
-      case 'music':
-        this.showMusic = true;
-        break;
-      case 'film':
-        this.showFilm = true;
-        break;
-      case 'book':
-        this.showBook = true;
-        break;
-      case 'game':
-        this.showGame = true;
-        break;
-      case 'application':
-        this.showApplication = true;
-        break;
-    }
-  }
 
-  onFinish(): void {
-    this.authService.setPreferences(true);
-    this.router.navigate(['app/musics']);
+  openDialog(): void {
+    this.dialog.open(DialogConfirmationComponent, {});
   }
-
-  closeAllFrame(): void {
-    this.showMusic = this.showFilm = this.showBook = this.showGame = this.showApplication = false;
-  }
-
 }
