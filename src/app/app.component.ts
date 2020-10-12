@@ -15,5 +15,4 @@ export class AppComponent {
     return this._auth;
   }
 
-
 }
