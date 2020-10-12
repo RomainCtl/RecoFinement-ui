@@ -38,34 +38,32 @@ const routes: Routes = [
     path: 'app',
     component: HomeComponent,
     canActivate: [AuthGuard],
-    children: [
-      {
-        path: 'applications',
-        component: ApplicationsComponent,
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'books',
-        component: BooksComponent,
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'games',
-        component: GamesComponent,
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'movies',
-        component: MoviesComponent,
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'musics',
-        component: MusicsComponent,
-        canActivate: [AuthGuard]
-      }
-    ]
-  }
+  },
+  {
+      path: 'app/applications',
+      component: ApplicationsComponent,
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'app/books',
+      component: BooksComponent,
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'app/games',
+      component: GamesComponent,
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'app/movies',
+      component: MoviesComponent,
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'app/musics',
+      component: MusicsComponent,
+      canActivate: [AuthGuard]
+    },
 ];
 
 @NgModule({

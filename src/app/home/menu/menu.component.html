@@ -1,29 +1,21 @@
-<header id="header" class="header left-aligned-navbar">
-  <div id="logoAndNav" class="container px-md-5">
-  </div>
+<div class="row" style="background-color: gray;">
+  <nav class="navbar navbar-light bg-light container-fluid p-3">
+    <div class="col-sm">
+      <a routerLink="/app" class="navbar-brand">
+        <img src="./assets/images/logo.svg" alt="Logo Recofinement" width="250"/>
+      </a>
+    </div>
+    <div class="col-sm-6 text-center h5">
+      <button mat-button routerLink="/app" [routerLinkActive]="['mat-warn']" [routerLinkActiveOptions]="{exact: true}">Home</button>   
+      <button mat-button [routerLink]="['app/musics']" [routerLinkActive]="['mat-warn']">Musics</button>   
+      <button mat-button [routerLink]="['app/movies']" [routerLinkActive]="['mat-warn']">Movies & Series</button>   
+      <button mat-button [routerLink]="['app/games']" [routerLinkActive]="['mat-warn']">Games</button>   
+      <button mat-button [routerLink]="['app/books']" [routerLinkActive]="['mat-warn']">Books</button>   
+      <button mat-button [routerLink]="['app/applications']" [routerLinkActive]="['mat-warn']">Applications</button>
+    </div>
+    <div class="col-sm text-right">
+      <button mat-raised-button color="warn" (click)="logOut()">Log out</button>
+    </div>
+  </nav>
+</div>
 
-<div class="header-section header-white-nav-links bg-dark-1">
-        <h3 class="masthead-brand">ReCoFinement</h3>
-        <nav class="nav nav-masthead justify-content-center">
-          <a class="nav-link" routerLink="/app" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-          <a class="nav-link" [routerLink]="['musics']" routerLinkActive="active">Musics</a>
-          <a class="nav-link" [routerLink]="['movies']" routerLinkActive="active">Movies & Series</a>
-          <a class="nav-link" [routerLink]="['games']" routerLinkActive="active">Games</a>
-          <a class="nav-link" [routerLink]="['books']" routerLinkActive="active">Books</a>
-          <a class="nav-link" [routerLink]="['applications']" routerLinkActive="active">Applications</a>
-          <div class="col">
-            <label class="sr-only">Search</label>
-            <div class="input-group">
-                <input type="text" id="searchBar" class="search-form-control py-2 pl-4 min-width-50 rounded-pill text-light bg-transparent border-light" name="email" id="searchproduct-item" placeholder="Search..." aria-label="Search..." aria-describedby="searchProduct1" required="">
-            </div>
-            </div>
-            <div class="d-inline-flex ml-md-5">
-              <button type="button" (click)="logOut()" class="btn border-light text-danger font-weight-bolder">Log out</button>
-            </div>
-                  
-        </nav>
-      </div>
-  </header>
-  <main id="content">
-    <router-outlet></router-outlet>
-  </main>
