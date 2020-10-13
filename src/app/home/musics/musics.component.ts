@@ -1,7 +1,9 @@
-import { TrackResponseDto } from './../../shared/models/DtoResponse/track.model';
+import { MatDialog } from '@angular/material/dialog';
 import { TrackService } from 'src/app/services/media/track.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TrackResponseDto } from 'src/app/shared/models/DtoResponse/track.model';
+import { PopupComponent } from './popup/popup/popup.component';
 
 @Component({
   selector: 'app-musics',
@@ -10,7 +12,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class MusicsComponent implements OnInit {
 
-  constructor(private trackService: TrackService, private snackBar: MatSnackBar) { }
+  constructor(
+    private trackService: TrackService,
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog) { }
 
   trackResponse: TrackResponseDto;
 
@@ -25,7 +30,7 @@ export class MusicsComponent implements OnInit {
 
   onScroll(): void {
     console.log('scrolled');
-    if (this.nextPage <= 3) {
+    if (this.nextPage <= this.trackResponse.total_pages) {
       this.getMusics(this.nextPage);
     } else {
       this.snackBar.open('You have reached the end of the Internet!', 'Alright!');
@@ -43,6 +48,29 @@ export class MusicsComponent implements OnInit {
       this.nextPage++;
       console.log(this.trackResponse.content);
     });
+  }
+
+  openDialog(index: number): void {
+    this.snackBar.openFromComponent(PopupComponent, {
+      data: this.trackResponse.content[index],
+      horizontalPosition: 'start',
+      panelClass: 'bg-light'
+    });
+
+    // console.log(index);
+    // const dialogRef = this.dialog.open(PopupComponent, {
+    //   data: {
+    //     track: this.trackResponse.content,
+    //     indexOfElement: index
+    //   }
+
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log(`Dialog result: ${result}`);
+    // });
+  }
+
+  closeSnackBar(): void {
+    this.snackBar.dismiss();
   }
 
 }

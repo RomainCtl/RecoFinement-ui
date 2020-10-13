@@ -13,7 +13,7 @@ export class RatingComponent implements OnInit {
   @Input() media: string;
   onRatingChangeResult: RatingChangeEvent;
 
-  constructor(private ratingService: RatingService) { 
+  constructor(private ratingService: RatingService) {
   }
 
   ngOnInit(): void {

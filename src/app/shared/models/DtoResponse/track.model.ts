@@ -1,3 +1,4 @@
+import { Genre } from './../../genre.model';
 import { Track } from './../../track.model';
 export class TrackResponseDto {
     status: boolean;

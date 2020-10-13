@@ -1,3 +1,4 @@
+import { Genre } from './genre.model';
 export class Track {
     track_id: number;
     title: string;
@@ -8,7 +9,9 @@ export class Track {
     recording_mbid: string;
     language: string;
     rating: number;
+    genres: Genre[];
     rating_count: number;
+    spotify_id: string;
     url: string;
     covert_art_url: string;
 }

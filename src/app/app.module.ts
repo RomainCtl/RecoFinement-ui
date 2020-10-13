@@ -61,6 +61,7 @@ import { RegisterComponent } from './auth/components/register/register.component
 import { PaginationService, NgxPaginationModule } from 'ngx-pagination';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { PopupComponent } from './home/musics/popup/popup/popup.component';
 
 
 @NgModule({
@@ -77,7 +78,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     RegisterComponent,
     PreferenceComponent,
     CardPreferenceComponent,
-    RatingComponent
+    RatingComponent,
+    PopupComponent
   ],
   imports: [
     CommonModule,
