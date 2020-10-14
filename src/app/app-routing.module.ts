@@ -12,7 +12,6 @@ import { GamesComponent } from './home/games/games.component';
 import { MoviesComponent } from './home/movies/movies.component';
 import { MusicsComponent } from './home/musics/musics.component';
 import { PreferenceComponent } from './auth/components/preferences/preference.component';
-import { ProfileComponent } from './auth/components/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -63,11 +62,6 @@ const routes: Routes = [
     {
       path: 'app/musics',
       component: MusicsComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'app/profile',
-      component: ProfileComponent,
       canActivate: [AuthGuard]
     },
     {
