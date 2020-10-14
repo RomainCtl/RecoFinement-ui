@@ -1,107 +1,141 @@
 <main>
-    <h1 class="text-center display-4 col-12">My preferences</h1>
-    <section>
 
-        <div class="page-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-            <p class="lead">Please select media that you have already seen and/or liked. Your choices will then help us improve the recommendations made.</p>
-        </div>
-       
-        <div  *ngIf="showMusic" id="music" class="container">
-            <div class="row">
-                <p class="font-weight-bold col-12 text-center text-uppercase">musics</p>
-                <ng-container *ngFor="let music of musics | paginate: configMusic">
-                    <app-card-preference class="col-md-2 text-center"
-                        [id]="music.track_id"
-                        [title]="music.title"
-                        [author]="music.artist_name"
-                        [rating]="0"
-                        [cover]="music.covert_art_url == null ? 'https://cdn.pixabay.com/photo/2017/01/17/06/48/background-1986032__340.jpg' : 'https://cdn.pixabay.com/photo/2017/01/17/06/48/background-1986032__340.jpg'"
-                    ></app-card-preference>
-                </ng-container>
-                <div class="col-12">
-                    <pagination-controls class="col-6 offset-3 pagination" (pageChange)="pageChanged($event)"></pagination-controls>
-                </div>
-                <aside class="text-center button">
-                    <button type="button" class="btn btn-primary btn-block btn-next" (click)="onChange('film')">Next</button>
-                </aside>
-            </div>      
-        </div>
+  <div class="py-5 text-center jumbotron">
+    <h1 class="mat-h1">My preferences</h1>
+    <p class="lead">Please select media that you have already seen and/or liked. Your choices will then help us improve the recommendations made.</p>
+  </div>
 
-        <div  *ngIf="showFilm" id="film" class="container">
-            <div class="row">
-                <p class="font-weight-bold col-12 text-center text-uppercase">films and series</p>
-                <ng-container *ngFor="let film of films">
-                    <app-card-preference class="col-md-2"
-                    [id]="film.movie_id"
-                    [title]="film.title"
-                    [author]="film.director"
-                    [rating]="film.rating"
-                    [cover]=""
-                    ></app-card-preference>
-                </ng-container>
-                <aside class="text-center button">
-                    <button type="button" class="btn btn-primary btn-block btn-next" (click)="onChange('music')">Previous</button>
-                    <button type="button" class="btn btn-primary btn-block btn-next" (click)="onChange('book')">Next</button>
-                </aside>
-            </div>      
-        </div>
-  
-        <div  *ngIf="showBook" id="book" class="container">
-            <div class="row">
-                <p class="font-weight-bold col-12 text-center text-uppercase">books</p>
-                <ng-container *ngFor="let book of books">
-                    <app-card-preference class="col-md-2"
-                    [id]="book.isbn"
-                    [title]="book.title"
-                    [author]="book.author"
-                    [rating]="book.rating"
-                    [cover]="book.image_url_s"
-                    ></app-card-preference>
-                </ng-container>
-                <aside class="text-center button">
-                    <button type="button" class="btn btn-primary btn-block btn-next" (click)="onChange('film')">Previous</button>
-                    <button type="button" class="btn btn-primary btn-block btn-next" (click)="onChange('game')">Next</button>
-                </aside>
-            </div>      
-        </div>
+  <section>
+    <div *ngIf="this.internalErrorStatus" class="alert alert-danger px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" role="alert">
+      {{ this.internalError }}
+    </div>
 
-        <div  *ngIf="showGame" id="game" class="container">
-            <div class="row">
-                <p class="font-weight-bold col-12 text-center text-uppercase">games</p>
-                <ng-container *ngFor="let game of games">
-                    <app-card-preference class="col-md-2"
-                    [id]="game.movie_id"
-                    [title]="game.name"
-                    [author]="game.publishers"
-                    [rating]="game.rating"
-                    [cover]=""
-                    ></app-card-preference>
-                </ng-container>
-                <aside class="text-center button">
-                    <button type="button" class="btn btn-primary btn-block btn-next" (click)="onChange('book')">Previous</button>
-                    <button type="button" class="btn btn-primary btn-block btn-next" (click)="onChange('application')">Next</button>
-                </aside>
-            </div>      
+    <mat-horizontal-stepper [linear]="true" #stepper>
+      <mat-step label="Music">
+        <div class="container">
+          <div class="row">
+            <p class="font-weight-bold col-12 text-center text-uppercase mat-h2">Musics</p>
+            <ng-container *ngFor="let music of musics">
+                <app-card-preference class="col-md-3"
+                    [id]="music.track_id"
+                    [title]="music.title"
+                    [subtitle]="music.artist_name"
+                    [info]="music.year"
+                    [cover]="'https://cdn.pixabay.com/photo/2019/08/28/20/13/music-cover-4437602_1280.jpg'"
+                    [type]="'music'"
+                ></app-card-preference>
+            </ng-container>
+          </div>
         </div>
-
-        <div *ngIf="showApplication" id="application" class="container">
-            <div class="row">
-                <p class="font-weight-bold col-12 text-center text-uppercase">applications</p>
-                <ng-container *ngFor="let application of applications">
-                    <app-card-preference class="col-md-2"
-                        [id]="application.app_id"
-                        [title]="application.name"
-                        [author]=""
-                        [rating]="application.rating"
-                        [cover]=""
-                    ></app-card-preference>
-                </ng-container>
-                <aside class="text-center button">
-                    <button type="button" class="btn btn-primary btn-block btn-next" (click)="onChange('game')">Previous</button>
-                    <button type="button" class="btn btn-primary btn-block btn-next" (click)="onFinish()">Finish</button>
-                </aside>
-            </div>      
+        <aside>
+          <button mat-raised-button matStepperNext color="primary">Next</button>
+        </aside>
+      </mat-step>
+      <mat-step label="Movies">
+        <div class="container">
+          <div class="row">
+            <p class="font-weight-bold col-12 text-center text-uppercase mat-h2">Movies</p>
+            <ng-container *ngFor="let movie of movies">
+              <app-card-preference class="col-md-3"
+              [id]="movie.movie_id"
+              [title]="movie.title"
+              [subtitle]="movie.director"
+              [info]="movie.genres.replaceAll('|', ', ')"
+              [cover]="'https://images.template.net/wp-content/uploads/2017/02/17221912/Printable-Blank-Movie-Poster.jpg'"
+              [type]="'movie'"
+              ></app-card-preference>
+            </ng-container>
+          </div>
         </div>
-        
-    </section>
+        <aside>
+          <button mat-raised-button matStepperPrevious color="primary">Back</button>
+          <button mat-raised-button matStepperNext color="primary">Next</button>
+        </aside>
+      </mat-step>
+      <mat-step label="Series">
+        <div class="container">
+          <div class="row">
+            <p class="font-weight-bold col-12 text-center text-uppercase mat-h2">Series</p>
+            <ng-container *ngFor="let serie of series">
+              <app-card-preference class="col-md-3"
+              [id]="serie.serie_id"
+              [title]="serie.title"
+              [subtitle]=""
+              [info]="serie.genres.replaceAll(',', ', ')"
+              [cover]="'https://images.template.net/wp-content/uploads/2017/02/17221912/Printable-Blank-Movie-Poster.jpg'"
+              [type]="'serie'"
+              ></app-card-preference>
+            </ng-container>
+          </div>
+        </div>
+        <aside>
+          <button mat-raised-button matStepperPrevious color="primary">Back</button>
+          <button mat-raised-button matStepperNext color="primary">Next</button>
+        </aside>
+      </mat-step>
+      <mat-step label="Books">
+        <div class="container">
+          <div class="row">
+            <p class="font-weight-bold col-12 text-center text-uppercase mat-h2">books</p>
+            <ng-container *ngFor="let book of books">
+              <app-card-preference class="col-md-3"
+              [id]="book.isbn"
+              [title]="book.title"
+              [subtitle]="book.author"
+              [cover]="book.image_url_l"
+              [info]="book.publisher"
+              [type]="'book'"
+              ></app-card-preference>
+            </ng-container>
+          </div>
+        </div>
+        <aside>
+          <button mat-raised-button matStepperPrevious color="primary">Back</button>
+          <button mat-raised-button matStepperNext color="primary">Next</button>
+        </aside>
+      </mat-step>
+      <mat-step label="Games">
+        <div class="container">
+          <div class="row">
+            <p class="font-weight-bold col-12 text-center text-uppercase mat-h2">games</p>
+            <ng-container *ngFor="let game of games">
+              <app-card-preference class="col-md-3"
+              [id]="game.movie_id"
+              [title]="game.name"
+              [subtitle]="game.publishers"
+              [cover]="game.header_image == null ? 'https://live.staticflickr.com/182/400813834_e0d52410d7_z.jpg' : game.header_image"
+              [info]="game.genres"
+              [type]="'game'"
+              ></app-card-preference>
+            </ng-container>
+          </div>
+        </div>
+        <aside>
+          <button mat-raised-button matStepperPrevious color="primary">Back</button>
+          <button mat-raised-button matStepperNext color="primary">Next</button>
+        </aside>
+      </mat-step>
+      <mat-step label="Applications">
+        <div class="container">
+          <div class="row">
+            <p class="font-weight-bold col-12 text-center text-uppercase mat-h2">applications</p>
+            <ng-container *ngFor="let application of applications">
+              <app-card-preference class="col-md-3"
+                  [id]="application.app_id"
+                  [title]="application.name"
+                  [subtitle]=""
+                  [cover]=""
+                  [info]="application.genres"
+                  [type]="'application'"
+              ></app-card-preference>
+            </ng-container>
+          </div>
+        </div>
+        <aside>
+          <button mat-raised-button matStepperPrevious color="primary">Back</button>
+          <button mat-raised-button color="primary" (click)="openDialog()">Finish</button>
+        </aside>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </section>
 </main>

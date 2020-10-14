@@ -3,14 +3,21 @@
 
     <h1 class="h3 mb-3 font-weight-normal">Please register</h1>
     <label for="inputEmail" class="sr-only">Email address</label>
-    <input ngModel type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+    <input ngModel type="email" name="email" class="form-control" placeholder="Email address" required autofocus>
     <label for="inputEmail" class="sr-only">Pseudo</label>
-    <input ngModel type="text" name="username" id="inputPseudo" class="form-control" placeholder="Pseudo" required>
+    <input ngModel type="text" name="username" class="form-control" placeholder="Pseudo" required>
     <label for="inputPassword" class="sr-only">Password</label>
-    <input ngModel type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+    <input ngModel type="password" name="password" class="form-control" placeholder="Password" required>
+    <label for="inputPassword" class="sr-only">Password confirmation</label>
+    <input [(ngModel)]="passwordConfirmation" type="password" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Password confirmation" required>
     <div *ngIf="!registerHttpResponse.status">
       <div *ngFor="let error of registerHttpResponse.errors" class="alert alert-danger" role="alert">
         {{ error }}
+      </div>
+    </div>
+    <div *ngIf="passwordError.length > 0">
+      <div class="alert alert-danger" role="alert">
+        {{ passwordError }}
       </div>
     </div>
     <button class="btn btn-lg btn-primary btn-block mb-2" type="submit">Register</button>

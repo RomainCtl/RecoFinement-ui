@@ -98,7 +98,10 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+<<<<<<< HEAD
               "./node_modules/hammerjs/hammer.min.js",
+=======
+>>>>>>> master
               "src/styles.scss",
               "https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
             ],

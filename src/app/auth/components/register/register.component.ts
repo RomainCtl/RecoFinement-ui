@@ -26,12 +26,17 @@ export class RegisterComponent implements OnInit {
     errors: ['']
   };
 
+  passwordError = '';
+  passwordConfirmation = '';
+
+
   constructor(private _auth: AuthService, private _router: Router, private cookie: CookieService) { }
 
   ngOnInit(): void {
   }
 
   register(user: UserRegisterDtoRequest): void {
+<<<<<<< HEAD
     this._auth.register(user).then(
       (result: UserRegisterDtoResponse) => {
         this.registerHttpResponse = result;
@@ -41,7 +46,25 @@ export class RegisterComponent implements OnInit {
     ).catch(
       (errors: HttpErrorResponse) => {
         this.registerHttpResponse = errors.error;
+=======
+
+    if (user.password === this.passwordConfirmation) {
+      this.passwordError = '';
+
+      this._auth.register(user).then(
+        (result: UserRegisterDtoResponse) => {
+          this.registerHttpResponse = result;
+          document.cookie = 'access_token=' + this.registerHttpResponse.access_token;
+          this._router.navigate(['register/preferences']);
+        }
+        ).catch(
+          (errors: HttpErrorResponse) => {
+            this.registerHttpResponse = errors.error;
+          }
+          );
+        } else {
+          this.passwordError = 'Passwords don\'t match';
+        }
+>>>>>>> master
       }
-    );
   }
-}

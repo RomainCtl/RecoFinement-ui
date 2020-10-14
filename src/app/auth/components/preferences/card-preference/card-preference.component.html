@@ -1,9 +1,19 @@
-<div class="card mb-2 shadow-sm text-center">
-    <img class="img-fluid" [src]="this.cover" />
-    <span>{{this.title}}</span>
-    <small>{{this.author}}</small>
-    <app-rating
-        [note]="this.rating == null ? 0 : this.rating"
-        [media]="this.id">
-    </app-rating>
-</div>
+<mat-card class="mb-2">
+  <mat-card-header>
+    <mat-card-title>{{this.title.split('(')[0].split(':')[0].split(', The')[0]}}</mat-card-title>
+    <mat-card-subtitle>{{this.subtitle}}</mat-card-subtitle>
+  </mat-card-header>
+
+  <div *ngIf="this.type=='book'" class="img-cover">
+    <img mat-card-image [src]="this.cover" class="card-img" alt="Cover media">
+  </div>
+  <img *ngIf="this.type!='book'" mat-card-image [src]="this.cover" alt="Cover media">
+
+  <mat-card-content>
+    <i>{{this.info}}</i>
+  </mat-card-content>
+  <app-rating
+    [media]="this.id"
+    [type]="this.type">
+  </app-rating>
+</mat-card>
