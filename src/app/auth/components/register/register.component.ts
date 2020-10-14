@@ -36,17 +36,6 @@ export class RegisterComponent implements OnInit {
   }
 
   register(user: UserRegisterDtoRequest): void {
-<<<<<<< HEAD
-    this._auth.register(user).then(
-      (result: UserRegisterDtoResponse) => {
-        this.registerHttpResponse = result;
-        document.cookie = 'access_token=' + this.registerHttpResponse.access_token + '; path:/';
-        this._router.navigate(['register/preferences']);
-      }
-    ).catch(
-      (errors: HttpErrorResponse) => {
-        this.registerHttpResponse = errors.error;
-=======
 
     if (user.password === this.passwordConfirmation) {
       this.passwordError = '';
@@ -65,6 +54,5 @@ export class RegisterComponent implements OnInit {
         } else {
           this.passwordError = 'Passwords don\'t match';
         }
->>>>>>> master
       }
   }

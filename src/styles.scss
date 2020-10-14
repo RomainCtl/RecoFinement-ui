@@ -2,7 +2,6 @@
 
 @import '~css-star-rating/css/star-rating.min.css';
 
-<<<<<<< HEAD
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
 
@@ -14,7 +13,3 @@ input:focus, textarea:focus, select:focus, button:focus, a:focus{
 @mixin tab-focus() {
     outline: none;
 }
-=======
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
->>>>>>> master

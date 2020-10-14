@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+import { DialogConfirmationComponent } from './auth/components/preferences/dialog-confirmation/dialog-confirmation.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatButtonModule} from '@angular/material/button';
@@ -39,8 +39,6 @@ import { MusicsComponent } from './home/musics/musics.component';
 import { HomeComponent } from './home/home.component';
 import { MenuComponent } from './home/menu/menu.component';
 import { StarRatingModule } from 'angular-star-rating';
-=======
->>>>>>> master
 import { AuthGuard } from './auth/auth.guard';
 import { Interceptor } from './shared/interceptor';
 import { HttpClientModule } from '@angular/common/http';
@@ -82,19 +80,15 @@ import { PopupComponent } from './home/musics/popup/popup/popup.component';
     PreferenceComponent,
     CardPreferenceComponent,
     RatingComponent,
-    PopupComponent
+    PopupComponent,
+    DialogConfirmationComponent
   ],
   imports: [
     CommonModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-<<<<<<< HEAD
     StarRatingModule.forRoot(),
-=======
-    AuthModule,
-    HomeModule,
->>>>>>> master
     RouterModule,
     HttpClientModule,
     FormsModule,
