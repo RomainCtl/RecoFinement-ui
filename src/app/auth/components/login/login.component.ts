@@ -1,9 +1,8 @@
-import { CookieService } from 'ngx-cookie-service';
 import { UserLoginDtoResponse } from './../../../shared/models/DtoResponse/user-login.model';
 import { UserLoginDtoRequest } from '../../../shared/models/DtoRequest/user-login.model';
 import { Router } from '@angular/router';
 import { AuthService } from './../../../services/auth.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -24,18 +23,17 @@ export class LoginComponent implements OnInit {
     access_token: '',
     errors: ['']
   };
-  constructor(private _auth: AuthService, private router: Router) {  }
+  constructor(private _auth: AuthService, private _router: Router) {  }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   login(values: UserLoginDtoRequest): void {
     this._auth.login(values)
     .then(
       (result: UserLoginDtoResponse) => {
         this.loginHttpResponse = result;
-        document.cookie = 'access_token=' + this.loginHttpResponse.access_token;
-        this.router.navigate(['app']);
+        document.cookie = 'access_token=' + this.loginHttpResponse.access_token + '; path:/';
+        this._router.navigate(['app']);
       }
     ).catch((result: HttpErrorResponse) => {
       this.loginHttpResponse = result.error;

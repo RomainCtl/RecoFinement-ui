@@ -1,23 +1,21 @@
-<div class="container-fluid d-flex flex-column">
-    <header class="masthead mb-auto">
-        <div class="inner">
-          <h3 class="masthead-brand">ReCoFinement</h3>
-          <nav class="nav nav-masthead justify-content-center">
-            <div class="row">
-            <a class="nav-link" routerLink="/app" routerLinkActive="active">Home</a>
-            <a class="nav-link" routerLink="/app/musics" routerLinkActive="active">Musics</a>
-            <a class="nav-link" routerLink="/app/movies" routerLinkActive="active">Movies & Series</a>
-            <a class="nav-link" routerLink="/app/games" routerLinkActive="active">Games</a>
-            <a class="nav-link" routerLink="/app/books" routerLinkActive="active">Books</a>
-            <a class="nav-link" routerLink="/app/applications" routerLinkActive="active">Applications</a>
-              <div class="col">
-                <button type="button" (click)="logOut()" class="btn border-light text-danger font-weight-bolder">Log out</button>
-              </div>
-            </div>
-          </nav>
-        </div>
-    </header>
+<div class="row">
+  <nav class="navbar navbar-light bg-light container-fluid p-3">
+    <div class="col-sm">
+      <a routerLink="/app" class="navbar-brand">
+        <img src="./assets/images/logo.svg" alt="Logo Recofinement" width="250"/>
+      </a>
     </div>
-    <div class="d-flex flex-column container-fluid">
-      <router-outlet></router-outlet>
+    <div class="col-sm-6 text-center h5">
+      <button mat-button routerLink="/app" [routerLinkActive]="['mat-warn']" [routerLinkActiveOptions]="{exact: true}">Home</button>   
+      <button mat-button [routerLink]="['app/musics']" [routerLinkActive]="['mat-warn']">Musics</button>   
+      <button mat-button [routerLink]="['app/movies']" [routerLinkActive]="['mat-warn']">Movies & Series</button>   
+      <button mat-button [routerLink]="['app/games']" [routerLinkActive]="['mat-warn']">Games</button>   
+      <button mat-button [routerLink]="['app/books']" [routerLinkActive]="['mat-warn']">Books</button>   
+      <button mat-button [routerLink]="['app/applications']" [routerLinkActive]="['mat-warn']">Applications</button>
     </div>
+    <div class="col-sm text-right">
+      <button mat-raised-button color="warn" (click)="logOut()">Log out</button>
+    </div>
+  </nav>
+</div>
+

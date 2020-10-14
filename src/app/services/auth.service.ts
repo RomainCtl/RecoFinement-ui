@@ -1,5 +1,5 @@
-import { UserRegisterDtoResponse } from './../shared/models/DtoResponse/user-register.model';
 import { CookieService } from 'ngx-cookie-service';
+import { UserRegisterDtoResponse } from './../shared/models/DtoResponse/user-register.model';
 import { UserRegisterDtoRequest } from './../shared/models/DtoRequest/user-register.model';
 import { UserLoginDtoRequest } from './../shared/models/DtoRequest/user-login.model';
 import { Router } from '@angular/router';
@@ -20,8 +20,7 @@ export class AuthService {
 
   redirectUrl: string;
 
-  constructor(private http: HttpClient, private router: Router, private cookie: CookieService) { 
-   }
+  constructor(private http: HttpClient, private router: Router, private cookie: CookieService) {  }
 
   login(user: UserLoginDtoRequest): Promise<UserLoginDtoResponse> {
     return this.http.post<UserLoginDtoResponse>(this._loginUrl, user).toPromise();
@@ -39,15 +38,14 @@ export class AuthService {
     return this.preferenceState;
   }
 
-  setPreferences(state: boolean) {
+  setPreferences(state: boolean): void {
     this.preferenceState = state;
   }
 
   logout(): void {
     this.http.post(this._logoutUrl, null).toPromise().then( () => {
-      document.cookie = "access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
-      this.router.navigate(['login']);
-      document.location.reload();
+      document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+      this.router.navigate(['/']);
     }).catch(error => {
       console.error(error);
     });
