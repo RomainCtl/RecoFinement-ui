@@ -1,0 +1,13 @@
+<p>
+  profile works!
+</p>
+
+<form #userForm="ngForm" (ngSubmit)="createGroup(userForm)">
+  <input type="text" />
+  <button type="submit">Create a group</button>
+</form>
+
+<h1>My Groups</h1>
+<div *ngFor="">
+<button mat-raised-button color="warn" (click)="logOut()">Send Invitation</button>
+</div>

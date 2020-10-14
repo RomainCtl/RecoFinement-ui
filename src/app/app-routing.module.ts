@@ -1,3 +1,4 @@
+import { ProfileComponent } from './auth/components/profile/profile.component';
 import { AuthReverseGuard } from './auth/auth-reverse.guard';
 import { BooksComponent } from './home/books/books.component';
 import { ApplicationsComponent } from './home/applications/applications.component';
@@ -62,6 +63,11 @@ const routes: Routes = [
     {
       path: 'app/musics',
       component: MusicsComponent,
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'app/profile',
+      component: ProfileComponent,
       canActivate: [AuthGuard]
     },
     {
