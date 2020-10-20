@@ -7,6 +7,7 @@ import { GameService } from 'src/app/services/media/game.service';
 import { MovieService } from 'src/app/services/media/movie.service';
 import { SerieService } from 'src/app/services/media/serie.service';
 import { TrackService } from 'src/app/services/media/track.service';
+import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
   selector: 'app-interests',
@@ -18,6 +19,8 @@ export class InterestsComponent implements OnInit {
   save = true;
 
   error: boolean;
+
+  myGenreLiked = [];
 
   interestTrack: FormGroup = new FormGroup({});
   trackGenres = [];
@@ -45,7 +48,8 @@ export class InterestsComponent implements OnInit {
     private movieService: MovieService,
     private serieService: SerieService,
     private gameService: GameService,
-    private appService: ApplicationService)
+    private appService: ApplicationService,
+    private userService: UserService)
   {
     this.waitTrack = from(this.trackService.getGenres());
     this.waitMovie = from(this.movieService.getGenres());
@@ -55,62 +59,65 @@ export class InterestsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.waitTrack.subscribe(response => {
-      this.trackGenres = response.content;
-      for (const genre of this.trackGenres) {
-        this.interestTrack.addControl(genre.name, new FormControl(false));
-      }
-    },
-    error => {
-      this.error = this.errorMovie = true;
-      this.initErrorMessage('The recovery of genres for tracks failed.');
-      console.error(error);
-    });
-    this.waitMovie.subscribe(response => {
-      this.movieGenres = response.content;
-      for (const genre of this.movieGenres) {
-        this.interestMovie.addControl(genre.name, new FormControl(false));
-      }
-    },
+    this.getMyLikedGenre().then(() => {
+
+      this.waitTrack.subscribe(track => {
+        this.trackGenres = track.content;
+        for (const genre of this.trackGenres) {
+          this.interestTrack.addControl(genre.genre_id, new FormControl(this.myGenreLiked.find(e => e.genre_id === +genre.genre_id)));
+        }
+      },
       error => {
         this.error = true;
-        this.initErrorMessage('The recovery of genres for movies failed.');
+        this.initErrorMessage('The recovery of genres for tracks failed.');
         console.error(error);
-      }
-    );
-    this.waitSerie.subscribe(response => {
-      this.serieGenres = response.content;
-      for (const genre of this.serieGenres) {
-        this.interestSerie.addControl(genre.name, new FormControl(false));
-      }
-    },
+      });
+      this.waitMovie.subscribe(movie => {
+        this.movieGenres = movie.content;
+        for (const genre of this.movieGenres) {
+          this.interestMovie.addControl(genre.genre_id, new FormControl(this.myGenreLiked.find(e => e.genre_id === +genre.genre_id)));
+        }
+      },
+        error => {
+          this.error = true;
+          this.initErrorMessage('The recovery of genres for movies failed.');
+          console.error(error);
+        }
+      );
+      this.waitSerie.subscribe(serie => {
+        this.serieGenres = serie.content;
+        for (const genre of this.serieGenres) {
+          this.interestSerie.addControl(genre.genre_id, new FormControl(this.myGenreLiked.find(e => e.genre_id === +genre.genre_id)));
+        }
+      },
+        error => {
+          this.error = true;
+          this.initErrorMessage('The recovery of genres for series failed.');
+          console.error(error);
+        }
+      );
+      this.waitGame.subscribe(game => {
+        this.gameGenres = game.content;
+        for (const genre of this.gameGenres) {
+          this.interestGame.addControl(genre.genre_id, new FormControl(this.myGenreLiked.find(e => e.genre_id === +genre.genre_id)));
+        }
+      },
       error => {
         this.error = true;
         this.initErrorMessage('The recovery of genres for series failed.');
         console.error(error);
-      }
-    );
-    this.waitGame.subscribe(response => {
-      this.gameGenres = response.content;
-      for (const genre of this.gameGenres) {
-        this.interestGame.addControl(genre.name, new FormControl(false));
-      }
-    },
-    error => {
-      this.error = true;
-      this.initErrorMessage('The recovery of genres for series failed.');
-      console.error(error);
-    });
-    this.waitApp.subscribe(response => {
-      this.appGenres = response.content;
-      for (const genre of this.appGenres) {
-        this.interestApp.addControl(genre.name, new FormControl(false));
-      }
-    },
-    error => {
-      this.error = true;
-      this.initErrorMessage('The recovery of genres for applications failed.');
-      console.error(error);
+      });
+      this.waitApp.subscribe(app => {
+        this.appGenres = app.content;
+        for (const genre of this.appGenres) {
+          this.interestApp.addControl(genre.genre_id, new FormControl(this.myGenreLiked.find(e => e.genre_id === +genre.genre_id)));
+        }
+      },
+      error => {
+        this.error = true;
+        this.initErrorMessage('The recovery of genres for applications failed.');
+        console.error(error);
+      });
     });
   }
 
@@ -127,8 +134,7 @@ export class InterestsComponent implements OnInit {
   onTrackFormSubmit(): void {
     const snack = this.initSnack('Track');
     snack.afterDismissed().subscribe(() => {
-      // TODO save in databases
-      console.log(this.interestTrack.value);
+      this.saveGenre(this.interestTrack);
       this.save = true;
     });
   }
@@ -136,8 +142,7 @@ export class InterestsComponent implements OnInit {
   onMovieFormSubmit(): void {
     const snack = this.initSnack('Movie');
     snack.afterDismissed().subscribe(() => {
-      // TODO save in databases
-      console.log(this.interestMovie.value);
+      this.saveGenre(this.interestMovie);
       this.save = true;
     });
   }
@@ -145,8 +150,7 @@ export class InterestsComponent implements OnInit {
   onSerieFormSubmit(): void {
     const snack = this.initSnack('Serie');
     snack.afterDismissed().subscribe(() => {
-      // TODO save in databases
-      console.log(this.interestSerie.value);
+      this.saveGenre(this.interestSerie);
       this.save = true;
     });
   }
@@ -154,8 +158,7 @@ export class InterestsComponent implements OnInit {
   onGameFormSubmit(): void {
     const snack = this.initSnack('Game');
     snack.afterDismissed().subscribe(() => {
-      // TODO save in databases
-      console.log(this.interestGame.value);
+      this.saveGenre(this.interestGame);
       this.save = true;
     });
   }
@@ -163,8 +166,7 @@ export class InterestsComponent implements OnInit {
   onAppFormSubmit(): void {
     const snack = this.initSnack('Application');
     snack.afterDismissed().subscribe(() => {
-      // TODO save in databases
-      console.log(this.interestApp.value);
+      this.saveGenre(this.interestApp);
       this.save = true;
     });
   }
@@ -175,4 +177,31 @@ export class InterestsComponent implements OnInit {
       panelClass: ['custom-style']
     });
   }
+
+  getMyLikedGenre(): Promise<any> {
+    return this.userService.getGenre().then((res) => {
+      this.myGenreLiked = res.content;
+    });
+  }
+
+  saveGenre(formRes: FormGroup): void {
+    if (this.save) {
+      for (const genreId of Object.keys(formRes.value)) {
+        if (formRes.value[genreId]) {
+          if (!this.myGenreLiked.find(e => e.genre_id === +genreId)) {
+            this.userService.postGenre(+genreId).then(() =>
+              this.getMyLikedGenre()
+            );
+          }
+        } else {
+          if (this.myGenreLiked.find(e => e.genre_id === +genreId)) {
+            this.userService.deleteGenre(+genreId).then(() =>
+              this.getMyLikedGenre()
+            );
+          }
+        }
+      }
+    }
+  }
+
 }
