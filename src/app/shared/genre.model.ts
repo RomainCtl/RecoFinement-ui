@@ -1,4 +1,5 @@
 export class Genre {
-    tag: string;
+    genre_id: number;
+    name: string;
     frequency: number;
 }
