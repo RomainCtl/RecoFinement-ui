@@ -1,3 +1,4 @@
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { Router } from '@angular/router';
@@ -11,12 +12,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private _auth: AuthService, private _router: Router, private dialog: MatDialog) { }
+  constructor(private _auth: AuthService, private _router: Router, private dialog: MatDialog, private bottom: MatBottomSheet) { }
 
   ngOnInit(): void {
   }
 
   logOut(): void {
+    this.bottom.dismiss();
     this.dialog.closeAll();
     this._auth.logout();
   }

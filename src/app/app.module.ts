@@ -29,6 +29,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { AuthReverseGuard } from './auth/auth-reverse.guard';
 import { FormsModule } from '@angular/forms';
@@ -130,7 +131,8 @@ import { SeriesComponent } from './home/series/series.component';
     MatPaginatorModule,
     MatBadgeModule,
     FlexLayoutModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    MatBottomSheetModule
   ],
   providers: [
     PaginationService,

@@ -8,6 +8,7 @@ import { PopupComponent } from './modals/popup/popup.component';
 import * as $ from 'jquery';
 import { Overlay } from '@angular/cdk/overlay';
 import { Track } from 'src/app/shared/track.model';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 @Component({
   selector: 'app-musics',
@@ -20,7 +21,8 @@ export class MusicsComponent implements OnInit {
     private trackService: TrackService,
     private mainSnackBar: MatSnackBar,
     public dialog: MatDialog,
-    public overlay: Overlay) { }
+    public overlay: Overlay,
+    public bottom: MatBottomSheet) { }
 
     musicPreviewRef: MatDialogRef<PreviewComponent>;
 
@@ -79,25 +81,33 @@ export class MusicsComponent implements OnInit {
 
   openPreview(index: number): void {
 
-    if (this.dialog.getDialogById('musicPreview') !== undefined) {
-      this.dialog.getDialogById('musicPreview').close();
-    }
+    // if (this.dialog.getDialogById('musicPreview') !== undefined) {
+    //   this.dialog.getDialogById('musicPreview').close();
+    // }
 
-    setTimeout(() => {
+    // setTimeout(() => {
 
-      this.dialog.open(PreviewComponent, {
-          data: this.trackResponse.content[index],
-          width: '100%',
-          hasBackdrop: false,
-          position: {
-            bottom: '0'
-          },
-          scrollStrategy: this.overlay.scrollStrategies.noop(),
-          panelClass: ['shadow-none', 'fullPageWidth'],
-          id: 'musicPreview'
-        });
+      // this.dialog.open(PreviewComponent, {
+      //     data: this.trackResponse.content[index],
+      //     width: '100%',
+      //     hasBackdrop: false,
+      //     position: {
+      //       bottom: '0'
+      //     },
+      //     scrollStrategy: this.overlay.scrollStrategies.noop(),
+      //     panelClass: ['shadow-none', 'fullPageWidth'],
+      //     id: 'musicPreview'
+      //   });
 
-    }, 200);
+    this.bottom.open(PreviewComponent, {
+      data: this.trackResponse.content[index],
+      hasBackdrop: false,
+      panelClass: ['shadow-none', 'bg-transparent', 'm-0', 'p-0'],
+      scrollStrategy: this.overlay.scrollStrategies.noop(),
+      direction: 'ltr'
+    });
+
+    // }, 200);
 
 
       // this.dialog.getDialogById('musicPreview')._containerInstance._config.data = this.trackResponse.content[index];
