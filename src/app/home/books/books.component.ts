@@ -27,6 +27,9 @@ export class BooksComponent implements OnInit {
     total_pages: 0
   };
 
+  searchActivated = false;
+  searchInput = '';
+
   nextPage = 2;
   finished = true;
   booksLeft = true;
@@ -46,7 +49,7 @@ export class BooksComponent implements OnInit {
 
   onScroll(): void {
     if (this.nextPage <= this.bookResponse.total_pages) {
-      this.getMusics(this.nextPage);
+      this.getBooks(this.nextPage);
     } else {
       if (!this.booksLeft) {
         this.snackBar.open('You have reached the end of the Internet!', 'Alright!');
@@ -59,10 +62,16 @@ export class BooksComponent implements OnInit {
     return this.bookResponse;
   }
 
-  private getMusics(page?: number): void {
+  private getBooks(page?: number): void {
     this.bookService.getPopularBooks(page).then((result: BookResponseDto) => {
       this.bookResponse.content = this.bookResponse.content.concat(result.content);
       this.nextPage++;
+    });
+  }
+
+  private getSearchedBooks(searchTerm: string): void {
+    this.bookService.searchBooks(searchTerm).then((result: BookResponseDto) => {
+      this.bookResponse.content = result.content;
     });
   }
 
@@ -78,6 +87,26 @@ export class BooksComponent implements OnInit {
       popupDetails.close();
     });
   }
-  
+
+  searchBooks(searchTerm: string): void {
+    if (searchTerm.length > 3) {
+      this.searchActivated = true;
+      this.getSearchedBooks(searchTerm);
+    }
+
+    if (searchTerm.length === 0) {
+
+      this.bookService.getPopularBooks(1).then((result: BookResponseDto) => {
+        this.bookResponse = result;
+        this.searchActivated = false;
+        if (result.number_of_elements !== 0) {
+          this.booksLeft = false;
+        }
+        if (this.nextPage !== this.bookResponse.total_pages) {
+          this.finished = false;
+        }
+      });
+    }
+  }
 
 }

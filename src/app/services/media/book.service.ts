@@ -17,7 +17,7 @@ export class BookService {
     return this.httpClient.get<any>(this.urlGetPopularBooks + '?page=' + page).toPromise();
   }
 
-  searchBooks(page:number, searchTerm: string): Promise<BookResponseDto> {
-      return this.httpClient.get<BookResponseDto>(this.urlSearchBooks + searchTerm + '?page=' + page).toPromise();
+  searchBooks(searchTerm: string): Promise<BookResponseDto> {
+      return this.httpClient.get<BookResponseDto>(this.urlSearchBooks + searchTerm + '?page=1').toPromise();
   }
 }
