@@ -1,3 +1,5 @@
+import { Book } from './../../shared/models/DtoResponse/books/Book.model';
+import { BookResponseDto } from 'src/app/shared/models/DtoResponse/books/book-dto.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -6,11 +8,16 @@ import { Injectable } from '@angular/core';
 })
 export class BookService {
 
-  private urlGetPopularBooks = 'http://127.0.0.1:4040/api/book?page=1';
+  private urlGetPopularBooks = 'http://127.0.0.1:4040/api/book';
+  private urlSearchBooks = 'http://127.0.0.1:4040/api/book/search/';
 
   constructor(private httpClient: HttpClient) { }
 
-  getPopularBooks(): Promise<any> {
-    return this.httpClient.get<any>(this.urlGetPopularBooks).toPromise();
+  getPopularBooks(page: number): Promise<any> {
+    return this.httpClient.get<any>(this.urlGetPopularBooks + '?page=' + page).toPromise();
+  }
+
+  searchBooks(page:number, searchTerm: string): Promise<BookResponseDto> {
+      return this.httpClient.get<BookResponseDto>(this.urlSearchBooks + searchTerm + '?page=' + page).toPromise();
   }
 }

@@ -1,5 +1,5 @@
-import { Genre } from './../../genre.model';
-import { Track } from './../../track.model';
+import { Genre } from './Genre.model';
+import { Track } from './Track.model';
 export class TrackResponseDto {
     status: boolean;
     message: string;
