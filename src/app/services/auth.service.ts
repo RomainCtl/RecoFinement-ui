@@ -44,10 +44,11 @@ export class AuthService {
 
   logout(): void {
     this.http.post(this._logoutUrl, null).toPromise().then( () => {
-      document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+      this.cookie.delete('access_token', '/');
       this.router.navigate(['/']);
     }).catch(error => {
-      console.error(error);
+      console.log(error);
+      // this.cookie.delete('access_token', '/');
     });
   }
 

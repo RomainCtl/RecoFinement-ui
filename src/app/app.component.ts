@@ -9,10 +9,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private _auth: AuthService) { }
+  constructor(private _auth: AuthService, private router: Router) { }
 
   get authService(): AuthService {
     return this._auth;
   }
+
+  
 
 }
