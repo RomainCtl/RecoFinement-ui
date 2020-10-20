@@ -18,7 +18,7 @@
           <form *ngIf="(this.waitTrack | async); else loading" [formGroup]="interestTrack" class="col-12" (ngSubmit)="onTrackFormSubmit()" ngNativeValidate>
             <div class="row">
               <ng-container *ngFor="let genre of this.trackGenres">
-                <mat-slide-toggle class="col-3" [formControlName]="genre.genre_id">{{ genre.name }}</mat-slide-toggle>
+                <mat-slide-toggle class="col-3" [formControlName]="genre.genre_id">{{ genre.name | titlecase  }}</mat-slide-toggle>
               </ng-container>
             </div>
             <br />
@@ -37,7 +37,7 @@
           <form *ngIf="(this.waitMovie | async); else loading" [formGroup]="interestMovie" class="col-12" (ngSubmit)="onMovieFormSubmit()" ngNativeValidate>
             <div class="row">
               <ng-container *ngFor="let genre of this.movieGenres">
-                <mat-slide-toggle class="col-3" [formControlName]="genre.genre_id">{{ genre.name }}</mat-slide-toggle>
+                <mat-slide-toggle class="col-3" [formControlName]="genre.genre_id">{{ genre.name | titlecase  }}</mat-slide-toggle>
               </ng-container>
             </div>
             <br />
@@ -56,7 +56,7 @@
           <form *ngIf="(this.waitSerie | async); else loading" [formGroup]="interestSerie" class="col-12" (ngSubmit)="onSerieFormSubmit()" ngNativeValidate>
             <div class="row">
               <ng-container *ngFor="let genre of this.serieGenres">
-                <mat-slide-toggle class="col-3" [formControlName]="genre.genre_id">{{ genre.name }}</mat-slide-toggle>
+                <mat-slide-toggle class="col-3" [formControlName]="genre.genre_id">{{ genre.name | titlecase  }}</mat-slide-toggle>
               </ng-container>
             </div>
             <br />
@@ -75,7 +75,7 @@
           <form *ngIf="(this.waitGame | async); else loading" [formGroup]="interestGame" class="col-12" (ngSubmit)="onGameFormSubmit()" ngNativeValidate>
             <div class="row">
               <ng-container *ngFor="let genre of this.gameGenres">
-                <mat-slide-toggle class="col-3" [formControlName]="genre.genre_id">{{ genre.name }}</mat-slide-toggle>
+                <mat-slide-toggle class="col-3" [formControlName]="genre.genre_id">{{ genre.name | titlecase  }}</mat-slide-toggle>
               </ng-container>
             </div>
             <br />
@@ -94,7 +94,7 @@
           <form *ngIf="(this.waitApp | async); else loading" [formGroup]="interestApp" class="col-12" (ngSubmit)="onAppFormSubmit()" ngNativeValidate>
             <div class="row">
               <ng-container *ngFor="let genre of this.appGenres">
-                <mat-slide-toggle class="col-3" [formControlName]="genre.genre_id">{{ genre.name }}</mat-slide-toggle>
+                <mat-slide-toggle class="col-3" [formControlName]="genre.genre_id">{{ genre.name | titlecase  }}</mat-slide-toggle>
               </ng-container>
             </div>
             <br />
