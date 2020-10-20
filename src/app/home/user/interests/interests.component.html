@@ -47,16 +47,23 @@
           </form>
         </mat-expansion-panel>
 
-        <mat-expansion-panel disabled>
+        <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
               Series
             </mat-panel-title>
-            <mat-panel-description>
-              Not available at the moment
-            </mat-panel-description>
           </mat-expansion-panel-header>
-
+          <form *ngIf="(this.waitSerie | async); else loading" [formGroup]="interestSerie" class="col-12" (ngSubmit)="onSerieFormSubmit()" ngNativeValidate>
+            <div class="row">
+              <ng-container *ngFor="let genre of this.serieGenres">
+                <mat-slide-toggle class="col-3" [formControlName]="genre.name">{{ genre.name }}</mat-slide-toggle>
+              </ng-container>
+            </div>
+            <br />
+            <mat-action-row>
+              <button mat-button color="primary" type="submit">Save</button>
+            </mat-action-row>
+          </form>
         </mat-expansion-panel>
 
         <mat-expansion-panel (afterCollapse)="onGameFormSubmit()">
@@ -102,7 +109,12 @@
   </div>
 
   <ng-template #loading>
-    Loading Data...
+    <ng-container *ngIf="!error">
+      <p>Loading Data...</p>
+    </ng-container>
+    <ng-container *ngIf="error">
+      <p class="msg-error mat-body-strong">Genre recovery has failed.</p>
+    </ng-container>
   </ng-template>
 
 </main>

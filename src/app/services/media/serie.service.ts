@@ -7,6 +7,7 @@ import { Injectable } from '@angular/core';
 export class SerieService {
 
   private urlGetPopularSerie = 'http://127.0.0.1:4040/api/serie?page=1';
+  private urlGetGenreSerie = 'http://127.0.0.1:4040/api/serie/genres';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -15,6 +16,6 @@ export class SerieService {
   }
 
   getGenres(): Promise<any> {
-    return this.httpClient.get<any>('').toPromise();
+    return this.httpClient.get<any>(this.urlGetGenreSerie).toPromise();
   }
 }
