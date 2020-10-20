@@ -1,0 +1,35 @@
+<div mat-dialog-content style="width:70rem;" class="h-100">
+
+    <div class="container-fluid">
+            <div class="row overflow-hidden">
+              <div class="col d-flex flex-column position-static p-0" style="width:50%;">
+                <strong class="d-inline-block mb-2 h1 text-danger">{{track.title}}</strong>
+                <mat-chip-list>
+                   <span class="mb-1"><mat-chip class="h6" color="accent" selected>{{ track.rating.toFixed(2) }} <mat-icon class="ml-1">star_rating</mat-icon></mat-chip><mat-chip class="bg-transparent text-muted m-0 p-0">over {{ track.rating_count }} ratings.</mat-chip></span>
+
+                </mat-chip-list>
+
+                 
+                 <strong class="d-inline-block mb-2 h3">{{track.artist_name}}</strong>
+                 <strong class="d-inline-block mb-2 h6">{{track.release}}</strong>
+                <div class="mb-3 text-muted">{{ track.year }}</div>
+                <mat-chip-list class="container-fluid h-100">
+                    <mat-chip *ngFor="let genre of track.genres">{{ genre.tag }}</mat-chip>
+                </mat-chip-list>
+                <p class="text-center h5"><strong>Give your rating</strong></p>
+                <star-rating [readOnly]="readOnly" [starType]="'svg'" (ratingChange)="saveRating($event)" [rating]="this.rateNumber"></star-rating>
+
+                <div mat-dialog-actions class="m-0">
+                    <button mat-button mat-dialog-close>Close</button>
+                  </div>
+            </div>
+            <img class="rounded-lg" [src]="track.covert_art_url" style="width:50%;">
+            
+        </div>
+         
+   
+    </div>
+  
+
+</div>
+

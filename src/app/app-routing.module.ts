@@ -1,3 +1,4 @@
+import { SeriesComponent } from './home/series/series.component';
 import { AuthReverseGuard } from './auth/auth-reverse.guard';
 import { BooksComponent } from './home/books/books.component';
 import { ApplicationsComponent } from './home/applications/applications.component';
@@ -57,6 +58,11 @@ const routes: Routes = [
     {
       path: 'app/movies',
       component: MoviesComponent,
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'app/series',
+      component: SeriesComponent,
       canActivate: [AuthGuard]
     },
     {

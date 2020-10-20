@@ -24,7 +24,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {MatDialogModule} from '@angular/material/dialog';
+import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
@@ -62,7 +62,9 @@ import { RegisterComponent } from './auth/components/register/register.component
 import { PaginationService, NgxPaginationModule } from 'ngx-pagination';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { PopupComponent } from './home/musics/popup/popup/popup.component';
+import { PopupComponent } from './home/musics/modals/popup/popup.component';
+import { PreviewComponent } from './home/musics/modals/preview/preview.component';
+import { SeriesComponent } from './home/series/series.component';
 
 
 @NgModule({
@@ -81,7 +83,9 @@ import { PopupComponent } from './home/musics/popup/popup/popup.component';
     CardPreferenceComponent,
     RatingComponent,
     PopupComponent,
-    DialogConfirmationComponent
+    DialogConfirmationComponent,
+    PreviewComponent,
+    SeriesComponent
   ],
   imports: [
     CommonModule,

@@ -21,7 +21,7 @@
                     [title]="music.title"
                     [subtitle]="music.artist_name"
                     [info]="music.year"
-                    [cover]="'https://cdn.pixabay.com/photo/2019/08/28/20/13/music-cover-4437602_1280.jpg'"
+                    [cover]="music.covert_art_url"
                     [type]="'music'"
                 ></app-card-preference>
             </ng-container>
@@ -41,7 +41,7 @@
               [title]="movie.title"
               [subtitle]="movie.director"
               [info]="movie.genres.replaceAll('|', ', ')"
-              [cover]="'https://images.template.net/wp-content/uploads/2017/02/17221912/Printable-Blank-Movie-Poster.jpg'"
+              [cover]="movie.cover"
               [type]="'movie'"
               ></app-card-preference>
             </ng-container>

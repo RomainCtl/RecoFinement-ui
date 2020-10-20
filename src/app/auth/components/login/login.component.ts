@@ -1,3 +1,5 @@
+import { MatDialog } from '@angular/material/dialog';
+import { CookieService } from 'ngx-cookie-service';
 import { UserLoginDtoResponse } from './../../../shared/models/DtoResponse/user-login.model';
 import { UserLoginDtoRequest } from '../../../shared/models/DtoRequest/user-login.model';
 import { Router } from '@angular/router';
@@ -23,7 +25,7 @@ export class LoginComponent implements OnInit {
     access_token: '',
     errors: ['']
   };
-  constructor(private _auth: AuthService, private _router: Router) {  }
+  constructor(private _auth: AuthService, private _router: Router, private cookie: CookieService, private dialog: MatDialog) {  }
 
   ngOnInit(): void { }
 
@@ -32,7 +34,8 @@ export class LoginComponent implements OnInit {
     .then(
       (result: UserLoginDtoResponse) => {
         this.loginHttpResponse = result;
-        document.cookie = 'access_token=' + this.loginHttpResponse.access_token + '; path:/';
+        this.cookie.set('access_token', this.loginHttpResponse.access_token, {expires: 1, sameSite: 'Lax', path: '/'});
+        // document.cookie = 'access_token=' + this.loginHttpResponse.access_token + '; path:/';
         this._router.navigate(['app']);
       }
     ).catch((result: HttpErrorResponse) => {

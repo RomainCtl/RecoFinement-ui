@@ -1,9 +1,13 @@
-import { MatDialog } from '@angular/material/dialog';
+import { PreviewComponent } from './modals/preview/preview.component';
+import { DialogPosition, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { TrackService } from 'src/app/services/media/track.service';
-import { Component, Inject, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Component, Inject, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { MatSnackBar, MatSnackBarConfig, MatSnackBarRef } from '@angular/material/snack-bar';
 import { TrackResponseDto } from 'src/app/shared/models/DtoResponse/track.model';
-import { PopupComponent } from './popup/popup/popup.component';
+import { PopupComponent } from './modals/popup/popup.component';
+import * as $ from 'jquery';
+import { Overlay } from '@angular/cdk/overlay';
+import { Track } from 'src/app/shared/track.model';
 
 @Component({
   selector: 'app-musics',
@@ -14,26 +18,50 @@ export class MusicsComponent implements OnInit {
 
   constructor(
     private trackService: TrackService,
-    private snackBar: MatSnackBar,
-    public dialog: MatDialog) { }
+    private mainSnackBar: MatSnackBar,
+    public dialog: MatDialog,
+    public overlay: Overlay) { }
 
-  trackResponse: TrackResponseDto;
+    musicPreviewRef: MatDialogRef<PreviewComponent>;
 
-  nextPage = 2;
-  finished = false;
+  trackResponse: TrackResponseDto = {
+    status: false,
+    message: '',
+    content: [],
+    number_of_elements: 0,
+    page: 0,
+    total_pages: 0
+  };
+
+  snackBarConfig: MatSnackBarConfig = {
+    horizontalPosition: 'start',
+    panelClass: ['shadow-none', 'm-0', 'p-0', ,'', 'w-100']
+  };
+
+  nextPage = 3;
+  finished = true;
+  noTracks = true;
 
   ngOnInit(): void {
-    this.trackService.getTracks(1).then((result: TrackResponseDto) => {
+    this.trackService.getTracks(2).then((result: TrackResponseDto) => {
       this.trackResponse = result;
+      if (result.number_of_elements !== 0) {
+        this.noTracks = false;
+      }
+      if(this.nextPage !== this.trackResponse.total_pages) {
+        this.finished = false;
+      }
     });
+
   }
 
   onScroll(): void {
-    console.log('scrolled');
     if (this.nextPage <= this.trackResponse.total_pages) {
       this.getMusics(this.nextPage);
     } else {
-      this.snackBar.open('You have reached the end of the Internet!', 'Alright!');
+      if (!this.noTracks) {
+        this.mainSnackBar.open('You have reached the end of the Internet!', 'Alright!');
+      }
       this.finished = true;
     }
   }
@@ -46,31 +74,53 @@ export class MusicsComponent implements OnInit {
     this.trackService.getTracks(page).then((result: TrackResponseDto) => {
       this.trackResponse.content = this.trackResponse.content.concat(result.content);
       this.nextPage++;
-      console.log(this.trackResponse.content);
     });
   }
 
-  openDialog(index: number): void {
-    this.snackBar.openFromComponent(PopupComponent, {
+  openPreview(index: number): void {
+
+    if (this.dialog.getDialogById('musicPreview') !== undefined) {
+      this.dialog.getDialogById('musicPreview').close();
+    }
+
+    setTimeout(() => {
+
+      this.dialog.open(PreviewComponent, {
+          data: this.trackResponse.content[index],
+          width: '100%',
+          hasBackdrop: false,
+          position: {
+            bottom: '0'
+          },
+          scrollStrategy: this.overlay.scrollStrategies.noop(),
+          panelClass: ['shadow-none', 'fullPageWidth'],
+          id: 'musicPreview'
+        });
+
+    }, 200);
+
+
+      // this.dialog.getDialogById('musicPreview')._containerInstance._config.data = this.trackResponse.content[index];
+
+
+ 
+  }
+
+  openPopUp(index: number): void {
+    const popupDetails = this.dialog.open(PopupComponent, {
       data: this.trackResponse.content[index],
-      horizontalPosition: 'start',
-      panelClass: 'bg-light'
+      panelClass: ['shadow-none'],
+      hasBackdrop: true,
+      backdropClass: 'bg-light'
     });
 
-    // console.log(index);
-    // const dialogRef = this.dialog.open(PopupComponent, {
-    //   data: {
-    //     track: this.trackResponse.content,
-    //     indexOfElement: index
-    //   }
+    popupDetails.backdropClick().subscribe(() => {
+      popupDetails.close();
+    });
 
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log(`Dialog result: ${result}`);
+    // this.dialog.getDialogById('popupDetails').afterOpened().subscribe(() =>{
+    //   this.dialog.getDialogById('popupDetails').close();
     // });
-  }
-
-  closeSnackBar(): void {
-    this.snackBar.dismiss();
   }
 
 }
