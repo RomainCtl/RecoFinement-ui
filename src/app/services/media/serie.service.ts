@@ -13,4 +13,8 @@ export class SerieService {
   getPopularSeries(): Promise<any> {
     return this.httpClient.get<any>(this.urlGetPopularSerie).toPromise();
   }
+
+  getGenres(): Promise<any> {
+    return this.httpClient.get<any>('').toPromise();
+  }
 }

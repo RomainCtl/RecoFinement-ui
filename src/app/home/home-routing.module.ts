@@ -7,8 +7,13 @@ import { HomeComponent } from './home.component';
 import { MusicsComponent } from './musics/musics.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { InterestsComponent } from './user/interests/interests.component';
 
 const routes: Routes = [
+  {
+    path: 'app/user/interests',
+    component: InterestsComponent
+  },
   {
     path: 'app/applications',
     component: ApplicationsComponent,
