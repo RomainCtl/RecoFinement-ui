@@ -69,6 +69,7 @@ export class InterestsComponent implements OnInit {
 
       this.waitTrack.subscribe(track => {
         this.trackGenres = track.content;
+        this.sortArray(this.trackGenres);
         for (const genre of this.trackGenres) {
           this.interestTrack.addControl(genre.genre_id, new FormControl(this.myGenreLiked.find(e => e.genre_id === +genre.genre_id)));
         }
@@ -80,6 +81,7 @@ export class InterestsComponent implements OnInit {
       });
       this.waitMovie.subscribe(movie => {
         this.movieGenres = movie.content;
+        this.sortArray(this.movieGenres);
         for (const genre of this.movieGenres) {
           this.interestMovie.addControl(genre.genre_id, new FormControl(this.myGenreLiked.find(e => e.genre_id === +genre.genre_id)));
         }
@@ -92,6 +94,7 @@ export class InterestsComponent implements OnInit {
       );
       this.waitSerie.subscribe(serie => {
         this.serieGenres = serie.content;
+        this.sortArray(this.serieGenres);
         for (const genre of this.serieGenres) {
           this.interestSerie.addControl(genre.genre_id, new FormControl(this.myGenreLiked.find(e => e.genre_id === +genre.genre_id)));
         }
@@ -104,6 +107,7 @@ export class InterestsComponent implements OnInit {
       );
       this.waitGame.subscribe(game => {
         this.gameGenres = game.content;
+        this.sortArray(this.gameGenres);
         for (const genre of this.gameGenres) {
           this.interestGame.addControl(genre.genre_id, new FormControl(this.myGenreLiked.find(e => e.genre_id === +genre.genre_id)));
         }
@@ -115,6 +119,7 @@ export class InterestsComponent implements OnInit {
       });
       this.waitApp.subscribe(app => {
         this.appGenres = app.content;
+        this.sortArray(this.appGenres);
         for (const genre of this.appGenres) {
           this.interestApp.addControl(genre.genre_id, new FormControl(this.myGenreLiked.find(e => e.genre_id === +genre.genre_id)));
         }
@@ -245,4 +250,11 @@ export class InterestsComponent implements OnInit {
     this.appLimit = Number(this.appLimit) - (this.appGenres.length - 16);
   }
 
+  sortArray(array: any[]): void {
+    array.sort( (a, b) => {
+      const textA = a.name.toUpperCase();
+      const textB = b.name.toUpperCase();
+      return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+    });
+  }
 }
