@@ -12,7 +12,8 @@ import { InterestsComponent } from './user/interests/interests.component';
 const routes: Routes = [
   {
     path: 'app/user/interests',
-    component: InterestsComponent
+    component: InterestsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'app/applications',
