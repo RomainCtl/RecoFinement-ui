@@ -18,6 +18,12 @@ export class InterestsComponent implements OnInit {
 
   save = true;
 
+  trackLimit = 16;
+  movieLimit = 16;
+  serieLimit = 16;
+  gameLimit = 16;
+  appLimit = 16;
+
   error: boolean;
 
   myGenreLiked = [];
@@ -202,6 +208,41 @@ export class InterestsComponent implements OnInit {
         }
       }
     }
+  }
+
+  showMoreTracks(): void {
+    this.trackLimit = Number(this.trackLimit) + (this.trackGenres.length - 16);
+  }
+  showLessTracks(): void {
+    this.trackLimit = Number(this.trackLimit) - (this.trackGenres.length - 16);
+  }
+
+  showMoreMovies(): void {
+    this.movieLimit = Number(this.movieLimit) + (this.movieGenres.length - 16);
+  }
+  showLessMovies(): void {
+    this.movieLimit = Number(this.movieLimit) - (this.movieGenres.length - 16);
+  }
+
+  showMoreSeries(): void {
+    this.serieLimit = Number(this.serieLimit) + (this.serieGenres.length - 16);
+  }
+  showLessSeries(): void {
+    this.serieLimit = Number(this.serieLimit) - (this.serieGenres.length - 16);
+  }
+
+  showMoreGames(): void {
+    this.gameLimit = Number(this.gameLimit) + (this.gameGenres.length - 16);
+  }
+  showLessGames(): void {
+    this.gameLimit = Number(this.gameLimit) - (this.gameGenres.length - 16);
+  }
+
+  showMoreApps(): void {
+    this.appLimit = Number(this.appLimit) + (this.appGenres.length - 16);
+  }
+  showLessApps(): void {
+    this.appLimit = Number(this.appLimit) - (this.appGenres.length - 16);
   }
 
 }

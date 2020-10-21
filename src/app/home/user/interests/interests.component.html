@@ -17,10 +17,13 @@
           </mat-expansion-panel-header>
           <form *ngIf="(this.waitTrack | async); else loading" [formGroup]="interestTrack" class="col-12" (ngSubmit)="onTrackFormSubmit()" ngNativeValidate>
             <div class="row">
-              <ng-container *ngFor="let genre of this.trackGenres">
+              <ng-container *ngFor="let genre of this.trackGenres | slice : 0:trackLimit">
                 <mat-slide-toggle class="col-3" [formControlName]="genre.genre_id">{{ genre.name | titlecase  }}</mat-slide-toggle>
               </ng-container>
             </div>
+            <br />
+            <button mat-button *ngIf="trackLimit < this.trackGenres.length" (click)="showMoreTracks()">Show more</button>
+            <button mat-button *ngIf="trackLimit > 16" (click)="showLessTracks()">Show less</button>
             <br />
             <mat-action-row>
               <button mat-button color="primary" type="submit">Save</button>
@@ -36,10 +39,13 @@
           </mat-expansion-panel-header>
           <form *ngIf="(this.waitMovie | async); else loading" [formGroup]="interestMovie" class="col-12" (ngSubmit)="onMovieFormSubmit()" ngNativeValidate>
             <div class="row">
-              <ng-container *ngFor="let genre of this.movieGenres">
+              <ng-container *ngFor="let genre of this.movieGenres | slice : 0:movieLimit">
                 <mat-slide-toggle class="col-3" [formControlName]="genre.genre_id">{{ genre.name | titlecase  }}</mat-slide-toggle>
               </ng-container>
             </div>
+            <br />
+            <button mat-button *ngIf="movieLimit < this.movieGenres.length" (click)="showMoreMovies()">Show more</button>
+            <button mat-button *ngIf="movieLimit > 16" (click)="showLessMovies()">Show less</button>
             <br />
             <mat-action-row>
               <button mat-button color="primary" type="submit">Save</button>
@@ -55,10 +61,13 @@
           </mat-expansion-panel-header>
           <form *ngIf="(this.waitSerie | async); else loading" [formGroup]="interestSerie" class="col-12" (ngSubmit)="onSerieFormSubmit()" ngNativeValidate>
             <div class="row">
-              <ng-container *ngFor="let genre of this.serieGenres">
+              <ng-container *ngFor="let genre of this.serieGenres | slice : 0:serieLimit">
                 <mat-slide-toggle class="col-3" [formControlName]="genre.genre_id">{{ genre.name | titlecase  }}</mat-slide-toggle>
               </ng-container>
             </div>
+            <br />
+            <button mat-button *ngIf="serieLimit < this.serieGenres.length" (click)="showMoreSeries()">Show more</button>
+            <button mat-button *ngIf="serieLimit > 16" (click)="showLessSeries()">Show less</button>
             <br />
             <mat-action-row>
               <button mat-button color="primary" type="submit">Save</button>
@@ -74,10 +83,13 @@
           </mat-expansion-panel-header>
           <form *ngIf="(this.waitGame | async); else loading" [formGroup]="interestGame" class="col-12" (ngSubmit)="onGameFormSubmit()" ngNativeValidate>
             <div class="row">
-              <ng-container *ngFor="let genre of this.gameGenres">
+              <ng-container *ngFor="let genre of this.gameGenres | slice : 0:gameLimit">
                 <mat-slide-toggle class="col-3" [formControlName]="genre.genre_id">{{ genre.name | titlecase  }}</mat-slide-toggle>
               </ng-container>
             </div>
+            <br />
+            <button mat-button *ngIf="gameLimit < this.gameGenres.length" (click)="showMoreGames()">Show more</button>
+            <button mat-button *ngIf="gameLimit > 16" (click)="showLessGames()">Show less</button>
             <br />
             <mat-action-row>
               <button mat-button color="primary" type="submit">Save</button>
@@ -93,10 +105,13 @@
           </mat-expansion-panel-header>
           <form *ngIf="(this.waitApp | async); else loading" [formGroup]="interestApp" class="col-12" (ngSubmit)="onAppFormSubmit()" ngNativeValidate>
             <div class="row">
-              <ng-container *ngFor="let genre of this.appGenres">
+              <ng-container *ngFor="let genre of this.appGenres | slice : 0:appLimit">
                 <mat-slide-toggle class="col-3" [formControlName]="genre.genre_id">{{ genre.name | titlecase  }}</mat-slide-toggle>
               </ng-container>
             </div>
+            <br />
+            <button mat-button *ngIf="appLimit < this.appGenres.length" (click)="showMoreApps()">Show more</button>
+            <button mat-button *ngIf="appLimit > 16" (click)="showLessApps()">Show less</button>
             <br />
             <mat-action-row>
               <button mat-button color="primary" type="submit">Save</button>
