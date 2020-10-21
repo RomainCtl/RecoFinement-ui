@@ -1,4 +1,7 @@
-<div  class="d-flex w-100 h-100">
+<div class="d-flex justify-content-center mt-5">
+  <img src="assets/images/logo.svg" width="500">
+</div>
+<div  class="d-flex w-100 h-75 text-center">
     <form class="form-signin" #loginForm="ngForm" (ngSubmit)="login(loginForm.value)">
 
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
@@ -16,7 +19,7 @@
         {{ loginHttpResponse.message }}
       </div>
     </div>
-    <button type="submit" class="btn btn-lg btn-primary btn-block mb-2">Sign in</button>
+    <button mat-raised-button color="primary" type="submit" class="w-100 h5 mb-2">Sign in</button>
     <a routerLink="/register">Create an account</a>
     <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
 

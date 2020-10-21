@@ -43,7 +43,9 @@ export class RegisterComponent implements OnInit {
       this._auth.register(user).then(
         (result: UserRegisterDtoResponse) => {
           this.registerHttpResponse = result;
-          document.cookie = 'access_token=' + this.registerHttpResponse.access_token;
+          this.cookie.set('access_token', this.registerHttpResponse.access_token, {expires: 1, sameSite: 'Lax', path: '/'});
+
+          // document.cookie = 'access_token=' + this.registerHttpResponse.access_token;
           this._router.navigate(['register/preferences']);
         }
         ).catch(
