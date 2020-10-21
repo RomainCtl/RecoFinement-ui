@@ -19,7 +19,7 @@ export interface DialogData {
 })
 export class PopupComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public track: Track, private ratingService: RatingService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public item: any, private ratingService: RatingService) { }
 
   @Input() rateNumber: number;
   readOnly = false;
@@ -28,9 +28,9 @@ export class PopupComponent implements OnInit {
   }
 
   saveRating(event: ClickEvent): void {
-    this.track.rating_count++;
+    this.item.rating_count++;
     this.readOnly = true;
-    this.ratingService.saveRating(event.rating, this.track.track_id, 'music')
+    this.ratingService.saveRating(event.rating, this.item.track_id, 'music')
     .then((result) => {
       console.log(result);
     }).catch(() => {

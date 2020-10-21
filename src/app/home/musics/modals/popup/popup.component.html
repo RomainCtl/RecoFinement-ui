@@ -1,6 +1,6 @@
-<div mat-dialog-content class="h-75">
+<div mat-dialog-content class="h-75" *ngIf="item.track_id">
     <div mat-dialog-actions class="m-0 p-0 row">
-        <strong class="col d-inline-block mb-2 h1 p-0 text-danger">{{track.title}}</strong>
+        <strong class="col d-inline-block mb-2 h1 p-0 text-danger">{{item.title}}</strong>
         <mat-icon mat-dialog-close class="text-secondary">cancel</mat-icon>
       </div>
 
@@ -14,23 +14,23 @@
                 
                 
                 <mat-chip-list>
-                   <span class="mb-1"><mat-chip class="h6" color="accent" selected>{{ track.rating.toFixed(2) }} <mat-icon class="ml-1">star_rating</mat-icon></mat-chip><mat-chip class="bg-transparent text-muted m-0 p-0">over {{ track.rating_count | number }} ratings.</mat-chip></span>
+                   <span class="mb-1"><mat-chip class="h6" color="accent" selected>{{ item.rating.toFixed(2) }} <mat-icon class="ml-1">star_rating</mat-icon></mat-chip><mat-chip class="bg-transparent text-muted m-0 p-0">over {{ item.rating_count | number }} ratings.</mat-chip></span>
 
                 </mat-chip-list>
 
                  
-                 <strong class="d-inline-block mb-2 h3">{{track.artist_name}}</strong>
-                 <strong class="d-inline-block mb-2 h6">{{track.release}}</strong>
-                <div *ngIf="track.year !== 0" class="mb-3 text-muted">{{ track.year }}</div>
+                 <strong class="d-inline-block mb-2 h3">{{item.artist_name}}</strong>
+                 <strong class="d-inline-block mb-2 h6">{{item.release}}</strong>
+                <div *ngIf="item.year !== 0" class="mb-3 text-muted">{{ item.year }}</div>
                 <mat-chip-list class="container-fluid h-100">
-                    <mat-chip *ngFor="let genre of track.genres">{{ genre.name }}</mat-chip>
+                    <mat-chip *ngFor="let genre of item.genres">{{ genre.name }}</mat-chip>
                 </mat-chip-list>
                 <p class="text-center h5"><strong>Give your rating</strong></p>
                 <star-rating [readOnly]="readOnly" [starType]="'svg'" (ratingChange)="saveRating($event)" [rating]="this.rateNumber"></star-rating>
 
                 
             </div>
-            <img class="rounded-lg" [src]="track.covert_art_url" style="width:40%;">
+            <img class="rounded-lg" [src]="item.covert_art_url" style="width:40%;">
             
         </div>
          
@@ -40,3 +40,43 @@
 
 </div>
 
+<div mat-dialog-content class="h-75" *ngIf="item.game_id">
+
+  <div class="container-fluid p-0">
+      <div mat-dialog-actions class="m-0 p-0 row">
+        <strong class="col d-inline-block mb-2 h1 p-0 text-danger">{{item.name}}</strong>
+        <mat-icon mat-dialog-close class="text-secondary">cancel</mat-icon>
+      </div>
+
+      
+          <div class="row overflow-hidden">
+            
+              
+            
+        
+            <div class="col d-flex flex-column justify-content-center p-0">
+
+               
+               <strong class="d-inline-block mb-2 h3">{{item.publishers}}</strong>
+               <strong class="d-inline-block mb-2 h6">{{item.price}}</strong>
+              <div class="mb-3 text-muted">{{ item.release_date }}</div>
+              <mat-chip-list class="container-fluid h-100">
+                  <mat-chip *ngFor="let genre of item.genres">{{ genre.name }}</mat-chip>
+              </mat-chip-list>
+              <p class="text-center h5"><strong>Give your rating</strong></p>
+              <star-rating [readOnly]="readOnly" [starType]="'svg'" (ratingChange)="saveRating($event)" [rating]="this.rateNumber"></star-rating>
+
+              
+            </div>
+            <img class="rounded-lg mb-2" style="width:460px; height:215px;" [src]="item.header_image">
+
+          
+          
+      </div>
+
+       
+ 
+  </div>
+
+
+</div>
