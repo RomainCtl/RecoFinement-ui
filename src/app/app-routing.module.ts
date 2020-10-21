@@ -13,6 +13,7 @@ import { GamesComponent } from './home/games/games.component';
 import { MoviesComponent } from './home/movies/movies.component';
 import { MusicsComponent } from './home/musics/musics.component';
 import { PreferenceComponent } from './auth/components/preferences/preference.component';
+import { InterestsComponent } from './home/user/interests/interests.component';
 
 const routes: Routes = [
   {
@@ -68,6 +69,11 @@ const routes: Routes = [
     {
       path: 'app/musics',
       component: MusicsComponent,
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'user/interest',
+      component: InterestsComponent,
       canActivate: [AuthGuard]
     },
     {

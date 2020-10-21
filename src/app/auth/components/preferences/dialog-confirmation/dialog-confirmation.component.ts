@@ -24,7 +24,7 @@ export class DialogConfirmationComponent implements OnInit {
   onConfirmationPreferences(): void {
     this.onNoClick();
     this.authService.setPreferences(true);
-    this.router.navigate(['app/musics']);
+    this.router.navigate(['app']);
   }
 
 }

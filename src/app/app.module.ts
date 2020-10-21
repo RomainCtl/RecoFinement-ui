@@ -18,7 +18,6 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatTabsModule} from '@angular/material/tabs';
-import {MatExpansionModule} from '@angular/material/expansion';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
@@ -30,8 +29,10 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatExpansionModule} from '@angular/material/expansion';
 import { AuthReverseGuard } from './auth/auth-reverse.guard';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { BooksComponent } from './home/books/books.component';
 import { GamesComponent } from './home/games/games.component';
 import { MoviesComponent } from './home/movies/movies.component';
@@ -65,6 +66,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { PopupComponent } from './home/musics/modals/popup/popup.component';
 import { PreviewComponent } from './home/musics/modals/preview/preview.component';
 import { SeriesComponent } from './home/series/series.component';
+import { InterestsComponent } from './home/user/interests/interests.component';
 
 
 @NgModule({
@@ -85,7 +87,8 @@ import { SeriesComponent } from './home/series/series.component';
     PopupComponent,
     DialogConfirmationComponent,
     PreviewComponent,
-    SeriesComponent
+    SeriesComponent,
+    InterestsComponent
   ],
   imports: [
     CommonModule,
@@ -130,7 +133,9 @@ import { SeriesComponent } from './home/series/series.component';
     MatPaginatorModule,
     MatBadgeModule,
     FlexLayoutModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    MatExpansionModule,
+    ReactiveFormsModule
   ],
   providers: [
     PaginationService,
