@@ -52,14 +52,11 @@
 <div class="container-fluid">
     
         <div class="row overflow-hidden">
-          
-            
             
           <div class="col d-flex flex-column position-static p-0" style="width: 30vw;">
             
-            
             <mat-chip-list>
-               <span class="mb-1"><mat-chip class="h6" color="accent" selected>{{ item.rating.toFixed(2) }} <mat-icon class="ml-1">star_rating</mat-icon></mat-chip><mat-chip class="bg-transparent text-muted m-0 p-0">over {{ item.rating_count }} ratings.</mat-chip></span>
+               <span class="mb-1"><mat-chip class="h6" color="accent" selected>{{ item.rating.toFixed(2) }} <mat-icon class="ml-1">star_rating</mat-icon></mat-chip><mat-chip class="bg-transparent text-muted m-0 p-0">over {{ item.rating_count | number }} ratings.</mat-chip></span>
 
             </mat-chip-list>
 

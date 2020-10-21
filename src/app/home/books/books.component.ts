@@ -89,6 +89,7 @@ export class BooksComponent implements OnInit {
   }
 
   searchBooks(searchTerm: string): void {
+
     if (searchTerm.length > 3) {
       this.searchActivated = true;
       this.getSearchedBooks(searchTerm);
