@@ -107,7 +107,7 @@ export class ApplicationsComponent implements OnInit {
   }
 
   searchApps(searchTerm: string): void {
-    if (searchTerm.length >= 1) {
+    if (searchTerm.length >= 2) {
       this.searchActivated = true;
       this.getSearchedApps(searchTerm);
     }
