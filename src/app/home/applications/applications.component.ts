@@ -40,8 +40,6 @@ export class ApplicationsComponent implements OnInit {
   searchActivated = false;
   searchInput = '';
 
-
-
   appCtrl = new FormControl();
   filteredApplications: Observable<Application[]>;
 
@@ -100,7 +98,7 @@ export class ApplicationsComponent implements OnInit {
       data: this.appResponse.content[index],
       panelClass: ['shadow-none'],
       hasBackdrop: true,
-      backdropClass: 'bg-light'
+      backdropClass: 'blur'
     });
 
     popupDetails.backdropClick().subscribe(() => {

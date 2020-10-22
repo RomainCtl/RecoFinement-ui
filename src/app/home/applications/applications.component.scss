@@ -58,3 +58,7 @@
     transform:scale(1.07);
 
 }
+
+::ng-deep .blur {
+  backdrop-filter: blur(6px);
+}

@@ -81,7 +81,7 @@
             <mat-chip class="h6" color="accent" selected>{{ item.rating.toFixed(2) }} <mat-icon class="ml-1">star_rating
               </mat-icon>
             </mat-chip>
-            <mat-chip class="bg-transparent text-muted m-0 p-0">over {{ item.reviews }} ratings.</mat-chip>
+            <mat-chip class="bg-transparent text-muted m-0 p-0">over {{ item.reviews | number }} ratings.</mat-chip>
           </span>
         </mat-chip-list>
         <br />
