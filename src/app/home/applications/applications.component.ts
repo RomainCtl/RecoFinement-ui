@@ -1,7 +1,10 @@
 import { Overlay } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 import { ApplicationService } from 'src/app/services/media/application.service';
 import { ApplicationResponseDto } from 'src/app/shared/models/DtoResponse/applications/application-dto.model';
 import { Application } from 'src/app/shared/models/DtoResponse/applications/application.model';
@@ -34,6 +37,14 @@ export class ApplicationsComponent implements OnInit {
   finished = true;
   noApplications = true;
 
+  searchActivated = false;
+  searchInput = '';
+
+
+
+  appCtrl = new FormControl();
+  filteredApplications: Observable<Application[]>;
+
   ngOnInit(): void {
     this.appService.getApplications(2).then((result: ApplicationResponseDto) => {
       this.appResponse = result;
@@ -43,13 +54,28 @@ export class ApplicationsComponent implements OnInit {
       if (this.nextPage !== this.appResponse.total_pages) {
         this.finished = false;
       }
+      this.filteredApplications = this.appCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        map(app => app ? this._filter(app) : this.applications.content.slice())
+      );
     });
+  }
+  private _filter(value: string): Application[] {
+    const filterValue = value.toLowerCase();
+    return this.applications.content.filter(app => app.name.toLowerCase().indexOf(filterValue) === 0);
   }
 
   private getApplications(page?: number): void {
     this.appService.getApplications(page).then((result: ApplicationResponseDto) => {
       this.appResponse.content = this.appResponse.content.concat(result.content);
       this.nextPage++;
+    });
+  }
+
+  private getSearchedApps(searchTerm: string): void {
+    this.appService.searchApplications(searchTerm).then((result: ApplicationResponseDto) => {
+      this.appResponse.content = result.content;
     });
   }
 
@@ -80,5 +106,26 @@ export class ApplicationsComponent implements OnInit {
     popupDetails.backdropClick().subscribe(() => {
       popupDetails.close();
     });
+  }
+
+  searchApps(searchTerm: string): void {
+    if (searchTerm.length >= 1) {
+      this.searchActivated = true;
+      this.getSearchedApps(searchTerm);
+    }
+
+    if (searchTerm.length === 0) {
+
+      this.appService.getPopularApplications().then((result: ApplicationResponseDto) => {
+        this.appResponse = result;
+        this.searchActivated = false;
+        if (result.number_of_elements !== 0) {
+          this.noApplications = false;
+        }
+        if (this.nextPage !== this.appResponse.total_pages) {
+          this.finished = false;
+        }
+      });
+    }
   }
 }
