@@ -37,6 +37,7 @@ export class ApplicationsComponent implements OnInit {
   finished = true;
   noApplications = true;
 
+  searchEmpty = false;
   searchActivated = false;
   searchInput = '';
 
@@ -44,7 +45,7 @@ export class ApplicationsComponent implements OnInit {
   filteredApplications: Observable<Application[]>;
 
   ngOnInit(): void {
-    this.appService.getApplications(2).then((result: ApplicationResponseDto) => {
+    this.appService.getPopularApplications().then((result: ApplicationResponseDto) => {
       this.appResponse = result;
       if (result.number_of_elements !== 0) {
         this.noApplications = false;
@@ -74,6 +75,11 @@ export class ApplicationsComponent implements OnInit {
   private getSearchedApps(searchTerm: string): void {
     this.appService.searchApplications(searchTerm).then((result: ApplicationResponseDto) => {
       this.appResponse.content = result.content;
+      if (this.appResponse.content.length === 0) {
+        this.searchEmpty = true;
+      } else {
+        this.searchEmpty = false;
+      }
     });
   }
 
@@ -113,7 +119,6 @@ export class ApplicationsComponent implements OnInit {
     }
 
     if (searchTerm.length === 0) {
-
       this.appService.getPopularApplications().then((result: ApplicationResponseDto) => {
         this.appResponse = result;
         this.searchActivated = false;
