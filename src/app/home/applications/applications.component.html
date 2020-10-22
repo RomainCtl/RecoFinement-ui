@@ -18,7 +18,7 @@
           <div class="card-body p-3">
             <h3 class="card-title text-danger"><strong>{{application.name}}</strong></h3>
             <p class="card-text"><strong>{{application.type}}</strong></p>
-            <button mat-stroked-button color="primary">See more</button>
+            <button mat-stroked-button color="primary" (click)="openPopUp(indexOfElement)">See more</button>
           </div>
         </div>
       </div>

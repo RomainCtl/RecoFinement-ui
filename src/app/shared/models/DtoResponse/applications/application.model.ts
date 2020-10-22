@@ -1,6 +1,6 @@
 import { CategorieDto } from '../../Categorie/categorie.model';
 
-export class ApplicationDto {
+export class Application {
 
   private type: string;
   private rating: number;

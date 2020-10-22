@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ApplicationService } from 'src/app/services/media/application.service';
-import { ApplicationResponseDto } from 'src/app/shared/models/DtoResponse/application.model';
+import { ApplicationResponseDto } from 'src/app/shared/models/DtoResponse/applications/application-dto.model';
+import { Application } from 'src/app/shared/models/DtoResponse/applications/application.model';
+import { PopupComponent } from '../modals/popup/popup.component';
 
 @Component({
   selector: 'app-applications',
@@ -64,5 +66,19 @@ export class ApplicationsComponent implements OnInit {
       }
       this.finished = true;
     }
+  }
+
+
+  openPopUp(index: number): void {
+    const popupDetails = this.dialog.open<PopupComponent, Application>(PopupComponent, {
+      data: this.appResponse.content[index],
+      panelClass: ['shadow-none'],
+      hasBackdrop: true,
+      backdropClass: 'bg-light'
+    });
+
+    popupDetails.backdropClick().subscribe(() => {
+      popupDetails.close();
+    });
   }
 }

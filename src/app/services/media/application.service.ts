@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ApplicationResponseDto } from 'src/app/shared/models/DtoResponse/application.model';
+import { ApplicationResponseDto } from 'src/app/shared/models/DtoResponse/applications/application-dto.model';
 
 @Injectable({
   providedIn: 'root'
