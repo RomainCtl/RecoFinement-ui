@@ -63,9 +63,9 @@ import { RegisterComponent } from './auth/components/register/register.component
 import { PaginationService, NgxPaginationModule } from 'ngx-pagination';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { PopupComponent } from './home/musics/modals/popup/popup.component';
-import { PreviewComponent } from './home/musics/modals/preview/preview.component';
 import { SeriesComponent } from './home/series/series.component';
+import { PreviewComponent } from './home/modals/preview/preview.component';
+import { PopupComponent } from './home/modals/popup/popup.component';
 import { InterestsComponent } from './home/user/interests/interests.component';
 
 

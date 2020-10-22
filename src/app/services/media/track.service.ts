@@ -1,4 +1,4 @@
-import { TrackResponseDto } from './../../shared/models/DtoResponse/track.model';
+import { TrackResponseDto } from '../../shared/models/DtoResponse/musics/track-dto.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
