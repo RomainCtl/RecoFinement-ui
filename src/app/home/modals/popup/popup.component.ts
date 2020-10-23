@@ -1,11 +1,16 @@
-import { Book } from './../../../shared/models/DtoResponse/books/Book.model';
+import { GameService } from 'src/app/services/media/game.service';
+import { GameMeta } from 'src/app/shared/models/DtoResponse/games/GameMeta.model';
 import { ClickEvent } from 'angular-star-rating';
-import { PreviewComponent } from './../preview/preview.component';
-import { MAT_SNACK_BAR_DATA, MatSnackBar } from '@angular/material/snack-bar';
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Track } from 'src/app/shared/models/DtoResponse/musics/Track.model';
-import { RatingService } from 'src/app/services/rating/rating.service';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { GameMetaResponseDto } from 'src/app/shared/models/DtoResponse/games/game-meta.model';
+
+export interface DialogData {
+  track: Track[];
+  indexOfElement: number;
+}
 
 @Component({
   selector: 'app-popup',
@@ -14,21 +19,27 @@ import { RatingService } from 'src/app/services/rating/rating.service';
 })
 export class PopupComponent implements OnInit {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public item: any, private ratingService: RatingService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public item: any, private gameService: GameService) { }
 
-  @Input() rateNumber: number;
   readOnly = false;
+  gameUserMeta = new GameMeta();
 
-  ngOnInit(): void { }
-
-  saveRating(event: ClickEvent): void {
-    this.item.rating_count++;
-    this.readOnly = true;
-    this.ratingService.saveRating(event.rating, this.item.track_id, 'music')
-    .then((result) => {
-      console.log(result);
-    }).catch(() => {
+  ngOnInit(): void {
+    this.gameService.getUserMeta(this.item.game_id).then((result: GameMetaResponseDto) => {
+      this.gameUserMeta = result.content;
     });
+  }
+
+  saveGameRating(event: ClickEvent): void {
+    this.gameService.saveRating(this.item.game_id, { rating: event.rating });
+  }
+
+  goToSteam(): void {
+    window.open('https://store.steampowered.com/app/' + this.item.steamid, '_blank');
+  }
+
+  savePurchasedData(event: MatCheckboxChange): void {
+    this.gameService.savePurchasedState(this.item.game_id, { purchase: event.checked });
   }
 
 }

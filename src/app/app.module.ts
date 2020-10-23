@@ -18,20 +18,21 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatTabsModule} from '@angular/material/tabs';
-import {MatExpansionModule} from '@angular/material/expansion';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
+import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatExpansionModule} from '@angular/material/expansion';
 import { AuthReverseGuard } from './auth/auth-reverse.guard';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { BooksComponent } from './home/books/books.component';
 import { GamesComponent } from './home/games/games.component';
 import { MoviesComponent } from './home/movies/movies.component';
@@ -44,7 +45,7 @@ import { Interceptor } from './shared/interceptor';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -65,6 +66,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { SeriesComponent } from './home/series/series.component';
 import { PreviewComponent } from './home/modals/preview/preview.component';
 import { PopupComponent } from './home/modals/popup/popup.component';
+import { InterestsComponent } from './home/user/interests/interests.component';
 
 
 @NgModule({
@@ -85,7 +87,8 @@ import { PopupComponent } from './home/modals/popup/popup.component';
     PopupComponent,
     DialogConfirmationComponent,
     PreviewComponent,
-    SeriesComponent
+    SeriesComponent,
+    InterestsComponent
   ],
   imports: [
     CommonModule,
@@ -130,7 +133,9 @@ import { PopupComponent } from './home/modals/popup/popup.component';
     MatPaginatorModule,
     MatBadgeModule,
     FlexLayoutModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    MatExpansionModule,
+    ReactiveFormsModule
   ],
   providers: [
     PaginationService,
