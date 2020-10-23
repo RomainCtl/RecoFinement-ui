@@ -65,7 +65,7 @@ export class PreferenceComponent implements OnInit {
             })
             .then(() => {
               // Get popular games
-              this.gameService.getPopularGames().then(response => {
+              this.gameService.getPopularGames(1).then(response => {
                 if (response.status === true) {
                   this.games = response.content;
                 }
