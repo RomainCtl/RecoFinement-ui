@@ -1,6 +1,6 @@
 <div class="row">
   <nav class="navbar navbar-light bg-light container-fluid p-3">
-    <div class="col-sm">
+    <div class="col-sm-3">
       <a routerLink="/app" class="navbar-brand">
         <img src="./assets/images/logo.svg" alt="Logo Recofinement" width="250"/>
       </a>
@@ -14,13 +14,12 @@
       <button mat-button [routerLink]="['app/books']" [routerLinkActive]="['mat-primary']">Books</button>
       <button mat-button [routerLink]="['app/applications']" [routerLinkActive]="['mat-primary']">Applications</button>
     </div>
-    <div class="col-sm text-right">
+    <div class="col-sm-3 text-right">
       <mat-icon aria-hidden="false" [matMenuTriggerFor]="menu" class="h1 text-danger"  style="cursor: pointer;">person</mat-icon>
       <mat-menu #menu="matMenu" class="mt-4">
         <button mat-menu-item [routerLink]="['user/interest']">Manage profile</button>
         <button mat-menu-item (click)="logOut()">Sign out</button>
       </mat-menu>
-      <!-- <button mat-raised-button color="warn" (click)="logOut()">Log out</button> -->
     </div>
   </nav>
 </div>

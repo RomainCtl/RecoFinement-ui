@@ -1,6 +1,6 @@
 <div mat-dialog-content class="h-75" *ngIf="item.track_id">
     <div mat-dialog-actions class="m-0 p-0 row">
-        <strong class="col d-inline-block mb-2 h1 p-0 text-danger">{{item.title}}</strong>
+        <strong class="col-sm-12 col-md-6 col-lg-3 d-inline-block mb-2 h1 p-0 text-danger">{{item.title}}</strong>
         <mat-icon mat-dialog-close class="text-secondary">cancel</mat-icon>
       </div>
 
@@ -26,7 +26,7 @@
                     <mat-chip *ngFor="let genre of item.genres">{{ genre.name }}</mat-chip>
                 </mat-chip-list>
                 <p class="text-center h5"><strong>Give your rating</strong></p>
-                <star-rating [readOnly]="readOnly" [starType]="'svg'" (ratingChange)="saveRating($event)" [rating]="this.rateNumber"></star-rating>
+                <star-rating [readOnly]="readOnly" [starType]="'svg'" (ratingChange)="saveGameRating($event)" [rating]="this.rateNumber"></star-rating>
 
                 
             </div>
@@ -40,43 +40,40 @@
 
 </div>
 
-<div mat-dialog-content class="h-75" *ngIf="item.game_id">
+<!-- GAME POP-UP -->
 
-  <div class="container-fluid p-0">
-      <div mat-dialog-actions class="m-0 p-0 row">
-        <strong class="col d-inline-block mb-2 h1 p-0 text-danger">{{item.name}}</strong>
-        <mat-icon mat-dialog-close class="text-secondary">cancel</mat-icon>
+<div mat-dialog-content *ngIf="item.game_id">
+  <div class="container">
+      <div mat-dialog-actions class="mr-2 mb-1 d-flex justify-content-between p-0">
+          <p class="font-weight-bold text-danger text-left h4 text-truncate" style="max-width:80%;">{{item.name}}</p>
+          <mat-icon mat-dialog-close class="text-right text-secondary">cancel</mat-icon>
       </div>
-
-      
-          <div class="row overflow-hidden">
-            
-              
-            
-        
-            <div class="col d-flex flex-column justify-content-center p-0">
-
-               
-               <strong class="d-inline-block mb-2 h3">{{item.publishers}}</strong>
-               <strong class="d-inline-block mb-2 h6">{{item.price}}</strong>
-              <div class="mb-3 text-muted">{{ item.release_date }}</div>
-              <mat-chip-list class="container-fluid h-100">
-                  <mat-chip *ngFor="let genre of item.genres">{{ genre.name }}</mat-chip>
-              </mat-chip-list>
-              <p class="text-center h5"><strong>Give your rating</strong></p>
-              <star-rating [readOnly]="readOnly" [starType]="'svg'" (ratingChange)="saveRating($event)" [rating]="this.rateNumber"></star-rating>
-
-              
-            </div>
-            <img class="rounded-lg mb-2" style="width:460px; height:215px;" [src]="item.header_image">
-
-          
-          
-      </div>
-
-       
- 
   </div>
-
-
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <p class="h3 font-weight-bold">{{item.publishers}}</p>
+        <p class="h5">{{item.developers}}</p>
+        <p *ngIf="item.price" class="mb-2 h6 text-info">Price: {{item.price}}</p>
+        <mat-checkbox color="warn" [checked]="gameUserMeta.purchase" (change)="savePurchasedData($event)">Purchased</mat-checkbox>
+        <p class="mb-2 text-muted font-italic">{{item.short_description}}</p>
+        <div class="mb-3 text-primary">{{ item.release_date }}</div>
+        <img (click)="goToSteam()" class="btn m-0 p-0" src="assets/images/Steam_icon_logo.svg">
+      </div>
+      <div class="col-sm-12 col-md-6 my-auto mx-auto">
+        <div class="container-fluid">
+          <img class="rounded-lg mb-2 shadow border m-2 w-100" [src]="item.header_image">
+        </div>
+      </div>
+    </div>
+    <div class="row m-3">
+      <div class="col">
+        <p class="text-center h5 font-weight-bold">Give your rating</p>
+        <star-rating [starType]="'svg'" [rating]="gameUserMeta.rating || 0" (ratingChange)="saveGameRating($event)"></star-rating>
+        <!-- <ng-template #ratingZero>
+          <star-rating *ngIf="gameUserMeta.rating !== null else ratingZero" [starType]="'svg'" [rating]="gameUserMeta.rating" (ratingChange)="saveGameRating($event)"></star-rating>
+        </ng-template> -->
+      </div>
+    </div>
+  </div>
 </div>
