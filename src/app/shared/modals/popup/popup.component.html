@@ -57,11 +57,12 @@
         </mat-chip-list>
         <p class="h3 font-weight-bold mt-2">{{item.author}}</p>
         <p class="h5">{{item.publisher}}</p>
+        <mat-checkbox color="warn" [checked]="bookUserMeta.purchase" (change)="savePurchasedData($event)">Purchased</mat-checkbox>
         <p class="mb-2 text-info h6">ISBN: {{item.isbn}}</p>
         <div class="mb-3 text-primary">{{ item.year_of_publication }}</div>
         <hr>
         <p class="text-center h5 font-weight-bold">Give your rating</p>
-        <star-rating [starType]="'svg'" [rating]="gameUserMeta.rating || 0" (ratingChange)="saveGameRating($event)"></star-rating>
+        <star-rating [starType]="'svg'" [rating]="bookUserMeta.rating || 0" (ratingChange)="saveRating($event)"></star-rating>
       </div>
       <div class="col-sm-12 col-md-6 my-auto mx-auto">
         <div class="container-fluid">
