@@ -13,7 +13,7 @@ import { GamesComponent } from './home/games/games.component';
 import { MoviesComponent } from './home/movies/movies.component';
 import { MusicsComponent } from './home/musics/musics.component';
 import { PreferenceComponent } from './auth/components/preferences/preference.component';
-import { InterestsComponent } from './home/user/interests/interests.component';
+import { InterestsComponent } from './auth/components/user/interests/interests.component';
 
 const routes: Routes = [
   {

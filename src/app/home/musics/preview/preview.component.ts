@@ -1,10 +1,8 @@
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { PopupComponent } from './../popup/popup.component';
 import { Inject } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-import { MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Track } from 'src/app/shared/track.model';
+import { Track } from 'src/app/shared/models/DtoResponse/musics/Track.model';
 
 @Component({
   selector: 'app-preview',

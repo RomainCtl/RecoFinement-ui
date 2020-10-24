@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GameResponseDto } from 'src/app/shared/models/DtoResponse/games/games.model';
-import { PopupComponent } from '../musics/modals/popup/popup.component';
+import { PopupComponent } from 'src/app/shared/modals/popup/popup.component';
 
 @Component({
   selector: 'app-games',

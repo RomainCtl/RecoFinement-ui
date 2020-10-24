@@ -1,4 +1,10 @@
+import { Book } from './../../shared/models/DtoResponse/books/Book.model';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
+import { BookService } from 'src/app/services/media/book.service';
+import { BookResponseDto } from 'src/app/shared/models/DtoResponse/books/book-dto.model';
+import { PopupComponent } from 'src/app/shared/modals/popup/popup.component';
 
 @Component({
   selector: 'app-books',
@@ -7,9 +13,101 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BooksComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private bookService: BookService,
+    public snackBar: MatSnackBar,
+    public dialog: MatDialog) {}
+
+  bookResponse: BookResponseDto = {
+    status: false,
+    message: '',
+    content: [],
+    number_of_elements: 0,
+    page: 0,
+    total_pages: 0
+  };
+
+  searchActivated = false;
+  searchInput = '';
+
+  nextPage = 2;
+  finished = true;
+  booksLeft = true;
 
   ngOnInit(): void {
+    this.bookService.getPopularBooks(1).then((result: BookResponseDto) => {
+      this.bookResponse = result;
+      if (result.number_of_elements !== 0) {
+        this.booksLeft = false;
+      }
+      if (this.nextPage !== this.bookResponse.total_pages) {
+        this.finished = false;
+      }
+    });
+
+  }
+
+  onScroll(): void {
+    if (this.nextPage <= this.bookResponse.total_pages) {
+      this.getBooks(this.nextPage);
+    } else {
+      if (!this.booksLeft) {
+        this.snackBar.open('You have reached the end of the Internet!', 'Alright!');
+      }
+      this.finished = true;
+    }
+  }
+
+  get books(): BookResponseDto {
+    return this.bookResponse;
+  }
+
+  private getBooks(page?: number): void {
+    this.bookService.getPopularBooks(page).then((result: BookResponseDto) => {
+      this.bookResponse.content = this.bookResponse.content.concat(result.content);
+      this.nextPage++;
+    });
+  }
+
+  private getSearchedBooks(searchTerm: string): void {
+    this.bookService.searchBooks(searchTerm).then((result: BookResponseDto) => {
+      this.bookResponse.content = result.content;
+    });
+  }
+
+  openPopUp(index: number): void {
+    const popupDetails = this.dialog.open<PopupComponent, Book>(PopupComponent, {
+      data: this.bookResponse.content[index],
+      panelClass: ['shadow-none'],
+      hasBackdrop: true,
+      backdropClass: 'bg-light'
+    });
+
+    popupDetails.backdropClick().subscribe(() => {
+      popupDetails.close();
+    });
+  }
+
+  searchBooks(searchTerm: string): void {
+
+    if (searchTerm.length > 3) {
+      this.searchActivated = true;
+      this.getSearchedBooks(searchTerm);
+    }
+
+    if (searchTerm.length === 0) {
+
+      this.bookService.getPopularBooks(1).then((result: BookResponseDto) => {
+        this.bookResponse = result;
+        this.searchActivated = false;
+        if (result.number_of_elements !== 0) {
+          this.booksLeft = false;
+        }
+        if (this.nextPage !== this.bookResponse.total_pages) {
+          this.finished = false;
+        }
+      });
+    }
   }
 
 }
