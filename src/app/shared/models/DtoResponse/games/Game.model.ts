@@ -1,4 +1,5 @@
 export class Game {
+    genres: [];
     game_id: number;
     steamid: number;
     name: string;

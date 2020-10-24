@@ -3,14 +3,8 @@ import { GameMeta } from 'src/app/shared/models/DtoResponse/games/GameMeta.model
 import { ClickEvent } from 'angular-star-rating';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Track } from 'src/app/shared/models/DtoResponse/musics/Track.model';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { GameMetaResponseDto } from 'src/app/shared/models/DtoResponse/games/game-meta.model';
-
-export interface DialogData {
-  track: Track[];
-  indexOfElement: number;
-}
 
 @Component({
   selector: 'app-popup',
@@ -25,9 +19,11 @@ export class PopupComponent implements OnInit {
   gameUserMeta = new GameMeta();
 
   ngOnInit(): void {
-    this.gameService.getUserMeta(this.item.game_id).then((result: GameMetaResponseDto) => {
-      this.gameUserMeta = result.content;
-    });
+    if (this.item.game_id) {
+      this.gameService.getUserMeta(this.item.game_id).then((result: GameMetaResponseDto) => {
+        this.gameUserMeta = result.content;
+      });
+    }
   }
 
   saveGameRating(event: ClickEvent): void {
