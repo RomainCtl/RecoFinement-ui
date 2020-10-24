@@ -2,8 +2,8 @@
 
 <p class="lead display-4 text-center p-3">Books you may like</p>
 <hr>
-<div class="container-fluid text-center">
-    <mat-form-field color="warn" class="h4 w-25">
+<div class="container text-center">
+    <mat-form-field color="warn" class="h4">
         <mat-label>Search a book...</mat-label>
         <input matInput [placeholder]="books.content[0].title" (input)="searchBooks($event.target.value)">
     </mat-form-field>
@@ -11,10 +11,10 @@
 
 </div>
     <br>
-    <div class="container-xl">
-      <div class="row row-cols-4">
-        <div class="col d-flex justify-content-center text-center p-0" *ngFor="let book of books.content; index as indexOfElement;">
-          <div class="card m-3 p-0 shadow " style="width: 18rem;">
+    <div class="container-xl p-5">
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center text-center p-0" *ngFor="let book of books.content; index as indexOfElement;">
+          <div class="card m-3 p-0 shadow" style="width: 18rem;">
             <div class="container p-0">
               <img [src]="book.image_url_l" class="card-img-top">
             </div>

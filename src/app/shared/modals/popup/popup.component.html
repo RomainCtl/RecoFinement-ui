@@ -42,40 +42,34 @@
 
 <!-- ------------------------------ BOOK POP-UP -------------------------------- -->
 
-<div mat-dialog-content class="h-75" *ngIf="item.isbn">
-
-<div mat-dialog-actions class="m-0 p-0 row">
-  <strong class="col d-inline-block mb-2 h1 p-0 text-danger">{{item.title}}</strong>
-  <mat-icon mat-dialog-close class="text-secondary">cancel</mat-icon>
-</div>
-
-<div class="container-fluid">
-    
-        <div class="row overflow-hidden">
-            
-          <div class="col d-flex flex-column position-static p-0" style="width: 30vw;">
-            
-            <mat-chip-list>
-               <span class="mb-1"><mat-chip class="h6" color="accent" selected>{{ item.rating.toFixed(2) }} <mat-icon class="ml-1">star_rating</mat-icon></mat-chip><mat-chip class="bg-transparent text-muted m-0 p-0">over {{ item.rating_count | number }} ratings.</mat-chip></span>
-
-            </mat-chip-list>
-
-             
-             <strong class="d-inline-block mb-2 h3">{{item.author}}</strong>
-             <strong class="d-inline-block mb-2 h6">{{item.publisher}}</strong>
-             <div *ngIf="item.year !== 0" class="mb-3 text-muted">{{ item.year_of_publication }}</div>
-             <strong class="d-inline-block mb-2 h6 text-info">ISBN: {{item.isbn}}</strong>
-            <div class="container-fluid h-100"></div>
-            <p class="text-center h5"><strong>Give your rating</strong></p>
-            <star-rating [readOnly]="readOnly" [starType]="'svg'"></star-rating>
-
-            
-        </div>
-        <img class="rounded-lg" [src]="item.image_url_l">
-        
+<div mat-dialog-content *ngIf="item.isbn">
+  <div class="container">
+    <div mat-dialog-actions class="mr-2 mb-1 d-flex justify-content-between p-0">
+      <p class="font-weight-bold text-danger text-left h4 text-truncate" style="max-width:80%;">{{item.title}}</p>
+      <mat-icon mat-dialog-close class="text-right text-secondary">cancel</mat-icon>
     </div>
-     
-
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <mat-chip-list>
+          <span class="mb-1"><mat-chip class="h6" color="accent" selected>{{ item.rating.toFixed(2) }} <mat-icon class="ml-1">star_rating</mat-icon></mat-chip><mat-chip class="bg-transparent text-muted m-0 p-0">over {{ item.rating_count | number }} ratings.</mat-chip></span>
+        </mat-chip-list>
+        <p class="h3 font-weight-bold mt-2">{{item.author}}</p>
+        <p class="h5">{{item.publisher}}</p>
+        <p class="mb-2 text-info h6">ISBN: {{item.isbn}}</p>
+        <div class="mb-3 text-primary">{{ item.year_of_publication }}</div>
+        <hr>
+        <p class="text-center h5 font-weight-bold">Give your rating</p>
+        <star-rating [starType]="'svg'" [rating]="gameUserMeta.rating || 0" (ratingChange)="saveGameRating($event)"></star-rating>
+      </div>
+      <div class="col-sm-12 col-md-6 my-auto mx-auto">
+        <div class="container-fluid">
+          <img class="rounded-lg mb-2 shadow border m-2 w-100" [src]="item.image_url_l">
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 
