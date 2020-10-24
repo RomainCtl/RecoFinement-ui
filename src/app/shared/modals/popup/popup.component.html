@@ -103,7 +103,7 @@
     <div class="row m-3">
       <div class="col">
         <p class="text-center h5 font-weight-bold">Give your rating</p>
-        <star-rating [starType]="'svg'" [rating]="gameUserMeta.rating || 0" (ratingChange)="saveGameRating($event)"></star-rating>
+        <star-rating [starType]="'svg'" [rating]="gameUserMeta.rating || 0" (ratingChange)="saveRating($event)"></star-rating>
       </div>
     </div>
   </div>
