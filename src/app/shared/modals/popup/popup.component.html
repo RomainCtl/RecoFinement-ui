@@ -111,36 +111,37 @@
 
 <!-- ------------------------------ APPS POP-UP -------------------------------- -->
 
-<div mat-dialog-content class="h-75" *ngIf="item.app_id">
-  <div mat-dialog-actions class="m-0 p-0 row">
-    <strong class="col d-inline-block mb-2 h1 p-0 text-danger">{{item.name}}</strong>
-    <mat-icon mat-dialog-close class="text-secondary">cancel</mat-icon>
+<div mat-dialog-content *ngIf="item.app_id">
+  <div class="container">
+      <div mat-dialog-actions class="mr-2 mb-1 d-flex justify-content-between p-0">
+          <p class="font-weight-bold text-danger text-left h4 text-truncate" style="max-width:80%;">{{item.name}}</p>
+          <mat-icon mat-dialog-close class="text-right text-secondary">cancel</mat-icon>
+      </div>
   </div>
-
-  <div class="container-fluid">
-    <div class="row overflow-hidden">
-      <div class="col d-flex flex-column position-static p-0" style="width: 30vw;">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
         <mat-chip-list>
-          <span class="mb-1">
-            <mat-chip class="h6" color="accent" selected>{{ item.rating.toFixed(2) }} <mat-icon class="ml-1">star_rating
-              </mat-icon>
-            </mat-chip>
-            <mat-chip class="bg-transparent text-muted m-0 p-0">over {{ item.reviews | number }} ratings.</mat-chip>
-          </span>
+          <span class="mb-1"><mat-chip class="h6" color="accent" selected>{{ item.rating.toFixed(2) }} <mat-icon class="ml-1">star_rating</mat-icon></mat-chip><mat-chip class="bg-transparent text-muted m-0 p-0">over {{ item.reviews | number }} ratings.</mat-chip></span>
         </mat-chip-list>
-        <br />
-        <strong class="d-inline-block mb-2 h3">{{item.installs}} installs</strong>
-        <mat-checkbox color="warn" [checked]="appUserMeta.downloaded" (change)="savePurchasedData($event)">Downloaded</mat-checkbox>
-        <strong *ngIf="item.type === 'Paid'" class="d-inline-block mb-2 h6 text-info">{{item.price}}</strong>
-        <strong class="d-inline-block mb-2 h6">{{item.categorie.name}} </strong>
-        <div *ngIf="item.last_updated !== 0" class="mb-3 text-muted">{{ item.last_updated }}</div>
 
-        <div class="container-fluid h-100"></div>
-        <p class="text-center h5"><strong>Give your rating</strong></p>
+        <p class="h3 font-weight-bold">{{item.installs}} installs</p>
+        <p class="h5">{{item.categorie.name}}</p>
+        <p *ngIf="item.type === 'Paid'" class="mb-2 h6 text-info">Price: {{item.price}}</p>
+        <mat-checkbox color="warn" [checked]="appUserMeta.downloaded" (change)="savePurchasedData($event)">Downloaded</mat-checkbox>        <p class="mb-2 text-muted font-italic">{{item.short_description}}</p>
+        <div *ngIf="item.last_updated !== 0" class="mb-3 text-primary">{{ item.last_updated }}</div>
+      </div>
+      <div class="col-sm-12 col-md-6 my-auto mx-auto">
+        <div class="container-fluid">
+          <img class="rounded-lg mb-2 shadow border m-2 w-100" [src]="item.header_image">
+        </div>
+      </div>
+    </div>
+    <div class="row m-3">
+      <div class="col">
+        <p class="text-center h5 font-weight-bold">Give your rating</p>
         <star-rating [starType]="'svg'" [rating]="appUserMeta.rating || 0" (ratingChange)="saveRating($event)"></star-rating>
       </div>
     </div>
   </div>
 </div>
-
-
