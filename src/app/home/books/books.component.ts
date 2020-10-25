@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Component, OnInit } from '@angular/core';
 import { BookService } from 'src/app/services/media/book.service';
 import { BookResponseDto } from 'src/app/shared/models/DtoResponse/books/book-dto.model';
-import { PopupComponent } from '../modals/popup/popup.component';
+import { PopupComponent } from 'src/app/shared/modals/popup/popup.component';
 
 @Component({
   selector: 'app-books',

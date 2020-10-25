@@ -6,8 +6,8 @@ import { TrackResponseDto } from 'src/app/shared/models/DtoResponse/musics/track
 import * as $ from 'jquery';
 import { Overlay } from '@angular/cdk/overlay';
 import { Track } from 'src/app/shared/models/DtoResponse/musics/Track.model';
-import { PreviewComponent } from '../modals/preview/preview.component';
-import { PopupComponent } from '../modals/popup/popup.component';
+import { PreviewComponent } from 'src/app/home/musics/preview/preview.component';
+import { PopupComponent } from 'src/app/shared/modals/popup/popup.component';
 
 @Component({
   selector: 'app-musics',
@@ -103,7 +103,7 @@ export class MusicsComponent implements OnInit {
       // this.dialog.getDialogById('musicPreview')._containerInstance._config.data = this.trackResponse.content[index];
 
 
- 
+
   }
 
   openPopUp(index: number): void {

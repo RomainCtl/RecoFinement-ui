@@ -6,9 +6,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import { ApplicationService } from 'src/app/services/media/application.service';
+import { PopupComponent } from 'src/app/shared/modals/popup/popup.component';
 import { ApplicationResponseDto } from 'src/app/shared/models/DtoResponse/applications/application-dto.model';
 import { Application } from 'src/app/shared/models/DtoResponse/applications/application.model';
-import { PopupComponent } from '../modals/popup/popup.component';
 
 @Component({
   selector: 'app-applications',

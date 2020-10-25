@@ -1,3 +1,4 @@
+import { RedirectConfirmationComponent } from './shared/modals/redirect-confirmation/redirect-confirmation.component';
 import { DialogConfirmationComponent } from './auth/components/preferences/dialog-confirmation/dialog-confirmation.component';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatBadgeModule} from '@angular/material/badge';
@@ -23,7 +24,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
-import {MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS} from '@angular/material/dialog';
+import {MatDialogModule} from '@angular/material/dialog';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatTableModule} from '@angular/material/table';
@@ -41,11 +42,11 @@ import { HomeComponent } from './home/home.component';
 import { MenuComponent } from './home/menu/menu.component';
 import { StarRatingModule } from 'angular-star-rating';
 import { AuthGuard } from './auth/auth.guard';
-import { Interceptor } from './shared/interceptor';
+import { Interceptor } from './auth/interceptor';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -64,9 +65,9 @@ import { PaginationService, NgxPaginationModule } from 'ngx-pagination';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { SeriesComponent } from './home/series/series.component';
-import { PreviewComponent } from './home/modals/preview/preview.component';
-import { PopupComponent } from './home/modals/popup/popup.component';
-import { InterestsComponent } from './home/user/interests/interests.component';
+import { PreviewComponent } from 'src/app/home/musics/preview/preview.component';
+import { PopupComponent } from 'src/app/shared/modals/popup/popup.component';
+import { InterestsComponent } from 'src/app/auth/components/user/interests/interests.component';
 
 
 @NgModule({
@@ -88,7 +89,8 @@ import { InterestsComponent } from './home/user/interests/interests.component';
     DialogConfirmationComponent,
     PreviewComponent,
     SeriesComponent,
-    InterestsComponent
+    InterestsComponent,
+    RedirectConfirmationComponent
   ],
   imports: [
     CommonModule,
