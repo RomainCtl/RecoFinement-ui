@@ -80,7 +80,7 @@ export class BooksComponent implements OnInit {
       data: this.bookResponse.content[index],
       panelClass: ['shadow-none'],
       hasBackdrop: true,
-      backdropClass: 'bg-light'
+      backdropClass: 'blur'
     });
 
     popupDetails.backdropClick().subscribe(() => {

@@ -1,13 +1,39 @@
-import { DialogPosition, MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { TrackService } from 'src/app/services/media/track.service';
-import { Component, Inject, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
-import { MatSnackBar, MatSnackBarConfig, MatSnackBarRef } from '@angular/material/snack-bar';
-import { TrackResponseDto } from 'src/app/shared/models/DtoResponse/musics/track-dto.model';
+import {
+  DialogPosition,
+  MatDialog,
+  MatDialogRef
+} from '@angular/material/dialog';
+import {
+  TrackService
+} from 'src/app/services/media/track.service';
+import {
+  Component,
+  Inject,
+  OnInit,
+  ViewContainerRef,
+  ViewEncapsulation
+} from '@angular/core';
+import {
+  MatSnackBar,
+  MatSnackBarConfig,
+  MatSnackBarRef
+} from '@angular/material/snack-bar';
+import {
+  TrackResponseDto
+} from 'src/app/shared/models/DtoResponse/musics/track-dto.model';
 import * as $ from 'jquery';
-import { Overlay } from '@angular/cdk/overlay';
-import { Track } from 'src/app/shared/models/DtoResponse/musics/Track.model';
-import { PreviewComponent } from 'src/app/home/musics/preview/preview.component';
-import { PopupComponent } from 'src/app/shared/modals/popup/popup.component';
+import {
+  Overlay
+} from '@angular/cdk/overlay';
+import {
+  Track
+} from 'src/app/shared/models/DtoResponse/musics/Track.model';
+import {
+  PreviewComponent
+} from 'src/app/home/musics/preview/preview.component';
+import {
+  PopupComponent
+} from 'src/app/shared/modals/popup/popup.component';
 
 @Component({
   selector: 'app-musics',
@@ -20,9 +46,9 @@ export class MusicsComponent implements OnInit {
     private trackService: TrackService,
     private mainSnackBar: MatSnackBar,
     public dialog: MatDialog,
-    public overlay: Overlay) { }
+    public overlay: Overlay) {}
 
-    musicPreviewRef: MatDialogRef<PreviewComponent>;
+  musicPreviewRef: MatDialogRef < PreviewComponent > ;
 
   trackResponse: TrackResponseDto = {
     status: false,
@@ -48,7 +74,7 @@ export class MusicsComponent implements OnInit {
       if (result.number_of_elements !== 0) {
         this.noTracks = false;
       }
-      if(this.nextPage !== this.trackResponse.total_pages) {
+      if (this.nextPage !== this.trackResponse.total_pages) {
         this.finished = false;
       }
     });
@@ -70,7 +96,7 @@ export class MusicsComponent implements OnInit {
     return this.trackResponse;
   }
 
-  private getMusics(page?: number): void {
+  private getMusics(page ?: number): void {
     this.trackService.getTracks(page).then((result: TrackResponseDto) => {
       this.trackResponse.content = this.trackResponse.content.concat(result.content);
       this.nextPage++;
@@ -86,33 +112,34 @@ export class MusicsComponent implements OnInit {
     setTimeout(() => {
 
       this.dialog.open(PreviewComponent, {
-          data: this.trackResponse.content[index],
-          width: '100%',
-          hasBackdrop: false,
-          position: {
-            bottom: '0'
-          },
-          scrollStrategy: this.overlay.scrollStrategies.noop(),
-          panelClass: ['shadow-none', 'fullPageWidth'],
-          id: 'musicPreview'
-        });
+        data: this.trackResponse.content[index],
+        width: '100%',
+        hasBackdrop: false,
+        position: {
+          bottom: '0'
+        },
+        scrollStrategy: this.overlay.scrollStrategies.noop(),
+        panelClass: ['shadow-none', 'fullPageWidth'],
+        id: 'musicPreview'
+      });
 
     }, 200);
 
 
-      // this.dialog.getDialogById('musicPreview')._containerInstance._config.data = this.trackResponse.content[index];
+    // this.dialog.getDialogById('musicPreview')._containerInstance._config.data = this.trackResponse.content[index];
 
 
 
   }
 
   openPopUp(index: number): void {
-    const popupDetails = this.dialog.open<PopupComponent, Track>(PopupComponent, {
-      data: this.trackResponse.content[index],
-      panelClass: ['shadow-none'],
-      hasBackdrop: true,
-      backdropClass: 'bg-light'
-    });
+    const popupDetails = this.dialog.open < PopupComponent,
+      Track > (PopupComponent, {
+        data: this.trackResponse.content[index],
+        panelClass: ['shadow-none'],
+        hasBackdrop: true,
+        backdropClass: 'blur'
+      });
 
     popupDetails.backdropClick().subscribe(() => {
       popupDetails.close();

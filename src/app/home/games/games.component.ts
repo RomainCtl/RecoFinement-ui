@@ -40,7 +40,7 @@ export class GamesComponent implements OnInit {
       if (result.number_of_elements !== 0) {
         this.noGames = false;
       }
-      if(this.nextPage !== this.gameResponse.total_pages) {
+      if (this.nextPage !== this.gameResponse.total_pages) {
         this.finished = false;
       }
     });
@@ -74,7 +74,7 @@ export class GamesComponent implements OnInit {
       data: this.gameResponse.content[index],
       panelClass: ['shadow-none'],
       hasBackdrop: true,
-      backdropClass: 'bg-light'
+      backdropClass: 'blur'
     });
 
     popupDetails.backdropClick().subscribe(() => {
