@@ -1,17 +1,20 @@
 <div *ngIf="!booksLeft">
   <p class="lead display-4 text-center p-3">Books you may like</p>
   <hr>
-  <mat-form-field color="warn" class="h4 w-25">
-    <mat-label>Search a book...</mat-label>
-    <input matInput placeholder="Book name" aria-label="Book" [formControl]="appCtrl" [matAutocomplete]="auto"
-      (ngModelChange)="searchBooks($event)">
-    <mat-icon matSuffix>search</mat-icon>
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let option of filteredBooks | async" [value]="option.title">
-        {{ option.title }}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
+  <div class="container-fluid text-center">
+
+    <mat-form-field color="warn" class="h4 w-25">
+      <mat-label>Search a book...</mat-label>
+      <input matInput placeholder="Book name" aria-label="Book" [formControl]="appCtrl" [matAutocomplete]="auto"
+        (ngModelChange)="searchBooks($event)">
+      <mat-icon matSuffix>search</mat-icon>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredBooks | async" [value]="option.title">
+          {{ option.title }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
 </div>
 <br>
 <div class="container-xl p-5">
