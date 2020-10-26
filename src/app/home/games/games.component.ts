@@ -6,6 +6,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GameResponseDto } from 'src/app/shared/models/DtoResponse/games/games.model';
 import { PopupComponent } from 'src/app/shared/modals/popup/popup.component';
+import {map, startWith} from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-games',
@@ -15,7 +18,7 @@ import { PopupComponent } from 'src/app/shared/modals/popup/popup.component';
 export class GamesComponent implements OnInit {
 
   constructor(
-    private trackService: GameService,
+    private gameService: GameService,
     private mainSnackBar: MatSnackBar,
     public dialog: MatDialog,
     public overlay: Overlay) { }
@@ -34,8 +37,15 @@ export class GamesComponent implements OnInit {
   finished = true;
   noGames = true;
 
+  searchEmpty = false;
+  searchActivated = false;
+  searchInput = '';
+
+  appCtrl = new FormControl();
+  filteredGames: Observable <Game[]>;
+
   ngOnInit(): void {
-    this.trackService.getPopularGames(1).then((result: GameResponseDto) => {
+    this.gameService.getPopularGames(1).then((result: GameResponseDto) => {
       this.gameResponse = result;
       if (result.number_of_elements !== 0) {
         this.noGames = false;
@@ -43,8 +53,16 @@ export class GamesComponent implements OnInit {
       if (this.nextPage !== this.gameResponse.total_pages) {
         this.finished = false;
       }
+      this.filteredGames = this.appCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        map(game => game ? this._filter(game) : this.games.content.slice())
+      );
     });
-
+  }
+  private _filter(value: string): Game[] {
+    const filterValue = value.toLowerCase();
+    return this.games.content.filter(game => game.name.toLowerCase().indexOf(filterValue) === 0);
   }
 
   onScroll(): void {
@@ -58,12 +76,23 @@ export class GamesComponent implements OnInit {
     }
   }
 
+  private getSearchedGames(searchTerm: string): void {
+    this.gameService.searchGames(searchTerm).then((result: GameResponseDto) => {
+      this.gameResponse.content = result.content;
+      if (this.gameResponse.content.length === 0) {
+        this.searchEmpty = true;
+      } else {
+        this.searchEmpty = false;
+      }
+    });
+  }
+
   get games(): GameResponseDto {
     return this.gameResponse;
   }
 
   private getGames(page?: number): void {
-    this.trackService.getPopularGames(page).then((result: GameResponseDto) => {
+    this.gameService.getPopularGames(page).then((result: GameResponseDto) => {
       this.gameResponse.content = this.gameResponse.content.concat(result.content);
       this.nextPage++;
     });
@@ -80,6 +109,25 @@ export class GamesComponent implements OnInit {
     popupDetails.backdropClick().subscribe(() => {
       popupDetails.close();
     });
+  }
 
+  searchGames(searchTerm: string): void {
+    if (searchTerm.length >= 2) {
+      this.searchActivated = true;
+      this.getSearchedGames(searchTerm);
+    }
+
+    if (searchTerm.length === 0) {
+      this.gameService.getPopularGames(1).then((result: GameResponseDto) => {
+        this.gameResponse = result;
+        this.searchActivated = false;
+        if (result.number_of_elements !== 0) {
+          this.noGames = false;
+        }
+        if (this.nextPage !== this.gameResponse.total_pages) {
+          this.finished = false;
+        }
+      });
+    }
   }
 }
