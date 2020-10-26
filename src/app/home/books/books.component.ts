@@ -30,6 +30,7 @@ export class BooksComponent implements OnInit {
     total_pages: 0
   };
 
+  searchEmpty = false;
   searchActivated = false;
   searchInput = '';
 
@@ -86,6 +87,11 @@ export class BooksComponent implements OnInit {
   private getSearchedBooks(searchTerm: string): void {
     this.bookService.searchBooks(searchTerm).then((result: BookResponseDto) => {
       this.bookResponse.content = result.content;
+      if (this.bookResponse.content.length === 0) {
+        this.searchEmpty = true;
+      } else {
+        this.searchEmpty = false;
+      }
     });
   }
 
