@@ -34,6 +34,9 @@ import {
 import {
   PopupComponent
 } from 'src/app/shared/modals/popup/popup.component';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-musics',
@@ -68,6 +71,13 @@ export class MusicsComponent implements OnInit {
   finished = true;
   noTracks = true;
 
+  searchEmpty = false;
+  searchActivated = false;
+  searchInput = '';
+
+  appCtrl = new FormControl();
+  filteredMusic: Observable<Track[]>;
+
   ngOnInit(): void {
     this.trackService.getTracks(2).then((result: TrackResponseDto) => {
       this.trackResponse = result;
@@ -77,8 +87,16 @@ export class MusicsComponent implements OnInit {
       if (this.nextPage !== this.trackResponse.total_pages) {
         this.finished = false;
       }
+      this.filteredMusic = this.appCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        map(track => track ? this._filter(track) : this.tracks.content.slice())
+      );
     });
-
+  }
+  private _filter(value: string): Track[] {
+    const filterValue = value.toLowerCase();
+    return this.tracks.content.filter(track => track.title.toLowerCase().indexOf(filterValue) === 0);
   }
 
   onScroll(): void {
@@ -90,6 +108,17 @@ export class MusicsComponent implements OnInit {
       }
       this.finished = true;
     }
+  }
+
+  private getSearchedTracks(searchTerm: string): void {
+    this.trackService.searchTracks(searchTerm).then((result: TrackResponseDto) => {
+      this.trackResponse.content = result.content;
+      if (this.trackResponse.content.length === 0) {
+        this.searchEmpty = true;
+      } else {
+        this.searchEmpty = false;
+      }
+    });
   }
 
   get tracks(): TrackResponseDto {
@@ -150,4 +179,23 @@ export class MusicsComponent implements OnInit {
     // });
   }
 
+  searchTracks(searchTerm: string): void {
+    if (searchTerm.length >= 2) {
+      this.searchActivated = true;
+      this.getSearchedTracks(searchTerm);
+    }
+
+    if (searchTerm.length === 0) {
+      this.trackService.getTracks(2).then((result: TrackResponseDto) => {
+        this.trackResponse = result;
+        this.searchActivated = false;
+        if (result.number_of_elements !== 0) {
+          this.noTracks = false;
+        }
+        if (this.nextPage !== this.trackResponse.total_pages) {
+          this.finished = false;
+        }
+      });
+    }
+  }
 }

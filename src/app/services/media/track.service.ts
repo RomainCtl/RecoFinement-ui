@@ -10,6 +10,7 @@ export class TrackService {
   private urlGetTracks = 'http://127.0.0.1:4040/api/track?page=';
   private urlGetPopularTracks = 'http://127.0.0.1:4040/api/track?page=1';
   private urlGetGenreTracks = 'http://127.0.0.1:4040/api/track/genres';
+  private urlSearchTracks = 'http://127.0.0.1:4040/api/track/search/';
 
 
   constructor(private httpClient: HttpClient) { }
@@ -20,6 +21,10 @@ export class TrackService {
 
   getPopularTracks(): Promise<any> {
     return this.httpClient.get<any>(this.urlGetPopularTracks).toPromise();
+  }
+
+  searchTracks(searchTerm: string): Promise<TrackResponseDto> {
+    return this.httpClient.get<TrackResponseDto>(this.urlSearchTracks + searchTerm + '?page=1').toPromise();
   }
 
   getGenres(): Promise<any> {

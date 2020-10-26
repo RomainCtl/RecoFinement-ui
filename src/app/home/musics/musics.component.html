@@ -1,24 +1,35 @@
 <div *ngIf="!noTracks">
-<p class="lead display-4 text-center p-3">Musics you may like</p>
-<hr>
-<div class="container-fluid text-center">
-  <mat-form-field color="warn" class="h4 w-25">
+  <p class="lead display-4 text-center p-3">Musics you may like</p>
+  <hr>
+  <div class="container-fluid text-center">
+    <mat-form-field color="warn" class="h4 w-25">
       <mat-label>Search a music...</mat-label>
-      <input matInput [placeholder]="tracks.content[0].title">
+      <input matInput placeholder="Music name" aria-label="Music" [formControl]="appCtrl"
+        [matAutocomplete]="auto" (ngModelChange)="searchTracks($event)">
+      <mat-icon matSuffix>search</mat-icon>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredMusic | async" [value]="option.title">
+          {{ option.title }}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
+  </div>
 </div>
-</div>
-<hr>
 <br>
 <div class="container-xl p-5">
+  <div *ngIf="this.searchEmpty" class="col d-flex justify-content-center text-center p-0 mb-2 text-muted">
+    There is no musics for your search.
+  </div>
   <div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center text-center p-0" *ngFor="let track of tracks.content; index as indexOfElement;">
+    <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center text-center p-0"
+      *ngFor="let track of tracks.content; index as indexOfElement;">
       <div class="card m-3 p-0 shadow" style="width: 18rem;">
         <div class="container p-0">
           <img [src]="track.covert_art_url" class="card-img-top">
           <div (click)="openPreview(indexOfElement)" class="overlay" style="cursor: pointer;">
             <div class="icon">
-              <mat-icon class="fa fa-user text-center w-100 h-100" style="font-size:75px;" aria-hidden="false">play_circle_outline</mat-icon>
+              <mat-icon class="fa fa-user text-center w-100 h-100" style="font-size:75px;" aria-hidden="false">
+                play_circle_outline</mat-icon>
             </div>
           </div>
         </div>
@@ -29,23 +40,18 @@
         </div>
       </div>
     </div>
-    <div
-    style="display: none;"
-    infiniteScroll
-    [infiniteScrollDistance]="800"
-    [infiniteScrollThrottle]="1000"
-    (scrolled)="onScroll()"
-    >
-  </div>
-  <div *ngIf="!finished" class="container-fluid mx-auto mt-5 mb-5 text-center">
-    <div class="spinner-border text-danger" style="width: 3rem; height: 3rem;" role="status">
-      <span class="sr-only">Loading...</span>
+    <div *ngIf="!searchActivated" style="display: none;" infiniteScroll [infiniteScrollDistance]="800" [infiniteScrollThrottle]="1000"
+      (scrolled)="onScroll()">
     </div>
-  </div>
+    <div *ngIf="!finished && !searchActivated" class="container-fluid mx-auto mt-5 mb-5 text-center">
+      <div class="spinner-border text-danger" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
   </div>
 </div>
-  <div class="d-flex align-items-center justify-content-center h-75" *ngIf="noTracks">
-    <div class="spinner-border text-danger" style="width: 6rem; height: 6rem;" role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
+<div class="d-flex align-items-center justify-content-center h-75" *ngIf="noTracks">
+  <div class="spinner-border text-danger" style="width: 6rem; height: 6rem;" role="status">
+    <span class="sr-only">Loading...</span>
   </div>
+</div>
