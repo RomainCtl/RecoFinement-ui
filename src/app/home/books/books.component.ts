@@ -5,6 +5,9 @@ import { Component, OnInit } from '@angular/core';
 import { BookService } from 'src/app/services/media/book.service';
 import { BookResponseDto } from 'src/app/shared/models/DtoResponse/books/book-dto.model';
 import { PopupComponent } from 'src/app/shared/modals/popup/popup.component';
+import { Observable } from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-books',
@@ -34,6 +37,9 @@ export class BooksComponent implements OnInit {
   finished = true;
   booksLeft = true;
 
+  appCtrl = new FormControl();
+  filteredBooks: Observable<Book[]>;
+
   ngOnInit(): void {
     this.bookService.getPopularBooks(1).then((result: BookResponseDto) => {
       this.bookResponse = result;
@@ -43,8 +49,16 @@ export class BooksComponent implements OnInit {
       if (this.nextPage !== this.bookResponse.total_pages) {
         this.finished = false;
       }
+      this.filteredBooks = this.appCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        map(book => book ? this._filter(book) : this.books.content.slice())
+      );
     });
-
+  }
+  private _filter(value: string): Book[] {
+    const filterValue = value.toLowerCase();
+    return this.books.content.filter(book => book.title.toLowerCase().indexOf(filterValue) === 0);
   }
 
   onScroll(): void {
