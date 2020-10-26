@@ -2,7 +2,7 @@
   <p class="lead display-4 text-center p-3">Musics you may like</p>
   <hr>
   <div class="container-fluid text-center">
-    <mat-form-field color="warn" class="h4 w-25">
+    <mat-form-field color="warn" class="h4 col-sm-12 col-md-6 col-lg-4 align-center">
       <mat-label>Search a music...</mat-label>
       <input matInput placeholder="Music name" aria-label="Music" [formControl]="appCtrl"
         [matAutocomplete]="auto" (ngModelChange)="searchTracks($event)">
