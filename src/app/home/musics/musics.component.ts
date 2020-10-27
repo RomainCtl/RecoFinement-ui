@@ -1,14 +1,15 @@
-import { PreviewComponent } from './modals/preview/preview.component';
 import { DialogPosition, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { TrackService } from 'src/app/services/media/track.service';
 import { Component, Inject, OnInit, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarRef } from '@angular/material/snack-bar';
-import { TrackResponseDto } from 'src/app/shared/models/DtoResponse/track.model';
-import { PopupComponent } from './modals/popup/popup.component';
+import { TrackResponseDto } from 'src/app/shared/models/DtoResponse/musics/track-dto.model';
 import * as $ from 'jquery';
 import { Overlay } from '@angular/cdk/overlay';
-import { Track } from 'src/app/shared/track.model';
+import { Track } from 'src/app/shared/models/DtoResponse/musics/Track.model';
+import { PreviewComponent } from '../modals/preview/preview.component';
+import { PopupComponent } from '../modals/popup/popup.component';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+
 
 @Component({
   selector: 'app-musics',
@@ -37,7 +38,7 @@ export class MusicsComponent implements OnInit {
 
   snackBarConfig: MatSnackBarConfig = {
     horizontalPosition: 'start',
-    panelClass: ['shadow-none', 'm-0', 'p-0', ,'', 'w-100']
+    panelClass: ['shadow-none', 'm-0', 'p-0', 'w-100']
   };
 
   nextPage = 3;
@@ -111,13 +112,10 @@ export class MusicsComponent implements OnInit {
 
 
       // this.dialog.getDialogById('musicPreview')._containerInstance._config.data = this.trackResponse.content[index];
-
-
- 
   }
 
   openPopUp(index: number): void {
-    const popupDetails = this.dialog.open(PopupComponent, {
+    const popupDetails = this.dialog.open<PopupComponent, Track>(PopupComponent, {
       data: this.trackResponse.content[index],
       panelClass: ['shadow-none'],
       hasBackdrop: true,

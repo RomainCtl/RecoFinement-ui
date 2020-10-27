@@ -6,12 +6,12 @@
       </a>
     </div>
     <div class="col-sm-6 text-center h5">
-      <button mat-button routerLink="/app" [routerLinkActive]="['mat-primary']" [routerLinkActiveOptions]="{exact: true}">Home</button>   
-      <button mat-button [routerLink]="['app/musics']" [routerLinkActive]="['mat-primary']">Musics</button>   
-      <button mat-button [routerLink]="['app/movies']" [routerLinkActive]="['mat-primary']">Movies</button>   
-      <button mat-button [routerLink]="['app/series']" [routerLinkActive]="['mat-primary']">Series</button>   
-      <button mat-button [routerLink]="['app/games']" [routerLinkActive]="['mat-primary']">Games</button>   
-      <button mat-button [routerLink]="['app/books']" [routerLinkActive]="['mat-primary']">Books</button>   
+      <button mat-button routerLink="/app" [routerLinkActive]="['mat-primary']" [routerLinkActiveOptions]="{exact: true}">Home</button>
+      <button mat-button [routerLink]="['app/musics']" [routerLinkActive]="['mat-primary']">Musics</button>
+      <button mat-button [routerLink]="['app/movies']" [routerLinkActive]="['mat-primary']">Movies</button>
+      <button mat-button [routerLink]="['app/series']" [routerLinkActive]="['mat-primary']">Series</button>
+      <button mat-button [routerLink]="['app/games']" [routerLinkActive]="['mat-primary']">Games</button>
+      <button mat-button [routerLink]="['app/books']" [routerLinkActive]="['mat-primary']">Books</button>
       <button mat-button [routerLink]="['app/applications']" [routerLinkActive]="['mat-primary']">Applications</button>
     </div>
     <div class="col-sm text-right">
@@ -22,7 +22,7 @@
         </mat-chip>
       </mat-chip-list>
       <mat-menu #menu="matMenu" class="mt-4">
-        <button mat-menu-item>Manage my profile</button>
+        <button mat-menu-item [routerLink]="['user/interest']">Manage profile</button>
         <button mat-menu-item (click)="logOut()">Sign out</button>
       </mat-menu>
     </div>

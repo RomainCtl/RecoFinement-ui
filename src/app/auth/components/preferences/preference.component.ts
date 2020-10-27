@@ -58,7 +58,7 @@ export class PreferenceComponent implements OnInit {
           })
           .then(() => {
             // Get popular books
-            this.bookService.getPopularBooks().then(response => {
+            this.bookService.getPopularBooks(1).then(response => {
               if (response.status === true) {
                 this.books = response.content;
               }
