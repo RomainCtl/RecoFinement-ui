@@ -5,6 +5,9 @@ import { Component, OnInit } from '@angular/core';
 import { BookService } from 'src/app/services/media/book.service';
 import { BookResponseDto } from 'src/app/shared/models/DtoResponse/books/book-dto.model';
 import { PopupComponent } from 'src/app/shared/modals/popup/popup.component';
+import { Observable } from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-books',
@@ -27,12 +30,16 @@ export class BooksComponent implements OnInit {
     total_pages: 0
   };
 
+  searchEmpty = false;
   searchActivated = false;
   searchInput = '';
 
   nextPage = 2;
   finished = true;
   booksLeft = true;
+
+  appCtrl = new FormControl();
+  filteredBooks: Observable<Book[]>;
 
   ngOnInit(): void {
     this.bookService.getPopularBooks(1).then((result: BookResponseDto) => {
@@ -43,8 +50,16 @@ export class BooksComponent implements OnInit {
       if (this.nextPage !== this.bookResponse.total_pages) {
         this.finished = false;
       }
+      this.filteredBooks = this.appCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        map(book => book ? this._filter(book) : this.books.content.slice())
+      );
     });
-
+  }
+  private _filter(value: string): Book[] {
+    const filterValue = value.toLowerCase();
+    return this.books.content.filter(book => book.title.toLowerCase().indexOf(filterValue) === 0);
   }
 
   onScroll(): void {
@@ -72,6 +87,11 @@ export class BooksComponent implements OnInit {
   private getSearchedBooks(searchTerm: string): void {
     this.bookService.searchBooks(searchTerm).then((result: BookResponseDto) => {
       this.bookResponse.content = result.content;
+      if (this.bookResponse.content.length === 0) {
+        this.searchEmpty = true;
+      } else {
+        this.searchEmpty = false;
+      }
     });
   }
 
@@ -80,7 +100,7 @@ export class BooksComponent implements OnInit {
       data: this.bookResponse.content[index],
       panelClass: ['shadow-none'],
       hasBackdrop: true,
-      backdropClass: 'bg-light'
+      backdropClass: 'blur'
     });
 
     popupDetails.backdropClick().subscribe(() => {
@@ -89,7 +109,6 @@ export class BooksComponent implements OnInit {
   }
 
   searchBooks(searchTerm: string): void {
-
     if (searchTerm.length > 3) {
       this.searchActivated = true;
       this.getSearchedBooks(searchTerm);
