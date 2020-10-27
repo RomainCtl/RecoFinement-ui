@@ -135,6 +135,7 @@ export class InterestsComponent implements OnInit {
   initSnack(media: string): MatSnackBarRef<TextOnlySnackBar> {
     const snack = this.snackBar.open(media + ' interests saved', 'UNDO', {
       duration: 2000,
+      horizontalPosition: 'end'
     });
     snack.onAction().subscribe(() => {
       this.save = false;

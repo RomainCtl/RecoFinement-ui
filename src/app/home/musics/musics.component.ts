@@ -1,5 +1,4 @@
 import {
-  DialogPosition,
   MatDialog,
   MatDialogRef
 } from '@angular/material/dialog';
@@ -7,21 +6,15 @@ import {
   TrackService
 } from 'src/app/services/media/track.service';
 import {
-  Component,
-  Inject,
-  OnInit,
-  ViewContainerRef,
-  ViewEncapsulation
+  Component, OnInit
 } from '@angular/core';
 import {
   MatSnackBar,
-  MatSnackBarConfig,
-  MatSnackBarRef
+  MatSnackBarConfig
 } from '@angular/material/snack-bar';
 import {
   TrackResponseDto
 } from 'src/app/shared/models/DtoResponse/musics/track-dto.model';
-import * as $ from 'jquery';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
 import {
@@ -45,7 +38,7 @@ import { map, startWith } from 'rxjs/operators';
   templateUrl: './musics.component.html',
   styleUrls: ['./musics.component.scss']
 })
-export class MusicsComponent implements OnInit {
+export class MusicsComponent implements OnInit  {
 
   constructor(
     private trackService: TrackService,
@@ -137,6 +130,8 @@ export class MusicsComponent implements OnInit {
 
   openPreview(index: number): void {
 
+    this.savePlayCount(index);
+
     this.bottom.open(PreviewComponent, {
       data: this.trackResponse.content[index],
       hasBackdrop: false,
@@ -144,6 +139,7 @@ export class MusicsComponent implements OnInit {
       scrollStrategy: this.overlay.scrollStrategies.noop(),
       direction: 'ltr'
     });
+
 
   }
 
@@ -180,5 +176,9 @@ export class MusicsComponent implements OnInit {
         }
       });
     }
+  }
+
+  savePlayCount(id: number): void {
+    this.trackService.savePlayCount(id, { additional_play_count: 1 });
   }
 }
