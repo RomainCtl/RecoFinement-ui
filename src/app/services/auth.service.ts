@@ -50,7 +50,6 @@ export class AuthService {
       this.router.navigate(['/']);
     }).catch(error => {
       console.log(error);
-      // this.cookie.delete('access_token', '/');
     });
   }
 

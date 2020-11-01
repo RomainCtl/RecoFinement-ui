@@ -11,19 +11,13 @@ export class ForgetPasswordComponent implements OnInit {
 
   constructor(private authService: AuthService) { }
 
-  emailSent = false;
-  errorMessage = [];
   successMessage = '';
   ngOnInit(): void {
   }
 
   sendResetLink(email): void {
     this.authService.forgetPassword(email).then((result) => {
-      this.emailSent = true;
       this.successMessage = result.message;
-
-    }).catch((err: HttpErrorResponse) => {
-      this.errorMessage = err.error.errors;
     });
   }
 

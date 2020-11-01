@@ -31,8 +31,7 @@ export class LoginComponent implements OnInit {
     private _auth: AuthService,
     private _router: Router,
     private cookie: CookieService,
-    private dialog: MatDialog,
-    private errorService: ErrorService) {  }
+    private dialog: MatDialog) {  }
 
   ngOnInit(): void { }
 
@@ -53,16 +52,7 @@ export class LoginComponent implements OnInit {
         // document.cookie = 'access_token=' + this.loginHttpResponse.access_token + '; path:/';
         this._router.navigate(['app']);
       }
-    ).catch((result: HttpErrorResponse) => {
-      this.loginHttpResponse = result.error;
-      if (this.loginHttpResponse.errors) {
-        for (const err of this.loginHttpResponse.errors) {
-          this.errorService.addError(err);
-        }
-      } else {
-        this.errorService.addError(this.loginHttpResponse.message);
-      }
-    });
+    );
   }
 
 }

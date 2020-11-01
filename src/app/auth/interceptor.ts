@@ -34,8 +34,8 @@ export class Interceptor implements HttpInterceptor {
             if (event instanceof HttpResponse) {
                 // do something on response
             }
-          }, (err: any) => {
-            if (err instanceof HttpErrorResponse && err.status === 401 && this.auth.isUserLoggedIn()) {
+          }, (err: HttpErrorResponse) => {
+            if (err.status === 401 && this.auth.isUserLoggedIn()) {
                 const dialogRef = this.dialog.open(RedirectConfirmationComponent, {
                     disableClose: true
                 });
@@ -47,6 +47,10 @@ export class Interceptor implements HttpInterceptor {
                     }, 3000);
                 });
                 this.error.addError(this.error.msg401error);
+            } else if (err.status === 400) {
+              err.error.errors.forEach(element => {
+                this.error.addError(element);
+              });
             }
             else if ( err.status === 500 || err.status === 503) {
               this.error.addError(this.error.msg500error);
