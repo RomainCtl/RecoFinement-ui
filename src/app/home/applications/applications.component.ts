@@ -21,7 +21,6 @@ export class ApplicationsComponent implements OnInit {
     private appService: ApplicationService,
     private mainSnackBar: MatSnackBar,
     public dialog: MatDialog,
-    public overlay: Overlay
   ) { }
 
   appResponse: ApplicationResponseDto = {
@@ -33,7 +32,7 @@ export class ApplicationsComponent implements OnInit {
     total_pages: 0
   };
 
-  nextPage = 3;
+  nextPage = 2;
   finished = true;
   noApplications = true;
 

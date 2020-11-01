@@ -71,6 +71,8 @@ import { PopupComponent } from 'src/app/shared/modals/popup/popup.component';
 import { InterestsComponent } from 'src/app/auth/components/user/interests/interests.component';
 import { ResetPasswordComponent } from './auth/components/user/reset-password/reset-password.component';
 import { ForgetPasswordComponent } from './auth/components/user/forget-password/forget-password.component';
+import { NotificationComponent } from './shared/modals/notification/notification/notification.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -95,7 +97,8 @@ import { ForgetPasswordComponent } from './auth/components/user/forget-password/
     InterestsComponent,
     RedirectConfirmationComponent,
     ResetPasswordComponent,
-    ForgetPasswordComponent
+    ForgetPasswordComponent,
+    NotificationComponent
   ],
   imports: [
     CommonModule,
@@ -143,7 +146,8 @@ import { ForgetPasswordComponent } from './auth/components/user/forget-password/
     InfiniteScrollModule,
     MatBottomSheetModule,
     MatExpansionModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   providers: [
     PaginationService,

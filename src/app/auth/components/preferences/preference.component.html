@@ -6,10 +6,6 @@
   </div>
 
   <section>
-    <div *ngIf="this.internalErrorStatus" class="alert alert-danger px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" role="alert">
-      {{ this.internalError }}
-    </div>
-
     <mat-horizontal-stepper [linear]="true" #stepper>
       <mat-step label="Music">
         <div class="container">

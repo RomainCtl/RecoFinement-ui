@@ -9,7 +9,7 @@
     <input ngModel type="text" name="username" class="form-control rounded-0" placeholder="Pseudo" required>
     <input ngModel type="password" name="password" class="form-control border-top-0" placeholder="Password" required>
     <input [(ngModel)]="passwordConfirmation" type="password" [ngModelOptions]="{standalone: true}" class="form-control border rounded" placeholder="Password confirmation" required>
-    <div *ngIf="!registerHttpResponse.status">
+    <!-- <div *ngIf="!registerHttpResponse.status">
       <div *ngFor="let error of registerHttpResponse.errors" class="alert alert-danger" role="alert">
         {{ error }}
       </div>
@@ -18,7 +18,7 @@
       <div class="alert alert-danger" role="alert">
         {{ passwordError }}
       </div>
-    </div>
+    </div> -->
     <button mat-raised-button color="primary" class="w-100 h5 mb-2" type="submit">Register</button>
     <a routerLink="/login">I already have an account!</a>
     <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
