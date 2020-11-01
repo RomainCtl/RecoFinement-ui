@@ -1,39 +1,14 @@
-import {
-  DialogPosition,
-  MatDialog,
-  MatDialogRef
-} from '@angular/material/dialog';
-import {
-  TrackService
-} from 'src/app/services/media/track.service';
-import {
-  Component,
-  Inject,
-  OnInit,
-  ViewContainerRef,
-  ViewEncapsulation
-} from '@angular/core';
-import {
-  MatSnackBar,
-  MatSnackBarConfig,
-  MatSnackBarRef
-} from '@angular/material/snack-bar';
-import {
-  TrackResponseDto
-} from 'src/app/shared/models/DtoResponse/musics/track-dto.model';
-import * as $ from 'jquery';
-import {
-  Overlay
-} from '@angular/cdk/overlay';
-import {
-  Track
-} from 'src/app/shared/models/DtoResponse/musics/Track.model';
-import {
-  PreviewComponent
-} from 'src/app/home/musics/preview/preview.component';
-import {
-  PopupComponent
-} from 'src/app/shared/modals/popup/popup.component';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { TrackService } from 'src/app/services/media/track.service';
+import { Component, OnInit } from '@angular/core';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { TrackResponseDto } from 'src/app/shared/models/DtoResponse/musics/track-dto.model';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+
+import { Overlay } from '@angular/cdk/overlay';
+import { Track } from 'src/app/shared/models/DtoResponse/musics/Track.model';
+import { PreviewComponent } from 'src/app/home/musics/preview/preview.component';
+import { PopupComponent } from 'src/app/shared/modals/popup/popup.component';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -43,13 +18,14 @@ import { map, startWith } from 'rxjs/operators';
   templateUrl: './musics.component.html',
   styleUrls: ['./musics.component.scss']
 })
-export class MusicsComponent implements OnInit {
+export class MusicsComponent implements OnInit  {
 
   constructor(
     private trackService: TrackService,
     private mainSnackBar: MatSnackBar,
     public dialog: MatDialog,
-    public overlay: Overlay) {}
+    public overlay: Overlay,
+    public bottom: MatBottomSheet) { }
 
   musicPreviewRef: MatDialogRef < PreviewComponent > ;
 
@@ -157,6 +133,15 @@ export class MusicsComponent implements OnInit {
 
     // this.dialog.getDialogById('musicPreview')._containerInstance._config.data = this.trackResponse.content[index];
 
+    this.savePlayCount(index);
+
+    this.bottom.open(PreviewComponent, {
+      data: this.trackResponse.content[index],
+      hasBackdrop: false,
+      panelClass: ['shadow-none', 'bg-transparent', 'm-0', 'p-0'],
+      scrollStrategy: this.overlay.scrollStrategies.noop(),
+      direction: 'ltr'
+    });
 
 
   }
@@ -174,9 +159,6 @@ export class MusicsComponent implements OnInit {
       popupDetails.close();
     });
 
-    // this.dialog.getDialogById('popupDetails').afterOpened().subscribe(() =>{
-    //   this.dialog.getDialogById('popupDetails').close();
-    // });
   }
 
   searchTracks(searchTerm: string): void {
@@ -197,5 +179,9 @@ export class MusicsComponent implements OnInit {
         }
       });
     }
+  }
+
+  savePlayCount(id: number): void {
+    this.trackService.savePlayCount(id, { additional_play_count: 1 });
   }
 }

@@ -1,3 +1,5 @@
+import { TrackMetaResponseDto } from './../../models/DtoResponse/musics/track-meta.model';
+import { TrackService } from 'src/app/services/media/track.service';
 import { BookMeta } from './../../models/DtoResponse/books/BookMeta.model';
 import { BookMetaResponseDto } from './../../models/DtoResponse/books/book-meta.model';
 import { BookService } from 'src/app/services/media/book.service';
@@ -11,6 +13,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { GameMetaResponseDto } from 'src/app/shared/models/DtoResponse/games/game-meta.model';
 import { ApplicationMeta } from '../../models/DtoResponse/applications/applicationMeta.model';
 import { ApplicationMetaResponseDto } from '../../models/DtoResponse/applications/application-meta.model';
+import { TrackMeta } from '../../models/DtoResponse/musics/TrackMeta.model';
 
 @Component({
   selector: 'app-popup',
@@ -21,6 +24,7 @@ export class PopupComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public item: any,
+    private trackService: TrackService,
     private gameService: GameService,
     private bookService: BookService,
     private appService: ApplicationService) { }
@@ -29,6 +33,7 @@ export class PopupComponent implements OnInit {
   gameUserMeta = new GameMeta();
   bookUserMeta = new BookMeta();
   appUserMeta = new ApplicationMeta();
+  trackUserMeta = new TrackMeta();
 
   ngOnInit(): void {
     if (this.item.game_id) {
@@ -46,9 +51,17 @@ export class PopupComponent implements OnInit {
         this.appUserMeta = result.content;
       });
     }
+    if (this.item.track_id) {
+      this.trackService.getUserMeta(this.item.track_id).then((result: TrackMetaResponseDto) => {
+        this.trackUserMeta = result.content;
+      });
+    }
   }
 
   saveRating(event: ClickEvent): void {
+    if (this.item.track_id) {
+      this.trackService.saveRating(this.item.track_id, { rating: event.rating });
+    }
     if (this.item.game_id) {
       this.gameService.saveRating(this.item.game_id, { rating: event.rating });
     }

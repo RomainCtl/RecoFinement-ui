@@ -14,8 +14,13 @@
       <button mat-button [routerLink]="['app/books']" [routerLinkActive]="['mat-primary']">Books</button>
       <button mat-button [routerLink]="['app/applications']" [routerLinkActive]="['mat-primary']">Applications</button>
     </div>
-    <div class="col-sm-3 text-right">
-      <mat-icon aria-hidden="false" [matMenuTriggerFor]="menu" class="h1 text-danger"  style="cursor: pointer;">person</mat-icon>
+    <div class="col-sm d-flex justify-content-end">
+      <mat-chip-list>
+        <mat-chip [matMenuTriggerFor]="menu" color="warn" selected style="cursor: pointer;">
+          Username
+          <mat-icon aria-hidden="false"  class="ml-2">person</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
       <mat-menu #menu="matMenu" class="mt-4">
         <button mat-menu-item [routerLink]="['user/interest']">Manage profile</button>
         <button mat-menu-item (click)="logOut()">Sign out</button>
