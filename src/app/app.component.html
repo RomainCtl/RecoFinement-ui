@@ -1,6 +1,7 @@
 <div class="container-fluid" *ngIf="authService.isUserLoggedIn()">
   <app-menu></app-menu>
 </div>
-<div class="container-fluid h-100">
+<div class="container-fluid h-100" style="position: relative;">
   <router-outlet></router-outlet>
+  <app-notification style="position: absolute; top: 0; right: 0; width:25%;"></app-notification>
 </div>

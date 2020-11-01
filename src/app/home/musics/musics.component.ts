@@ -1,34 +1,14 @@
-import {
-  MatDialog,
-  MatDialogRef
-} from '@angular/material/dialog';
-import {
-  TrackService
-} from 'src/app/services/media/track.service';
-import {
-  Component, OnInit
-} from '@angular/core';
-import {
-  MatSnackBar,
-  MatSnackBarConfig
-} from '@angular/material/snack-bar';
-import {
-  TrackResponseDto
-} from 'src/app/shared/models/DtoResponse/musics/track-dto.model';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { TrackService } from 'src/app/services/media/track.service';
+import { Component, OnInit } from '@angular/core';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { TrackResponseDto } from 'src/app/shared/models/DtoResponse/musics/track-dto.model';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 
-import {
-  Overlay
-} from '@angular/cdk/overlay';
-import {
-  Track
-} from 'src/app/shared/models/DtoResponse/musics/Track.model';
-import {
-  PreviewComponent
-} from 'src/app/home/musics/preview/preview.component';
-import {
-  PopupComponent
-} from 'src/app/shared/modals/popup/popup.component';
+import { Overlay } from '@angular/cdk/overlay';
+import { Track } from 'src/app/shared/models/DtoResponse/musics/Track.model';
+import { PreviewComponent } from 'src/app/home/musics/preview/preview.component';
+import { PopupComponent } from 'src/app/shared/modals/popup/popup.component';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -63,7 +43,7 @@ export class MusicsComponent implements OnInit  {
     panelClass: ['shadow-none', 'm-0', 'p-0', 'w-100']
   };
 
-  nextPage = 3;
+  nextPage = 2;
   finished = true;
   noTracks = true;
 
@@ -75,7 +55,7 @@ export class MusicsComponent implements OnInit  {
   filteredMusic: Observable<Track[]>;
 
   ngOnInit(): void {
-    this.trackService.getTracks(2).then((result: TrackResponseDto) => {
+    this.trackService.getPopularTracks().then((result: TrackResponseDto) => {
       this.trackResponse = result;
       if (result.number_of_elements !== 0) {
         this.noTracks = false;
@@ -130,6 +110,29 @@ export class MusicsComponent implements OnInit  {
 
   openPreview(index: number): void {
 
+    if (this.dialog.getDialogById('musicPreview') !== undefined) {
+      this.dialog.getDialogById('musicPreview').close();
+    }
+
+    setTimeout(() => {
+
+      this.dialog.open(PreviewComponent, {
+        data: this.trackResponse.content[index],
+        width: '100%',
+        hasBackdrop: false,
+        position: {
+          bottom: '0'
+        },
+        scrollStrategy: this.overlay.scrollStrategies.noop(),
+        panelClass: ['shadow-none', 'fullPageWidth'],
+        id: 'musicPreview'
+      });
+
+    }, 200);
+
+
+    // this.dialog.getDialogById('musicPreview')._containerInstance._config.data = this.trackResponse.content[index];
+
     this.savePlayCount(index);
 
     this.bottom.open(PreviewComponent, {
@@ -165,7 +168,7 @@ export class MusicsComponent implements OnInit  {
     }
 
     if (searchTerm.length === 0) {
-      this.trackService.getTracks(2).then((result: TrackResponseDto) => {
+      this.trackService.getPopularTracks().then((result: TrackResponseDto) => {
         this.trackResponse = result;
         this.searchActivated = false;
         if (result.number_of_elements !== 0) {

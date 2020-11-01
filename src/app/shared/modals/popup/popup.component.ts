@@ -51,7 +51,7 @@ export class PopupComponent implements OnInit {
         this.appUserMeta = result.content;
       });
     }
-    if(this.item.track_id) {
+    if (this.item.track_id) {
       this.trackService.getUserMeta(this.item.track_id).then((result: TrackMetaResponseDto) => {
         this.trackUserMeta = result.content;
       });

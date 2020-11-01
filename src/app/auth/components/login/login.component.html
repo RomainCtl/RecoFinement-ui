@@ -9,7 +9,7 @@
     <input ngModel type="email" name="email" class="form-control" placeholder="Email address" required autofocus>
     <label for="inputPassword" class="sr-only">Password</label>
     <input ngModel type="password" name="password" class="form-control" placeholder="Password" required>
-    <div *ngIf="!loginHttpResponse.status && loginHttpResponse.errors">
+    <!-- <div *ngIf="!loginHttpResponse.status && loginHttpResponse.errors">
       <div *ngFor="let error of loginHttpResponse.errors" class="alert alert-danger" role="alert">
         {{ error }}
       </div>
@@ -18,7 +18,7 @@
       <div class="alert alert-danger" role="alert">
         {{ loginHttpResponse.message }}
       </div>
-    </div>
+    </div> -->
     <button mat-raised-button color="primary" type="submit" class="w-100 h5 mb-2">Sign in</button>
     <a routerLink="/register">Create an account</a>
     <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
