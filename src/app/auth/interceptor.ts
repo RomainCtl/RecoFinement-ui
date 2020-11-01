@@ -6,11 +6,19 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, Htt
 import { Observable, timer } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { ErrorService } from '../services/error/error.service';
+
+declare var $: any;
 
 @Injectable()
 export class Interceptor implements HttpInterceptor {
 
-    constructor(private cookie: CookieService, private router: Router, private dialog: MatDialog) { }
+    constructor(
+      private cookie: CookieService,
+      private router: Router,
+      private dialog: MatDialog,
+      private error: ErrorService,
+    ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -25,7 +33,11 @@ export class Interceptor implements HttpInterceptor {
                 // do something on response
             }
           }, (err: any) => {
-            if (err instanceof HttpErrorResponse && err.status === 401) {
+            console.log(err);
+            if ( err.status === 400 ) {
+              this.error.addError(this.error.msg400error);
+            }
+            else if (err instanceof HttpErrorResponse && err.status === 401) {
                 const dialogRef = this.dialog.open(RedirectConfirmationComponent, {
                     disableClose: true
                 });
@@ -36,6 +48,22 @@ export class Interceptor implements HttpInterceptor {
                         this.router.navigate(['/login']);
                     }, 3000);
                 });
+                this.error.addError(this.error.msg401error);
+            }
+            if ( err.status === 403 ) {
+              this.error.addError(this.error.msg403error);
+            }
+            if ( err.status === 404 ) {
+              this.error.addError(this.error.msg404error);
+            }
+            if ( err.status === 500 || err.status === 503) {
+              this.error.addError(this.error.msg500error);
+            }
+            if ( err.status === 504 ) {
+              this.error.addError(this.error.msg504error);
+            }
+            else {
+              this.error.addError('An unknown error has occurred.');
             }
           })
         );

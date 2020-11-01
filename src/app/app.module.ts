@@ -68,6 +68,8 @@ import { SeriesComponent } from './home/series/series.component';
 import { PreviewComponent } from 'src/app/home/musics/preview/preview.component';
 import { PopupComponent } from 'src/app/shared/modals/popup/popup.component';
 import { InterestsComponent } from 'src/app/auth/components/user/interests/interests.component';
+import { NotificationComponent } from './shared/modals/notification/notification/notification.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -90,7 +92,8 @@ import { InterestsComponent } from 'src/app/auth/components/user/interests/inter
     PreviewComponent,
     SeriesComponent,
     InterestsComponent,
-    RedirectConfirmationComponent
+    RedirectConfirmationComponent,
+    NotificationComponent
   ],
   imports: [
     CommonModule,
@@ -137,7 +140,8 @@ import { InterestsComponent } from 'src/app/auth/components/user/interests/inter
     FlexLayoutModule,
     InfiniteScrollModule,
     MatExpansionModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   providers: [
     PaginationService,

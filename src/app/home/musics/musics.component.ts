@@ -67,7 +67,7 @@ export class MusicsComponent implements OnInit {
     panelClass: ['shadow-none', 'm-0', 'p-0', 'w-100']
   };
 
-  nextPage = 3;
+  nextPage = 2;
   finished = true;
   noTracks = true;
 
@@ -79,7 +79,7 @@ export class MusicsComponent implements OnInit {
   filteredMusic: Observable<Track[]>;
 
   ngOnInit(): void {
-    this.trackService.getTracks(2).then((result: TrackResponseDto) => {
+    this.trackService.getPopularTracks().then((result: TrackResponseDto) => {
       this.trackResponse = result;
       if (result.number_of_elements !== 0) {
         this.noTracks = false;
@@ -186,7 +186,7 @@ export class MusicsComponent implements OnInit {
     }
 
     if (searchTerm.length === 0) {
-      this.trackService.getTracks(2).then((result: TrackResponseDto) => {
+      this.trackService.getPopularTracks().then((result: TrackResponseDto) => {
         this.trackResponse = result;
         this.searchActivated = false;
         if (result.number_of_elements !== 0) {

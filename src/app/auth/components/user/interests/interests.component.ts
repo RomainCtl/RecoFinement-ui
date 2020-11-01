@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar, MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { Observable, from } from 'rxjs';
 import { ApplicationService } from 'src/app/services/media/application.service';
@@ -135,6 +135,7 @@ export class InterestsComponent implements OnInit {
   initSnack(media: string): MatSnackBarRef<TextOnlySnackBar> {
     const snack = this.snackBar.open(media + ' interests saved', 'UNDO', {
       duration: 2000,
+      horizontalPosition: 'end'
     });
     snack.onAction().subscribe(() => {
       this.save = false;
@@ -185,7 +186,8 @@ export class InterestsComponent implements OnInit {
   initErrorMessage(msg: string): void {
     this.snackBar.open(msg, '', {
       duration: 10000,
-      panelClass: ['custom-style']
+      panelClass: ['custom-style'],
+      horizontalPosition: 'start'
     });
   }
 
