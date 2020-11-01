@@ -17,6 +17,8 @@ export class AuthService {
   private _registerUrl = 'http://localhost:4040/api/auth/register';
   private _loginUrl = 'http://localhost:4040/api/auth/login';
   private _logoutUrl = 'http://localhost:4040/api/auth/logout';
+  private urlForgetPassword = 'http://127.0.0.1:4040/api/auth/forget';
+  private urlResetPassword = 'http://127.0.0.1:4040/api/auth/reset';
 
   redirectUrl: string;
 
@@ -50,6 +52,14 @@ export class AuthService {
       console.log(error);
       // this.cookie.delete('access_token', '/');
     });
+  }
+
+  forgetPassword(email: any): Promise<any> {
+    return this.http.post<any>(this.urlForgetPassword, email).toPromise();
+  }
+
+  resetPassword(token: string, formPassword: any): Promise<any> {
+    return this.http.post<any>(this.urlResetPassword, { reset_password_token: token, password: formPassword.newPassword}).toPromise();
   }
 
 }

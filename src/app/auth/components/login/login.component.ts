@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ForgetPasswordComponent } from '../user/forget-password/forget-password.component';
 
 @Component({
   selector: 'app-login',
@@ -25,9 +26,21 @@ export class LoginComponent implements OnInit {
     access_token: '',
     errors: ['']
   };
-  constructor(private _auth: AuthService, private _router: Router, private cookie: CookieService, private dialog: MatDialog) {  }
+  constructor(
+    private _auth: AuthService,
+    private _router: Router,
+    private cookie: CookieService,
+    private dialog: MatDialog) {  }
 
   ngOnInit(): void { }
+
+  resetPassword(): void {
+    this.dialog.open(ForgetPasswordComponent, {
+      panelClass: ['shadow-none', 'w-25'],
+      hasBackdrop: true,
+      backdropClass: 'blur'
+    });
+  }
 
   login(values: UserLoginDtoRequest): void {
     this._auth.login(values)
