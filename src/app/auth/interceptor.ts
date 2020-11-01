@@ -33,11 +33,10 @@ export class Interceptor implements HttpInterceptor {
                 // do something on response
             }
           }, (err: any) => {
-            console.log(err);
-            if ( err.status === 400 ) {
-              this.error.addError(this.error.msg400error);
-            }
-            else if (err instanceof HttpErrorResponse && err.status === 401) {
+            // if ( err.status === 400 ) {
+            //   this.error.addError(this.error.msg400error);
+            // }
+            if (err instanceof HttpErrorResponse && err.status === 401) {
                 const dialogRef = this.dialog.open(RedirectConfirmationComponent, {
                     disableClose: true
                 });
@@ -50,21 +49,21 @@ export class Interceptor implements HttpInterceptor {
                 });
                 this.error.addError(this.error.msg401error);
             }
-            if ( err.status === 403 ) {
-              this.error.addError(this.error.msg403error);
-            }
-            if ( err.status === 404 ) {
-              this.error.addError(this.error.msg404error);
-            }
-            if ( err.status === 500 || err.status === 503) {
-              this.error.addError(this.error.msg500error);
-            }
-            if ( err.status === 504 ) {
-              this.error.addError(this.error.msg504error);
-            }
-            else {
-              this.error.addError('An unknown error has occurred.');
-            }
+            // else if ( err.status === 403 ) {
+            //   this.error.addError(this.error.msg403error);
+            // }
+            // else if ( err.status === 404 ) {
+            //   this.error.addError(this.error.msg404error);
+            // }
+            // else if ( err.status === 500 || err.status === 503) {
+            //   this.error.addError(this.error.msg500error);
+            // }
+            // else if ( err.status === 504 ) {
+            //   this.error.addError(this.error.msg504error);
+            // }
+            // else {
+            //   this.error.addError('An unknown error has occurred.');
+            // }
           })
         );
     }

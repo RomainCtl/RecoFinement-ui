@@ -4,9 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
-import { ErrorService } from 'src/app/services/error/error.service';
 import { ApplicationService } from 'src/app/services/media/application.service';
-import { ToastService } from 'src/app/services/notification/toast.service';
 import { PopupComponent } from 'src/app/shared/modals/popup/popup.component';
 import { ApplicationResponseDto } from 'src/app/shared/models/DtoResponse/applications/application-dto.model';
 import { Application } from 'src/app/shared/models/DtoResponse/applications/application.model';
@@ -22,7 +20,6 @@ export class ApplicationsComponent implements OnInit {
     private appService: ApplicationService,
     private mainSnackBar: MatSnackBar,
     public dialog: MatDialog,
-    private toastService: ToastService
   ) { }
 
   appResponse: ApplicationResponseDto = {

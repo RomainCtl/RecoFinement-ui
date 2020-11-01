@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorService } from 'src/app/services/error/error.service';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,11 @@ export class LoginComponent implements OnInit {
     access_token: '',
     errors: ['']
   };
-  constructor(private _auth: AuthService, private _router: Router, private cookie: CookieService, private dialog: MatDialog) {  }
+  constructor(
+    private _auth: AuthService,
+    private _router: Router,
+    private cookie: CookieService,
+    private errorService: ErrorService) {  }
 
   ngOnInit(): void { }
 
@@ -40,6 +45,13 @@ export class LoginComponent implements OnInit {
       }
     ).catch((result: HttpErrorResponse) => {
       this.loginHttpResponse = result.error;
+      if (this.loginHttpResponse.errors) {
+        for (const err of this.loginHttpResponse.errors) {
+          this.errorService.addError(err);
+        }
+      } else {
+        this.errorService.addError(this.loginHttpResponse.message);
+      }
     });
   }
 
