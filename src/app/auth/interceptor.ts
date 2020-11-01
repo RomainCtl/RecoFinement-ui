@@ -7,6 +7,7 @@ import { Observable, timer } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ErrorService } from '../services/error/error.service';
+import { AuthService } from '../services/auth.service';
 
 declare var $: any;
 
@@ -17,6 +18,7 @@ export class Interceptor implements HttpInterceptor {
       private cookie: CookieService,
       private router: Router,
       private dialog: MatDialog,
+      private auth: AuthService,
       private error: ErrorService,
     ) { }
 
@@ -33,10 +35,7 @@ export class Interceptor implements HttpInterceptor {
                 // do something on response
             }
           }, (err: any) => {
-            // if ( err.status === 400 ) {
-            //   this.error.addError(this.error.msg400error);
-            // }
-            if (err instanceof HttpErrorResponse && err.status === 401) {
+            if (err instanceof HttpErrorResponse && err.status === 401 && this.auth.isUserLoggedIn()) {
                 const dialogRef = this.dialog.open(RedirectConfirmationComponent, {
                     disableClose: true
                 });
@@ -49,21 +48,15 @@ export class Interceptor implements HttpInterceptor {
                 });
                 this.error.addError(this.error.msg401error);
             }
-            // else if ( err.status === 403 ) {
-            //   this.error.addError(this.error.msg403error);
-            // }
-            // else if ( err.status === 404 ) {
-            //   this.error.addError(this.error.msg404error);
-            // }
-            // else if ( err.status === 500 || err.status === 503) {
-            //   this.error.addError(this.error.msg500error);
-            // }
-            // else if ( err.status === 504 ) {
-            //   this.error.addError(this.error.msg504error);
-            // }
-            // else {
-            //   this.error.addError('An unknown error has occurred.');
-            // }
+            else if ( err.status === 500 || err.status === 503) {
+              this.error.addError(this.error.msg500error);
+            }
+            else if ( err.status === 504 ) {
+              this.error.addError(this.error.msg504error);
+            }
+            else if ( err.status === 0) {
+              this.error.addError('An unknown error has occurred.');
+            }
           })
         );
     }
