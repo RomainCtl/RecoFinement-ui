@@ -21,4 +21,6 @@ export class UserService {
   getGenre(): Promise<any> {
     return this.httpClient.get<any>(this.urlGenreUser).toPromise();
   }
+
+  
 }

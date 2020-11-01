@@ -10,6 +10,7 @@ declare var $: any;
 })
 export class NotificationComponent implements OnInit {
 
+  title = '';
   error = '';
   id = '';
 

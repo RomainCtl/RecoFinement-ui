@@ -1,3 +1,4 @@
+import { ResetPasswordComponent } from './auth/components/user/reset-password/reset-password.component';
 import { SeriesComponent } from './home/series/series.component';
 import { AuthReverseGuard } from './auth/auth-reverse.guard';
 import { BooksComponent } from './home/books/books.component';
@@ -75,6 +76,11 @@ const routes: Routes = [
       path: 'user/interest',
       component: InterestsComponent,
       canActivate: [AuthGuard]
+    },
+    {
+      path: 'reset/:token',
+      component: ResetPasswordComponent,
+      canActivate: [AuthReverseGuard]
     },
     {
       path: '**',

@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ForgetPasswordComponent } from '../user/forget-password/forget-password.component';
 import { ErrorService } from 'src/app/services/error/error.service';
 
 @Component({
@@ -30,9 +31,17 @@ export class LoginComponent implements OnInit {
     private _auth: AuthService,
     private _router: Router,
     private cookie: CookieService,
-    private errorService: ErrorService) {  }
+    private dialog: MatDialog) {  }
 
   ngOnInit(): void { }
+
+  resetPassword(): void {
+    this.dialog.open(ForgetPasswordComponent, {
+      panelClass: ['shadow-none', 'w-25'],
+      hasBackdrop: true,
+      backdropClass: 'blur'
+    });
+  }
 
   login(values: UserLoginDtoRequest): void {
     this._auth.login(values)
@@ -43,16 +52,7 @@ export class LoginComponent implements OnInit {
         // document.cookie = 'access_token=' + this.loginHttpResponse.access_token + '; path:/';
         this._router.navigate(['app']);
       }
-    ).catch((result: HttpErrorResponse) => {
-      this.loginHttpResponse = result.error;
-      if (this.loginHttpResponse.errors) {
-        for (const err of this.loginHttpResponse.errors) {
-          this.errorService.addError(err);
-        }
-      } else {
-        this.errorService.addError(this.loginHttpResponse.message);
-      }
-    });
+    );
   }
 
 }

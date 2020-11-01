@@ -1,3 +1,4 @@
+import { ErrorService } from 'src/app/services/error/error.service';
 import { Component, OnInit } from '@angular/core';
 
 import { ApplicationService } from 'src/app/services/media/application.service';
@@ -9,7 +10,6 @@ import { TrackService } from 'src/app/services/media/track.service';
 
 import { MatDialog } from '@angular/material/dialog';
 import { DialogConfirmationComponent } from './dialog-confirmation/dialog-confirmation.component';
-import { ErrorService } from 'src/app/services/error/error.service';
 
 @Component({
   selector: 'app-preference',

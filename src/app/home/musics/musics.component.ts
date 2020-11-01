@@ -110,29 +110,6 @@ export class MusicsComponent implements OnInit  {
 
   openPreview(index: number): void {
 
-    if (this.dialog.getDialogById('musicPreview') !== undefined) {
-      this.dialog.getDialogById('musicPreview').close();
-    }
-
-    setTimeout(() => {
-
-      this.dialog.open(PreviewComponent, {
-        data: this.trackResponse.content[index],
-        width: '100%',
-        hasBackdrop: false,
-        position: {
-          bottom: '0'
-        },
-        scrollStrategy: this.overlay.scrollStrategies.noop(),
-        panelClass: ['shadow-none', 'fullPageWidth'],
-        id: 'musicPreview'
-      });
-
-    }, 200);
-
-
-    // this.dialog.getDialogById('musicPreview')._containerInstance._config.data = this.trackResponse.content[index];
-
     this.savePlayCount(index);
 
     this.bottom.open(PreviewComponent, {
@@ -142,7 +119,6 @@ export class MusicsComponent implements OnInit  {
       scrollStrategy: this.overlay.scrollStrategies.noop(),
       direction: 'ltr'
     });
-
 
   }
 
