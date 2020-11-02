@@ -23,6 +23,7 @@
       </mat-chip-list>
       <mat-menu #menu="matMenu" class="mt-4">
         <button mat-menu-item [routerLink]="['user/interest']">Manage profile</button>
+        <button mat-menu-item [routerLink]="['user/history/tracks']">Track history</button>
         <button mat-menu-item (click)="logOut()">Sign out</button>
       </mat-menu>
     </div>

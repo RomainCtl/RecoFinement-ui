@@ -1,7 +1,8 @@
-import { TrackResponseDto } from '../../shared/models/DtoResponse/musics/track-dto.model';
+import { TrackResponseDto } from 'src/app/shared/models/DtoResponse/musics/track-dto.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TrackMetaResponseDto } from 'src/app/shared/models/DtoResponse/musics/track-meta.model';
+import { TrackHistoryResponseDto } from 'src/app/shared/models/DtoResponse/musics/track-history.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class TrackService {
   private urlGetGenreTracks = 'http://127.0.0.1:4040/api/track/genres';
   private urlSearchTracks = 'http://127.0.0.1:4040/api/track/search/';
   private urlUserMeta = 'http://127.0.0.1:4040/api/track/';
+  private urlGetHistoryTracks = 'http://127.0.0.1:4040/api/track/history?page=';
 
 
   constructor(private httpClient: HttpClient) { }
@@ -21,8 +23,12 @@ export class TrackService {
     return this.httpClient.get<TrackResponseDto>(this.urlGetTracks + page).toPromise();
   }
 
-  getPopularTracks(): Promise<any> {
-    return this.httpClient.get<any>(this.urlGetPopularTracks).toPromise();
+  getPopularTracks(): Promise<TrackResponseDto> {
+    return this.httpClient.get<TrackResponseDto>(this.urlGetPopularTracks).toPromise();
+  }
+
+  getHistoryTracks(page: number): Promise<TrackHistoryResponseDto> {
+    return this.httpClient.get<TrackHistoryResponseDto>(this.urlGetHistoryTracks + page).toPromise();
   }
 
   searchTracks(searchTerm: string): Promise<TrackResponseDto> {

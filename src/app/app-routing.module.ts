@@ -15,6 +15,7 @@ import { MoviesComponent } from './home/movies/movies.component';
 import { MusicsComponent } from './home/musics/musics.component';
 import { PreferenceComponent } from './auth/components/preferences/preference.component';
 import { InterestsComponent } from './auth/components/user/interests/interests.component';
+import { HistoryTracksComponent } from './auth/components/user/history-tracks/history-tracks.component';
 
 const routes: Routes = [
   {
@@ -75,6 +76,11 @@ const routes: Routes = [
     {
       path: 'user/interest',
       component: InterestsComponent,
+      canActivate: [AuthGuard]
+    },
+    {
+      path: 'user/history/tracks',
+      component: HistoryTracksComponent,
       canActivate: [AuthGuard]
     },
     {
