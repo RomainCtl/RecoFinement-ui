@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private urlGenreUser = 'http://127.0.0.1:4040/api/user/genre';
+  private urlGenreUser = environment.api_url + '/user/genre';
 
   constructor(private httpClient: HttpClient) { }
 

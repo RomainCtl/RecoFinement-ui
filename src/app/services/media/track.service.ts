@@ -2,17 +2,18 @@ import { TrackResponseDto } from '../../shared/models/DtoResponse/musics/track-d
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TrackMetaResponseDto } from 'src/app/shared/models/DtoResponse/musics/track-meta.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TrackService {
 
-  private urlGetTracks = 'http://127.0.0.1:4040/api/track?page=';
-  private urlGetPopularTracks = 'http://127.0.0.1:4040/api/track?page=1';
-  private urlGetGenreTracks = 'http://127.0.0.1:4040/api/track/genres';
-  private urlSearchTracks = 'http://127.0.0.1:4040/api/track/search/';
-  private urlUserMeta = 'http://127.0.0.1:4040/api/track/';
+  private urlGetTracks = environment.api_url + '/track?page=';
+  private urlGetPopularTracks = environment.api_url + '/track?page=1';
+  private urlGetGenreTracks = environment.api_url + '/track/genres';
+  private urlSearchTracks = environment.api_url + '/track/search/';
+  private urlUserMeta = environment.api_url + '/track/';
 
 
   constructor(private httpClient: HttpClient) { }

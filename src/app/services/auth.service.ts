@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserLoginDtoResponse } from '../shared/models/DtoResponse/user-login.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,15 +15,15 @@ export class AuthService {
 
   private preferenceState: boolean = false;
 
-  private _registerUrl = 'http://localhost:4040/api/auth/register';
-  private _loginUrl = 'http://localhost:4040/api/auth/login';
-  private _logoutUrl = 'http://localhost:4040/api/auth/logout';
-  private urlForgetPassword = 'http://127.0.0.1:4040/api/auth/forget';
-  private urlResetPassword = 'http://127.0.0.1:4040/api/auth/reset';
+  private _registerUrl = environment.api_url + '/api/auth/register';
+  private _loginUrl = environment.api_url + '/api/auth/login';
+  private _logoutUrl = environment.api_url + '/api/auth/logout';
+  private urlForgetPassword = environment.api_url + '/api/auth/forget';
+  private urlResetPassword = environment.api_url + '/api/auth/reset';
 
   redirectUrl: string;
 
-  constructor(private http: HttpClient, private router: Router, private cookie: CookieService) {  }
+  constructor(private http: HttpClient, private router: Router, private cookie: CookieService) { }
 
   login(user: UserLoginDtoRequest): Promise<UserLoginDtoResponse> {
     return this.http.post<UserLoginDtoResponse>(this._loginUrl, user).toPromise();
@@ -45,7 +46,7 @@ export class AuthService {
   }
 
   logout(): void {
-    this.http.post(this._logoutUrl, null).toPromise().then( () => {
+    this.http.post(this._logoutUrl, null).toPromise().then(() => {
       this.cookie.delete('access_token', '/');
       this.router.navigate(['/']);
     }).catch(error => {
