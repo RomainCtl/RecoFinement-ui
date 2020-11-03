@@ -24,7 +24,7 @@ ARG configuration=production
 ARG server_name=172.17.0.1
 
 # server_name (docker ip) is not the same in linux and windows env (if you are using project recommendations)
-RUN sed -i 's/172.17.0.1/'${server_name}'/g' /app/src/environments/environment.local.ts
+RUN sh -c 'sed -i "s/172.17.0.1/$(echo ${server_name})/g" /app/src/environments/environment.local.ts'
 
 RUN npm run build -- --output-path=./dist/out --configuration=$configuration
 
