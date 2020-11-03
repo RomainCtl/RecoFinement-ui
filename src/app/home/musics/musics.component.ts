@@ -110,7 +110,7 @@ export class MusicsComponent implements OnInit  {
 
   openPreview(index: number): void {
 
-    this.savePlayCount(index);
+    this.savePlayCount(this.trackResponse.content[index].track_id);
 
     this.bottom.open(PreviewComponent, {
       data: this.trackResponse.content[index],
@@ -158,6 +158,7 @@ export class MusicsComponent implements OnInit  {
   }
 
   savePlayCount(id: number): void {
+    console.log(id);
     this.trackService.savePlayCount(id, { additional_play_count: 1 });
   }
 }

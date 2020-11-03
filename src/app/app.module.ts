@@ -54,6 +54,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieService } from 'ngx-cookie-service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { CommonModule } from '@angular/common';
 import { ApplicationsComponent } from './home/applications/applications.component';
@@ -72,8 +73,7 @@ import { InterestsComponent } from 'src/app/auth/components/user/interests/inter
 import { ResetPasswordComponent } from './auth/components/user/reset-password/reset-password.component';
 import { ForgetPasswordComponent } from './auth/components/user/forget-password/forget-password.component';
 import { NotificationComponent } from './shared/modals/notification/notification/notification.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { HistoryTracksComponent } from './auth/components/user/history-tracks/history-tracks.component';
 
 @NgModule({
   declarations: [
@@ -98,7 +98,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     RedirectConfirmationComponent,
     ResetPasswordComponent,
     ForgetPasswordComponent,
-    NotificationComponent
+    NotificationComponent,
+    HistoryTracksComponent
   ],
   imports: [
     CommonModule,
