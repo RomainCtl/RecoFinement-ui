@@ -15,11 +15,11 @@ export class AuthService {
 
   private preferenceState: boolean = false;
 
-  private _registerUrl = environment.api_url + '/api/auth/register';
-  private _loginUrl = environment.api_url + '/api/auth/login';
-  private _logoutUrl = environment.api_url + '/api/auth/logout';
-  private urlForgetPassword = environment.api_url + '/api/auth/forget';
-  private urlResetPassword = environment.api_url + '/api/auth/reset';
+  private _registerUrl = environment.api_url + '/auth/register';
+  private _loginUrl = environment.api_url + '/auth/login';
+  private _logoutUrl = environment.api_url + '/auth/logout';
+  private urlForgetPassword = environment.api_url + '/auth/forget';
+  private urlResetPassword = environment.api_url + '/auth/reset';
 
   redirectUrl: string;
 

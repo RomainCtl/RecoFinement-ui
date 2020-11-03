@@ -10,12 +10,12 @@ import { environment } from 'src/environments/environment';
 })
 export class TrackService {
 
-  private urlGetTracks = 'http://127.0.0.1:4040/api/track?page=';
-  private urlGetPopularTracks = 'http://127.0.0.1:4040/api/track?page=1';
-  private urlGetGenreTracks = 'http://127.0.0.1:4040/api/track/genres';
-  private urlSearchTracks = 'http://127.0.0.1:4040/api/track/search/';
-  private urlUserMeta = 'http://127.0.0.1:4040/api/track/';
-  private urlGetHistoryTracks = 'http://127.0.0.1:4040/api/track/history?page=';
+  private urlGetTracks = environment.api_url + '/track?page=';
+  private urlGetPopularTracks = environment.api_url + '/track?page=1';
+  private urlGetGenreTracks = environment.api_url + '/track/genres';
+  private urlSearchTracks = environment.api_url + '/track/search/';
+  private urlUserMeta = environment.api_url + '/track/';
+  private urlGetHistoryTracks = environment.api_url + '/track/history?page=';
 
   constructor(private httpClient: HttpClient) { }
 
