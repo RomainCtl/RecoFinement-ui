@@ -15,9 +15,11 @@ export class AuthService {
 
   private preferenceState: boolean = false;
 
-  private _registerUrl = environment.api_url + '/auth/register';
-  private _loginUrl = environment.api_url + '/auth/login';
-  private _logoutUrl = environment.api_url + '/auth/logout';
+  private _registerUrl = environment.api_url + '/api/auth/register';
+  private _loginUrl = environment.api_url + '/api/auth/login';
+  private _logoutUrl = environment.api_url + '/api/auth/logout';
+  private urlForgetPassword = environment.api_url + '/api/auth/forget';
+  private urlResetPassword = environment.api_url + '/api/auth/reset';
 
   redirectUrl: string;
 
@@ -49,8 +51,15 @@ export class AuthService {
       this.router.navigate(['/']);
     }).catch(error => {
       console.log(error);
-      // this.cookie.delete('access_token', '/');
     });
+  }
+
+  forgetPassword(email: any): Promise<any> {
+    return this.http.post<any>(this.urlForgetPassword, email).toPromise();
+  }
+
+  resetPassword(token: string, formPassword: any): Promise<any> {
+    return this.http.post<any>(this.urlResetPassword, { reset_password_token: token, password: formPassword.newPassword}).toPromise();
   }
 
 }

@@ -1,5 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ErrorService } from './../../../../services/error/error.service';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar, MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { Observable, from } from 'rxjs';
 import { ApplicationService } from 'src/app/services/media/application.service';
@@ -55,7 +56,8 @@ export class InterestsComponent implements OnInit {
     private serieService: SerieService,
     private gameService: GameService,
     private appService: ApplicationService,
-    private userService: UserService)
+    private userService: UserService,
+    private errorService: ErrorService)
   {
     this.waitTrack = from(this.trackService.getGenres());
     this.waitMovie = from(this.movieService.getGenres());
@@ -184,10 +186,7 @@ export class InterestsComponent implements OnInit {
   }
 
   initErrorMessage(msg: string): void {
-    this.snackBar.open(msg, '', {
-      duration: 10000,
-      panelClass: ['custom-style']
-    });
+    this.errorService.addError(msg);
   }
 
   getMyLikedGenre(): Promise<any> {

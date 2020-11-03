@@ -6,11 +6,21 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, Htt
 import { Observable, timer } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { ErrorService } from '../services/error/error.service';
+import { AuthService } from '../services/auth.service';
+
+declare var $: any;
 
 @Injectable()
 export class Interceptor implements HttpInterceptor {
 
-    constructor(private cookie: CookieService, private router: Router, private dialog: MatDialog) { }
+    constructor(
+      private cookie: CookieService,
+      private router: Router,
+      private dialog: MatDialog,
+      private auth: AuthService,
+      private error: ErrorService,
+    ) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -24,8 +34,8 @@ export class Interceptor implements HttpInterceptor {
             if (event instanceof HttpResponse) {
                 // do something on response
             }
-          }, (err: any) => {
-            if (err instanceof HttpErrorResponse && err.status === 401) {
+          }, (err: HttpErrorResponse) => {
+            if (err.status === 401 && this.auth.isUserLoggedIn()) {
                 const dialogRef = this.dialog.open(RedirectConfirmationComponent, {
                     disableClose: true
                 });
@@ -36,6 +46,20 @@ export class Interceptor implements HttpInterceptor {
                         this.router.navigate(['/login']);
                     }, 3000);
                 });
+                this.error.addError(this.error.msg401error);
+            } else if (err.status === 400) {
+              err.error.errors.forEach(element => {
+                this.error.addError(element);
+              });
+            }
+            else if ( err.status === 500 || err.status === 503) {
+              this.error.addError(this.error.msg500error);
+            }
+            else if ( err.status === 504 ) {
+              this.error.addError(this.error.msg504error);
+            }
+            else if ( err.status === 0) {
+              this.error.addError('An unknown error has occurred.');
             }
           })
         );

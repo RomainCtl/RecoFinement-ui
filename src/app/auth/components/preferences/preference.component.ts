@@ -1,3 +1,4 @@
+import { ErrorService } from 'src/app/services/error/error.service';
 import { Component, OnInit } from '@angular/core';
 
 import { ApplicationService } from 'src/app/services/media/application.service';
@@ -25,7 +26,6 @@ export class PreferenceComponent implements OnInit {
   applications = [];
 
   internalError = 'An error was encountered during data recovery';
-  internalErrorStatus = false;
 
   constructor(private trackService: TrackService,
               private movieService: MovieService,
@@ -33,7 +33,8 @@ export class PreferenceComponent implements OnInit {
               private bookService: BookService,
               private gameService: GameService,
               private applicationService: ApplicationService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              private errorService: ErrorService) {
 
     // Get popular tracks
     this.trackService.getPopularTracks()
@@ -84,7 +85,7 @@ export class PreferenceComponent implements OnInit {
       })
       .catch(
         () => {
-          this.internalErrorStatus = true;
+          this.errorService.addError(this.internalError);
         }
       );
   }

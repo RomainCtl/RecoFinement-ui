@@ -14,6 +14,7 @@ export class Application {
   size: string;
   content_rating: string;
   reviews: number;
+  cover: string;
 
   constructor(app_id: string ) {}
 

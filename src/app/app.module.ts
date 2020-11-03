@@ -69,6 +69,10 @@ import { SeriesComponent } from './home/series/series.component';
 import { PreviewComponent } from 'src/app/home/musics/preview/preview.component';
 import { PopupComponent } from 'src/app/shared/modals/popup/popup.component';
 import { InterestsComponent } from 'src/app/auth/components/user/interests/interests.component';
+import { ResetPasswordComponent } from './auth/components/user/reset-password/reset-password.component';
+import { ForgetPasswordComponent } from './auth/components/user/forget-password/forget-password.component';
+import { NotificationComponent } from './shared/modals/notification/notification/notification.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -91,7 +95,10 @@ import { InterestsComponent } from 'src/app/auth/components/user/interests/inter
     PreviewComponent,
     SeriesComponent,
     InterestsComponent,
-    RedirectConfirmationComponent
+    RedirectConfirmationComponent,
+    ResetPasswordComponent,
+    ForgetPasswordComponent,
+    NotificationComponent
   ],
   imports: [
     CommonModule,
@@ -139,7 +146,8 @@ import { InterestsComponent } from 'src/app/auth/components/user/interests/inter
     InfiniteScrollModule,
     MatBottomSheetModule,
     MatExpansionModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgbModule
   ],
   providers: [
     PaginationService,

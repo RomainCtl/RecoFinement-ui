@@ -62,3 +62,8 @@
 ::ng-deep .blur {
   backdrop-filter: blur(6px);
 }
+
+::ng-deep .error {
+  background-color:brown;
+  color:white;
+}
