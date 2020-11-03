@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MovieService {
 
-  private urlGetPopularMovies = 'http://127.0.0.1:4040/api/movie?page=1';
-  private urlGetGenreMovies = 'http://127.0.0.1:4040/api/movie/genres';
+  private urlGetPopularMovies = environment.api_url + '/movie?page=1';
+  private urlGetGenreMovies = environment.api_url + '/movie/genres';
 
   constructor(private httpClient: HttpClient) { }
 

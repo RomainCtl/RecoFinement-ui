@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TrackMetaResponseDto } from 'src/app/shared/models/DtoResponse/musics/track-meta.model';
 import { TrackHistoryResponseDto } from 'src/app/shared/models/DtoResponse/musics/track-history.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,6 @@ export class TrackService {
   private urlSearchTracks = 'http://127.0.0.1:4040/api/track/search/';
   private urlUserMeta = 'http://127.0.0.1:4040/api/track/';
   private urlGetHistoryTracks = 'http://127.0.0.1:4040/api/track/history?page=';
-
 
   constructor(private httpClient: HttpClient) { }
 

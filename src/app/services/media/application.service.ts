@@ -2,18 +2,18 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApplicationResponseDto } from 'src/app/shared/models/DtoResponse/applications/application-dto.model';
 import { ApplicationMetaResponseDto } from 'src/app/shared/models/DtoResponse/applications/application-meta.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApplicationService {
 
-  private urlGetApplications = 'http://127.0.0.1:4040/api/application?page=';
-  private urlGetPopularApplications = 'http://127.0.0.1:4040/api/application?page=1';
-  private urlSearchApplication = 'http://127.0.0.1:4040/api/application/search/';
-  private urlGetGenresApplications = 'http://127.0.0.1:4040/api/application/genres';
-  private urlUserMeta = 'http://127.0.0.1:4040/api/application/';
-
+  private urlGetApplications = environment.api_url + '/application?page=';
+  private urlGetPopularApplications = environment.api_url + '/application?page=1';
+  private urlSearchApplication = environment.api_url + '/application/search/';
+  private urlGetGenresApplications = environment.api_url + '/application/genres';
+  private urlUserMeta = environment.api_url + '/application/';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -27,7 +27,7 @@ export class ApplicationService {
 
   searchApplications(searchTerm: string): Promise<ApplicationResponseDto> {
     return this.httpClient.get<ApplicationResponseDto>(this.urlSearchApplication + searchTerm + '?page=1').toPromise();
-}
+  }
 
   getGenres(): Promise<any> {
     return this.httpClient.get<any>(this.urlGetGenresApplications).toPromise();

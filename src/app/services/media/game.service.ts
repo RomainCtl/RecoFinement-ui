@@ -3,16 +3,17 @@ import { GameMeta } from '../../shared/models/DtoResponse/games/GameMeta.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GameResponseDto } from 'src/app/shared/models/DtoResponse/games/games.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
 
-  private urlGetPopularGames = 'http://127.0.0.1:4040/api/game';
-  private urlSearchGames = 'http://127.0.0.1:4040/api/game/search/';
-  private urlGetGenreGames = 'http://127.0.0.1:4040/api/game/genres';
-  private urlUserMeta = 'http://127.0.0.1:4040/api/game/';
+  private urlGetPopularGames = environment.api_url + '/game';
+  private urlSearchGames = environment.api_url + '/game/search/';
+  private urlGetGenreGames = environment.api_url + '/game/genres';
+  private urlUserMeta = environment.api_url + '/game/';
 
   constructor(private httpClient: HttpClient) { }
 

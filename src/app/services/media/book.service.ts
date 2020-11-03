@@ -2,15 +2,16 @@ import { BookMetaResponseDto } from './../../shared/models/DtoResponse/books/boo
 import { BookResponseDto } from 'src/app/shared/models/DtoResponse/books/book-dto.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookService {
 
-  private urlGetPopularBooks = 'http://127.0.0.1:4040/api/book';
-  private urlSearchBooks = 'http://127.0.0.1:4040/api/book/search/';
-  private urlUserMeta = 'http://127.0.0.1:4040/api/book/';
+  private urlGetPopularBooks = environment.api_url + '/book';
+  private urlSearchBooks = environment.api_url + '/book/search/';
+  private urlUserMeta = environment.api_url + '/book/';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -19,7 +20,7 @@ export class BookService {
   }
 
   searchBooks(searchTerm: string): Promise<BookResponseDto> {
-      return this.httpClient.get<BookResponseDto>(this.urlSearchBooks + searchTerm).toPromise();
+    return this.httpClient.get<BookResponseDto>(this.urlSearchBooks + searchTerm).toPromise();
   }
 
   getUserMeta(isbn: number): Promise<BookMetaResponseDto> {
