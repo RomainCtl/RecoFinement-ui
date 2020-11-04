@@ -10,7 +10,7 @@ import { InviteMemberDtoRequest } from 'src/app/shared/models/DtoRequest/invite-
 })
 export class ProfileService {
 
-  private urlGetGroup = 'http://127.0.0.1:4040/api/group';
+  private urlGetGroup = environment.api_url + '/group';
 
   constructor(private httpClient: HttpClient) { }
 
