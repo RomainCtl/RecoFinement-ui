@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { UserRegisterDtoResponse } from './../../../shared/models/DtoResponse/user-register.model';
 import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { ErrorService } from 'src/app/services/error/error.service';
 
 @Component({
   selector: 'app-register',
@@ -30,7 +31,11 @@ export class RegisterComponent implements OnInit {
   passwordConfirmation = '';
 
 
-  constructor(private _auth: AuthService, private _router: Router, private cookie: CookieService) { }
+  constructor(
+    private _auth: AuthService,
+    private _router: Router,
+    private cookie: CookieService,
+    private errorService: ErrorService) { }
 
   ngOnInit(): void {
   }
@@ -46,16 +51,26 @@ export class RegisterComponent implements OnInit {
           localStorage.setItem('username', result.user.username);
           localStorage.setItem('email', result.user.email);
           this.registerHttpResponse = result;
-          document.cookie = 'access_token=' + this.registerHttpResponse.access_token;
+          this.cookie.set('access_token', this.registerHttpResponse.access_token, { expires: 1, sameSite: 'Lax', path: '/' });
+
+          // document.cookie = 'access_token=' + this.registerHttpResponse.access_token;
           this._router.navigate(['register/preferences']);
         }
       ).catch(
         (errors: HttpErrorResponse) => {
           this.registerHttpResponse = errors.error;
+          if (this.registerHttpResponse.errors) {
+            for (const err of this.registerHttpResponse.errors) {
+              this.errorService.addError(err);
+            }
+          } else {
+            this.errorService.addError(this.registerHttpResponse.message);
+          }
         }
       );
     } else {
       this.passwordError = 'Passwords don\'t match';
+      this.errorService.addError(this.passwordError);
     }
   }
 }

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserDataDtoResponse } from 'src/app/shared/models/DtoResponse/user-data.model';
 import { UserDtoResponse } from 'src/app/shared/models/DtoResponse/user.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,8 @@ import { UserDtoResponse } from 'src/app/shared/models/DtoResponse/user.model';
 export class UserService {
 
   private urlGetUser = 'http://127.0.0.1:4040/api/user';
+  private urlGenreUser = environment.api_url + '/user/genre';
+
 
   constructor(private httpClient: HttpClient) { }
 
@@ -26,5 +29,17 @@ export class UserService {
 
   deleteUser(uuid: string): Promise<UserDtoResponse> {
     return this.httpClient.delete<UserDtoResponse>(this.urlGetUser + '/' + uuid).toPromise();
+  }
+
+  postGenre(id: number): Promise<any> {
+    return this.httpClient.put<any>(this.urlGenreUser + '/' + id, {}).toPromise();
+  }
+
+  deleteGenre(id: number): Promise<any> {
+    return this.httpClient.delete<any>(this.urlGenreUser + '/' + id).toPromise();
+  }
+
+  getGenre(): Promise<any> {
+    return this.httpClient.get<any>(this.urlGenreUser).toPromise();
   }
 }

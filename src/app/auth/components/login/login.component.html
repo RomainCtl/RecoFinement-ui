@@ -1,27 +1,35 @@
-<div  class="d-flex w-100 h-100 text-center">
-    <form class="form-signin" #loginForm="ngForm" (ngSubmit)="login(loginForm.value)">
-
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail" class="sr-only">Email address</label>
-    <input ngModel type="email" name="email" class="form-control" placeholder="Email address" required autofocus>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input ngModel type="password" name="password" class="form-control" placeholder="Password" required>
-    <div *ngIf="!loginHttpResponse.status && loginHttpResponse.errors">
-      <div *ngFor="let error of loginHttpResponse.errors" class="alert alert-danger" role="alert">
-        {{ error }}
+<form #loginForm="ngForm" (ngSubmit)="login(loginForm.value)" class="container-fluid h-100 w-25 d-flex justify-content-center align-items-center flex-column text-center">
+  <div class="row h-25">
+    <div class="col">
+      <div class="d-flex justify-content-center">
+        <img src="assets/images/logo.svg" width="500">
       </div>
     </div>
-    <div *ngIf="!loginHttpResponse.status && !loginHttpResponse.errors">
-      <div class="alert alert-danger" role="alert">
-        {{ loginHttpResponse.message }}
-      </div>
+  </div>
+  <div class="row">
+    <h1 class="h2 mb-3 w-100 font-weight-normal">Please sign in</h1>
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <mat-label>Email address</mat-label>
+        <input ngModel type="email" name="email" matInput placeholder="Enter your email" required>
+        <mat-icon matSuffix>email</mat-icon>
+      </mat-form-field>
     </div>
-    <button type="submit" class="btn btn-lg btn-primary btn-block mb-2">Sign in</button>
-    <a routerLink="/register">Create an account</a>
-    <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
-
-
-  </form>
-
-</div>
-
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input ngModel type="password" name="password" matInput placeholder="Enter your password" required>
+        <mat-icon matSuffix>lock</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col d-flex justify-content-center flex-column">
+      <button mat-raised-button color="primary" type="submit" class="h5 mb-2">Sign in</button>
+      <a routerLink="/register" class="mb-5">Create an account</a>
+      <button type="button" mat-stroked-button color="warn" (click)="resetPassword()">I forgot my password!</button>
+    </div>
+  </div>
+</form>

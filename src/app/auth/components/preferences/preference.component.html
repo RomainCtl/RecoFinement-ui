@@ -6,10 +6,6 @@
   </div>
 
   <section>
-    <div *ngIf="this.internalErrorStatus" class="alert alert-danger px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" role="alert">
-      {{ this.internalError }}
-    </div>
-
     <mat-horizontal-stepper [linear]="true" #stepper>
       <mat-step label="Music">
         <div class="container">
@@ -20,8 +16,8 @@
                     [id]="music.track_id"
                     [title]="music.title"
                     [subtitle]="music.artist_name"
-                    [info]="music.year"
-                    [cover]="'https://cdn.pixabay.com/photo/2019/08/28/20/13/music-cover-4437602_1280.jpg'"
+                    [info]=""
+                    [cover]="music.covert_art_url"
                     [type]="'music'"
                 ></app-card-preference>
             </ng-container>
@@ -40,8 +36,8 @@
               [id]="movie.movie_id"
               [title]="movie.title"
               [subtitle]="movie.director"
-              [info]="movie.genres.replaceAll('|', ', ')"
-              [cover]="'https://images.template.net/wp-content/uploads/2017/02/17221912/Printable-Blank-Movie-Poster.jpg'"
+              [info]=""
+              [cover]="movie.cover"
               [type]="'movie'"
               ></app-card-preference>
             </ng-container>
@@ -61,7 +57,7 @@
               [id]="serie.serie_id"
               [title]="serie.title"
               [subtitle]=""
-              [info]="serie.genres.replaceAll(',', ', ')"
+              [info]=""
               [cover]="'https://images.template.net/wp-content/uploads/2017/02/17221912/Printable-Blank-Movie-Poster.jpg'"
               [type]="'serie'"
               ></app-card-preference>
@@ -104,7 +100,7 @@
               [title]="game.name"
               [subtitle]="game.publishers"
               [cover]="game.header_image == null ? 'https://live.staticflickr.com/182/400813834_e0d52410d7_z.jpg' : game.header_image"
-              [info]="game.genres"
+              [info]=""
               [type]="'game'"
               ></app-card-preference>
             </ng-container>
@@ -125,7 +121,7 @@
                   [title]="application.name"
                   [subtitle]=""
                   [cover]=""
-                  [info]="application.genres"
+                  [info]=""
                   [type]="'application'"
               ></app-card-preference>
             </ng-container>

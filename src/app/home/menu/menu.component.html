@@ -1,22 +1,33 @@
 <div class="row">
   <nav class="navbar navbar-light bg-light container-fluid p-3">
-    <div class="col-sm">
+    <div class="col-sm-3">
       <a routerLink="/app" class="navbar-brand">
-        <img src="./assets/images/logo.svg" alt="Logo Recofinement" width="250"/>
+        <img src="./assets/images/logo.svg" alt="Logo Recofinement" width="250" />
       </a>
     </div>
     <div class="col-sm-6 text-center h5">
-      <button mat-button routerLink="/app" [routerLinkActive]="['mat-warn']" [routerLinkActiveOptions]="{exact: true}">Home</button>   
-      <button mat-button [routerLink]="['app/musics']" [routerLinkActive]="['mat-warn']">Musics</button>   
-      <button mat-button [routerLink]="['app/movies']" [routerLinkActive]="['mat-warn']">Movies & Series</button>   
-      <button mat-button [routerLink]="['app/games']" [routerLinkActive]="['mat-warn']">Games</button>   
-      <button mat-button [routerLink]="['app/books']" [routerLinkActive]="['mat-warn']">Books</button>   
-      <button mat-button [routerLink]="['app/applications']" [routerLinkActive]="['mat-warn']">Applications</button>
-      <button mat-button [routerLink]="['app/profile']" [routerLinkActive]="['mat-warn']">Profile</button>
+      <button mat-button routerLink="/app" [routerLinkActive]="['mat-primary']"
+        [routerLinkActiveOptions]="{exact: true}">Home</button>
+      <button mat-button [routerLink]="['app/musics']" [routerLinkActive]="['mat-primary']">Musics</button>
+      <button mat-button [routerLink]="['app/movies']" [routerLinkActive]="['mat-primary']">Movies</button>
+      <button mat-button [routerLink]="['app/series']" [routerLinkActive]="['mat-primary']">Series</button>
+      <button mat-button [routerLink]="['app/games']" [routerLinkActive]="['mat-primary']">Games</button>
+      <button mat-button [routerLink]="['app/books']" [routerLinkActive]="['mat-primary']">Books</button>
+      <button mat-button [routerLink]="['app/applications']" [routerLinkActive]="['mat-primary']">Applications</button>
     </div>
-    <div class="col-sm text-right">
-      <button mat-raised-button color="warn" (click)="logOut()">Log out</button>
+    <div class="col-sm d-flex justify-content-end">
+      <mat-chip-list>
+        <mat-chip [matMenuTriggerFor]="menu" color="warn" selected style="cursor: pointer;">
+          {{ myUsername }}
+          <mat-icon aria-hidden="false" class="ml-2">person</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+      <mat-menu #menu="matMenu" class="mt-4">
+        <button mat-menu-item [routerLink]="['user/profile']">Manage profile</button>
+        <button mat-menu-item [routerLink]="['user/interest']">Interests</button>
+        <button mat-menu-item [routerLink]="['user/history/tracks']">Track history</button>
+        <button mat-menu-item (click)="logOut()">Sign out</button>
+      </mat-menu>
     </div>
   </nav>
 </div>
-

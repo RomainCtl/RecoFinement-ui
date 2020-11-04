@@ -1,4 +1,4 @@
-import { Genre } from './genre.model';
+import { Genre } from './Genre.model';
 export class Track {
     track_id: number;
     title: string;

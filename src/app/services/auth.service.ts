@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserLoginDtoResponse } from '../shared/models/DtoResponse/user-login.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,13 +15,15 @@ export class AuthService {
 
   private preferenceState: boolean = false;
 
-  private _registerUrl = 'http://localhost:4040/api/auth/register';
-  private _loginUrl = 'http://localhost:4040/api/auth/login';
-  private _logoutUrl = 'http://localhost:4040/api/auth/logout';
+  private _registerUrl = environment.api_url + '/auth/register';
+  private _loginUrl = environment.api_url + '/auth/login';
+  private _logoutUrl = environment.api_url + '/auth/logout';
+  private urlForgetPassword = environment.api_url + '/auth/forget';
+  private urlResetPassword = environment.api_url + '/auth/reset';
 
   redirectUrl: string;
 
-  constructor(private http: HttpClient, private router: Router, private cookie: CookieService) {  }
+  constructor(private http: HttpClient, private router: Router, private cookie: CookieService) { }
 
   login(user: UserLoginDtoRequest): Promise<UserLoginDtoResponse> {
     return this.http.post<UserLoginDtoResponse>(this._loginUrl, user).toPromise();
@@ -43,12 +46,20 @@ export class AuthService {
   }
 
   logout(): void {
-    this.http.post(this._logoutUrl, null).toPromise().then( () => {
-      document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+    this.http.post(this._logoutUrl, null).toPromise().then(() => {
+      this.cookie.delete('access_token', '/');
       this.router.navigate(['/']);
     }).catch(error => {
-      console.error(error);
+      console.log(error);
     });
+  }
+
+  forgetPassword(email: any): Promise<any> {
+    return this.http.post<any>(this.urlForgetPassword, email).toPromise();
+  }
+
+  resetPassword(token: string, formPassword: any): Promise<any> {
+    return this.http.post<any>(this.urlResetPassword, { reset_password_token: token, password: formPassword.newPassword}).toPromise();
   }
 
 }

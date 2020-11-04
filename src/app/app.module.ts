@@ -33,6 +33,9 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { AuthReverseGuard } from './auth/auth-reverse.guard';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RedirectConfirmationComponent } from './shared/modals/redirect-confirmation/redirect-confirmation.component';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+
 import { BooksComponent } from './home/books/books.component';
 import { GamesComponent } from './home/games/games.component';
 import { MoviesComponent } from './home/movies/movies.component';
@@ -42,17 +45,18 @@ import { HomeComponent } from './home/home.component';
 import { MenuComponent } from './home/menu/menu.component';
 import { StarRatingModule } from 'angular-star-rating';
 import { AuthGuard } from './auth/auth.guard';
-import { Interceptor } from './shared/interceptor';
+import { Interceptor } from './auth/interceptor';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CookieService } from 'ngx-cookie-service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { CommonModule } from '@angular/common';
 import { ApplicationsComponent } from './home/applications/applications.component';
@@ -64,8 +68,14 @@ import { RegisterComponent } from './auth/components/register/register.component
 import { PaginationService, NgxPaginationModule } from 'ngx-pagination';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-import { PopupComponent } from './home/musics/popup/popup/popup.component';
-
+import { SeriesComponent } from './home/series/series.component';
+import { PreviewComponent } from 'src/app/home/musics/preview/preview.component';
+import { PopupComponent } from 'src/app/shared/modals/popup/popup.component';
+import { InterestsComponent } from 'src/app/auth/components/user/interests/interests.component';
+import { ResetPasswordComponent } from './auth/components/user/reset-password/reset-password.component';
+import { ForgetPasswordComponent } from './auth/components/user/forget-password/forget-password.component';
+import { NotificationComponent } from './shared/modals/notification/notification/notification.component';
+import { HistoryTracksComponent } from './auth/components/user/history-tracks/history-tracks.component';
 
 @NgModule({
   declarations: [
@@ -85,7 +95,15 @@ import { PopupComponent } from './home/musics/popup/popup/popup.component';
     PopupComponent,
     DialogConfirmationComponent,
     ProfileComponent,
-    GroupMembersComponent
+    GroupMembersComponent,
+    PreviewComponent,
+    SeriesComponent,
+    InterestsComponent,
+    RedirectConfirmationComponent,
+    ResetPasswordComponent,
+    ForgetPasswordComponent,
+    NotificationComponent,
+    HistoryTracksComponent
   ],
   imports: [
     CommonModule,
@@ -130,7 +148,11 @@ import { PopupComponent } from './home/musics/popup/popup/popup.component';
     MatPaginatorModule,
     MatBadgeModule,
     FlexLayoutModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    MatBottomSheetModule,
+    MatExpansionModule,
+    ReactiveFormsModule,
+    NgbModule
   ],
   providers: [
     PaginationService,

@@ -1,27 +1,48 @@
-<div  class="d-flex w-100 h-100 text-center">
-<form class="form-signin" #registerForm="ngForm" (ngSubmit)="register(registerForm.value)">
+<div class="d-flex justify-content-center mt-5">
+  <img src="assets/images/logo.svg" width="500">
+</div>
+<div  class="d-flex w-100 h-75 text-center">
+<form #registerForm="ngForm" class="container-fluid h-100 w-25 d-flex justify-content-center align-items-center flex-column text-center" (ngSubmit)="register(registerForm.value)">
 
-    <h1 class="h3 mb-3 font-weight-normal">Please register</h1>
-    <label for="inputEmail" class="sr-only">Email address</label>
-    <input ngModel type="email" name="email" class="form-control" placeholder="Email address" required autofocus>
-    <label for="inputEmail" class="sr-only">Pseudo</label>
-    <input ngModel type="text" name="username" class="form-control" placeholder="Pseudo" required>
-    <label for="inputPassword" class="sr-only">Password</label>
-    <input ngModel type="password" name="password" class="form-control" placeholder="Password" required>
-    <label for="inputPassword" class="sr-only">Password confirmation</label>
-    <input [(ngModel)]="passwordConfirmation" type="password" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Password confirmation" required>
-    <div *ngIf="!registerHttpResponse.status">
-      <div *ngFor="let error of registerHttpResponse.errors" class="alert alert-danger" role="alert">
-        {{ error }}
-      </div>
+  <div class="row">
+    <h1 class="h2 mb-3 w-100 font-weight-normal">Please register</h1>
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <mat-label>Email address</mat-label>
+        <input ngModel type="email" name="email" matInput placeholder="Enter your email" required>
+        <mat-icon matSuffix>email</mat-icon>
+      </mat-form-field>
     </div>
-    <div *ngIf="passwordError.length > 0">
-      <div class="alert alert-danger" role="alert">
-        {{ passwordError }}
-      </div>
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <mat-label>Pseudo</mat-label>
+        <input ngModel type="text" name="username" matInput placeholder="Enter your username" required>
+        <mat-icon matSuffix>account_box</mat-icon>
+      </mat-form-field>
     </div>
-    <button class="btn btn-lg btn-primary btn-block mb-2" type="submit">Register</button>
-    <a routerLink="/login">I already have an account!</a>
-    <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
+  </div>
+  <div class="row">
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input ngModel type="password" name="password" matInput placeholder="Enter your password" required>
+        <mat-icon matSuffix>lock</mat-icon>
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field appearance="outline">
+        <mat-label>Password confirmation</mat-label>
+        <input [(ngModel)]="passwordConfirmation" [ngModelOptions]="{standalone: true}" type="password" matInput placeholder="Enter your password" required>
+        <mat-icon matSuffix>lock</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col d-flex justify-content-center flex-column">
+      <button mat-raised-button color="primary" class="h5 mb-2" type="submit">Register</button>
+      <a routerLink="/login">I already have an account!</a>
+      <p class="mt-5 mb-3 text-muted">&copy; 2020</p>
+    </div>
+  </div>
   </form>
 </div>
