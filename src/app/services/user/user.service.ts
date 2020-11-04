@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class UserService {
 
-  private urlGetUser = 'http://127.0.0.1:4040/api/user';
+  private urlGetUser = environment.api_url + '/user';
   private urlGenreUser = environment.api_url + '/user/genre';
 
 
