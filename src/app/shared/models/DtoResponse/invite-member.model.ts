@@ -8,6 +8,7 @@ export class InviteMemberDtoResponse {
     group: Group;
     members: Member[];
     invitations: Invitation[];
+    errors: [x: string];
 }
 
 

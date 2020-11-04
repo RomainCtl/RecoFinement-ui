@@ -42,17 +42,20 @@ export class RegisterComponent implements OnInit {
 
       this._auth.register(user).then(
         (result: UserRegisterDtoResponse) => {
+          localStorage.setItem('uuid', result.user.uuid);
+          localStorage.setItem('username', result.user.username);
+          localStorage.setItem('email', result.user.email);
           this.registerHttpResponse = result;
           document.cookie = 'access_token=' + this.registerHttpResponse.access_token;
           this._router.navigate(['register/preferences']);
         }
-        ).catch(
-          (errors: HttpErrorResponse) => {
-            this.registerHttpResponse = errors.error;
-          }
-          );
-        } else {
-          this.passwordError = 'Passwords don\'t match';
+      ).catch(
+        (errors: HttpErrorResponse) => {
+          this.registerHttpResponse = errors.error;
         }
-      }
+      );
+    } else {
+      this.passwordError = 'Passwords don\'t match';
+    }
   }
+}

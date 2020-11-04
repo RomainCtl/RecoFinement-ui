@@ -22,8 +22,8 @@ export class ProfileService {
     return this.httpClient.post<GroupDtoResponse>(this.urlGetGroup, payload).toPromise();
   }
 
-  deleteGroup(id: number): void {
-    this.httpClient.delete<void>(this.urlGetGroup + '/' + id);
+  deleteGroup(id: number): Promise<GroupDtoResponse> {
+    return this.httpClient.delete<GroupDtoResponse>(this.urlGetGroup + '/' + id).toPromise();
   }
 
   inviteMember(payload: InviteMemberDtoRequest, id: number): Promise<InviteMemberDtoResponse> {
@@ -34,7 +34,7 @@ export class ProfileService {
     return this.httpClient.put<InviteMemberDtoResponse>(this.urlGetGroup + '/' + id + '/invitations/' + uuid, {}).toPromise();
   }
 
-  deleteInvitation(id: number, uuid: string): Promise<InviteMemberDtoResponse> {
+  declineInvitation(id: number, uuid: string): Promise<InviteMemberDtoResponse> {
     return this.httpClient.delete<InviteMemberDtoResponse>(this.urlGetGroup + '/' + id + '/invitations/' + uuid, {}).toPromise();
   }
 }
