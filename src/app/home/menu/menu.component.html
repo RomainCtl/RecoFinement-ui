@@ -2,11 +2,12 @@
   <nav class="navbar navbar-light bg-light container-fluid p-3">
     <div class="col-sm-3">
       <a routerLink="/app" class="navbar-brand">
-        <img src="./assets/images/logo.svg" alt="Logo Recofinement" width="250"/>
+        <img src="./assets/images/logo.svg" alt="Logo Recofinement" width="250" />
       </a>
     </div>
     <div class="col-sm-6 text-center h5">
-      <button mat-button routerLink="/app" [routerLinkActive]="['mat-primary']" [routerLinkActiveOptions]="{exact: true}">Home</button>
+      <button mat-button routerLink="/app" [routerLinkActive]="['mat-primary']"
+        [routerLinkActiveOptions]="{exact: true}">Home</button>
       <button mat-button [routerLink]="['app/musics']" [routerLinkActive]="['mat-primary']">Musics</button>
       <button mat-button [routerLink]="['app/movies']" [routerLinkActive]="['mat-primary']">Movies</button>
       <button mat-button [routerLink]="['app/series']" [routerLinkActive]="['mat-primary']">Series</button>
@@ -17,17 +18,16 @@
     <div class="col-sm d-flex justify-content-end">
       <mat-chip-list>
         <mat-chip [matMenuTriggerFor]="menu" color="warn" selected style="cursor: pointer;">
-          Username
-          <mat-icon aria-hidden="false"  class="ml-2">person</mat-icon>
+          {{ myUsername }}
+          <mat-icon aria-hidden="false" class="ml-2">person</mat-icon>
         </mat-chip>
       </mat-chip-list>
       <mat-menu #menu="matMenu" class="mt-4">
-        <button mat-menu-item [routerLink]="['user/interest']">Manage profile</button>
+        <button mat-menu-item [routerLink]="['user/profile']">Manage profile</button>
+        <button mat-menu-item [routerLink]="['user/interest']">Interests</button>
         <button mat-menu-item [routerLink]="['user/history/tracks']">Track history</button>
         <button mat-menu-item (click)="logOut()">Sign out</button>
       </mat-menu>
     </div>
   </nav>
 </div>
-
-

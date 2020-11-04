@@ -47,27 +47,30 @@ export class RegisterComponent implements OnInit {
 
       this._auth.register(user).then(
         (result: UserRegisterDtoResponse) => {
+          localStorage.setItem('uuid', result.user.uuid);
+          localStorage.setItem('username', result.user.username);
+          localStorage.setItem('email', result.user.email);
           this.registerHttpResponse = result;
-          this.cookie.set('access_token', this.registerHttpResponse.access_token, {expires: 1, sameSite: 'Lax', path: '/'});
+          this.cookie.set('access_token', this.registerHttpResponse.access_token, { expires: 1, sameSite: 'Lax', path: '/' });
 
           // document.cookie = 'access_token=' + this.registerHttpResponse.access_token;
           this._router.navigate(['register/preferences']);
         }
-        ).catch(
-          (errors: HttpErrorResponse) => {
-            this.registerHttpResponse = errors.error;
-            if (this.registerHttpResponse.errors) {
-              for (const err of this.registerHttpResponse.errors) {
-                this.errorService.addError(err);
-              }
-            } else {
-              this.errorService.addError(this.registerHttpResponse.message);
+      ).catch(
+        (errors: HttpErrorResponse) => {
+          this.registerHttpResponse = errors.error;
+          if (this.registerHttpResponse.errors) {
+            for (const err of this.registerHttpResponse.errors) {
+              this.errorService.addError(err);
             }
+          } else {
+            this.errorService.addError(this.registerHttpResponse.message);
           }
-          );
-        } else {
-          this.passwordError = 'Passwords don\'t match';
-          this.errorService.addError(this.passwordError);
         }
-      }
+      );
+    } else {
+      this.passwordError = 'Passwords don\'t match';
+      this.errorService.addError(this.passwordError);
+    }
   }
+}

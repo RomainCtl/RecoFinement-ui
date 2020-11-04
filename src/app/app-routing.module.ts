@@ -1,3 +1,4 @@
+import { ProfileComponent } from './auth/components/profile/profile.component';
 import { ResetPasswordComponent } from './auth/components/user/reset-password/reset-password.component';
 import { SeriesComponent } from './home/series/series.component';
 import { AuthReverseGuard } from './auth/auth-reverse.guard';
@@ -6,7 +7,7 @@ import { ApplicationsComponent } from './home/applications/applications.componen
 import { AuthGuard } from './auth/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './auth/components/login/login.component';
-import { NgModule  } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { RegisterComponent } from './auth/components/register/register.component';
@@ -44,60 +45,65 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-      path: 'app/applications',
-      component: ApplicationsComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'app/books',
-      component: BooksComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'app/games',
-      component: GamesComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'app/movies',
-      component: MoviesComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'app/series',
-      component: SeriesComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'app/musics',
-      component: MusicsComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'user/interest',
-      component: InterestsComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'user/history/tracks',
-      component: HistoryTracksComponent,
-      canActivate: [AuthGuard]
-    },
-    {
-      path: 'reset/:token',
-      component: ResetPasswordComponent,
-      canActivate: [AuthReverseGuard]
-    },
-    {
-      path: '**',
-      redirectTo: 'login'
-    }
+    path: 'app/applications',
+    component: ApplicationsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'app/books',
+    component: BooksComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'app/games',
+    component: GamesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'app/movies',
+    component: MoviesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'app/series',
+    component: SeriesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'app/musics',
+    component: MusicsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'user/profile',
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'user/interest',
+    component: InterestsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'user/history/tracks',
+    component: HistoryTracksComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'reset/:token',
+    component: ResetPasswordComponent,
+    canActivate: [AuthReverseGuard]
+  },
+  {
+    path: '**',
+    redirectTo: 'login'
+  }
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes)
-],
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

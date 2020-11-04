@@ -12,7 +12,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private _auth: AuthService, private _router: Router, private dialog: MatDialog, private bottom: MatBottomSheet) { }
+  public myUsername;
+
+  constructor(private _auth: AuthService, private _router: Router, private dialog: MatDialog, private bottom: MatBottomSheet) {
+    this.myUsername = localStorage.getItem('username');
+  }
 
   ngOnInit(): void {
   }
