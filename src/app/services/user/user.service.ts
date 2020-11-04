@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserDataDtoResponse } from 'src/app/shared/models/DtoResponse/user-data.model';
 import { UserDtoResponse } from 'src/app/shared/models/DtoResponse/user.model';
-import { environment } from '../../../environments/environment';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
