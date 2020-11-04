@@ -4,6 +4,7 @@ import { GroupDtoResponse } from './../../shared/models/DtoResponse/group.model'
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { InviteMemberDtoRequest } from 'src/app/shared/models/DtoRequest/invite-member.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
