@@ -1,9 +1,12 @@
-<div class="d-flex justify-content-center mt-5">
-  <img src="assets/images/logo.svg" width="500">
-</div>
-<div  class="d-flex w-100 h-75 text-center">
-<form #registerForm="ngForm" class="container-fluid h-100 w-25 d-flex justify-content-center align-items-center flex-column text-center" (ngSubmit)="register(registerForm.value)">
 
+<form #registerForm="ngForm" class="container-fluid h-100 w-25 d-flex justify-content-center align-items-center flex-column text-center" (ngSubmit)="register(registerForm.value)">
+  <div class="row h-25">
+    <div class="col">
+      <div class="d-flex justify-content-center mt-5">
+        <img src="assets/images/logo.svg" style="width:50vmin;">
+      </div>
+    </div>
+  </div>
   <div class="row">
     <h1 class="h2 mb-3 w-100 font-weight-normal">Please register</h1>
     <div class="col">
@@ -45,4 +48,3 @@
     </div>
   </div>
   </form>
-</div>

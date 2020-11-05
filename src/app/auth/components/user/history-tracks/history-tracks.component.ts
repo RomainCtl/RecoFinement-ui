@@ -30,7 +30,7 @@ export class HistoryTracksComponent implements OnInit {
 
   snackBarConfig: MatSnackBarConfig = {
     horizontalPosition: 'start',
-    panelClass: ['shadow-none', 'm-0', 'p-0', 'w-100']
+    duration: 5000
   };
 
   ngOnInit(): void {
@@ -52,7 +52,7 @@ export class HistoryTracksComponent implements OnInit {
       this.getHistoryMusics(this.nextPage);
     } else {
       if (!this.noTracks) {
-        this.mainSnackBar.open('You have reached the end of your history!', 'Alright!');
+        this.mainSnackBar.open('You have reached the end of your history!', 'Alright!', this.snackBarConfig);
       }
       this.finished = true;
     }

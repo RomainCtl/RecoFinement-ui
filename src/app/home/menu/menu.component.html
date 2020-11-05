@@ -1,4 +1,4 @@
-<div class="row">
+<div id="largeMenu" class="row">
   <nav class="navbar navbar-light bg-light container-fluid p-3">
     <div class="col-sm-3">
       <a routerLink="/app" class="navbar-brand">
@@ -24,9 +24,81 @@
       </mat-chip-list>
       <mat-menu #menu="matMenu" class="mt-4">
         <button mat-menu-item [routerLink]="['user/profile']">Manage profile</button>
-        <button mat-menu-item [routerLink]="['user/interest']">Interests</button>
-        <button mat-menu-item [routerLink]="['user/history/tracks']">Track history</button>
+        <button mat-menu-item [routerLink]="['user/interest']">My interests</button>
+        <button mat-menu-item [routerLink]="['user/history/tracks']">Music history</button>
         <button mat-menu-item (click)="logOut()">Sign out</button>
+      </mat-menu>
+    </div>
+  </nav>
+</div>
+<div id="smallMenu" class="row">
+  <nav class="navbar navbar-light bg-light container-fluid p-3">
+    <div class="col">
+      <a routerLink="/app" class="navbar-brand">
+        <img src="./assets/images/logo.svg" alt="Logo Recofinement" style="width:80%;"/>
+      </a>
+    </div>
+    <div class="col d-flex justify-content-end">
+      <button mat-icon-button [matMenuTriggerFor]="smallMenu" class="m-4" aria-label="Example icon-button with a menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #smallMenu="matMenu">
+        <button mat-menu-item routerLink="/app">
+          <mat-icon color="primary">home</mat-icon>
+          <span>Home</span>
+        </button>
+        <button mat-menu-item [matMenuTriggerFor]="librairies">
+          <mat-icon color="primary">local_library</mat-icon>
+          <span>Librairies</span>
+        </button>
+        <mat-menu #librairies="matMenu">
+          <button mat-menu-item [routerLink]="['app/musics']">
+            <mat-icon color="primary">library_music</mat-icon>
+            <span>Musics</span>
+          </button>
+          <button mat-menu-item [routerLink]="['app/movies']">
+            <mat-icon color="primary">movie</mat-icon>
+            <span>Movies</span>
+          </button>
+          <button mat-menu-item [routerLink]="['app/series']">
+            <mat-icon color="primary">slideshow</mat-icon>
+            <span>Series</span>
+          </button>
+          <button mat-menu-item [routerLink]="['app/games']">
+            <mat-icon color="primary">games</mat-icon>
+            <span>Games</span>
+          </button>
+          <button mat-menu-item [routerLink]="['app/books']">
+            <mat-icon color="primary">import_contacts</mat-icon>
+            <span>Books</span>
+          </button>
+          <button mat-menu-item [routerLink]="['app/applications']">
+            <mat-icon color="primary">apps</mat-icon>
+            <span>Applications</span>
+          </button>
+        </mat-menu>
+        <button mat-menu-item [matMenuTriggerFor]="profile">
+          <mat-icon color="primary">account_circle</mat-icon>
+          <span>My profile</span>
+        </button>
+        <mat-menu #profile="matMenu">
+          <button mat-menu-item [routerLink]="['user/profile']">
+            <mat-icon color="primary">settings</mat-icon>
+            <span>Manage my profile</span>
+          </button>
+          <button mat-menu-item [routerLink]="['user/interest']">
+            <mat-icon color="primary">favorite</mat-icon>
+            <span>My interests</span>
+          </button>
+          <button mat-menu-item [routerLink]="['user/history/tracks']">
+            <mat-icon color="primary">history</mat-icon>
+            <span>Music history</span>
+          </button>
+        </mat-menu>
+        <button mat-menu-item (click)="logOut()">
+          <mat-icon color="warn">exit_to_app</mat-icon>
+          <span>Sign out</span>
+        </button>
       </mat-menu>
     </div>
   </nav>
