@@ -10,7 +10,22 @@
   </div>
   <div *ngIf="toggle" class="ml-4">
     <form #inviteForm="ngForm" (ngSubmit)="inviteMember(inviteForm)">
-      <input ngModel name="memberName" placeholder="Pseudo" />
+      <mat-form-field>
+        <input type="text"
+              name="memberName"
+              placeholder="Pseudo"
+              matInput
+              [formControl]="invitationControle"
+              [matAutocomplete]="auto" />
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayUser">
+          <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
+          <ng-container *ngIf="!isLoading">
+            <mat-option *ngFor="let user of filteredOptions" [value]="user">
+              <span>{{ user.username }}</span><small> - {{ user.email }}</small>
+            </mat-option>
+          </ng-container>
+        </mat-autocomplete>
+      </mat-form-field>
       <button mat-icon-button color="primary" type="submit">
         <mat-icon matTooltip="Add">done</mat-icon>
       </button>

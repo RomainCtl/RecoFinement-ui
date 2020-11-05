@@ -19,7 +19,7 @@ export class UserService {
     return this.httpClient.get<UserDtoResponse>(this.urlGetUser + '/' + uuid).toPromise();
   }
 
-  getUserInfo(search_term: string): Promise<UserDataDtoResponse> {
+  searchUser(search_term: string): Promise<UserDataDtoResponse> {
     return this.httpClient.get<UserDataDtoResponse>(this.urlGetUser + '/search/' + search_term).toPromise();
   }
 

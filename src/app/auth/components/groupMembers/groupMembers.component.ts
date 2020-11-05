@@ -1,13 +1,15 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { from } from 'rxjs';
+import { debounceTime, distinctUntilChanged, startWith, switchMap, tap } from 'rxjs/operators';
 import { ProfileService } from 'src/app/services/profile/profile.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { InviteMemberDtoRequest } from 'src/app/shared/models/DtoRequest/invite-member.model';
 import { InviteMemberDtoResponse } from 'src/app/shared/models/DtoResponse/invite-member.model';
 import { UserDataDtoResponse } from 'src/app/shared/models/DtoResponse/user-data.model';
-import { BrowserModule } from '@angular/platform-browser';
+import { Member } from 'src/app/shared/models/member.model';
 
 @Component({
   selector: 'app-groupMembers',
@@ -18,6 +20,10 @@ export class GroupMembersComponent implements OnInit {
 
   public toggle = false;
   public myUsername = localStorage.getItem('username');
+
+  isLoading = false;
+  invitationControle = new FormControl();
+  filteredOptions: Member[] = [];
 
   userDataHttpResponse: UserDataDtoResponse = {
     message: '',
@@ -52,6 +58,26 @@ export class GroupMembersComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.invitationControle.valueChanges.pipe(
+      startWith(''),
+      debounceTime(800),
+      distinctUntilChanged(),
+      tap(() => this.isLoading = true),
+      switchMap(value => {
+        if (value)
+          return from(this.userService.searchUser(value));
+        else
+          return from(this.filteredOptions);
+      })
+    ).subscribe((result: any) => {
+      this.isLoading = false;
+      if (result)
+        return this.filteredOptions = result.content;
+    });
+  }
+
+  displayUser(member: Member): string {
+    return member ? member.username : '';
   }
 
   addMember(): void {
@@ -61,30 +87,25 @@ export class GroupMembersComponent implements OnInit {
     this.inviteMemberHttpResponse.message = '';
   }
 
-  inviteMember(form: NgForm): void {
-    this.userDataHttpResponse.status = true;
+  inviteMember(): void {
     this.inviteMemberHttpResponse.status = true;
     this.inviteMemberHttpResponse.message = '';
-    this.userService.getUserInfo(form.value.memberName).then(
-      (result: UserDataDtoResponse) => {
-        this.userDataHttpResponse = result;
-        if (this.userDataHttpResponse.number_of_elements > 0) {
-          const payload: InviteMemberDtoRequest = { uuid: this.userDataHttpResponse.content[0].uuid };
-          this.profileService.inviteMember(payload, this.data.group.group_id).then(
-            (inviteResult: InviteMemberDtoResponse) => {
-              this.inviteMemberHttpResponse = inviteResult;
-            }
-          ).catch(
-            (inviteErrors: HttpErrorResponse) => {
-              this.inviteMemberHttpResponse.status = inviteErrors.error.status;
-              this.inviteMemberHttpResponse.errors = [inviteErrors.error.message];
-            }
-          );
-        } else {
-          this.userDataHttpResponse.status = false;
-          this.userDataHttpResponse.errors = ['Unknown username'];
+
+    if (this.invitationControle) {
+      const payload: InviteMemberDtoRequest = { uuid: this.invitationControle.value.uuid };
+      this.profileService.inviteMember(payload, this.data.group.group_id).then(
+        (inviteResult: InviteMemberDtoResponse) => {
+          this.inviteMemberHttpResponse = inviteResult;
         }
-      }
-    );
+      ).catch(
+        (inviteErrors: HttpErrorResponse) => {
+          this.inviteMemberHttpResponse.status = inviteErrors.error.status;
+          this.inviteMemberHttpResponse.errors = [inviteErrors.error.message];
+        }
+      );
+    } else {
+      this.userDataHttpResponse.status = false;
+      this.userDataHttpResponse.errors = ['Invitation failed'];
+    }
   }
 }
