@@ -36,6 +36,7 @@ export class GamesComponent implements OnInit {
   nextPage = 2;
   finished = true;
   noGames = true;
+  apiResponse = false;
 
   searchEmpty = false;
   searchActivated = false;
@@ -47,6 +48,7 @@ export class GamesComponent implements OnInit {
   ngOnInit(): void {
     this.gameService.getPopularGames(1).then((result: GameResponseDto) => {
       this.gameResponse = result;
+      this.apiResponse = true;
       if (result.number_of_elements !== 0) {
         this.noGames = false;
       }

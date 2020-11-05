@@ -46,6 +46,7 @@ export class MusicsComponent implements OnInit  {
   nextPage = 2;
   finished = true;
   noTracks = true;
+  apiResponse = false;
 
   searchEmpty = false;
   searchActivated = false;
@@ -57,6 +58,7 @@ export class MusicsComponent implements OnInit  {
   ngOnInit(): void {
     this.trackService.getPopularTracks().then((result: TrackResponseDto) => {
       this.trackResponse = result;
+      this.apiResponse = true;
       if (result.number_of_elements !== 0) {
         this.noTracks = false;
       }
