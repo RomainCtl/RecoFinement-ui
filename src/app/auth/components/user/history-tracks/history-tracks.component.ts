@@ -18,6 +18,7 @@ export class HistoryTracksComponent implements OnInit {
   nextPage = 2;
   finished = true;
   noTracks = true;
+  apiResponse = false;
 
   trackResponse: TrackHistoryResponseDto = {
     status: false,
@@ -36,7 +37,7 @@ export class HistoryTracksComponent implements OnInit {
   ngOnInit(): void {
     this.trackService.getHistoryTracks(1).then((result: TrackHistoryResponseDto) => {
       this.trackResponse = result;
-      console.log(this.trackResponse);
+      this.apiResponse = true;
       if (result.number_of_elements !== 0) {
         this.noTracks = false;
       }
