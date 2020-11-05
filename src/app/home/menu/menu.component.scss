@@ -1,0 +1,40 @@
+.example-container {
+    width: 100%;
+    height: 100%;
+    // border: 1px solid rgba(0, 0, 0, 0.5);
+    background: transparent;
+  }
+  
+  .sidenav-content {
+    display: flex;
+    width:75%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .sidenav {
+    padding: 20px;
+  }
+
+  .custom-blur {
+      backdrop-filter: blur(2px);
+  }
+
+  @media screen and (max-width: 1200px) {
+    #largeMenu {
+      display: none;
+    }
+    #smallMenu {
+      display:block;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    #largeMenu {
+      display: block;
+    }
+    #smallMenu {
+      display:none;
+    }
+  }

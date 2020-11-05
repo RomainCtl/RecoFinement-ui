@@ -13,6 +13,7 @@ import { Component, OnInit } from '@angular/core';
 export class MenuComponent implements OnInit {
 
   public myUsername;
+  showFiller = false;
 
   constructor(private _auth: AuthService, private _router: Router, private dialog: MatDialog, private bottom: MatBottomSheet) {
     this.myUsername = localStorage.getItem('username');
