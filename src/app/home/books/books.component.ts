@@ -37,6 +37,7 @@ export class BooksComponent implements OnInit {
   nextPage = 2;
   finished = true;
   booksLeft = true;
+  apiResponse = false;
 
   appCtrl = new FormControl();
   filteredBooks: Observable<Book[]>;
@@ -44,6 +45,7 @@ export class BooksComponent implements OnInit {
   ngOnInit(): void {
     this.bookService.getPopularBooks(1).then((result: BookResponseDto) => {
       this.bookResponse = result;
+      this.apiResponse = true;
       if (result.number_of_elements !== 0) {
         this.booksLeft = false;
       }

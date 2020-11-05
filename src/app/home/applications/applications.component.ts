@@ -35,6 +35,7 @@ export class ApplicationsComponent implements OnInit {
   nextPage = 2;
   finished = true;
   noApplications = true;
+  apiResponse = false;
 
   searchEmpty = false;
   searchActivated = false;
@@ -46,6 +47,7 @@ export class ApplicationsComponent implements OnInit {
   ngOnInit(): void {
     this.appService.getPopularApplications().then((result: ApplicationResponseDto) => {
       this.appResponse = result;
+      this.apiResponse = true;
       if (result.number_of_elements !== 0) {
         this.noApplications = false;
       }
