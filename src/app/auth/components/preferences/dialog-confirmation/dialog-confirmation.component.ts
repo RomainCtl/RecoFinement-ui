@@ -27,7 +27,7 @@ export class DialogConfirmationComponent implements OnInit {
 
   onConfirmationPreferences(): void {
     this.onNoClick();
-    this.userService.setPreferences().then(result => {
+    this.userService.setPreferences().then(() => {
       this.authService.setPreferences(true);
     }).catch(err => {
       this.errorService.addError(err.message);
