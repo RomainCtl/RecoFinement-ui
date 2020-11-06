@@ -27,6 +27,10 @@ export class UserService {
     return this.httpClient.patch<UserDtoResponse>(this.urlGetUser + '/' + uuid, payload).toPromise();
   }
 
+  setPreferences(): Promise<any> {
+    return this.httpClient.put<any>(this.urlGetUser + '/preferences_defined', {}).toPromise();
+  }
+
   deleteUser(uuid: string): Promise<UserDtoResponse> {
     return this.httpClient.delete<UserDtoResponse>(this.urlGetUser + '/' + uuid).toPromise();
   }
