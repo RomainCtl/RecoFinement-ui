@@ -20,9 +20,10 @@ export class LoginComponent implements OnInit {
     status: true,
     message: '',
     user: {
-        username: '',
-        uuid: '',
-        email: ''
+      username: '',
+      uuid: '',
+      email: '',
+      preferences_defined: true,
     },
     access_token: '',
     errors: ['']
@@ -31,7 +32,7 @@ export class LoginComponent implements OnInit {
     private _auth: AuthService,
     private _router: Router,
     private cookie: CookieService,
-    private dialog: MatDialog) {  }
+    private dialog: MatDialog) { }
 
   ngOnInit(): void { }
 
@@ -45,17 +46,17 @@ export class LoginComponent implements OnInit {
 
   login(values: UserLoginDtoRequest): void {
     this._auth.login(values)
-    .then(
-      (result: UserLoginDtoResponse) => {
-        localStorage.setItem('uuid', result.user.uuid);
-        localStorage.setItem('username', result.user.username);
-        localStorage.setItem('email', result.user.email);
-        this.loginHttpResponse = result;
-        this.cookie.set('access_token', this.loginHttpResponse.access_token, {expires: 1, sameSite: 'Lax', path: '/'});
-        // document.cookie = 'access_token=' + this.loginHttpResponse.access_token + '; path:/';
-        this._router.navigate(['app']);
-      }
-    );
+      .then(
+        (result: UserLoginDtoResponse) => {
+          localStorage.setItem('uuid', result.user.uuid);
+          localStorage.setItem('username', result.user.username);
+          localStorage.setItem('email', result.user.email);
+          this.loginHttpResponse = result;
+          this.cookie.set('access_token', this.loginHttpResponse.access_token, { expires: 1, sameSite: 'Lax', path: '/' });
+          // document.cookie = 'access_token=' + this.loginHttpResponse.access_token + '; path:/';
+          this._router.navigate(['app']);
+        }
+      );
   }
 
 }
