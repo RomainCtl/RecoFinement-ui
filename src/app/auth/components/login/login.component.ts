@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
 
   resetPassword(): void {
     this.dialog.open(ForgetPasswordComponent, {
-      panelClass: ['shadow-none', 'w-25'],
+      panelClass: ['shadow-none', 'w-100'],
       hasBackdrop: true,
       backdropClass: 'blur'
     });
