@@ -7,9 +7,9 @@ import { UserService } from 'src/app/services/user/user.service';
 import { UserDtoResponse } from 'src/app/shared/models/DtoResponse/user.model';
 import { GroupDtoResponse } from 'src/app/shared/models/DtoResponse/group.model';
 import { Group } from 'src/app/shared/models/group.model';
-import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { GroupMembersComponent } from '../groupMembers/groupMembers.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-profile',
@@ -44,7 +44,7 @@ export class ProfileComponent implements OnInit {
   constructor(
     private profileService: ProfileService,
     private userService: UserService,
-    private authService: AuthService,
+    private cookie: CookieService,
     public dialog: MatDialog,
     private router: Router) { }
 
@@ -108,7 +108,7 @@ export class ProfileComponent implements OnInit {
     const uuid: string = localStorage.getItem('uuid');
     if (confirm('Are you sure you want to delete your account ? All your preferences and groups will also be deleted')) {
       this.userService.deleteUser(uuid);
-      document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC;';
+      this.cookie.delete('access_token', '/');
       this.router.navigate(['/']);
     }
   }
