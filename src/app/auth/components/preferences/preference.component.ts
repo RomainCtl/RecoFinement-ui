@@ -5,7 +5,7 @@ import { ApplicationService } from 'src/app/services/media/application.service';
 import { BookService } from 'src/app/services/media/book.service';
 import { GameService } from 'src/app/services/media/game.service';
 import { MovieService } from 'src/app/services/media/movie.service';
-import { SerieService } from 'src/app/services/media/serie.service';
+import { SeriesService } from 'src/app/services/media/serie.service';
 import { TrackService } from 'src/app/services/media/track.service';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -29,7 +29,7 @@ export class PreferenceComponent implements OnInit {
 
   constructor(private trackService: TrackService,
               private movieService: MovieService,
-              private serieService: SerieService,
+              private serieService: SeriesService,
               private bookService: BookService,
               private gameService: GameService,
               private applicationService: ApplicationService,
