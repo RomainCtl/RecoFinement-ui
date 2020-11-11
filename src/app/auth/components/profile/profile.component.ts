@@ -219,7 +219,7 @@ export class ProfileComponent implements OnInit {
   exportData(): void {
     this.userService.exportUserData().then(data => {
       const blob = new Blob([JSON.stringify(data.user)], { type: 'application/json' });
-      saveAs(blob, 'user-data.json');
+      saveAs(blob, 'data.json');
     });
   }
 }

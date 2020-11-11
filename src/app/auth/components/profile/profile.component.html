@@ -62,11 +62,11 @@
     <!-- TAB 2 -->
     <mat-tab label="Manage groups">
 
-    <ng-container *ngIf="userData.user.owned_groups.length === 0 && userData.user.groups.length === 0">
+    <ng-container *ngIf="myGroups.length === 0 && groups.length === 0">
 
       <p class="display-4 lead text-center text-muted p-3 m-5" style="font-size: 7vmin;">You don't have any groups.</p>
       <div class="container d-flex justify-content-center align-items-center flex-column">
-        <button mat-raised-button class="w-25 m-5" (click)="addGroup()">Add a group</button>
+        <button mat-raised-button class="w-100 mt-5" (click)="addGroup()">Add a group</button>
         <div *ngIf="toggle">
           <form #createForm="ngForm" (ngSubmit)="createGroup(createForm)">
             <input ngModel name="groupName" placeholder="Group name" />
