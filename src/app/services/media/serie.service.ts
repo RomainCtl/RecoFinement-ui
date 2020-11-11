@@ -22,7 +22,7 @@ export class SerieService {
     return this.httpClient.get<any>(this.urlGetGenreSerie).toPromise();
   }
 
-  saveRating(movieId: number, movieMeta: any): Promise<SerieMetaResponseDto> {
-    return this.httpClient.patch<SerieMetaResponseDto>(this.urlUserMeta + movieId + '/meta', movieMeta).toPromise();
+  saveRating(serieId: number, serieMeta: any): Promise<SerieMetaResponseDto> {
+    return this.httpClient.patch<SerieMetaResponseDto>(this.urlUserMeta + serieId + '/meta', serieMeta).toPromise();
   }
 }
