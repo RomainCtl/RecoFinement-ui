@@ -13,12 +13,15 @@
       <mat-form-field>
         <input type="text"
               name="memberName"
-              placeholder="Pseudo"
+              placeholder="Your friend's username"
               matInput
+              (keyup)="loading($event)"
               [formControl]="invitationControle"
               [matAutocomplete]="auto" />
         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayUser">
-          <mat-option *ngIf="isLoading" class="is-loading"><mat-spinner diameter="50"></mat-spinner></mat-option>
+          <mat-option *ngIf="isLoading" class="is-loading">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          </mat-option>
           <ng-container *ngIf="!isLoading">
             <mat-option *ngFor="let user of filteredOptions" [value]="user">
               <span>{{ user.username }}</span><small> - {{ user.email }}</small>

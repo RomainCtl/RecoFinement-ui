@@ -1,23 +1,27 @@
-input[type="text"],
-input[type="password"] {
-  max-width: 500px;
+// input[type="text"],
+// input[type="password"] {
+//   max-width: 500px;
+//   width: 100%;
+//   padding: 12px 20px;
+//   margin: 8px auto;
+//   display: block;
+//   border: 1px solid #ccc;
+//   border-radius: 4px;
+//   box-sizing: border-box;
+//   text-align: center;
+// }
+
+// div.container {
+//   border-radius: 5px;
+//   background-color: #f2f2f2;
+//   // padding: 20px;
+// }
+
+// label {
+//   font-size: 1.3em;
+//   margin-top: 30px;
+// }
+
+mat-form-field {
   width: 100%;
-  padding: 12px 20px;
-  margin: 8px auto;
-  display: block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-div.container {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  // padding: 20px;
-}
-
-label {
-  font-size: 1.3em;
-  margin-top: 30px;
 }
