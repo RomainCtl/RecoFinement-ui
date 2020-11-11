@@ -10,9 +10,9 @@
       <mat-step label="Music">
         <div class="container">
           <div class="row">
-            <p class="font-weight-bold col-12 text-center text-uppercase mat-h2">Musics</p>
-            <ng-container *ngFor="let music of musics">
-                <app-card-preference class="col-md-3"
+            <p class="font-weight-bold col-sm-12 text-center text-uppercase mat-h2">Musics</p>
+            <ng-container *ngFor="let music of musics" class="container-xl">
+                <app-card-preference
                     [id]="music.track_id"
                     [title]="music.title"
                     [subtitle]="music.artist_name"
@@ -32,7 +32,7 @@
           <div class="row">
             <p class="font-weight-bold col-12 text-center text-uppercase mat-h2">Movies</p>
             <ng-container *ngFor="let movie of movies">
-              <app-card-preference class="col-md-3"
+              <app-card-preference
               [id]="movie.movie_id"
               [title]="movie.title"
               [subtitle]="movie.director"
@@ -53,12 +53,12 @@
           <div class="row">
             <p class="font-weight-bold col-12 text-center text-uppercase mat-h2">Series</p>
             <ng-container *ngFor="let serie of series">
-              <app-card-preference class="col-md-3"
+              <app-card-preference
               [id]="serie.serie_id"
               [title]="serie.title"
               [subtitle]=""
               [info]=""
-              [cover]="'https://images.template.net/wp-content/uploads/2017/02/17221912/Printable-Blank-Movie-Poster.jpg'"
+              [cover]="serie.cover"
               [type]="'serie'"
               ></app-card-preference>
             </ng-container>
@@ -74,7 +74,7 @@
           <div class="row">
             <p class="font-weight-bold col-12 text-center text-uppercase mat-h2">books</p>
             <ng-container *ngFor="let book of books">
-              <app-card-preference class="col-md-3"
+              <app-card-preference
               [id]="book.isbn"
               [title]="book.title"
               [subtitle]="book.author"
@@ -95,7 +95,7 @@
           <div class="row">
             <p class="font-weight-bold col-12 text-center text-uppercase mat-h2">games</p>
             <ng-container *ngFor="let game of games">
-              <app-card-preference class="col-md-3"
+              <app-card-preference
               [id]="game.movie_id"
               [title]="game.name"
               [subtitle]="game.publishers"
@@ -115,12 +115,12 @@
         <div class="container">
           <div class="row">
             <p class="font-weight-bold col-12 text-center text-uppercase mat-h2">applications</p>
-            <ng-container *ngFor="let application of applications">
-              <app-card-preference class="col-md-3"
+            <ng-container *ngFor="let application of applications" class="container-xl">
+              <app-card-preference
                   [id]="application.app_id"
                   [title]="application.name"
                   [subtitle]=""
-                  [cover]=""
+                  [cover]="application.cover"
                   [info]=""
                   [type]="'application'"
               ></app-card-preference>
@@ -129,6 +129,8 @@
         </div>
         <aside>
           <button mat-raised-button matStepperPrevious color="primary">Back</button>
+        </aside>
+        <aside>
           <button mat-raised-button color="primary" (click)="openDialog()">Finish</button>
         </aside>
       </mat-step>
