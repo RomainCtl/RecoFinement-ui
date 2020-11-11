@@ -1,13 +1,13 @@
-<mat-card class="mb-2">
+<!-- <mat-card class="mb-2">
   <mat-card-header>
     <mat-card-title>{{this.title.split('(')[0].split(':')[0].split(', The')[0]}}</mat-card-title>
     <mat-card-subtitle>{{this.subtitle}}</mat-card-subtitle>
   </mat-card-header>
 
-  <div *ngIf="this.type=='book'" class="img-cover">
+  <div *ngIf="this.type==='book'" class="img-cover">
     <img mat-card-image [src]="this.cover" class="card-img" alt="Cover media">
   </div>
-  <img *ngIf="this.type!='book'" mat-card-image [src]="this.cover" alt="Cover media">
+  <img *ngIf="this.type!=='book'" mat-card-image [src]="this.cover" alt="Cover media">
 
   <mat-card-content>
     <i>{{this.info}}</i>
@@ -16,4 +16,24 @@
     [media]="this.id"
     [type]="this.type">
   </app-rating>
-</mat-card>
+</mat-card> -->
+
+  <div class="col-sm-12 col-md-6 col-lg-3 text-center">
+    <div class="card m-3 p-0 shadow" style="width: 18rem;">
+      <div class="container p-0">
+        <img *ngIf="this.type!=='application'" [src]="this.cover" class="card-img-top">
+        <div *ngIf="this.type==='application'" class="img-cover">
+          <img mat-card-image [src]="this.cover" class="card-img p-5" alt="Cover media">
+        </div>
+      </div>
+      <div class="card-body p-3 d-flex justify-content-center flex-column">
+        <h3 class="card-title text-danger"><strong>{{this.title.split('(')[0].split(':')[0].split(', The')[0]}}</strong></h3>
+        <p class="card-text"><strong>{{this.subtitle}}</strong></p>
+        <p class="card-text text-muted"><strong>{{this.info}}</strong></p>
+        <app-rating
+        [media]="this.id"
+        [type]="this.type">
+      </app-rating>
+      </div>
+    </div>
+  </div>
