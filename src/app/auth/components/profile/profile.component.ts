@@ -14,6 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { GroupMembersComponent } from '../groupMembers/groupMembers.component';
 import { User } from 'src/app/shared/models/user.model';
+import saveAs from 'file-saver';
 
 @Component({
   selector: 'app-profile',
@@ -212,6 +213,13 @@ export class ProfileComponent implements OnInit {
     this.dialog.open(GroupMembersComponent, {
       width: '350px',
       data: { group }
+    });
+  }
+
+  exportData(): void {
+    this.userService.exportUserData().then(data => {
+      const blob = new Blob([JSON.stringify(data.user)], { type: 'application/json' });
+      saveAs(blob, 'user-data.json');
     });
   }
 }

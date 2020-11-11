@@ -11,12 +11,16 @@ export class UserService {
 
   private urlGetUser = environment.api_url + '/user';
   private urlGenreUser = environment.api_url + '/user/genre';
-
+  private urlExportUserData = environment.api_url + '/user/export';
 
   constructor(private httpClient: HttpClient) { }
 
   getUserData(uuid: string): Promise<UserDtoResponse> {
     return this.httpClient.get<UserDtoResponse>(this.urlGetUser + '/' + uuid).toPromise();
+  }
+
+  exportUserData(): Promise<any> {
+    return this.httpClient.get<any>(this.urlExportUserData).toPromise();
   }
 
   searchUser(search_term: string): Promise<UserDataDtoResponse> {

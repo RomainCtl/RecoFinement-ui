@@ -44,9 +44,14 @@
               <div class="col mb-2">
                 <button mat-raised-button color="primary" type="submit">Update my information</button>
               </div>
-              <div class="col">
+              <div class="col mb-2">
                 <button mat-raised-button color="warn" (click)="deleteUser()">
                   Delete my account
+                </button>
+              </div>
+              <div class="col">
+                <button mat-raised-button color="accent" (click)="exportData()">
+                  Export my data
                 </button>
               </div>
             </div>
