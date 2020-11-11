@@ -4,7 +4,7 @@ import { FormControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CookieService } from 'ngx-cookie-service';
 import { from } from 'rxjs';
-import { debounceTime, distinctUntilChanged, startWith, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, startWith, switchMap, tap, map } from 'rxjs/operators';
 import { ProfileService } from 'src/app/services/profile/profile.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { InviteMemberDtoRequest } from 'src/app/shared/models/DtoRequest/invite-member.model';
@@ -67,23 +67,22 @@ export class GroupMembersComponent implements OnInit {
     });
 
     this.invitationControle.valueChanges.pipe(
-      startWith(''),
-      debounceTime(800),
-      distinctUntilChanged(),
       switchMap(value => {
         if (value) {
           return from(this.userService.searchUser(value));
         } else {
-          return from(this.filteredOptions);
+          return from(this.filteredOptions.filter((user: Member) => user.uuid !== this.cookie.get('user_id')));
         }
       })
     ).subscribe((result: any) => {
       if (result) {
         this.isLoading = false;
-        return this.filteredOptions = result.content;
+        return this.filteredOptions;
       }
     });
   }
+
+
 
   displayUser(member: Member): string {
     return member ? member.username : '';
@@ -118,7 +117,9 @@ export class GroupMembersComponent implements OnInit {
     }
   }
 
-  loading(event: KeyboardEvent): void {
+  loading(event): void {
+
+    console.log(event)
     if (event.location === 0) {
       this.isLoading = true;
     }

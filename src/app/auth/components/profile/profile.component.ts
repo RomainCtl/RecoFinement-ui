@@ -46,6 +46,8 @@ export class ProfileComponent implements OnInit {
     errors: ['']
   };
   spotifyLinked = false;
+  tmdbLinked = false;
+  googleLinked = false;
 
   constructor(
     private profileService: ProfileService,
@@ -77,11 +79,24 @@ export class ProfileComponent implements OnInit {
       if (params.code) {
         this.externalService.getOAuthSpotify().then((result: any) => {
           if (result.spotify_url !== 'linked') {
-            this.externalService.callback(params.code, params.state);
-            this.router.navigate([this.route.snapshot.routeConfig.path]);
-            this.snackBar.open('Your spotify account is now linked!', 'Great!', { horizontalPosition: 'start' });
+            this.externalService.callbackSpotify(params.code, params.state).then(() => {
+              this.router.navigate([this.route.snapshot.routeConfig.path]);
+              this.snackBar.open('Your spotify account is now linked!', 'Great!', { horizontalPosition: 'start' });
+            });
           }
         });
+      }
+      if (params.approved) {
+        this.externalService.getOAuthTmdb().then((result: any) => {
+          if (result.tmdb_url !== 'linked') {
+            this.externalService.callbackTmdb(params.request_token, params.approved).then(() => {
+              this.router.navigate([this.route.snapshot.routeConfig.path]);
+              this.snackBar.open('Your tmdb account is now linked!', 'Great!', { horizontalPosition: 'start' });
+            });
+          }
+        });
+      } else if (params.denied) {
+        this.snackBar.open('There was a problem linking your TMDB account', 'Alright!', { horizontalPosition: 'start' });
       }
     });
 
@@ -197,8 +212,8 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  ckeckSpotifyLinked(tabIndex): void {
-    if (tabIndex === 1) {
+  checkLinkedAccounts(tabIndex): void {
+    if (tabIndex === 2) {
       this.externalService.getOAuthSpotify().then((result: any) => {
         if (result.spotify_url !== 'linked') {
           this.spotifyLinked = false;
@@ -206,7 +221,28 @@ export class ProfileComponent implements OnInit {
           this.spotifyLinked = true;
         }
       });
+      this.externalService.getOAuthTmdb().then((result: any) => {
+        if (result.tmdb_url !== 'linked') {
+          this.tmdbLinked = false;
+        } else {
+          this.tmdbLinked = true;
+        }
+      });
     }
+  }
+
+  linkTMDB(): void {
+    this.externalService.getOAuthTmdb().then((result: any) => {
+      if (result.tmdb_url !== 'linked') {
+        window.location.href = result.tmdb_url;
+      } else {
+        this.tmdbLinked = true;
+      }
+    });
+  }
+
+  linkGoogleBooks(): void {
+
   }
 
   openDialog(group): void {
@@ -219,7 +255,7 @@ export class ProfileComponent implements OnInit {
   exportData(): void {
     this.userService.exportUserData().then(data => {
       const blob = new Blob([JSON.stringify(data.user)], { type: 'application/json' });
-      saveAs(blob, 'user-data.json');
+      saveAs(blob, 'data.json');
     });
   }
 }
