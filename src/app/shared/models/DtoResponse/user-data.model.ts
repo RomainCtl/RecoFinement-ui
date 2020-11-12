@@ -6,6 +6,7 @@ export class UserDataDtoResponse {
     uuid: string;
     email: string;
     username: string;
+    preferences_defined: boolean;
   };
   number_of_elements: 0;
   page: 0;

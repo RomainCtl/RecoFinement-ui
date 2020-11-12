@@ -34,6 +34,7 @@ export class GroupMembersComponent implements OnInit {
       uuid: '',
       email: '',
       username: '',
+      preferences_defined: true,
     },
     number_of_elements: 0,
     page: 0,

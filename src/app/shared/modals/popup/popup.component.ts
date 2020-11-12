@@ -1,3 +1,7 @@
+import { SerieMetaResponseDto } from 'src/app/shared/models/DtoResponse/series/serie-meta.model';
+import { SerieMeta } from './../../models/DtoResponse/series/SerieMeta.model';
+import { SeriesResponseDto } from './../../models/DtoResponse/series/series-dto.model';
+import { SeriesService } from './../../../services/media/serie.service';
 import { TrackMetaResponseDto } from './../../models/DtoResponse/musics/track-meta.model';
 import { TrackService } from 'src/app/services/media/track.service';
 import { BookMeta } from './../../models/DtoResponse/books/BookMeta.model';
@@ -27,15 +31,24 @@ export class PopupComponent implements OnInit {
     private trackService: TrackService,
     private gameService: GameService,
     private bookService: BookService,
+    private seriesService: SeriesService,
     private appService: ApplicationService) { }
 
   readOnly = false;
+  seriesUserMeta = new SerieMeta();
   gameUserMeta = new GameMeta();
   bookUserMeta = new BookMeta();
   appUserMeta = new ApplicationMeta();
   trackUserMeta = new TrackMeta();
+  watchedSeasons = 0;
+  fullSeriesWatch = false;
 
   ngOnInit(): void {
+    if (this.item.serie_id) {
+      this.seriesService.getUserMeta(this.item.serie_id).then((result: SerieMetaResponseDto) => {
+        this.seriesUserMeta = result.content;
+      });
+    }
     if (this.item.game_id) {
       this.gameService.getUserMeta(this.item.game_id).then((result: GameMetaResponseDto) => {
         this.gameUserMeta = result.content;
@@ -71,6 +84,9 @@ export class PopupComponent implements OnInit {
     if (this.item.app_id) {
       this.appService.saveRating(this.item.app_id, { rating: event.rating });
     }
+    if(this.item.serie_id) {
+      this.seriesService.saveRating(this.item.serie_id, { rating: event.rating });
+    }
   }
 
   goToSteam(): void {
@@ -87,6 +103,10 @@ export class PopupComponent implements OnInit {
     if (this.item.app_id) {
       this.appService.saveDownloadedState(this.item.app_id, { downloaded: event.checked});
     }
+  }
+
+  saveWatchedEpisodes(event: any): void {
+    this.seriesService.saveWatchedEpisodes(this.item.serie_id, { num_watched_episodes: event });
   }
 
 }

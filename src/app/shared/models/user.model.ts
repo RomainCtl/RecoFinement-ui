@@ -7,4 +7,5 @@ export class User {
   groups: Group[];
   invitations: Group[];
   owned_groups: Group[];
+  preferences_defined: boolean;
 }

@@ -2,7 +2,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CookieService } from 'ngx-cookie-service';
 import { ExternalService } from './../../../services/external/external.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ProfileService } from 'src/app/services/profile/profile.service';
@@ -10,7 +9,6 @@ import { UserService } from 'src/app/services/user/user.service';
 import { UserDtoResponse } from 'src/app/shared/models/DtoResponse/user.model';
 import { GroupDtoResponse } from 'src/app/shared/models/DtoResponse/group.model';
 import { Group } from 'src/app/shared/models/group.model';
-import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { GroupMembersComponent } from '../groupMembers/groupMembers.component';
 import { User } from 'src/app/shared/models/user.model';
@@ -67,7 +65,8 @@ export class ProfileComponent implements OnInit {
       username: '',
       groups: [],
       invitations: [],
-      owned_groups: []
+      owned_groups: [],
+      preferences_defined: false
     },
     errors: ['']
   };

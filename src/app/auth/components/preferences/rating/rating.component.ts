@@ -1,6 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ClickEvent, RatingChangeEvent } from 'angular-star-rating';
-import { RatingService } from 'src/app/services/rating/rating.service';
+import { ClickEvent } from 'angular-star-rating';
+import { ApplicationService } from 'src/app/services/media/application.service';
+import { BookService } from 'src/app/services/media/book.service';
+import { GameService } from 'src/app/services/media/game.service';
+import { MovieService } from 'src/app/services/media/movie.service';
+import { SeriesService } from 'src/app/services/media/serie.service';
+import { TrackService } from 'src/app/services/media/track.service';
 
 @Component({
   selector: 'app-rating',
@@ -13,14 +18,40 @@ export class RatingComponent implements OnInit {
   @Input() media: string;
   @Input() type: string;
 
-  constructor(private ratingService: RatingService) {
+  constructor(private trackService: TrackService,
+    private gameService: GameService,
+    private bookService: BookService,
+    private movieService: MovieService,
+    private serieService: SeriesService,
+    private appService: ApplicationService) {
   }
 
   ngOnInit(): void {
   }
 
   onClick = ($event: ClickEvent) => {
-    this.ratingService.saveRating(+$event.rating, +this.media, this.type).then(() => {
+    let prom: Promise<any>;
+    switch (this.type) {
+      case 'music':
+        prom = this.trackService.saveRating(+this.media, { rating: $event.rating });
+        break;
+      case 'movie':
+        prom = this.movieService.saveRating(+this.media, { rating: $event.rating });
+        break;
+      case 'serie':
+        prom = this.serieService.saveRating(+this.media, { rating: $event.rating });
+        break;
+      case 'book':
+        prom = this.bookService.saveRating(+this.media, { rating: $event.rating });
+        break;
+      case 'game':
+        prom = this.gameService.saveRating(+this.media, { rating: $event.rating });
+        break;
+      case 'application':
+        prom = this.appService.saveRating(+this.media, { rating: $event.rating });
+        break;
+    }
+    prom.then(() => {
       this.note = $event.rating;
     }).catch((err) => {
       console.log(err);

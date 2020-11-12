@@ -5,6 +5,7 @@ export class UserLoginDtoResponse {
         username: string;
         uuid: string;
         email: string;
+        preferences_defined: boolean;
     };
     access_token: string;
     errors: [x: string];

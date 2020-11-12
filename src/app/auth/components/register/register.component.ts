@@ -23,7 +23,8 @@ export class RegisterComponent implements OnInit {
     user: {
       email: '',
       username: '',
-      uuid: ''
+      uuid: '',
+      preferences_defined: true,
     },
     access_token: '',
     errors: ['']

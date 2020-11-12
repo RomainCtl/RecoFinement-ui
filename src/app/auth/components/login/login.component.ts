@@ -5,9 +5,7 @@ import { UserLoginDtoRequest } from '../../../shared/models/DtoRequest/user-logi
 import { Router } from '@angular/router';
 import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ForgetPasswordComponent } from '../user/forget-password/forget-password.component';
-import { ErrorService } from 'src/app/services/error/error.service';
 
 @Component({
   selector: 'app-login',
@@ -20,9 +18,10 @@ export class LoginComponent implements OnInit {
     status: true,
     message: '',
     user: {
-        username: '',
-        uuid: '',
-        email: ''
+      username: '',
+      uuid: '',
+      email: '',
+      preferences_defined: true,
     },
     access_token: '',
     errors: ['']
@@ -31,7 +30,7 @@ export class LoginComponent implements OnInit {
     private _auth: AuthService,
     private _router: Router,
     private cookie: CookieService,
-    private dialog: MatDialog) {  }
+    private dialog: MatDialog) { }
 
   ngOnInit(): void { }
 
