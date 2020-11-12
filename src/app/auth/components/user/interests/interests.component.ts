@@ -6,7 +6,7 @@ import { Observable, from } from 'rxjs';
 import { ApplicationService } from 'src/app/services/media/application.service';
 import { GameService } from 'src/app/services/media/game.service';
 import { MovieService } from 'src/app/services/media/movie.service';
-import { SerieService } from 'src/app/services/media/serie.service';
+import { SeriesService } from 'src/app/services/media/serie.service';
 import { TrackService } from 'src/app/services/media/track.service';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -53,7 +53,7 @@ export class InterestsComponent implements OnInit {
     private snackBar: MatSnackBar,
     private trackService: TrackService,
     private movieService: MovieService,
-    private serieService: SerieService,
+    private serieService: SeriesService,
     private gameService: GameService,
     private appService: ApplicationService,
     private userService: UserService,
