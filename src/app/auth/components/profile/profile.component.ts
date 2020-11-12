@@ -27,7 +27,6 @@ export class ProfileComponent implements OnInit {
   public ownerGroups: Group[] = [];
   public groups: Group[] = [];
   public otherGroups: Group[] = [];
-  // public invitations;
   public myUsername: string = localStorage.getItem('username');
   public myEmail: string = localStorage.getItem('email');
   public toggle = false;
