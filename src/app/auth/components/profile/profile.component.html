@@ -1,112 +1,229 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-8 col-sm-12 p-4 border-right">
-      <h1>Profile</h1>
-      <div class="text-right" style="height: 30px">
-        <button class="badge badge-success float-right" (click)="linkSpotify()" matTooltip="Connect my Spotify account">
-          Connect Spotify Account
-        </button>
+  <mat-tab-group mat-align-tabs="center" mat-stretch-tabs (selectedIndexChange)="checkLinkedAccounts($event)">
+    <mat-tab label="Edit my account">
+    <p class="display-4 text-center p-3 m-3" style="font-size: 7vmin;">Change my information</p>
+
+      <div class="container-fluid d-flex justify-content-center align-items-center flex-column">
+          <form #profileForm="ngForm" (ngSubmit)="editProfile(profileForm)" class="text-center m-5 w-75 mx-auto">
+            <div class="row">
+              <div class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Current: {{ userData.user.username }}</mat-label>
+                  <input ngModel type="text" name="username" matInput placeholder="Change my pseudo">
+                  <mat-icon matSuffix>account_box</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Current: {{ userData.user.email }}</mat-label>
+                  <input ngModel type="text" name="email" matInput placeholder="Change my email address">
+                  <mat-icon matSuffix>email</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="w-100"></div>
+              <div class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Change my password</mat-label>
+                  <input ngModel type="password" name="password" matInput placeholder="New Password">
+                  <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="col">
+                <mat-form-field appearance="outline">
+                  <mat-label>Confirm new password</mat-label>
+                  <input ngModel type="password" name="confirmPassword" matInput placeholder="Confirm new password">
+                  <mat-icon matSuffix>lock</mat-icon>
+                </mat-form-field>
+              </div>
+            </div>
+            <div *ngIf="passwordError.length > 0">
+              <div class="alert alert-danger" role="alert">
+                {{ passwordError }}
+              </div>
+            </div>
+            <div class="row-cols">
+              <div class="col mb-2">
+                <button mat-raised-button color="primary" type="submit">Update my information</button>
+              </div>
+              <div class="col mb-2">
+                <button mat-raised-button color="warn" (click)="deleteUser()">
+                  Delete my account
+                </button>
+              </div>
+              <div class="col">
+                <button mat-raised-button color="accent" (click)="exportData()">
+                  Export my data
+                </button>
+              </div>
+            </div>
+          </form>
       </div>
-      <form #profileForm="ngForm" (ngSubmit)="editProfile(profileForm)" class="text-center">
-        <label for="username">Change my username</label>
-        <input [(ngModel)]="myUsername" name="username" type="text" />
+    </mat-tab>
 
-        <label for="username">Change my email address</label>
-        <input [(ngModel)]="myEmail" name="email" type="text" />
+    <!-- TAB 2 -->
+    <mat-tab label="Manage groups">
 
-        <label for="password">Change my password</label>
-        <input ngModel name="password" placeholder="New password" type="password" />
-        <input ngModel name="confirmPassword" placeholder="Confirm new password" type="password" />
+    <ng-container *ngIf="myGroups.length === 0 && groups.length === 0">
 
-        <div *ngIf="!userHttpResponse.status">
-          <div *ngFor="let error of userHttpResponse.errors" class="alert alert-danger" role="alert">
-            {{ error }}
-          </div>
-        </div>
-        <div *ngIf="userHttpResponse.message" class="alert alert-success" role="alert">
-          {{ userHttpResponse.message }}
-        </div>
-
-        <div *ngIf="passwordError.length > 0">
-          <div class="alert alert-danger" role="alert">
-            {{ passwordError }}
-          </div>
-        </div>
-
-        <button mat-raised-button color="primary" type="submit">Save</button>
-      </form>
-
-      <div class="float-right mt-4 mb-3">
-        <button mat-raised-button color="warn" (click)="deleteUser()">
-          Delete my account
-        </button>
-      </div>
-    </div>
-
-    <div class="container col-md-4 col-sm-12 p-4 mt-5">
-      <div>
-        <div *ngFor="let invit of invitations" class="d-flex">
-          <p class="m-2">
-            You are invited to join <strong>{{ invit.name }}</strong> !
-          </p>
-          <button mat-icon-button color="primary" (click)="acceptInvit(invit)">
-            <mat-icon matTooltip="Accept">done</mat-icon>
-          </button>
-          <button mat-icon-button color="warn" (click)="declineInvit(invit)">
-            <mat-icon matTooltip="Decline">close</mat-icon>
-          </button>
-        </div>
-      </div>
-
-      <div>
-        <div class="d-flex">
-          <h1 class="m-1">Groups of Friends</h1>
-          <button mat-icon-button color="primary" (click)="addGroup()">
-            <mat-icon *ngIf="toggle">keyboard_arrow_up</mat-icon>
-            <mat-icon *ngIf="!toggle" matTooltip="Create a new group">add</mat-icon>
-          </button>
-        </div>
+      <p class="display-4 lead text-center text-muted p-3 m-5" style="font-size: 7vmin;">You don't have any groups.</p>
+      <div class="container d-flex justify-content-center align-items-center flex-column">
+        <button mat-raised-button class="w-100 mt-5" (click)="addGroup()">Add a group</button>
         <div *ngIf="toggle">
           <form #createForm="ngForm" (ngSubmit)="createGroup(createForm)">
             <input ngModel name="groupName" placeholder="Group name" />
             <button mat-icon-button color="primary" type="submit">
               <mat-icon matTooltip="Create">done</mat-icon>
             </button>
-            <div *ngIf="!createGroupHttpResponse.status">
+             <div *ngIf="!createGroupHttpResponse.status">
               <div *ngFor="let error of createGroupHttpResponse.errors" class="alert alert-danger" role="alert">
                 {{ error }}
               </div>
-            </div>
+            </div> 
           </form>
         </div>
+      </div>
+    </ng-container>
 
-        <div *ngIf="ownerGroups.length == 0 && otherGroups.length == 0"><em>You don't have any group of friends
-            yet.<br>Create or join one now !</em></div>
-        <div *ngFor="let group of ownerGroups">
-          <div class="d-flex ml-3 mt-2">
-            <h2 class="m-1">{{ group.name }}</h2>
-            <button mat-icon-button color="primary" (click)="openDialog(group)" matTooltip="See this group">
-              <mat-icon>open_in_new</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" (click)="deleteGroup(group)" matTooltip="Delete this group">
-              <mat-icon>delete</mat-icon>
-            </button>
+    <ng-container *ngIf="userData.user.owned_groups.length > 0">
+
+      <p class="display-4 text-center p-3" style="font-size: 7vmin;">My groups</p>
+      <div *ngFor="let invitation of userData.user.invitations" class="text-center">
+        <p class="m-2">
+          You are invited to join <strong>{{ invitation.name }}</strong>!
+        </p>
+        <button mat-icon-button color="primary" (click)="acceptInvit(invitation)">
+          <mat-icon matTooltip="Accept">done</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="declineInvit(invitation)">
+          <mat-icon matTooltip="Decline">close</mat-icon>
+        </button>
+      </div>
+      
+      <table class="table w-75 mx-auto border mt-5 text-center ">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">See</th>
+              <th scope="col">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let group of myGroups">
+                <td class="align-middle">
+                  {{ group.name }}
+                </td>
+                <td>
+                  <button mat-icon-button color="primary" (click)="openDialog(group)" matTooltip="See this group">
+                    <mat-icon>open_in_new</mat-icon>
+                  </button>
+                </td>
+                <td>
+                  <button mat-icon-button color="warn" (click)="deleteGroup(group)" matTooltip="Delete this group">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="container d-flex justify-content-center align-items-center flex-column">
+          <button mat-raised-button class="m-5" (click)="addGroup($event)">Add a group</button>
+          <div *ngIf="toggle">
+            <form #createForm="ngForm" (ngSubmit)="createGroup(createForm)">
+              <input ngModel name="groupName" placeholder="Group name" />
+              <button mat-icon-button color="primary" type="submit">
+                <mat-icon matTooltip="Create">done</mat-icon>
+              </button>
+               <div *ngIf="!createGroupHttpResponse.status">
+                <div *ngFor="let error of createGroupHttpResponse.errors" class="alert alert-danger" role="alert">
+                  {{ error }}
+                </div>
+              </div> 
+            </form>
           </div>
         </div>
+      </ng-container>
+      
+      <ng-container *ngIf="groups.length > 0">
+        <p class="display-4 text-center p-3" style="font-size: 7vmin;">Friends group</p>
 
-        <div *ngFor="let group of otherGroups">
-          <div class="d-flex ml-3 mt-2">
-            <h2 class="m-1">{{ group.name }}</h2>
-            <button mat-icon-button color="primary" (click)="openDialog(group)" matTooltip="See this group">
-              <mat-icon>open_in_new</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" (click)="deleteGroup(group)" matTooltip="Quit this group">
-              <mat-icon>close</mat-icon>
-            </button>
+        <table class="table w-75 mx-auto border mt-5 text-center">
+          <thead>
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">See</th>
+              <th scope="col">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let group of groups">
+                <td class="align-middle">
+                  {{ group.name }}
+                </td>
+                <td>
+                  <button mat-icon-button color="primary" (click)="openDialog(group)" matTooltip="See this group">
+                    <mat-icon>open_in_new</mat-icon>
+                  </button>
+                </td>
+                <td>
+                  <button mat-icon-button color="warn" (click)="deleteGroup(group)" matTooltip="Delete this group">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-container>
+
+    </mat-tab>
+    <mat-tab label="Third-party applications">
+      <p class="display-4 text-center m-5" style="font-size: 7vmin;">Link third-party applications</p>
+      <div class="container-xl">
+
+        <div class="row mt-5 d-flex justify-content-between align-items-center">
+          <div class="col-sm-12 col-md-6 col-lg-3 p-0">
+            <div class="card m-3 p-0 shadow" style="width: 18rem;">
+              <div class="container p-0">
+                <img src="assets/images/Spotify_Logo_RGB_Green.png" class="card-img-top">
+              </div>
+              <hr class="m-0">
+              <div class="card-body p-3 d-flex justify-content-center flex-column">
+                <button *ngIf="!spotifyLinked" class="bg-success text-light" mat-raised-button (click)="linkSpotify()">Link my Spotify account</button>
+                <div *ngIf="spotifyLinked" class="text-center text-success font-weight-bold m-2">
+                  <mat-icon class="h1">how_to_reg</mat-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-6 col-lg-3 p-0">
+            <div class="card m-3 p-0 shadow" style="width: 18rem;">
+              <div class="container p-0">
+                <img src="assets/images/TMDB_logo.svg" class="card-img-top p-3">
+              </div>
+              <hr class="m-0">
+              <div class="card-body p-3 d-flex justify-content-center flex-column">
+                <button *ngIf="!tmdbLinked" class="bg-info text-light" mat-raised-button (click)="linkTMDB()">Link my TMDB account</button>
+                <div *ngIf="tmdbLinked" class="text-center text-info font-weight-bold m-2">
+                  <mat-icon class="h1">how_to_reg</mat-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-6 col-lg-3 p-0">
+            <div class="card m-3 p-0 shadow" style="width: 18rem;">
+              <div class="container p-0">
+                <img src="assets/images/google_books.png" width="25%" class="card-img-top p-3">
+              </div>
+              <hr class="m-0">
+              <div class="card-body p-3 d-flex justify-content-center flex-column">
+                <button *ngIf="!googleLinked" class="bg-primary text-light" mat-raised-button (click)="linkGoogleBooks()">Link my Google Books account</button>
+                <div *ngIf="googleLinked" class="text-center text-primary font-weight-bold">
+                  <mat-icon class="h1">how_to_reg</mat-icon>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      <hr>
+    </mat-tab>
+  </mat-tab-group>
 
-    </div>
-  </div>
-</div>

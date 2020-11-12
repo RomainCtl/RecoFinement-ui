@@ -1,3 +1,4 @@
+import { MatDialog } from '@angular/material/dialog';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserRegisterDtoRequest } from './../../../shared/models/DtoRequest/user-register.model';
@@ -7,6 +8,7 @@ import { UserRegisterDtoResponse } from './../../../shared/models/DtoResponse/us
 import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { ErrorService } from 'src/app/services/error/error.service';
+import { TermsOfUseComponent } from './modal/terms-of-use/terms-of-use.component';
 
 @Component({
   selector: 'app-register',
@@ -36,7 +38,8 @@ export class RegisterComponent implements OnInit {
     private _auth: AuthService,
     private _router: Router,
     private cookie: CookieService,
-    private errorService: ErrorService) { }
+    private errorService: ErrorService,
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
@@ -52,6 +55,7 @@ export class RegisterComponent implements OnInit {
           localStorage.setItem('username', result.user.username);
           localStorage.setItem('email', result.user.email);
           this.registerHttpResponse = result;
+          this.cookie.set('user_id', result.user.uuid, {expires: 1, sameSite: 'Lax', path: '/'});
           this.cookie.set('access_token', this.registerHttpResponse.access_token, { expires: 1, sameSite: 'Lax', path: '/' });
 
           // document.cookie = 'access_token=' + this.registerHttpResponse.access_token;
@@ -73,5 +77,14 @@ export class RegisterComponent implements OnInit {
       this.passwordError = 'Passwords don\'t match';
       this.errorService.addError(this.passwordError);
     }
+  }
+
+  showTermsAndConditions(): void {
+    this.dialog.open(TermsOfUseComponent,
+      {
+        panelClass: ['shadow-none', 'w-75', 'h-75'],
+        hasBackdrop: true,
+        backdropClass: 'blur'
+      });
   }
 }

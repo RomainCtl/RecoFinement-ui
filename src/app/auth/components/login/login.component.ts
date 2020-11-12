@@ -5,9 +5,7 @@ import { UserLoginDtoRequest } from '../../../shared/models/DtoRequest/user-logi
 import { Router } from '@angular/router';
 import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
 import { ForgetPasswordComponent } from '../user/forget-password/forget-password.component';
-import { ErrorService } from 'src/app/services/error/error.service';
 
 @Component({
   selector: 'app-login',
@@ -38,7 +36,7 @@ export class LoginComponent implements OnInit {
 
   resetPassword(): void {
     this.dialog.open(ForgetPasswordComponent, {
-      panelClass: ['shadow-none', 'w-25'],
+      panelClass: ['shadow-none', 'w-100'],
       hasBackdrop: true,
       backdropClass: 'blur'
     });
@@ -46,17 +44,14 @@ export class LoginComponent implements OnInit {
 
   login(values: UserLoginDtoRequest): void {
     this._auth.login(values)
-      .then(
-        (result: UserLoginDtoResponse) => {
-          localStorage.setItem('uuid', result.user.uuid);
-          localStorage.setItem('username', result.user.username);
-          localStorage.setItem('email', result.user.email);
-          this.loginHttpResponse = result;
-          this.cookie.set('access_token', this.loginHttpResponse.access_token, { expires: 1, sameSite: 'Lax', path: '/' });
-          // document.cookie = 'access_token=' + this.loginHttpResponse.access_token + '; path:/';
-          this._router.navigate(['app']);
-        }
-      );
+    .then(
+      (result: UserLoginDtoResponse) => {
+        this.loginHttpResponse = result;
+        this.cookie.set('user_id', result.user.uuid, {expires: 1, sameSite: 'Lax', path: '/'});
+        this.cookie.set('access_token', this.loginHttpResponse.access_token, {expires: 1, sameSite: 'Lax', path: '/'});
+        this._router.navigate(['app']);
+      }
+    );
   }
 
 }

@@ -10,9 +10,9 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12 col-md-6">
-        <mat-chip-list>
+        <mat-chip-list *ngIf="item.rating">
           <span class="mb-1">
-            <mat-chip class="h6" color="accent" selected>{{ item.rating.toFixed(2) }} <mat-icon class="ml-1">star_rating
+            <mat-chip  class="h6" color="accent" selected>{{ item.rating.toFixed(2) }} <mat-icon class="ml-1">star_rating
               </mat-icon>
             </mat-chip>
             <mat-chip class="bg-transparent text-muted m-0 p-0">over {{ item.rating_count | number }} ratings.
@@ -151,7 +151,7 @@
       </div>
       <div class="col-sm-12 col-md-6 my-auto mx-auto">
         <div class="container-fluid">
-          <img class="rounded-lg mb-2 shadow border m-2 w-100" [src]="item.cover">
+          <img class="mb-2 m-2 w-100" [src]="item.cover">
         </div>
       </div>
     </div>

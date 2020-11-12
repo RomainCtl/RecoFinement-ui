@@ -1,5 +1,7 @@
-import { Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CookieService } from 'ngx-cookie-service';
+import { ExternalService } from './../../../services/external/external.service';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ProfileService } from 'src/app/services/profile/profile.service';
@@ -9,7 +11,8 @@ import { GroupDtoResponse } from 'src/app/shared/models/DtoResponse/group.model'
 import { Group } from 'src/app/shared/models/group.model';
 import { MatDialog } from '@angular/material/dialog';
 import { GroupMembersComponent } from '../groupMembers/groupMembers.component';
-import { CookieService } from 'ngx-cookie-service';
+import { User } from 'src/app/shared/models/user.model';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-profile',
@@ -18,11 +21,10 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class ProfileComponent implements OnInit {
 
-  public myGroups;
-  public ownerGroups: Array<Group> = new Array<Group>();
-  public groups;
-  public otherGroups: Array<Group> = new Array<Group>();
-  public invitations;
+  public myGroups: Group[] = [];
+  public ownerGroups: Group[] = [];
+  public groups: Group[] = [];
+  public otherGroups: Group[] = [];
   public myUsername: string = localStorage.getItem('username');
   public myEmail: string = localStorage.getItem('email');
   public toggle = false;
@@ -31,138 +33,227 @@ export class ProfileComponent implements OnInit {
   userHttpResponse: UserDtoResponse = {
     message: '',
     status: true,
-    user: null,
+    user: new User(),
     errors: ['']
   };
   createGroupHttpResponse: GroupDtoResponse = {
     message: '',
     status: true,
-    group: null,
+    group: new Group(),
     errors: ['']
   };
+  spotifyLinked = false;
+  tmdbLinked = false;
+  googleLinked = false;
 
   constructor(
     private profileService: ProfileService,
     private userService: UserService,
-    private cookie: CookieService,
+    private externalService: ExternalService,
     public dialog: MatDialog,
-    private router: Router) { }
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private cookie: CookieService,
+    private route: ActivatedRoute) { }
+
+  userData: UserDtoResponse = {
+    status: false,
+    message: '',
+    user: {
+      uuid: '',
+      email: '',
+      username: '',
+      groups: [],
+      invitations: [],
+      owned_groups: [],
+      preferences_defined: false
+    },
+    errors: ['']
+  };
 
   ngOnInit(): void {
-    this.userService.getUserData(localStorage.getItem('uuid'))
+
+    this.route.queryParams.subscribe(params => {
+      if (params.code) {
+        this.externalService.getOAuthSpotify().then((result: any) => {
+          if (result.spotify_url !== 'linked') {
+            this.externalService.callbackSpotify(params.code, params.state).then(() => {
+              this.router.navigate([this.route.snapshot.routeConfig.path]);
+              this.snackBar.open('Your spotify account is now linked!', 'Great!', { horizontalPosition: 'start' });
+            });
+          }
+        });
+      }
+      if (params.approved) {
+        this.externalService.getOAuthTmdb().then((result: any) => {
+          if (result.tmdb_url !== 'linked') {
+            this.externalService.callbackTmdb(params.request_token, params.approved).then(() => {
+              this.router.navigate([this.route.snapshot.routeConfig.path]);
+              this.snackBar.open('Your tmdb account is now linked!', 'Great!', { horizontalPosition: 'start' });
+            });
+          }
+        });
+      } else if (params.denied) {
+        this.snackBar.open('There was a problem linking your TMDB account', 'Alright!', { horizontalPosition: 'start' });
+      }
+    });
+
+    this.userService.getUserData(this.cookie.get('user_id'))
       .then(
         (result: UserDtoResponse) => {
-          this.invitations = result.user.invitations;
-
-          this.myGroups = result.user.owned_groups;
-          this.myGroups.forEach(group => {
+          this.userData = result;
+          this.userData.user.owned_groups.forEach(group => {
             this.profileService.getGroup(group.group_id).then((groupResult: GroupDtoResponse) => {
-              this.ownerGroups.push(groupResult.group);
+              this.myGroups.push(groupResult.group);
             });
           });
 
-          this.groups = result.user.groups;
-          this.groups.forEach(group => {
+          this.userData.user.groups.forEach(group => {
             this.profileService.getGroup(group.group_id).then((groupResult: GroupDtoResponse) => {
-              this.otherGroups.push(groupResult.group);
+              this.groups.push(groupResult.group);
             });
           });
         }
-      ).catch((result: HttpErrorResponse) => {
-      });
+      );
   }
 
   editProfile(form: NgForm): void {
-    if (form.value.username !== localStorage.getItem('username')) {
-      this.userService.updateUser(localStorage.getItem('uuid'), { username: form.value.username }).then(
+    if (form.value.username !== '') {
+      this.userService.updateUser(this.userData.user.uuid, { username: form.value.username }).then(
         (result: UserDtoResponse) => {
-          this.userHttpResponse = result;
+          this.userData = result;
+          window.location.reload();
         }
       );
-      localStorage.setItem('username', form.value.username);
     }
 
-    if (form.value.email !== localStorage.getItem('email')) {
-      this.userService.updateUser(localStorage.getItem('uuid'), { email: form.value.email }).then(
+    if (form.value.email !== '') {
+      this.userService.updateUser(this.userData.user.uuid, { email: form.value.email }).then(
         (result: UserDtoResponse) => {
-          this.userHttpResponse = result;
+          this.userData = result;
+          window.location.reload();
         }
       );
-      localStorage.setItem('email', form.value.email);
     }
 
     if (form.value.password === form.value.confirmPassword) {
-      if (form.value.password.length > 0) {
-        this.userService.updateUser(localStorage.getItem('uuid'), { password: form.value.password }).then(
-          (result: UserDtoResponse) => { this.userHttpResponse = result; }
-        ).catch(
-          (errors: HttpErrorResponse) => { this.userHttpResponse = errors.error; }
+      if (form.value.password !== '') {
+        this.userService.updateUser(this.userData.user.uuid, { password: form.value.password }).then(
+          (result: UserDtoResponse) => {
+            this.userData = result;
+            window.location.reload();
+          }
         );
       }
+
     } else {
       this.passwordError = 'Passwords don\'t match';
     }
   }
 
   deleteUser(): void {
-    const uuid: string = localStorage.getItem('uuid');
     if (confirm('Are you sure you want to delete your account ? All your preferences and groups will also be deleted')) {
-      this.userService.deleteUser(uuid);
+      this.userService.deleteUser(this.userData.user.uuid);
       this.cookie.delete('access_token', '/');
-      this.router.navigate(['/']);
+      this.router.navigate(['/login']);
     }
   }
 
-  addGroup(): void {
+  addGroup(event: any): void {
     this.toggle = !this.toggle;
+    if (!this.toggle) {
+      console.log(event);
+    }
   }
 
   createGroup(form: NgForm): void {
     this.profileService.addGroup({ name: form.value.groupName }).then(
       (result: GroupDtoResponse) => {
-        this.createGroupHttpResponse = result;
-        this.ownerGroups.push(result.group);
+        this.myGroups.push(result.group);
         this.toggle = !this.toggle;
-      }).catch(
-        (errors: HttpErrorResponse) => {
-          this.createGroupHttpResponse = errors.error;
-        }
-      );
+      });
   }
 
   deleteGroup(group): void {
+    console.log(group);
     if (confirm('Are you sure you want to delete the group ' + group.name + ' ?')) {
-      this.ownerGroups.splice(this.ownerGroups.indexOf(group, 0), 1);
+      if (group.owner.username === this.myUsername) {
+        this.myGroups.splice(this.myGroups.indexOf(group, 0), 1);
+      } else {
+        this.groups.splice(this.groups.indexOf(group, 0), 1);
+      }
       this.profileService.deleteGroup(group.group_id);
     }
   }
 
   acceptInvit(invit): void {
-    this.profileService.acceptInvitation(invit.group_id, localStorage.getItem('uuid'));
-    this.invitations.splice(this.invitations.indexOf(invit, 0), 1);
+    this.profileService.acceptInvitation(invit.group_id, this.userData.user.uuid);
+    this.userData.user.invitations.splice(this.userData.user.invitations.indexOf(invit, 0), 1);
     this.profileService.getGroup(invit.group_id).then((groupResult: GroupDtoResponse) => {
-      groupResult.group.members.push({ uuid: '', username: this.myUsername, email: '' });
-      this.otherGroups.push(groupResult.group);
+      groupResult.group.members.push({ uuid: '', username: this.userData.user.username, email: '' });
+      this.groups.push(groupResult.group);
     });
   }
 
   declineInvit(invit): void {
-    this.profileService.declineInvitation(invit.group_id, localStorage.getItem('uuid'));
-    this.invitations.splice(this.invitations.indexOf(invit, 0), 1);
+    this.profileService.declineInvitation(invit.group_id, this.userData.user.uuid);
+    this.userData.user.invitations.splice(this.userData.user.invitations.indexOf(invit, 0), 1);
   }
 
   linkSpotify(): void {
-    window.open('https://accounts.spotify.com/fr/login', '_blanck');
+    this.externalService.getOAuthSpotify().then((result: any) => {
+      if (result.spotify_url !== 'linked') {
+        window.location.href = result.spotify_url;
+      } else {
+        this.spotifyLinked = true;
+      }
+    });
+  }
+
+  checkLinkedAccounts(tabIndex): void {
+    if (tabIndex === 2) {
+      this.externalService.getOAuthSpotify().then((result: any) => {
+        if (result.spotify_url !== 'linked') {
+          this.spotifyLinked = false;
+        } else {
+          this.spotifyLinked = true;
+        }
+      });
+      this.externalService.getOAuthTmdb().then((result: any) => {
+        if (result.tmdb_url !== 'linked') {
+          this.tmdbLinked = false;
+        } else {
+          this.tmdbLinked = true;
+        }
+      });
+    }
+  }
+
+  linkTMDB(): void {
+    this.externalService.getOAuthTmdb().then((result: any) => {
+      if (result.tmdb_url !== 'linked') {
+        window.location.href = result.tmdb_url;
+      } else {
+        this.tmdbLinked = true;
+      }
+    });
+  }
+
+  linkGoogleBooks(): void {
+
   }
 
   openDialog(group): void {
-    const dialogRef = this.dialog.open(GroupMembersComponent, {
+    this.dialog.open(GroupMembersComponent, {
       width: '350px',
       data: { group }
     });
+  }
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+  exportData(): void {
+    this.userService.exportUserData().then(data => {
+      const blob = new Blob([JSON.stringify(data.user)], { type: 'application/json' });
+      saveAs(blob, 'data.json');
     });
   }
 }

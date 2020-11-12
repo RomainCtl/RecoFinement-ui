@@ -13,3 +13,12 @@ input:focus, textarea:focus, select:focus, button:focus, a:focus{
 @mixin tab-focus() {
     outline: none;
 }
+input {
+    -webkit-user-select: all !important;
+}
+
+*, *::before, *::after { outline: none; }
+
+star-rating {
+    cursor: pointer;
+}
