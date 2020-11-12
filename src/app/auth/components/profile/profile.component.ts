@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { GroupMembersComponent } from '../groupMembers/groupMembers.component';
 import { User } from 'src/app/shared/models/user.model';
-import saveAs from 'file-saver';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-profile',
