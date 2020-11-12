@@ -11,8 +11,7 @@ import { TrackHistoryResponseDto } from 'src/app/shared/models/DtoResponse/music
 export class HistoryTracksComponent implements OnInit {
 
   constructor(
-    private trackService: TrackService,
-    private mainSnackBar: MatSnackBar,
+    private trackService: TrackService
   ) { }
 
   nextPage = 2;
@@ -27,11 +26,6 @@ export class HistoryTracksComponent implements OnInit {
     number_of_elements: 0,
     page: 0,
     total_pages: 0
-  };
-
-  snackBarConfig: MatSnackBarConfig = {
-    horizontalPosition: 'start',
-    duration: 5000
   };
 
   ngOnInit(): void {
@@ -52,9 +46,6 @@ export class HistoryTracksComponent implements OnInit {
     if (this.nextPage <= this.trackResponse.total_pages) {
       this.getHistoryMusics(this.nextPage);
     } else {
-      if (!this.noTracks) {
-        this.mainSnackBar.open('You have reached the end of your history!', 'Alright!', this.snackBarConfig);
-      }
       this.finished = true;
     }
   }
