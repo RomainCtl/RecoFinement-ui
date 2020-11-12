@@ -47,6 +47,10 @@ export class MoviesComponent implements OnInit {
       this.apiResponse = true;
 
       if (result.number_of_elements !== 0) {
+        this.noMovies = false;
+      }
+
+      if (this.nextPage !== this.movieResponse.total_pages) {
         this.finished = false;
       }
 
