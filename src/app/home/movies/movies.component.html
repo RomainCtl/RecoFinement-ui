@@ -1,5 +1,51 @@
-<div class="container-fluid display-4 text-center p-3" style="font-size:7vmin;">
-    Movies you may like
+<div *ngIf="!noMovies">
+  <p class="display-4 text-center p-3" style="font-size: 7vmin;">Movies you may like</p>
+  <hr>
+  <div class="container-fluid text-center">
+    <mat-form-field color="warn" class="h4 col-sm-12 col-md-6 col-lg-4 align-center">
+      <mat-label>Search a movie...</mat-label>
+      <input matInput placeholder="Movie name" aria-label="Movie" [formControl]="appCtrl"
+        [matAutocomplete]="auto" (ngModelChange)="searchMovies($event)">
+      <mat-icon matSuffix inline>search</mat-icon>
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredMovies | async" [value]="option.title">
+          {{ option.title }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
 </div>
-<hr>
-<h3 class="d-flex justify-content-center text-muted">Coming soon</h3>
+
+<div class="container-xl p-5">
+  <div *ngIf="this.searchEmpty && this.searchActivated" class="col d-flex justify-content-center text-center p-0 mb-2 text-muted">
+    There is no movies for your search.
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center text-center p-0"
+      *ngFor="let movie of movies.content; index as indexOfElement;">
+      <div class="card m-3 p-0 shadow" style="width: 18rem;">
+        <div class="container p-0">
+          <img [src]="movie.cover" class="card-img-top">
+        </div>
+        <div class="card-body p-3 d-flex justify-content-center flex-column">
+          <h3 class="card-title text-danger"><strong>{{movie.title}}</strong></h3>
+          <p class="card-text"><strong>{{movie.director}}</strong></p>
+          <button mat-stroked-button color="primary" (click)="openPopUp(indexOfElement)">See more</button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!searchActivated" style="display: none;" infiniteScroll [infiniteScrollDistance]="800" [infiniteScrollThrottle]="1000"
+      (scrolled)="onScroll()">
+    </div>
+    <div *ngIf="!finished && !searchActivated" class="container-fluid mx-auto mt-5 mb-5 text-center">
+      <div class="spinner-border text-danger" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="d-flex align-items-center justify-content-center h-75" *ngIf="noMovies && !apiResponse">
+  <div class="spinner-border text-danger" style="width: 6rem; height: 6rem;" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
