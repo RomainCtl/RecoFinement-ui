@@ -42,3 +42,8 @@ body {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
+
+::ng-deep .blur {
+  backdrop-filter: blur(6px);
+  z-index:2;
+}

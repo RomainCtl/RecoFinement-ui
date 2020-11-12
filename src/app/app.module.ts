@@ -76,6 +76,7 @@ import { ResetPasswordComponent } from './auth/components/user/reset-password/re
 import { ForgetPasswordComponent } from './auth/components/user/forget-password/forget-password.component';
 import { NotificationComponent } from './shared/modals/notification/notification/notification.component';
 import { HistoryTracksComponent } from './auth/components/user/history-tracks/history-tracks.component';
+import { TermsOfUseComponent } from './auth/components/register/modal/terms-of-use/terms-of-use.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +104,8 @@ import { HistoryTracksComponent } from './auth/components/user/history-tracks/hi
     ResetPasswordComponent,
     ForgetPasswordComponent,
     NotificationComponent,
-    HistoryTracksComponent
+    HistoryTracksComponent,
+    TermsOfUseComponent
   ],
   imports: [
     CommonModule,
