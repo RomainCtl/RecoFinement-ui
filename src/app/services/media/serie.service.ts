@@ -18,6 +18,10 @@ export class SeriesService {
 
   constructor(private httpClient: HttpClient) { }
 
+  getUserMeta(series_id: number): Promise<SerieMetaResponseDto> {
+    return this.httpClient.get<SerieMetaResponseDto>(this.urlUserMeta + series_id + '/meta').toPromise();
+  }
+
   getSeries(page: number): Promise<SeriesResponseDto> {
     return this.httpClient.get<SeriesResponseDto>(this.urlGetSeries + page).toPromise();
   }
@@ -36,5 +40,9 @@ export class SeriesService {
 
   saveRating(serieId: number, serieMeta: any): Promise<SerieMetaResponseDto> {
     return this.httpClient.patch<SerieMetaResponseDto>(this.urlUserMeta + serieId + '/meta', serieMeta).toPromise();
+  }
+
+  saveWatchedEpisodes(seriesId: number, seriesMeta: any): Promise<SerieMetaResponseDto> {
+    return this.httpClient.patch<SerieMetaResponseDto>(this.urlUserMeta + seriesId + '/meta', seriesMeta).toPromise();
   }
 }

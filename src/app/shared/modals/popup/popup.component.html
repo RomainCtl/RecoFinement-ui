@@ -164,3 +164,110 @@
     </div>
   </div>
 </div>
+
+<!-- SERIES PUP-UP -->
+
+<ng-container *ngIf="item.serie_id">
+
+
+  <div mat-dialog-content dynamicHeight>
+    <div class="container-fluid">
+      <div mat-dialog-actions class="mr-2 mb-1 d-flex justify-content-between p-0">
+        <p class="font-weight-bold text-danger text-left h4 text-truncate" style="max-width:80%;">{{item.title}}</p>
+        <mat-icon mat-dialog-close class="text-right text-secondary">cancel</mat-icon>
+      </div>
+    </div>
+    <div class="container-fluid">
+      <mat-tab-group mat-stretch-tabs dyna>
+        <mat-tab> 
+          <ng-template mat-tab-label>
+            <mat-icon class="mr-2">visibility</mat-icon>
+            Overview
+          </ng-template>
+          <div class="row p-3">
+            <div class="col-sm-12 col-md-6">
+              <mat-chip-list>
+                <span class="mb-1">
+                  <mat-chip class="h6" color="accent" selected>{{ item.rating ? item.rating.toFixed(2) : 'No ratings yet.' }} <mat-icon class="ml-1">star_rating
+                  </mat-icon>
+                </mat-chip>
+                <mat-chip class="bg-transparent text-muted m-0 p-0">over {{ item.rating_count | number }} ratings.
+                </mat-chip>
+              </span>
+            </mat-chip-list>
+            <div class="mb-3 text-primary">{{ item.start_year }} - {{ item.end_year}}</div>
+            <mat-chip-list class="container-fluid h-100">
+              <mat-chip *ngFor="let genre of item.genres">{{ genre.name }}</mat-chip>
+            </mat-chip-list>
+            <p class="lead mt-5">How many seasons did you watch?</p>
+            <mat-slider
+            class="w-100"
+            [disabled]="this.watchedSeasons === 10 ? 'true' : 'false'"
+            invert="false"
+            max="10"
+            min="0"
+            step="0.5"
+            [(ngModel)]="watchedSeasons"
+            thumbLabel="true"
+            tickInterval="1"
+            color="primary"
+            vertical="false">
+          </mat-slider>
+          <h3 class="text-muted lead">I watched <span class="text-primary h4 font-weight-bold">{{watchedSeasons}}</span> season(s).</h3>
+          <hr>
+          <p class="text-center h5 font-weight-bold">Give your rating</p>
+          <star-rating [starType]="'svg'" [rating]="seriesUserMeta.rating || 0" (ratingChange)="saveRating($event)">
+          </star-rating>
+        </div>
+        <div class="col-sm-12 col-md-6 my-auto mx-auto">
+          <div class="container-fluid d-flex justify-content-center">
+            <img class="rounded-lg mb-2 shadow border m-2 w-75" [src]="item.cover ? item.cover : 'assets/images/placeholder.png'">
+          </div>
+        </div>
+      </div>  
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="mr-2">supervisor_account</mat-icon>
+            Staff
+          </ng-template>
+          <mat-accordion class="shadow-none">
+            <mat-expansion-panel>
+              <mat-expansion-panel-header class="border-none text-center">
+                <mat-panel-title class="text-secondary font-weight-bold">
+                  Actors
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <mat-chip-list role="list">
+                <mat-chip selected color="warn" *ngFor="let actor of item.actors.split(',')" role="listitem">{{actor}}</mat-chip>
+              </mat-chip-list>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title class="text-secondary font-weight-bold">
+                  Directors
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <mat-chip-list role="list">
+                <mat-chip selected color="accent" *ngFor="let director of item.directors.split(',')" role="listitem">{{director}}</mat-chip>
+              </mat-chip-list>
+            </mat-expansion-panel>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title class="text-secondary font-weight-bold">
+                  Writers
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <mat-chip-list role="list">
+                <mat-chip selected color="primary" *ngFor="let writer of item.writers.split(',')" role="listitem">{{writer}}</mat-chip>
+              </mat-chip-list>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </mat-tab>
+      </mat-tab-group>
+      
+</div>
+</div>
+</ng-container>
+
+

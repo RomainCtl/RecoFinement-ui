@@ -36,6 +36,9 @@ export class SeriesComponent implements OnInit {
     page: 0,
     total_pages: 0
   };
+  get content(): Series[] {
+    return this.series.content;
+  }
 
   snackBarConfig: MatSnackBarConfig = {
     horizontalPosition: 'start',
@@ -80,9 +83,6 @@ export class SeriesComponent implements OnInit {
     if (this.nextPage <= this.series.total_pages) {
       this.getSeries(this.nextPage);
     } else {
-      if (!this.noSeries) {
-        this.mainSnackBar.open('You have reached the end of the Internet!', 'Alright!');
-      }
       this.finished = true;
     }
   }
@@ -105,25 +105,11 @@ export class SeriesComponent implements OnInit {
     });
   }
 
-  openPreview(index: number): void {
-
-    // this.savePlayCount(this.series.content[index].serie_id);
-
-    this.bottom.open(PreviewComponent, {
-      data: this.series.content[index],
-      hasBackdrop: false,
-      panelClass: ['shadow-none', 'bg-transparent', 'm-0', 'p-0'],
-      scrollStrategy: this.overlay.scrollStrategies.noop(),
-      direction: 'ltr'
-    });
-
-  }
-
   openPopUp(index: number): void {
     const popupDetails = this.dialog.open < PopupComponent,
       Series > (PopupComponent, {
         data: this.series.content[index],
-        panelClass: ['shadow-none'],
+        panelClass: ['shadow-none', 'w-75', 'h-75'],
         hasBackdrop: true,
         backdropClass: 'blur'
       });
@@ -153,10 +139,5 @@ export class SeriesComponent implements OnInit {
       });
     }
   }
-
-  // savePlayCount(id: number): void {
-  //   console.log(id);
-  //   this.seriesService.savePlayCount(id, { additional_play_count: 1 });
-  // }
 
 }
