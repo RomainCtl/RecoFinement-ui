@@ -31,4 +31,12 @@ export class MovieService {
   saveRating(movieId: number, movieMeta: any): Promise<MovieMetaResponseDto> {
     return this.httpClient.patch<MovieMetaResponseDto>(this.urlUserMeta + movieId + '/meta', movieMeta).toPromise();
   }
+
+  getUserMeta(movie_id: number): Promise<MovieMetaResponseDto> {
+    return this.httpClient.get<MovieMetaResponseDto>(this.urlUserMeta + movie_id + '/meta').toPromise();
+  }
+
+  saveWatchedMovie(movie_id: number, movieMeta: any): Promise<MovieMetaResponseDto> {
+    return this.httpClient.patch<MovieMetaResponseDto>(this.urlUserMeta + movie_id + '/meta', movieMeta).toPromise();
+  }
 }

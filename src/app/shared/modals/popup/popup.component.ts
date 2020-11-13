@@ -1,6 +1,5 @@
 import { SerieMetaResponseDto } from 'src/app/shared/models/DtoResponse/series/serie-meta.model';
 import { SerieMeta } from './../../models/DtoResponse/series/SerieMeta.model';
-import { SeriesResponseDto } from './../../models/DtoResponse/series/series-dto.model';
 import { SeriesService } from './../../../services/media/serie.service';
 import { TrackMetaResponseDto } from './../../models/DtoResponse/musics/track-meta.model';
 import { TrackService } from 'src/app/services/media/track.service';
@@ -18,6 +17,9 @@ import { GameMetaResponseDto } from 'src/app/shared/models/DtoResponse/games/gam
 import { ApplicationMeta } from '../../models/DtoResponse/applications/applicationMeta.model';
 import { ApplicationMetaResponseDto } from '../../models/DtoResponse/applications/application-meta.model';
 import { TrackMeta } from '../../models/DtoResponse/musics/TrackMeta.model';
+import { MovieService } from 'src/app/services/media/movie.service';
+import { MovieMeta } from '../../models/DtoResponse/movies/MovieMeta.model';
+import { MovieMetaResponseDto } from '../../models/DtoResponse/movies/movie-meta.model';
 
 @Component({
   selector: 'app-popup',
@@ -31,10 +33,12 @@ export class PopupComponent implements OnInit {
     private trackService: TrackService,
     private gameService: GameService,
     private bookService: BookService,
+    private movieService: MovieService,
     private seriesService: SeriesService,
     private appService: ApplicationService) { }
 
   readOnly = false;
+  moviesUserData = new MovieMeta();
   seriesUserMeta = new SerieMeta();
   gameUserMeta = new GameMeta();
   bookUserMeta = new BookMeta();
@@ -44,6 +48,11 @@ export class PopupComponent implements OnInit {
   fullSeriesWatch = false;
 
   ngOnInit(): void {
+    if (this.item.movie_id) {
+      this.movieService.getUserMeta(this.item.movie_id).then((result: MovieMetaResponseDto) => {
+        this.moviesUserData = result.content;
+      });
+    }
     if (this.item.serie_id) {
       this.seriesService.getUserMeta(this.item.serie_id).then((result: SerieMetaResponseDto) => {
         this.seriesUserMeta = result.content;
@@ -84,8 +93,11 @@ export class PopupComponent implements OnInit {
     if (this.item.app_id) {
       this.appService.saveRating(this.item.app_id, { rating: event.rating });
     }
-    if(this.item.serie_id) {
+    if (this.item.serie_id) {
       this.seriesService.saveRating(this.item.serie_id, { rating: event.rating });
+    }
+    if (this.item.movie_id) {
+      this.movieService.saveRating(this.item.movie_id, { rating: event.rating });
     }
   }
 
@@ -107,6 +119,10 @@ export class PopupComponent implements OnInit {
 
   saveWatchedEpisodes(event: any): void {
     this.seriesService.saveWatchedEpisodes(this.item.serie_id, { num_watched_episodes: event });
+  }
+
+  saveWatchedMovie(event: any): void {
+    this.movieService.saveWatchedMovie(this.item.serie_id, { saveWatchedMovies: event });
   }
 
 }
