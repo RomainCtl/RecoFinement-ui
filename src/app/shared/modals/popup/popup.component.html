@@ -32,7 +32,7 @@
       </div>
       <div class="col-sm-12 col-md-6 my-auto mx-auto">
         <div class="container-fluid d-flex justify-content-center">
-          <img class="rounded-lg mb-2 shadow border m-2 w-75 h-75" [src]="item.covert_art_url">
+          <img class="rounded-lg mb-2 shadow border m-2 w-75 h-75" [src]="item.covert_art_url" alt="track cover">
         </div>
       </div>
     </div>
@@ -75,7 +75,7 @@
       </div>
       <div class="col-sm-12 col-md-6 my-auto mx-auto">
         <div class="container-fluid">
-          <img class="rounded-lg mb-2 shadow border m-2 w-100" [src]="item.image_url_l">
+          <img class="rounded-lg mb-2 shadow border m-2 w-100" [src]="item.image_url_l" alt="book cover">
         </div>
       </div>
     </div>
@@ -102,11 +102,11 @@
         </mat-checkbox>
         <p class="mb-2 text-muted font-italic">{{item.short_description}}</p>
         <div class="mb-3 text-primary">{{ item.release_date }}</div>
-        <img (click)="goToSteam()" class="btn m-0 p-0" src="assets/images/Steam_icon_logo.svg">
+        <img (click)="goToSteam()" class="btn m-0 p-0" src="assets/images/Steam_icon_logo.svg" alt="steam icon">
       </div>
       <div class="col-sm-12 col-md-6 my-auto mx-auto">
         <div class="container-fluid">
-          <img class="rounded-lg mb-2 shadow border m-2 w-100" [src]="item.header_image">
+          <img class="rounded-lg mb-2 shadow border m-2 w-100" [src]="item.header_image" alt="game cover">
         </div>
       </div>
     </div>
@@ -151,7 +151,7 @@
       </div>
       <div class="col-sm-12 col-md-6 my-auto mx-auto">
         <div class="container-fluid">
-          <img class="mb-2 m-2 w-100" [src]="item.cover">
+          <img class="mb-2 m-2 w-100" [src]="item.cover" alt="application cover">
         </div>
       </div>
     </div>
@@ -213,7 +213,7 @@
             <div class="col-sm-12 col-md-6 my-auto mx-auto">
               <div class="container-fluid d-flex justify-content-center">
                 <img class="rounded-lg mb-2 shadow border m-2 w-75"
-                  [src]="item.cover ? item.cover : 'assets/images/placeholder.png'">
+                  [src]="item.cover ? item.cover : 'assets/images/placeholder.png'" alt="serie cover">
               </div>
             </div>
           </div>
@@ -305,8 +305,7 @@
             <div class="col-sm-12 col-md-6 my-auto mx-auto">
               <div class="container-fluid d-flex justify-content-center">
                 <img class="rounded-lg mb-2 shadow border m-2 w-75"
-                  [src]="item.cover ? item.cover : 'assets/images/placeholder.png'"
-                  alt="movie cover">
+                  [src]="item.cover ? item.cover : 'assets/images/placeholder.png'" alt="movie cover">
               </div>
             </div>
           </div>
