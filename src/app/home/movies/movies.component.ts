@@ -44,7 +44,6 @@ export class MoviesComponent implements OnInit {
   ngOnInit(): void {
     this.movieService.getPopularMovies(1).then((result: MovieResponseDto) => {
       this.movieResponse = result;
-      console.log(this.movieResponse);
       this.apiResponse = true;
 
       if (result.number_of_elements !== 0) {
