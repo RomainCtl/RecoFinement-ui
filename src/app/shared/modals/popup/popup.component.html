@@ -293,7 +293,8 @@
                   </mat-chip>
                 </span>
               </mat-chip-list>
-              <div class="mb-3 text-primary">{{ item.start_year }} - {{ item.end_year}}</div>
+              <p class="font-weight-bold mb-2 h3">{{ item.director }}</p>
+              <p class="mb-3 text-primary">{{ item.year }}</p>
               <mat-chip-list class="container-fluid h-100">
                 <mat-chip *ngFor="let genre of item.genres">{{ genre.name }}</mat-chip>
               </mat-chip-list>
@@ -309,6 +310,16 @@
               </div>
             </div>
           </div>
+        </mat-tab>
+        <mat-tab *ngIf="item.plot_outline">
+          <ng-template mat-tab-label>
+            <mat-icon class="mr-2">description</mat-icon>
+            Summary
+          </ng-template>
+          <div class="container-fluid mt-3 text-justify">
+            {{ item.plot_outline }}
+          </div>
+
         </mat-tab>
         <mat-tab>
           <ng-template mat-tab-label>

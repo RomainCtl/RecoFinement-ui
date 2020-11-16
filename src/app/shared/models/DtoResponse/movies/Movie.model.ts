@@ -18,5 +18,5 @@ export class Movie {
   tmdbid: number;
   year: number;
   imdbid: number;
-
+  plot_outline: string;
 }

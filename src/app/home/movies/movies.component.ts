@@ -44,6 +44,7 @@ export class MoviesComponent implements OnInit {
   ngOnInit(): void {
     this.movieService.getPopularMovies(1).then((result: MovieResponseDto) => {
       this.movieResponse = result;
+      console.log(this.movieResponse);
       this.apiResponse = true;
 
       if (result.number_of_elements !== 0) {
@@ -99,7 +100,7 @@ export class MoviesComponent implements OnInit {
   openPopUp(index: number): void {
     const popupDetails = this.dialog.open<PopupComponent, Movie>(PopupComponent, {
       data: this.movieResponse.content[index],
-      panelClass: ['shadow-none'],
+      panelClass: ['shadow-none', 'w-75', 'h-75'],
       hasBackdrop: true,
       backdropClass: 'blur'
     });
