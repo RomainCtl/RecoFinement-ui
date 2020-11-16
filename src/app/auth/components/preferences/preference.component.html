@@ -53,12 +53,12 @@
           <div class="row">
             <p class="font-weight-bold col-12 text-center text-uppercase mat-h2">Series</p>
             <ng-container *ngFor="let serie of series">
-              <app-card-preference
+              <app-card-preference class="d-flex"
               [id]="serie.serie_id"
               [title]="serie.title"
               [subtitle]=""
               [info]=""
-              [cover]="serie.cover"
+              [cover]="serie.cover ? serie.cover : 'assets/images/placeholder.png'"
               [type]="'serie'"
               ></app-card-preference>
             </ng-container>
@@ -74,11 +74,11 @@
           <div class="row">
             <p class="font-weight-bold col-12 text-center text-uppercase mat-h2">books</p>
             <ng-container *ngFor="let book of books">
-              <app-card-preference
+              <app-card-preference class="d-flex"
               [id]="book.isbn"
               [title]="book.title"
               [subtitle]="book.author"
-              [cover]="book.image_url_l"
+              [cover]="book.image_url_l ? book.image_url_l : 'assets/images/placeholder.png'"
               [info]="book.publisher"
               [type]="'book'"
               ></app-card-preference>
@@ -99,7 +99,7 @@
               [id]="game.movie_id"
               [title]="game.name"
               [subtitle]="game.publishers"
-              [cover]="game.header_image == null ? 'https://live.staticflickr.com/182/400813834_e0d52410d7_z.jpg' : game.header_image"
+              [cover]="game.header_image ? game.header_image : 'assets/images/placeholder.png'"
               [info]=""
               [type]="'game'"
               ></app-card-preference>
@@ -120,7 +120,7 @@
                   [id]="application.app_id"
                   [title]="application.name"
                   [subtitle]=""
-                  [cover]="application.cover"
+                  [cover]="application.cover ? application.cover : 'assets/images/placeholder.png'"
                   [info]=""
                   [type]="'application'"
               ></app-card-preference>
