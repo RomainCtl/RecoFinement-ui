@@ -14,6 +14,9 @@ export class ExternalService {
   private urlGetOauthTmdb = environment.api_url + '/external/tmdb';
   private urlGetOauthTmdbCallback = environment.api_url + '/external/tmdb/callback';
 
+  private urlGetOauthGbooks = environment.api_url + '/external/gbooks';
+  private urlGetOauthGbooksCallback = environment.api_url + '/external/gbooks/callback';
+
   constructor(private httpClient: HttpClient) { }
 
   getOAuthSpotify(): Promise<any> {
@@ -30,5 +33,13 @@ export class ExternalService {
 
   callbackTmdb(token, isApproved): Promise<any> {
     return this.httpClient.post(this.urlGetOauthTmdbCallback, { request_token: token, approved: isApproved }).toPromise();
+  }
+
+  getOAuthGbooks(): Promise<any> {
+    return this.httpClient.get(this.urlGetOauthGbooks).toPromise();
+  }
+
+  callbackGbooks(urlState, urlCode, urlScope): Promise<any> {
+    return this.httpClient.post(this.urlGetOauthGbooksCallback, { state: urlState, code: urlCode, scope: urlScope }).toPromise();
   }
 }
