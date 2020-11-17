@@ -214,8 +214,8 @@
               </div>
               <hr class="m-0">
               <div class="card-body p-3 d-flex justify-content-center flex-column">
-                <button *ngIf="!googleLinked" class="bg-primary text-light" mat-raised-button (click)="linkGoogleBooks()">Link my Google Books account</button>
-                <div *ngIf="googleLinked" class="text-center text-primary font-weight-bold">
+                <button *ngIf="!gbooksLinked" class="bg-primary text-light" mat-raised-button (click)="linkGoogleBooks()">Link my Google Books account</button>
+                <div *ngIf="gbooksLinked" class="text-center text-primary font-weight-bold">
                   <mat-icon class="h1">how_to_reg</mat-icon>
                 </div>
               </div>

@@ -44,7 +44,7 @@ export class ProfileComponent implements OnInit {
   };
   spotifyLinked = false;
   tmdbLinked = false;
-  googleLinked = false;
+  gbooksLinked = false;
 
   constructor(
     private profileService: ProfileService,
@@ -74,22 +74,38 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
 
     this.route.queryParams.subscribe(params => {
-      if (params.code) {
-        this.externalService.getOAuthSpotify().then((result: any) => {
-          if (result.spotify_url !== 'linked') {
-            this.externalService.callbackSpotify(params.code, params.state).then(() => {
-              this.router.navigate([this.route.snapshot.routeConfig.path]);
-              this.snackBar.open('Your spotify account is now linked!', 'Great!', { horizontalPosition: 'start' });
+      if (params.code && params.state && params.scope) {
+        this.externalService.getOAuthGbooks().then((result: any) => {
+          if (result.gbooks_url !== 'linked') {
+            this.externalService.callbackGbooks(params.state, params.code, params.scope).then(() => {
+              this.router.navigate([this.route.routeConfig.path]);
+              this.snackBar.open('Your Google Books account is now linked!', 'Great!', { horizontalPosition: 'start' });
+            }).catch(() => {
+              this.snackBar.open('There was a problem linking your Google Books account', 'Alright!', { horizontalPosition: 'start' });
             });
           }
         });
       }
-      if (params.approved) {
+      if (params.code && params.state && !params.scope) {
+        this.externalService.getOAuthSpotify().then((result: any) => {
+          if (result.spotify_url !== 'linked') {
+            this.externalService.callbackSpotify(params.code, params.state).then(() => {
+              this.router.navigate([this.route.snapshot.routeConfig.path]);
+              this.snackBar.open('Your Spotify account is now linked!', 'Great!', { horizontalPosition: 'start' });
+            }).catch(() => {
+              this.snackBar.open('There was a problem linking your Spotofy account', 'Alright!', { horizontalPosition: 'start' });
+            });
+          }
+        });
+      }
+      if (params.approved && params.request_token) {
         this.externalService.getOAuthTmdb().then((result: any) => {
           if (result.tmdb_url !== 'linked') {
             this.externalService.callbackTmdb(params.request_token, params.approved).then(() => {
               this.router.navigate([this.route.snapshot.routeConfig.path]);
               this.snackBar.open('Your tmdb account is now linked!', 'Great!', { horizontalPosition: 'start' });
+            }).catch(() => {
+              this.snackBar.open('There was a problem linking your TMDB account', 'Alright!', { horizontalPosition: 'start' });
             });
           }
         });
@@ -226,6 +242,13 @@ export class ProfileComponent implements OnInit {
           this.tmdbLinked = true;
         }
       });
+      this.externalService.getOAuthGbooks().then((result: any) => {
+        if (result.gbooks_url !== 'linked') {
+          this.gbooksLinked = false;
+        } else {
+          this.gbooksLinked = true;
+        }
+      });
     }
   }
 
@@ -240,7 +263,13 @@ export class ProfileComponent implements OnInit {
   }
 
   linkGoogleBooks(): void {
-
+    this.externalService.getOAuthGbooks().then((result: any) => {
+      if (result.gbooks_url !== 'linked') {
+        window.location.href = result.gbooks_url;
+      } else {
+        this.gbooksLinked = true;
+      }
+    });
   }
 
   openDialog(group): void {
