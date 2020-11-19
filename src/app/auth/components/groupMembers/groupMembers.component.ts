@@ -5,7 +5,6 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CookieService } from 'ngx-cookie-service';
 import { from } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, startWith, switchMap, tap, map } from 'rxjs/operators';
-import { ProfileService } from 'src/app/services/profile/profile.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { InviteMemberDtoRequest } from 'src/app/shared/models/DtoRequest/invite-member.model';
 import { InviteMemberDtoResponse } from 'src/app/shared/models/DtoResponse/invite-member.model';
@@ -18,7 +17,7 @@ import { Member } from 'src/app/shared/models/member.model';
   templateUrl: './groupMembers.component.html',
   styleUrls: ['./groupMembers.component.scss']
 })
-export class GroupMembersComponent implements OnInit {
+export class GroupMembersComponent {
 
   public toggle = false;
   public myUsername = '';
@@ -27,20 +26,20 @@ export class GroupMembersComponent implements OnInit {
   invitationControle = new FormControl();
   filteredOptions: Member[] = [];
 
-  userDataHttpResponse: UserDataDtoResponse = {
-    message: '',
-    status: true,
-    content: {
-      uuid: '',
-      email: '',
-      username: '',
-      preferences_defined: true,
-    },
-    number_of_elements: 0,
-    page: 0,
-    total_pages: 0,
-    errors: ['']
-  };
+  // userDataHttpResponse: UserDataDtoResponse = {
+  //   message: '',
+  //   status: true,
+  //   content: {
+  //     uuid: '',
+  //     email: '',
+  //     username: '',
+  //     preferences_defined: true,
+  //   },
+  //   number_of_elements: 0,
+  //   page: 0,
+  //   total_pages: 0,
+  //   errors: ['']
+  // };
   inviteMemberHttpResponse: InviteMemberDtoResponse = {
     status: true,
     message: '',
@@ -53,76 +52,76 @@ export class GroupMembersComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<GroupMembersComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private profileService: ProfileService,
+    // private profileService: GroupService,
     private userService: UserService,
     private cookie: CookieService) { }
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
+  // onNoClick(): void {
+  //   this.dialogRef.close();
+  // }
 
-  ngOnInit(): void {
+  // ngOnInit(): void {
 
-    this.userService.getUserData(this.cookie.get('user_id')).then((result: UserDtoResponse) => {
-      this.myUsername = result.user.username;
-    });
+  //   this.userService.getUserData(this.cookie.get('user_id')).then((result: UserDtoResponse) => {
+  //     this.myUsername = result.user.username;
+  //   });
 
-    this.invitationControle.valueChanges.pipe(
-      switchMap(value => {
-        if (value) {
-          return from(this.userService.searchUser(value));
-        } else {
-          return from(this.filteredOptions.filter((user: Member) => user.uuid !== this.cookie.get('user_id')));
-        }
-      })
-    ).subscribe((result: any) => {
-      if (result) {
-        this.isLoading = false;
-        return this.filteredOptions;
-      }
-    });
-  }
+  //   this.invitationControle.valueChanges.pipe(
+  //     switchMap(value => {
+  //       if (value) {
+  //         return from(this.userService.searchUser(value));
+  //       } else {
+  //         return from(this.filteredOptions.filter((user: Member) => user.uuid !== this.cookie.get('user_id')));
+  //       }
+  //     })
+  //   ).subscribe((result: any) => {
+  //     if (result) {
+  //       this.isLoading = false;
+  //       return this.filteredOptions;
+  //     }
+  //   });
+  // }
 
 
 
-  displayUser(member: Member): string {
-    return member ? member.username : '';
-  }
+  // displayUser(member: Member): string {
+  //   return member ? member.username : '';
+  // }
 
-  addMember(): void {
-    this.toggle = !this.toggle;
-    this.userDataHttpResponse.status = true;
-    this.inviteMemberHttpResponse.status = true;
-    this.inviteMemberHttpResponse.message = '';
-  }
+  // addMember(): void {
+  //   this.toggle = !this.toggle;
+  //   this.userDataHttpResponse.status = true;
+  //   this.inviteMemberHttpResponse.status = true;
+  //   this.inviteMemberHttpResponse.message = '';
+  // }
 
-  inviteMember(): void {
-    this.inviteMemberHttpResponse.status = true;
-    this.inviteMemberHttpResponse.message = '';
+  // inviteMember(): void {
+  //   this.inviteMemberHttpResponse.status = true;
+  //   this.inviteMemberHttpResponse.message = '';
 
-    if (this.invitationControle) {
-      const payload: InviteMemberDtoRequest = { uuid: this.invitationControle.value.uuid };
-      this.profileService.inviteMember(payload, this.data.group.group_id).then(
-        (inviteResult: InviteMemberDtoResponse) => {
-          this.inviteMemberHttpResponse = inviteResult;
-        }
-      ).catch(
-        (inviteErrors: HttpErrorResponse) => {
-          this.inviteMemberHttpResponse.status = inviteErrors.error.status;
-          this.inviteMemberHttpResponse.errors = [inviteErrors.error.message];
-        }
-      );
-    } else {
-      this.userDataHttpResponse.status = false;
-      this.userDataHttpResponse.errors = ['Invitation failed'];
-    }
-  }
+  //   if (this.invitationControle) {
+  //     const payload: InviteMemberDtoRequest = { uuid: this.invitationControle.value.uuid };
+  //     this.profileService.inviteMember(payload, this.data.group.group_id).then(
+  //       (inviteResult: InviteMemberDtoResponse) => {
+  //         this.inviteMemberHttpResponse = inviteResult;
+  //       }
+  //     ).catch(
+  //       (inviteErrors: HttpErrorResponse) => {
+  //         this.inviteMemberHttpResponse.status = inviteErrors.error.status;
+  //         this.inviteMemberHttpResponse.errors = [inviteErrors.error.message];
+  //       }
+  //     );
+  //   } else {
+  //     this.userDataHttpResponse.status = false;
+  //     this.userDataHttpResponse.errors = ['Invitation failed'];
+  //   }
+  // }
 
-  loading(event): void {
+  // loading(event): void {
 
-    console.log(event)
-    if (event.location === 0) {
-      this.isLoading = true;
-    }
-  }
+  //   console.log(event)
+  //   if (event.location === 0) {
+  //     this.isLoading = true;
+  //   }
+  // }
 }

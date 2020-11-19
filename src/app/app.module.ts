@@ -77,6 +77,9 @@ import { ForgetPasswordComponent } from './auth/components/user/forget-password/
 import { NotificationComponent } from './shared/modals/notification/notification/notification.component';
 import { HistoryTracksComponent } from './auth/components/user/history-tracks/history-tracks.component';
 import { TermsOfUseComponent } from './auth/components/register/modal/terms-of-use/terms-of-use.component';
+import { GroupManagementComponent } from './auth/components/group-management/group-management.component';
+import { AddGroupComponent } from './auth/components/add-group/add-group.component';
+import { AddMemberComponent } from './auth/components/add-member/add-member.component';
 
 @NgModule({
   declarations: [
@@ -105,7 +108,10 @@ import { TermsOfUseComponent } from './auth/components/register/modal/terms-of-u
     ForgetPasswordComponent,
     NotificationComponent,
     HistoryTracksComponent,
-    TermsOfUseComponent
+    TermsOfUseComponent,
+    GroupManagementComponent,
+    AddGroupComponent,
+    AddMemberComponent
   ],
   imports: [
     CommonModule,

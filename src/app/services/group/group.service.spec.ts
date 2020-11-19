@@ -1,16 +1,16 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { ProfileService } from './profile.service';
+import { GroupService } from './group.service';
 
 describe('Service: Profile', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ProfileService]
+      providers: [GroupService]
     });
   });
 
-  it('should ...', inject([ProfileService], (service: ProfileService) => {
+  it('should ...', inject([GroupService], (service: GroupService) => {
     expect(service).toBeTruthy();
   }));
 });

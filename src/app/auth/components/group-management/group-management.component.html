@@ -1,0 +1,44 @@
+<div mat-dialog-content>
+    <div class="container-fluid">
+      <div mat-dialog-actions class="mb-1 d-flex justify-content-between p-0">
+        <p class="font-weight-bold text-danger text-left h4 text-truncate">{{ group.name }}</p>
+        <mat-icon mat-dialog-close class="text-right text-secondary">cancel</mat-icon>
+      </div>
+    
+        <div class="row-cols">
+            <div class="col">
+                <p style="font-size: 3vmin;">Members</p>
+                <p class="text-info font-weight-bold"> Owner: {{ groupWithMembers.owner.username }}</p>
+                <p *ngIf="groupWithMembers.members.length === 0" class="text-muted">This group has no members.</p>
+                <!-- <mat-form-field *ngIf="toggle" appearance="outline">
+                    <mat-label>Invite a member</mat-label>
+                    <input type="text"
+                    placeholder="Pick one"
+                    aria-label="Number"
+                    matInput
+                    (keyup.enter)="searchPotentialMembers($event.target.value)"
+                    [matAutocomplete]="auto">
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngIf="isLoading">
+                            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                        </mat-option>
+                        <ng-container *ngIf="searchedUsers && !isLoading">
+                            <mat-option *ngFor="let user of searchedUsers" [value]="user.username">
+                                {{user.username}} - <span class="text-muted">{{ user.email }}</span>
+                            </mat-option>
+                        </ng-container>
+                    </mat-autocomplete>
+                    <mat-hint>Press enter to search!</mat-hint>
+                    <mat-icon *ngIf="inviteToggle" matSuffix>send</mat-icon>
+                  </mat-form-field> -->
+                <mat-chip-list>
+                    <mat-chip style="cursor:pointer;" *ngFor="let member of groupWithMembers.members">{{ member.username }}</mat-chip>
+                    <!-- <mat-chip selected color="warn" style="cursor:pointer;" [matTooltip]="toggle === true ? 'Cancel' : 'Add a member'" matTooltipPosition="right" (click)="changeToggle()">
+                        <mat-icon *ngIf="!toggle">add</mat-icon>
+                        <mat-icon *ngIf="toggle">indeterminate_check_box</mat-icon>
+                    </mat-chip> -->
+                </mat-chip-list>
+            </div>
+        </div>
+    </div>
+</div>

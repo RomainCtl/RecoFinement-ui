@@ -1,0 +1,23 @@
+<div mat-dialog-content>
+    <div class="container">
+      <div mat-dialog-actions class="mb-1 d-flex justify-content-between p-0">
+        <p class="font-weight-bold text-danger text-left h4 text-truncate">Create a new group</p>
+        <mat-icon mat-dialog-close class="text-right text-secondary">cancel</mat-icon>
+      </div>
+    </div>
+    <div class="container">
+        <div class="row-cols">
+            <div class="col">
+                <mat-form-field appearance="outline">
+                    <mat-label>Pick up a name</mat-label>
+                    <input [(ngModel)]="newGroupName" matInput placeholder="Your new group">
+                    <mat-icon matSuffix>group</mat-icon>
+                    <mat-hint>Choose a great name!</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="col">
+                <button class="w-100 mb-2" mat-raised-button color="warn" (click)="createGroup()">Add</button>
+            </div>
+        </div>
+    </div>
+</div>
