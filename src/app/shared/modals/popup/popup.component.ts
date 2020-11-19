@@ -1,3 +1,5 @@
+import { Episode } from './../../models/DtoResponse/series/Episode.model';
+import { EpisodeDtoResponse } from './../../models/DtoResponse/series/episode-dto.model';
 import { SerieMetaResponseDto } from 'src/app/shared/models/DtoResponse/series/serie-meta.model';
 import { SerieMeta } from './../../models/DtoResponse/series/SerieMeta.model';
 import { SeriesService } from './../../../services/media/serie.service';
@@ -10,7 +12,7 @@ import { GameService } from 'src/app/services/media/game.service';
 import { ApplicationService } from 'src/app/services/media/application.service';
 import { GameMeta } from 'src/app/shared/models/DtoResponse/games/GameMeta.model';
 import { ClickEvent } from 'angular-star-rating';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { GameMetaResponseDto } from 'src/app/shared/models/DtoResponse/games/game-meta.model';
@@ -20,6 +22,8 @@ import { TrackMeta } from '../../models/DtoResponse/musics/TrackMeta.model';
 import { MovieService } from 'src/app/services/media/movie.service';
 import { MovieMeta } from '../../models/DtoResponse/movies/MovieMeta.model';
 import { MovieMetaResponseDto } from '../../models/DtoResponse/movies/movie-meta.model';
+import { MatSliderChange } from '@angular/material/slider';
+import { Output } from '@angular/core';
 
 @Component({
   selector: 'app-popup',
@@ -44,7 +48,7 @@ export class PopupComponent implements OnInit {
   bookUserMeta = new BookMeta();
   appUserMeta = new ApplicationMeta();
   trackUserMeta = new TrackMeta();
-  watchedSeasons = 0;
+  episodes = new Array<Episode>();
   fullSeriesWatch = false;
 
   ngOnInit(): void {
@@ -56,6 +60,9 @@ export class PopupComponent implements OnInit {
     if (this.item.serie_id) {
       this.seriesService.getUserMeta(this.item.serie_id).then((result: SerieMetaResponseDto) => {
         this.seriesUserMeta = result.content;
+      });
+      this.seriesService.getEpisodes(this.item.serie_id).then((result: EpisodeDtoResponse) => {
+        this.episodes = result.content;
       });
     }
     if (this.item.game_id) {
@@ -117,8 +124,8 @@ export class PopupComponent implements OnInit {
     }
   }
 
-  saveWatchedEpisodes(event: any): void {
-    this.seriesService.saveWatchedEpisodes(this.item.serie_id, { num_watched_episodes: event });
+  saveWatchedEpisodes(event: MatSliderChange): void {
+    this.seriesService.saveWatchedEpisodes(this.item.serie_id, { num_watched_episodes: event.value });
   }
 
   saveWatchedMovie(event: any): void {

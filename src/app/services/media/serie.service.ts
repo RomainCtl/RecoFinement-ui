@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SerieMetaResponseDto } from 'src/app/shared/models/DtoResponse/series/serie-meta.model';
 import { environment } from 'src/environments/environment';
+import { EpisodeDtoResponse } from 'src/app/shared/models/DtoResponse/series/episode-dto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ export class SeriesService {
 
   private urlGetPopularSerie = environment.api_url + '/serie';
   private urlGetGenreSerie = environment.api_url + '/serie/genres';
+  private urlGetEpisodesSeries = environment.api_url + '/serie/';
   private urlUserMeta = environment.api_url + '/serie/';
   private urlSearchSeries = environment.api_url + '/serie/search/';
   private urlGetSeries = environment.api_url + '/serie?page=';
@@ -32,6 +34,10 @@ export class SeriesService {
 
   getGenres(): Promise<any> {
     return this.httpClient.get<any>(this.urlGetGenreSerie).toPromise();
+  }
+
+  getEpisodes(serieId: number): Promise<EpisodeDtoResponse> {
+    return this.httpClient.get<EpisodeDtoResponse>(this.urlGetEpisodesSeries + serieId + '/episodes').toPromise();
   }
 
   searchSeries(searchTerm: string): Promise<SeriesResponseDto> {
