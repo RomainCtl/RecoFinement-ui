@@ -34,8 +34,4 @@ export class AddMemberComponent implements OnInit {
     }
   }
 
-  inviteMember(): void {
-    this.groupService.inviteMember()
-  }
-
 }
