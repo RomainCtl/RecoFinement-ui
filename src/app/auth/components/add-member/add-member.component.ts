@@ -1,3 +1,4 @@
+import { CookieService } from 'ngx-cookie-service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { GroupService } from './../../../services/group/group.service';
 import { User } from './../../../shared/models/user.model';
@@ -25,6 +26,7 @@ export class AddMemberComponent implements OnInit {
     private groupService: GroupService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
+    private cookie: CookieService,
     @Inject(MAT_DIALOG_DATA) public userData: UserDtoResponse) { }
 
   ngOnInit(): void {
@@ -39,6 +41,7 @@ export class AddMemberComponent implements OnInit {
       }
       this.isLoading = true;
       this.userService.searchUser(searchTerm).then((result: UserDataDtoResponse) => {
+        result.content = result.content.filter(user => user.uuid !== this.cookie.get('user_id'));
         this.searchedUsers = result.content;
         this.isLoading = false;
       });

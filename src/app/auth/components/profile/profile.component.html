@@ -87,16 +87,24 @@
           <div class="col-sm-4">
             <p class="display-3 text-center p-3 m-3" style="font-size: 5vmin;">Manage my invitations</p>
             <p class="text-center text-muted">
-              {{ userData.user.invitations.length > 0 ? 'The invitations you sent and received.' : 'You don\'t have any invitations yet.'}}
+              {{ userData.user.invitations.length > 0 || invitationsSent.length > 0 ? 'The invitations you sent and received.' : 'You don\'t have any invitations yet.'}}
             </p>
-            <ul class="list-group" *ngIf="userData.user.invitations.length > 0">
+            <ul class="list-group" *ngIf="userData.user.invitations.length > 0 || invitationsSent.length > 0">
               <li *ngFor="let invitation of userData.user.invitations" class="list-group-item d-flex justify-content-between align-items-center">
-                  You have been invited to join {{ invitation.name }}
+                  You have been invited to join {{ invitation.username }}
                   <span>
                     <button mat-button class="text-success" (click)="acceptInvit(invitation)">Accept</button>
                     <button mat-button class="text-danger" (click)="declineInvit(invitation)">Decline</button>
                   </span>
               </li>
+              <ng-container *ngFor="let myGroups of invitationsSent">
+                <li *ngFor="let invitation of myGroups.invitations" class="list-group-item d-flex justify-content-between align-items-center">
+                  You invited {{ invitation.username }}
+                  <span>
+                    <button mat-button class="text-danger" (click)="declineInvit(myGroups)">Delete</button>
+                  </span>
+                </li>
+              </ng-container>
             </ul>
             <div class="container-fluid d-flex justify-content-center">
               <button mat-raised-button color="primary" class="m-2" (click)="openAddMemberDialog(userData)">Invite a member</button>

@@ -20,7 +20,6 @@
                            name="memberPseudo"
                            (keyup)="searchPotentialMembers($event.target.value, $event)"
                            [matAutocomplete]="auto">
-                           <mat-icon matSuffix style="cursor:pointer;" class="bounce">search</mat-icon>
                     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                       <mat-option *ngIf="isLoading">
                         <mat-progress-bar mode="indeterminate"></mat-progress-bar>

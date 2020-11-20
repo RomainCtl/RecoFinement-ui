@@ -1,3 +1,5 @@
+import { GroupDtoResponse } from './../../../shared/models/DtoResponse/group.model';
+import { Invitation } from './../../../shared/models/invitation.model';
 import { AddMemberComponent } from './../add-member/add-member.component';
 import { AddGroupComponent } from './../add-group/add-group.component';
 import { GroupManagementComponent } from './../group-management/group-management.component';
@@ -12,6 +14,7 @@ import { UserService } from 'src/app/services/user/user.service';
 import { UserDtoResponse } from 'src/app/shared/models/DtoResponse/user.model';
 import { MatDialog } from '@angular/material/dialog';
 import { saveAs } from 'file-saver';
+import { Group } from 'src/app/shared/models/group.model';
 
 @Component({
   selector: 'app-profile',
@@ -25,6 +28,7 @@ export class ProfileComponent implements OnInit {
   spotifyLinked = false;
   tmdbLinked = false;
   gbooksLinked = false;
+  invitationsSent = [];
 
   constructor(
     private groupService: GroupService,
@@ -52,6 +56,8 @@ export class ProfileComponent implements OnInit {
   };
 
   ngOnInit(): void {
+
+    console.log(this.invitationsSent)
 
     this.route.queryParams.subscribe(params => {
       if (params.code && params.state && params.scope) {
@@ -96,6 +102,11 @@ export class ProfileComponent implements OnInit {
 
     this.userService.getUserData(this.cookie.get('user_id')).then((result: UserDtoResponse) => {
       this.userData = result;
+      this.userData.user.owned_groups.forEach(group => {
+        this.groupService.getGroup(group.group_id).then((result: GroupDtoResponse) => {
+          this.invitationsSent.push(result.group);
+        });
+      });
     });
 
   }
@@ -142,18 +153,23 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  acceptInvit(invit): void {
-    this.groupService.acceptInvitation(invit.group_id, this.userData.user.uuid).then(() => {
+  acceptInvit(invitation: Group): void {
+    this.groupService.acceptInvitation(invitation.group_id, this.userData.user.uuid).then(() => {
       this.userService.getUserData(this.cookie.get('user_id')).then((result: UserDtoResponse) => {
         this.userData = result;
       });
     });
   }
 
-  declineInvit(invit): void {
-    this.groupService.declineInvitation(invit.group_id, this.userData.user.uuid).then(() => {
+  declineInvit(group: Group): void {
+    this.groupService.declineInvitation(group.group_id, group.invitations[this.invitationsSent.indexOf(group, 0)].uuid).then(() => {
       this.userService.getUserData(this.cookie.get('user_id')).then((result: UserDtoResponse) => {
         this.userData = result;
+        this.userData.user.owned_groups.forEach(group => {
+          this.groupService.getGroup(group.group_id).then((result: GroupDtoResponse) => {
+            this.invitationsSent.splice(this.invitationsSent.indexOf(result.group, 0), 1);
+          });
+        });
       });
     });
   }
@@ -239,10 +255,17 @@ export class ProfileComponent implements OnInit {
   }
 
   openAddMemberDialog(userData: UserDtoResponse): void {
-    this.dialog.open(AddMemberComponent, {
+    const dialogRef = this.dialog.open(AddMemberComponent, {
       data:  userData,
       autoFocus: false,
       backdropClass: 'blur'
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.userData.user.owned_groups.forEach(group => {
+        this.groupService.getGroup(group.group_id).then((result: GroupDtoResponse) => {
+          this.invitationsSent.push(result.group);
+        });
+      });
     });
   }
 
