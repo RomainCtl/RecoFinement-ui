@@ -1,18 +1,20 @@
+import { GroupDtoResponse } from './../../../shared/models/DtoResponse/group.model';
+import { Invitation } from './../../../shared/models/invitation.model';
+import { AddMemberComponent } from './../add-member/add-member.component';
+import { AddGroupComponent } from './../add-group/add-group.component';
+import { GroupManagementComponent } from './../group-management/group-management.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CookieService } from 'ngx-cookie-service';
 import { ExternalService } from './../../../services/external/external.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ProfileService } from 'src/app/services/profile/profile.service';
+import { GroupService } from 'src/app/services/group/group.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { UserDtoResponse } from 'src/app/shared/models/DtoResponse/user.model';
-import { GroupDtoResponse } from 'src/app/shared/models/DtoResponse/group.model';
-import { Group } from 'src/app/shared/models/group.model';
 import { MatDialog } from '@angular/material/dialog';
-import { GroupMembersComponent } from '../groupMembers/groupMembers.component';
-import { User } from 'src/app/shared/models/user.model';
 import { saveAs } from 'file-saver';
+import { Group } from 'src/app/shared/models/group.model';
 
 @Component({
   selector: 'app-profile',
@@ -21,33 +23,15 @@ import { saveAs } from 'file-saver';
 })
 export class ProfileComponent implements OnInit {
 
-  public myGroups: Group[] = [];
-  public ownerGroups: Group[] = [];
-  public groups: Group[] = [];
-  public otherGroups: Group[] = [];
-  public myUsername: string = localStorage.getItem('username');
-  public myEmail: string = localStorage.getItem('email');
-  public toggle = false;
 
   passwordError = '';
-  userHttpResponse: UserDtoResponse = {
-    message: '',
-    status: true,
-    user: new User(),
-    errors: ['']
-  };
-  createGroupHttpResponse: GroupDtoResponse = {
-    message: '',
-    status: true,
-    group: new Group(),
-    errors: ['']
-  };
   spotifyLinked = false;
   tmdbLinked = false;
   gbooksLinked = false;
+  invitationsSent = [];
 
   constructor(
-    private profileService: ProfileService,
+    private groupService: GroupService,
     private userService: UserService,
     private externalService: ExternalService,
     public dialog: MatDialog,
@@ -72,6 +56,8 @@ export class ProfileComponent implements OnInit {
   };
 
   ngOnInit(): void {
+
+    console.log(this.invitationsSent)
 
     this.route.queryParams.subscribe(params => {
       if (params.code && params.state && params.scope) {
@@ -114,23 +100,15 @@ export class ProfileComponent implements OnInit {
       }
     });
 
-    this.userService.getUserData(this.cookie.get('user_id'))
-      .then(
-        (result: UserDtoResponse) => {
-          this.userData = result;
-          this.userData.user.owned_groups.forEach(group => {
-            this.profileService.getGroup(group.group_id).then((groupResult: GroupDtoResponse) => {
-              this.myGroups.push(groupResult.group);
-            });
-          });
+    this.userService.getUserData(this.cookie.get('user_id')).then((result: UserDtoResponse) => {
+      this.userData = result;
+      this.userData.user.owned_groups.forEach(group => {
+        this.groupService.getGroup(group.group_id).then((result: GroupDtoResponse) => {
+          this.invitationsSent.push(result.group);
+        });
+      });
+    });
 
-          this.userData.user.groups.forEach(group => {
-            this.profileService.getGroup(group.group_id).then((groupResult: GroupDtoResponse) => {
-              this.groups.push(groupResult.group);
-            });
-          });
-        }
-      );
   }
 
   editProfile(form: NgForm): void {
@@ -175,45 +153,25 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  addGroup(event: any): void {
-    this.toggle = !this.toggle;
-    if (!this.toggle) {
-      console.log(event);
-    }
-  }
-
-  createGroup(form: NgForm): void {
-    this.profileService.addGroup({ name: form.value.groupName }).then(
-      (result: GroupDtoResponse) => {
-        this.myGroups.push(result.group);
-        this.toggle = !this.toggle;
+  acceptInvit(invitation: Group): void {
+    this.groupService.acceptInvitation(invitation.group_id, this.userData.user.uuid).then(() => {
+      this.userService.getUserData(this.cookie.get('user_id')).then((result: UserDtoResponse) => {
+        this.userData = result;
       });
-  }
-
-  deleteGroup(group): void {
-    console.log(group);
-    if (confirm('Are you sure you want to delete the group ' + group.name + ' ?')) {
-      if (group.owner.username === this.myUsername) {
-        this.myGroups.splice(this.myGroups.indexOf(group, 0), 1);
-      } else {
-        this.groups.splice(this.groups.indexOf(group, 0), 1);
-      }
-      this.profileService.deleteGroup(group.group_id);
-    }
-  }
-
-  acceptInvit(invit): void {
-    this.profileService.acceptInvitation(invit.group_id, this.userData.user.uuid);
-    this.userData.user.invitations.splice(this.userData.user.invitations.indexOf(invit, 0), 1);
-    this.profileService.getGroup(invit.group_id).then((groupResult: GroupDtoResponse) => {
-      groupResult.group.members.push({ uuid: '', username: this.userData.user.username, email: '' });
-      this.groups.push(groupResult.group);
     });
   }
 
-  declineInvit(invit): void {
-    this.profileService.declineInvitation(invit.group_id, this.userData.user.uuid);
-    this.userData.user.invitations.splice(this.userData.user.invitations.indexOf(invit, 0), 1);
+  declineInvit(group: Group): void {
+    this.groupService.declineInvitation(group.group_id, group.invitations[this.invitationsSent.indexOf(group, 0)].uuid).then(() => {
+      this.userService.getUserData(this.cookie.get('user_id')).then((result: UserDtoResponse) => {
+        this.userData = result;
+        this.userData.user.owned_groups.forEach(group => {
+          this.groupService.getGroup(group.group_id).then((result: GroupDtoResponse) => {
+            this.invitationsSent.splice(this.invitationsSent.indexOf(result.group, 0), 1);
+          });
+        });
+      });
+    });
   }
 
   linkSpotify(): void {
@@ -272,10 +230,42 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  openDialog(group): void {
-    this.dialog.open(GroupMembersComponent, {
-      width: '350px',
-      data: { group }
+  openAddGroupDialog(): void {
+    const dialogRef = this.dialog.open(AddGroupComponent, { backdropClass: 'blur' });
+    dialogRef.afterClosed().subscribe(() => {
+      this.userService.getUserData(this.cookie.get('user_id')).then((result: UserDtoResponse) => {
+        this.userData = result;
+      });
+    });
+  }
+
+  openGroupManagementDialog(groupData: number, myGroup: boolean): void {
+    const dialogRef = this.dialog.open(GroupManagementComponent, {
+      data: { group: groupData, isMine: myGroup },
+      id: 'add-group',
+      width: '600px',
+      autoFocus: false,
+      backdropClass: 'blur'
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.userService.getUserData(this.cookie.get('user_id')).then((result: UserDtoResponse) => {
+        this.userData = result;
+      });
+    });
+  }
+
+  openAddMemberDialog(userData: UserDtoResponse): void {
+    const dialogRef = this.dialog.open(AddMemberComponent, {
+      data:  userData,
+      autoFocus: false,
+      backdropClass: 'blur'
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.userData.user.owned_groups.forEach(group => {
+        this.groupService.getGroup(group.group_id).then((result: GroupDtoResponse) => {
+          this.invitationsSent.push(result.group);
+        });
+      });
     });
   }
 

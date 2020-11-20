@@ -60,118 +60,58 @@
     </mat-tab>
 
     <!-- TAB 2 -->
-    <mat-tab label="Manage groups">
+    <mat-tab label="Manage groups" class="h-100">
 
-    <ng-container *ngIf="myGroups.length === 0 && groups.length === 0">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-4">
+            <p class="display-3 text-center p-3 m-3" style="font-size: 5vmin;">My groups</p>
+            <p class="text-center text-muted">
+              {{ userData.user.owned_groups.length > 0 ? 'The groups you created.' : 'You don\'t own any groups yet.'}}
+            </p>
+            <mat-chip-list class="p-5">
+              <mat-chip (click)="openGroupManagementDialog(group, true)" style="cursor:pointer;" *ngFor="let group of userData.user.owned_groups">{{ group.name }}</mat-chip>
+              <mat-chip selected color="warn" style="cursor:pointer;" (click)="openAddGroupDialog()"><mat-icon>add</mat-icon></mat-chip>
+            </mat-chip-list>
+          </div>
+          <div class="col-sm-4 border-left border-right">
+            <p class="display-3 text-center p-3 m-3" style="font-size: 5vmin;">My friends' groups</p>
+            <p class="text-center text-muted">
+              {{ userData.user.groups.length > 0 ? 'The groups you have been invited to.' : 'You don\'t have any friends groups yet.'}}
+            </p>
 
-      <p class="display-4 lead text-center text-muted p-3 m-5" style="font-size: 7vmin;">You don't have any groups.</p>
-      <div class="container d-flex justify-content-center align-items-center flex-column">
-        <button mat-raised-button class="w-100 mt-5" (click)="addGroup()">Add a group</button>
-        <div *ngIf="toggle">
-          <form #createForm="ngForm" (ngSubmit)="createGroup(createForm)">
-            <input ngModel name="groupName" placeholder="Group name" />
-            <button mat-icon-button color="primary" type="submit">
-              <mat-icon matTooltip="Create">done</mat-icon>
-            </button>
-             <div *ngIf="!createGroupHttpResponse.status">
-              <div *ngFor="let error of createGroupHttpResponse.errors" class="alert alert-danger" role="alert">
-                {{ error }}
-              </div>
-            </div> 
-          </form>
-        </div>
-      </div>
-    </ng-container>
-
-    <ng-container *ngIf="userData.user.owned_groups.length > 0">
-
-      <p class="display-4 text-center p-3" style="font-size: 7vmin;">My groups</p>
-      <div *ngFor="let invitation of userData.user.invitations" class="text-center">
-        <p class="m-2">
-          You are invited to join <strong>{{ invitation.name }}</strong>!
-        </p>
-        <button mat-icon-button color="primary" (click)="acceptInvit(invitation)">
-          <mat-icon matTooltip="Accept">done</mat-icon>
-        </button>
-        <button mat-icon-button color="warn" (click)="declineInvit(invitation)">
-          <mat-icon matTooltip="Decline">close</mat-icon>
-        </button>
-      </div>
-      
-      <table class="table w-75 mx-auto border mt-5 text-center ">
-          <thead>
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">See</th>
-              <th scope="col">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let group of myGroups">
-                <td class="align-middle">
-                  {{ group.name }}
-                </td>
-                <td>
-                  <button mat-icon-button color="primary" (click)="openDialog(group)" matTooltip="See this group">
-                    <mat-icon>open_in_new</mat-icon>
-                  </button>
-                </td>
-                <td>
-                  <button mat-icon-button color="warn" (click)="deleteGroup(group)" matTooltip="Delete this group">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                </td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="container d-flex justify-content-center align-items-center flex-column">
-          <button mat-raised-button class="m-5" (click)="addGroup($event)">Add a group</button>
-          <div *ngIf="toggle">
-            <form #createForm="ngForm" (ngSubmit)="createGroup(createForm)">
-              <input ngModel name="groupName" placeholder="Group name" />
-              <button mat-icon-button color="primary" type="submit">
-                <mat-icon matTooltip="Create">done</mat-icon>
-              </button>
-               <div *ngIf="!createGroupHttpResponse.status">
-                <div *ngFor="let error of createGroupHttpResponse.errors" class="alert alert-danger" role="alert">
-                  {{ error }}
-                </div>
-              </div> 
-            </form>
+            <mat-chip-list class="p-5">
+              <mat-chip (click)="openGroupManagementDialog(group, false)" style="cursor:pointer;" *ngFor="let group of userData.user.groups">{{ group.name }}</mat-chip>
+            </mat-chip-list>
+          </div>
+          <div class="col-sm-4">
+            <p class="display-3 text-center p-3 m-3" style="font-size: 5vmin;">Manage my invitations</p>
+            <p class="text-center text-muted">
+              {{ userData.user.invitations.length > 0 || invitationsSent.length > 0 ? 'The invitations you sent and received.' : 'You don\'t have any invitations yet.'}}
+            </p>
+            <ul class="list-group" *ngIf="userData.user.invitations.length > 0 || invitationsSent.length > 0">
+              <li *ngFor="let invitation of userData.user.invitations" class="list-group-item d-flex justify-content-between align-items-center">
+                  You have been invited to join {{ invitation.username }}
+                  <span>
+                    <button mat-button class="text-success" (click)="acceptInvit(invitation)">Accept</button>
+                    <button mat-button class="text-danger" (click)="declineInvit(invitation)">Decline</button>
+                  </span>
+              </li>
+              <ng-container *ngFor="let myGroups of invitationsSent">
+                <li *ngFor="let invitation of myGroups.invitations" class="list-group-item d-flex justify-content-between align-items-center">
+                  You invited {{ invitation.username }}
+                  <span>
+                    <button mat-button class="text-danger" (click)="declineInvit(myGroups)">Delete</button>
+                  </span>
+                </li>
+              </ng-container>
+            </ul>
+            <div class="container-fluid d-flex justify-content-center">
+              <button mat-raised-button color="primary" class="m-2" (click)="openAddMemberDialog(userData)">Invite a member</button>
+            </div>
           </div>
         </div>
-      </ng-container>
-      
-      <ng-container *ngIf="groups.length > 0">
-        <p class="display-4 text-center p-3" style="font-size: 7vmin;">Friends group</p>
-
-        <table class="table w-75 mx-auto border mt-5 text-center">
-          <thead>
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">See</th>
-              <th scope="col">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let group of groups">
-                <td class="align-middle">
-                  {{ group.name }}
-                </td>
-                <td>
-                  <button mat-icon-button color="primary" (click)="openDialog(group)" matTooltip="See this group">
-                    <mat-icon>open_in_new</mat-icon>
-                  </button>
-                </td>
-                <td>
-                  <button mat-icon-button color="warn" (click)="deleteGroup(group)" matTooltip="Delete this group">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                </td>
-            </tr>
-          </tbody>
-        </table>
-      </ng-container>
+      </div>
 
     </mat-tab>
     <mat-tab label="Third-party applications">

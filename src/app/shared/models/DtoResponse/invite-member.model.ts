@@ -1,3 +1,4 @@
+import { User } from './../user.model';
 import { Group } from '../group.model';
 import { Invitation } from '../invitation.model';
 import { Member } from '../member.model';
