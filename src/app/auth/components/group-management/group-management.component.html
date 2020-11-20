@@ -2,7 +2,7 @@
     <div class="container-fluid">
       <div mat-dialog-actions class="mb-1 d-flex justify-content-between p-0">
         <p class="font-weight-bold text-danger text-left h4 text-truncate">{{ data.group.name }}</p>
-        <button mat-button *ngIf="data.isMine" [matTooltip]="data.isMine ? 'The group will be deleted!' : 'You will be removed from the group'" (click)="leaveGroup(data.group.group_id)">Leave group <mat-icon class="text-left text-danger">exit_to_app</mat-icon></button>
+        <button mat-button [matTooltip]="data.isMine ? 'The group will be deleted!' : 'You will be removed from the group'" (click)="leaveGroup(data.group.group_id)">Leave group <mat-icon class="text-left text-danger">exit_to_app</mat-icon></button>
         <mat-icon mat-dialog-close class="text-right text-secondary">cancel</mat-icon>
       </div>
     
