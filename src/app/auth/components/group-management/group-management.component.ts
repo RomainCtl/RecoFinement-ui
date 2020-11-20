@@ -7,7 +7,8 @@ import { GroupDtoResponse } from './../../../shared/models/DtoResponse/group.mod
 import { GroupService } from './../../../services/group/group.service';
 import { Group } from './../../../shared/models/group.model';
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { group } from 'console';
 
 @Component({
   selector: 'app-group-management',
@@ -20,11 +21,21 @@ export class GroupManagementComponent implements OnInit {
 
   groupWithMembers: Group;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public group: Group, private groupService: GroupService, private userService: UserService) { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialog: MatDialog,
+    private groupService: GroupService,
+    private userService: UserService) { }
 
   ngOnInit(): void {
-    this.groupService.getGroup(this.group.group_id).then((result: GroupDtoResponse) => {
+    this.groupService.getGroup(this.data.group.group_id).then((result: GroupDtoResponse) => {
       this.groupWithMembers = result.group;
+    });
+  }
+
+  leaveGroup(group_id: number): void {
+    this.groupService.deleteGroup(group_id).then(() => {
+      this.dialog.openDialogs[0].close();
     });
   }
 

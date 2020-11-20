@@ -223,9 +223,9 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  openGroupManagementDialog(groupData: number): void {
+  openGroupManagementDialog(groupData: number, myGroup: boolean): void {
     const dialogRef = this.dialog.open(GroupManagementComponent, {
-      data: groupData,
+      data: { group: groupData, isMine: myGroup },
       id: 'add-group',
       width: '600px',
       autoFocus: false,
@@ -240,7 +240,7 @@ export class ProfileComponent implements OnInit {
 
   openAddMemberDialog(userData: UserDtoResponse): void {
     this.dialog.open(AddMemberComponent, {
-      data: userData,
+      data:  userData,
       autoFocus: false,
       backdropClass: 'blur'
     });

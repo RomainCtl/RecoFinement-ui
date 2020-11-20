@@ -70,7 +70,7 @@
               {{ userData.user.owned_groups.length > 0 ? 'The groups you created.' : 'You don\'t own any groups yet.'}}
             </p>
             <mat-chip-list class="p-5">
-              <mat-chip (click)="openGroupManagementDialog(group)" style="cursor:pointer;" *ngFor="let group of userData.user.owned_groups">{{ group.name }}</mat-chip>
+              <mat-chip (click)="openGroupManagementDialog(group, true)" style="cursor:pointer;" *ngFor="let group of userData.user.owned_groups">{{ group.name }}</mat-chip>
               <mat-chip selected color="warn" style="cursor:pointer;" (click)="openAddGroupDialog()"><mat-icon>add</mat-icon></mat-chip>
             </mat-chip-list>
           </div>
@@ -81,7 +81,7 @@
             </p>
 
             <mat-chip-list class="p-5">
-              <mat-chip (click)="openGroupManagementDialog(group)" style="cursor:pointer;" *ngFor="let group of userData.user.groups">{{ group.name }}</mat-chip>
+              <mat-chip (click)="openGroupManagementDialog(group, false)" style="cursor:pointer;" *ngFor="let group of userData.user.groups">{{ group.name }}</mat-chip>
             </mat-chip-list>
           </div>
           <div class="col-sm-4">
