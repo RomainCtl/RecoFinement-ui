@@ -28,8 +28,8 @@ export class GroupService {
     return this.httpClient.delete<GroupDtoResponse>(this.urlBaseGroup + '/' + id).toPromise();
   }
 
-  inviteMember(userId, id: number): Observable<InviteMemberDtoResponse> {
-    return this.httpClient.post<InviteMemberDtoResponse>(this.urlBaseGroup + '/' + id + '/invitations', { uuid: userId});
+  inviteMember(userId, id: number): Promise<InviteMemberDtoResponse> {
+    return this.httpClient.post<InviteMemberDtoResponse>(this.urlBaseGroup + '/' + id + '/invitations', { uuid: userId}).toPromise();
   }
 
   acceptInvitation(id: number, uuid: string): Promise<InviteMemberDtoResponse> {

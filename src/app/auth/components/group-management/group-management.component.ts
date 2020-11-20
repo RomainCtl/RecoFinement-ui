@@ -19,8 +19,7 @@ export class GroupManagementComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private dialog: MatDialog,
-    private groupService: GroupService,
-    private userService: UserService) { }
+    private groupService: GroupService) { }
 
   ngOnInit(): void {
     this.groupService.getGroup(this.data.group.group_id).then((result: GroupDtoResponse) => {
