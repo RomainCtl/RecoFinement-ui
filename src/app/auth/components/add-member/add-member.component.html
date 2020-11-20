@@ -7,6 +7,7 @@
     </div>
     <div class="container">
         <div class="row-cols">
+          <form #inviteMemberForm="ngForm">
             <div class="col">
                 Invite
                 <mat-form-field appearance="outline">
@@ -14,25 +15,40 @@
                     <input type="text"
                            placeholder="Pick one"
                            matInput
-                           (keyup.enter)="searchPotentialMembers($event.target.value)"
+                           ngModel
+                           required
+                           name="memberPseudo"
+                           (keyup)="searchPotentialMembers($event.target.value, $event)"
                            [matAutocomplete]="auto">
+                           <mat-icon matSuffix style="cursor:pointer;" class="bounce">search</mat-icon>
                     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                      <mat-option *ngFor="let member of searchedUsers" [value]="member.username">
-                        {{member.username}} - <span class="text-muted">{{member.email}}</span>
+                      <mat-option *ngIf="isLoading">
+                        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
                       </mat-option>
+                      <ng-container *ngIf="searchedUsers && !isLoading">
+                        <mat-option *ngFor="let member of searchedUsers" [value]="member.username">
+                          {{member.username}}
+                        </mat-option>
+                      </ng-container>
+                      <ng-container *ngIf="searchedUsers && searchedUsers.length === 0 && inviteMemberForm.value.memberPseudo.length > 3 && !isLoading">
+                        <mat-option>
+                          <span class="text-muted">Member does not exist.</span>
+                        </mat-option>
+                      </ng-container>
                     </mat-autocomplete>
                   </mat-form-field>
                   to join
                   <mat-form-field appearance="outline">
                     <mat-label>Select one of your groups</mat-label>
-                    <mat-select>
-                      <mat-option *ngFor="let owned_group of userData.user.owned_groups" [value]="owned_group.name">{{owned_group.name}}</mat-option>
+                    <mat-select ngModel name="group_id" required>
+                      <mat-option  *ngFor="let owned_group of userData.user.owned_groups" [value]="owned_group.group_id">{{owned_group.name}}</mat-option>
                     </mat-select>
                   </mat-form-field>
             </div>
             <div class="col">
-                <button class="w-100 mb-2" mat-raised-button color="primary">Invite</button>
+                <button class="w-100 mb-2" type="submit" mat-raised-button color="primary" (click)="inviteMember(inviteMemberForm.value)">Invite</button>
             </div>
+          </form>
         </div>
     </div>
 </div>

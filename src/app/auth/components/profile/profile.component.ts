@@ -94,28 +94,10 @@ export class ProfileComponent implements OnInit {
       }
     });
 
-
     this.userService.getUserData(this.cookie.get('user_id')).then((result: UserDtoResponse) => {
       this.userData = result;
     });
 
-    // this.userService.getUserData(this.cookie.get('user_id'))
-    //   .then(
-    //     (result: UserDtoResponse) => {
-    //       this.userData = result;
-    //       this.userData.user.owned_groups.forEach(group => {
-    //         this.profileService.getGroup(group.group_id).then((groupResult: GroupDtoResponse) => {
-    //           this.myGroups.push(groupResult.group);
-    //         });
-    //       });
-
-    //       this.userData.user.groups.forEach(group => {
-    //         this.profileService.getGroup(group.group_id).then((groupResult: GroupDtoResponse) => {
-    //           this.groups.push(groupResult.group);
-    //         });
-    //       });
-    //     }
-    //   );
   }
 
   editProfile(form: NgForm): void {
@@ -257,15 +239,10 @@ export class ProfileComponent implements OnInit {
   }
 
   openAddMemberDialog(userData: UserDtoResponse): void {
-    const dialogRef = this.dialog.open(AddMemberComponent, {
+    this.dialog.open(AddMemberComponent, {
       data: userData,
       autoFocus: false,
       backdropClass: 'blur'
-    });
-    dialogRef.afterClosed().subscribe(() => {
-      this.userService.getUserData(this.cookie.get('user_id')).then((result: UserDtoResponse) => {
-        this.userData = result;
-      });
     });
   }
 

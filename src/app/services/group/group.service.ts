@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { InviteMemberDtoResponse } from 'src/app/shared/models/DtoResponse/invite-member.model';
 import { CreateGroupDtoRequest } from '../../shared/models/DtoRequest/create-group.model';
 import { GroupDtoResponse } from '../../shared/models/DtoResponse/group.model';
@@ -27,8 +28,8 @@ export class GroupService {
     return this.httpClient.delete<GroupDtoResponse>(this.urlBaseGroup + '/' + id).toPromise();
   }
 
-  inviteMember(userId, id: number): Promise<InviteMemberDtoResponse> {
-    return this.httpClient.post<InviteMemberDtoResponse>(this.urlBaseGroup + '/' + id + '/invitations', { uuid: userId}).toPromise();
+  inviteMember(userId, id: number): Observable<InviteMemberDtoResponse> {
+    return this.httpClient.post<InviteMemberDtoResponse>(this.urlBaseGroup + '/' + id + '/invitations', { uuid: userId});
   }
 
   acceptInvitation(id: number, uuid: string): Promise<InviteMemberDtoResponse> {

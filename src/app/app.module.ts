@@ -1,4 +1,3 @@
-import { GroupMembersComponent } from './auth/components/groupMembers/groupMembers.component';
 import { DialogConfirmationComponent } from './auth/components/preferences/dialog-confirmation/dialog-confirmation.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -99,7 +98,6 @@ import { AddMemberComponent } from './auth/components/add-member/add-member.comp
     PopupComponent,
     DialogConfirmationComponent,
     ProfileComponent,
-    GroupMembersComponent,
     PreviewComponent,
     SeriesComponent,
     InterestsComponent,
