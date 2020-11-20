@@ -14,7 +14,21 @@ import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 
 export class GroupManagementComponent implements OnInit {
 
-  groupWithMembers: Group;
+  groupWithMembers: Group = {
+    name: '',
+    group_id: 0,
+    members: [],
+    invitations: [],
+    owner: {
+      uuid: '',
+      email: '',
+      username: '',
+      groups: [],
+      invitations: [],
+      owned_groups: [],
+      preferences_defined: false
+    }
+  };
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
