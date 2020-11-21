@@ -96,7 +96,7 @@
             <p class="font-weight-bold col-12 text-center text-uppercase mat-h2">games</p>
             <ng-container *ngFor="let game of games">
               <app-card-preference
-              [id]="game.movie_id"
+              [id]="game.game_id"
               [title]="game.name"
               [subtitle]="game.publishers"
               [cover]="game.header_image ? game.header_image : 'assets/images/placeholder.png'"
