@@ -80,6 +80,8 @@ import { GroupManagementComponent } from './auth/components/group-management/gro
 import { AddGroupComponent } from './auth/components/add-group/add-group.component';
 import { AddMemberComponent } from './auth/components/add-member/add-member.component';
 
+import { IvyCarouselModule } from 'angular-responsive-carousel';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -158,6 +160,7 @@ import { AddMemberComponent } from './auth/components/add-member/add-member.comp
     MatBottomSheetModule,
     MatExpansionModule,
     ReactiveFormsModule,
+    IvyCarouselModule,
     NgbModule
   ],
   providers: [
