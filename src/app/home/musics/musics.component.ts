@@ -1,3 +1,4 @@
+import { FeedbackComponent } from './../../shared/feedback/feedback/feedback.component';
 import { SliderComponent } from './../../shared/slider/slider/slider.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { TrackService } from 'src/app/services/media/track.service';
@@ -141,6 +142,19 @@ export class MusicsComponent implements OnInit, AfterViewInit  {
       popupDetails.close();
     });
 
+  }
+
+  openFeedback(index: number) {
+    const feedbackPopup = this.dialog.open<FeedbackComponent, number> (FeedbackComponent, {
+      data: index,
+      panelClass: ['shadow-none'],
+      hasBackdrop: true,
+      backdropClass: 'blur'
+    });
+
+    feedbackPopup.backdropClick().subscribe(() => {
+      feedbackPopup.close();
+    });
   }
 
   searchTracks(searchTerm: string): void {

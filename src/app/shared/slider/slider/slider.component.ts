@@ -22,6 +22,9 @@ export class SliderComponent implements OnInit  {
   @Output()
   public clickSeeMoreEvent: EventEmitter<number> = new EventEmitter<number>();
 
+  @Output()
+  public openFeedbackEvent: EventEmitter<number> = new EventEmitter<number>();
+
   constructor() { } 
 
   ngOnInit(): void {
@@ -64,6 +67,10 @@ export class SliderComponent implements OnInit  {
 
   openPopUp(index: number) {
     this.clickSeeMoreEvent.emit(index);
+  }
+
+  openFeedback(index: number) {
+    this.openFeedbackEvent.emit(index);
   }
 
 }

@@ -25,7 +25,11 @@
     There is no musics for your search.
   </div>
   <h1>Popular musics</h1>
-    <div app-slider (openPreviewEvent)="openPreview($event)" (clickSeeMoreEvent)="openPopUp($event)"></div>
+    <div 
+    app-slider 
+    (openPreviewEvent)="openPreview($event)" 
+    (clickSeeMoreEvent)="openPopUp($event)"
+    (openFeedbackEvent)="openFeedback($event)"></div>
   <!-- <h1>From [source] recommendation</h1>
   <ng-container>
     <div app-slider id="source2" (openPreviewEvent)="openPreview($event)"></div>
