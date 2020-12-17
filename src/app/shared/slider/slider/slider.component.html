@@ -1,0 +1,15 @@
+<div class="swiper-container" [swiper]="mySwiper.params">
+    <div class="swiper-wrapper">
+      <div *ngFor="let item of musics" class="swiper-slide">
+        <div class="card" style="width: 12rem;">
+            <img class="card-img-top" [src]="item.covert_art_url" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{ item.title }}</h5>
+              <p class="card-text">{{item.artist_name}}</p>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+</div>

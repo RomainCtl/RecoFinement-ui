@@ -1,6 +1,7 @@
+import { SliderComponent } from './../../shared/slider/slider/slider.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { TrackService } from 'src/app/services/media/track.service';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Directive, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { TrackResponseDto } from 'src/app/shared/models/DtoResponse/musics/track-dto.model';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
@@ -12,13 +13,16 @@ import { PopupComponent } from 'src/app/shared/modals/popup/popup.component';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import Swiper from 'swiper';
 
 @Component({
   selector: 'app-musics',
   templateUrl: './musics.component.html',
   styleUrls: ['./musics.component.scss']
 })
-export class MusicsComponent implements OnInit  {
+export class MusicsComponent implements OnInit, AfterViewInit  {
+
+  @ViewChild(SliderComponent) musicSwiper: SliderComponent;
 
   constructor(
     private trackService: TrackService,
@@ -162,5 +166,22 @@ export class MusicsComponent implements OnInit  {
   savePlayCount(id: number): void {
     console.log(id);
     this.trackService.savePlayCount(id, { additional_play_count: 1 });
+  }
+
+  ngAfterViewInit() {
+    this.trackService.getPopularTracks().then(tracks => {
+      this.musicSwiper.musics = tracks.content;
+    });
+    let swiperInit = new Swiper('.swiper-container', {
+      a11y: { enabled: true },
+      direction: 'horizontal',
+      slidesPerView: 8,
+      autoHeight: true,
+      spaceBetween: 50,
+      keyboard: true,
+      navigation: true,
+      observer: true
+    })
+    this.musicSwiper.mySwiper = swiperInit;
   }
 }

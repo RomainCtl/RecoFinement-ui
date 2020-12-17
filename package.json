@@ -34,7 +34,9 @@
     "ngx-cookie-service": "^10.1.1",
     "ngx-infinite-scroll": "^9.1.0",
     "ngx-pagination": "^5.0.0",
+    "ngx-swiper-wrapper": "^10.0.0",
     "rxjs": "~6.6.0",
+    "swiper": "^6.4.1",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
   },
