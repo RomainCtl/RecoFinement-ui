@@ -1,8 +1,16 @@
 <div class="swiper-container" [swiper]="mySwiper.params">
     <div class="swiper-wrapper">
-      <div *ngFor="let item of musics" class="swiper-slide">
+      <div *ngFor="let item of musics; index as indexOfElement" class="swiper-slide">
         <div class="card" style="width: 12rem;">
+          <div class="container p-0">
             <img class="card-img-top" [src]="item.covert_art_url" alt="Card image cap">
+            <div class="overlay" (click)="openPreview(indexOfElement)" style="cursor: pointer;">
+              <div class="icon" >
+                <mat-icon class="fa fa-user text-center w-100 h-100" style="font-size:75px;" aria-hidden="false">
+                  play_circle_outline</mat-icon>
+              </div>
+            </div>
+          </div>
             <div class="card-body">
               <h5 class="card-title">{{ item.title }}</h5>
               <p class="card-text">{{item.artist_name}}</p>

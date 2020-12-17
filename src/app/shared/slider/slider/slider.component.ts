@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Output, EventEmitter } from '@angular/core';
 
 import Swiper from 'swiper/core'
 
@@ -9,11 +9,36 @@ import Swiper from 'swiper/core'
 })
 export class SliderComponent implements OnInit  {
 
+
   public musics: any = null;
-  public mySwiper: Swiper = new Swiper('.swiper-container');
+  public mySwiper: Swiper;
 
-  constructor() { }
+  @Output()
+  public openPreviewEvent: EventEmitter<number> = new EventEmitter<number>();
 
-  ngOnInit(): void {  } 
+  constructor() { } 
+
+  ngOnInit(): void {
+    this.mySwiper = new Swiper('.swiper-container', {
+      a11y: { enabled: true },
+      direction: 'horizontal',
+      slidesPerView: 8,
+      autoHeight: true,
+      spaceBetween: 50,
+      keyboard: true,
+      navigation: {
+        prevEl: '.swiper-button-prev',
+        nextEl: '.swiper-button-next'
+      },
+      observer: true
+    })
+    this.mySwiper.on('scroll', () => {
+      this.mySwiper.update()
+    })
+  }
+
+  openPreview(index) {
+    this.openPreviewEvent.emit(index);
+  }
 
 }

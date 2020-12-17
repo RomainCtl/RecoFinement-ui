@@ -171,17 +171,6 @@ export class MusicsComponent implements OnInit, AfterViewInit  {
   ngAfterViewInit() {
     this.trackService.getPopularTracks().then(tracks => {
       this.musicSwiper.musics = tracks.content;
-    });
-    let swiperInit = new Swiper('.swiper-container', {
-      a11y: { enabled: true },
-      direction: 'horizontal',
-      slidesPerView: 8,
-      autoHeight: true,
-      spaceBetween: 50,
-      keyboard: true,
-      navigation: true,
-      observer: true
     })
-    this.musicSwiper.mySwiper = swiperInit;
   }
 }
