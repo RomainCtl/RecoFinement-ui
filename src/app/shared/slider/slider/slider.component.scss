@@ -1,6 +1,11 @@
 .swiper-container {
     width: 100%;
     height: 350px;
+    cursor: -webkit-grab; cursor: grab;
+}
+
+.swiper-container:active {
+  cursor: -webkit-grabbing; cursor: grabbing;
 }
 
 .container {
@@ -21,7 +26,7 @@
     transition: .3s ease;
     background-color: rgba(0, 0, 0, 0.5);
   }
-  
+
   /* When you mouse over the container, fade in the overlay icon*/
   .container:hover .overlay {
     opacity: 1;
@@ -38,7 +43,7 @@
     -ms-transform: translate(-50%, -50%);
     text-align: center;
   }
-  
+
   /* When you move the mouse over the icon, change color */
   .fa-user:hover {
     color: #eee;
@@ -52,7 +57,7 @@
     animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
   }
-  
+
   .no-blur {
     filter: blur(0);
     transition: filter .5s 2s ease-in;
@@ -109,7 +114,7 @@
   .link {
     cursor: pointer;
   }
-  
+
   .link:hover {
     text-decoration: underline;
-  } 
+  }

@@ -14,7 +14,7 @@ export class SliderHistoryComponent implements OnInit {
   public loadedImages = [];
 
   ngOnInit(): void {
-    this.historySwiper = new Swiper('.swiper-container', {
+    this.historySwiper = new Swiper('.listening_history', {
       direction: this.getDirection(),
       slidesPerView: 6,
       a11y: { enabled: true },

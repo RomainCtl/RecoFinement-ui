@@ -25,10 +25,10 @@ export class SliderComponent implements OnInit  {
   @Output()
   public openFeedbackEvent: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor() { } 
+  constructor() {}
 
   ngOnInit(): void {
-    this.mySwiper = new Swiper('.swiper-container', {
+    this.mySwiper = new Swiper('.popular_music', {
       direction: this.getDirection(),
       slidesPerView: 6,
       a11y: { enabled: true },

@@ -1,4 +1,4 @@
-<div class="swiper-container" [swiper]="historySwiper.params">
+<div class="swiper-container listening_history" [swiper]="historySwiper.params">
   <div class="swiper-wrapper">
     <div *ngFor="let item of history; index as indexOfElement" class="swiper-slide">
       <div class="card" style="width: 12rem;">
@@ -16,7 +16,7 @@
             <h3 class="card-title text-danger text-truncate"><strong>{{item.track.title}}</strong></h3>
           </span>
           <p class="card-text text-truncate" style="max-width: 100%;"><strong>{{item.track.artist_name}}</strong></p>
-          <p class="card-text text-muted">{{item.last_played_date | date:'short'}}</p>
+          <p class="card-text text-muted">{{item.last_played_date | date:'M/d/y h:mm a'}}</p>
         </div>
       </div>
     </div>

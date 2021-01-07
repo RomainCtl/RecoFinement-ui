@@ -1,6 +1,11 @@
 .swiper-container {
   width: 100%;
   height: 350px;
+  cursor: -webkit-grab; cursor: grab;
+}
+
+.swiper-container:active {
+  cursor: -webkit-grabbing; cursor: grabbing;
 }
 
 .container {
