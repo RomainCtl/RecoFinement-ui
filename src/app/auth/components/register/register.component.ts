@@ -3,14 +3,13 @@ import { MatDialog } from '@angular/material/dialog';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UserRegisterDtoRequest } from './../../../shared/models/DtoRequest/user-register.model';
-import { UserLoginDtoRequest } from './../../../shared/models/DtoRequest/user-login.model';
 import { Router } from '@angular/router';
 import { UserRegisterDtoResponse } from './../../../shared/models/DtoResponse/user-register.model';
 import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { ErrorService } from 'src/app/services/error/error.service';
 import { TermsOfUseComponent } from './modal/terms-of-use/terms-of-use.component';
-import { ScrollStrategyOptions, Overlay } from '@angular/cdk/overlay';
+import { Overlay } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-register',

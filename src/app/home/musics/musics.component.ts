@@ -146,7 +146,7 @@ export class MusicsComponent implements OnInit, AfterViewInit  {
 
   openFeedback(index: number) {
     const feedbackPopup = this.dialog.open<FeedbackComponent, number> (FeedbackComponent, {
-      data: index,
+      data: this.trackResponse.content[index].track_id,
       panelClass: ['shadow-none'],
       hasBackdrop: true,
       backdropClass: 'blur'

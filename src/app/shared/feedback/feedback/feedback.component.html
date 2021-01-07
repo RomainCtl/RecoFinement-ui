@@ -8,13 +8,7 @@
       <mat-form-field appearance="fill">
         <mat-label>Reason</mat-label>
         <mat-select>
-          <mat-option value="Reason 1">Reason 1</mat-option>
-          <mat-option value="Reason 2">Reason 2</mat-option>
-          <mat-option value="Reason 3">Reason 3</mat-option>
-          <mat-option value="Reason 4">Reason 4</mat-option>
-          <mat-option value="Reason 5">Reason 5</mat-option>
-          <mat-option value="Reason 6">Reason 6</mat-option>
-          <mat-option value="Reason 7">Reason 7</mat-option>
+          <mat-option *ngFor="let reason of reasons" [value]="reason">{{reason}}</mat-option>
         </mat-select>
       </mat-form-field>
       <button mat-stroked-button (click)="sendFeedback()">Send feedback</button>
