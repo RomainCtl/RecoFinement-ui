@@ -105,3 +105,11 @@
     -webkit-align-items: center;
     align-items: center;
   }
+
+  .link {
+    cursor: pointer;
+  }
+  
+  .link:hover {
+    text-decoration: underline;
+  } 

@@ -20,12 +20,9 @@
                 <span>
                   <h3 class="card-title text-danger text-truncate"><strong>{{item.title}}</strong></h3>
                 </span>
-                <p class="card-text"><strong>{{item.artist_name}}</strong></p>
-                <span class="d-flex justify-content-between align-items-center">
-                  <button mat-mini-fab color="" class="d-flex justify-content-center align-items-center flex-column" (click)="openPopUp(indexOfElement)"><mat-icon color="primary">preview</mat-icon></button>
-                  <button mat-mini-fab color="" class="d-flex justify-content-center align-items-center flex-column" (click)="openFeedback(indexOfElement)"><mat-icon color="warn">visibility_off</mat-icon></button>
-                </span>
-                
+                <p class="card-text text-truncate" style="max-width: 100%;"><strong>{{item.artist_name}}</strong></p>
+                  <button mat-stroked-button color="primary" class="d-flex justify-content-center align-items-center flex-column" (click)="openPopUp(indexOfElement)">See more</button>
+                  <p class="card-text"><small class="text-danger link" (click)="openFeedback(indexOfElement)">I don't like it.</small></p>
               </div>
           </div>
       </div>
