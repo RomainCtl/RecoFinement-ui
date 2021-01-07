@@ -52,8 +52,6 @@ export class RegisterComponent implements OnInit {
 
   register(user: UserRegisterDtoRequest): void {
 
-    console.log(this.agreedToConditions)
-
     if (user.password === this.passwordConfirmation) {
       this.passwordError = '';
 
