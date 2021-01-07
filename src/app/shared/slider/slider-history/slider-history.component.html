@@ -1,0 +1,26 @@
+<div class="swiper-container listening_history" [swiper]="historySwiper.params">
+  <div class="swiper-wrapper">
+    <div *ngFor="let item of history; index as indexOfElement" class="swiper-slide">
+      <div class="card" style="width: 12rem;">
+        <div class="container p-0">
+          <ng-container *ngIf="(indexOfElement+1) > historySwiper.params.slidesPerView else slidesInViewPort">
+            <img class="card-img-top swiper-lazy" src="assets/images/loading.gif"
+              [attr.data-src]="item.track.covert_art_url" alt="Loading...">
+          </ng-container>
+          <ng-template #slidesInViewPort>
+            <img class="card-img-top" [src]="item.track.covert_art_url" alt="Cover track">
+          </ng-template>
+        </div>
+        <div class="card-body p-3 d-flex justify-content-center flex-column" style="max-width: 100%;">
+          <span>
+            <h3 class="card-title text-danger text-truncate"><strong>{{item.track.title}}</strong></h3>
+          </span>
+          <p class="card-text text-truncate" style="max-width: 100%;"><strong>{{item.track.artist_name}}</strong></p>
+          <p class="card-text text-muted">{{item.last_played_date | date:'M/d/y h:mm a'}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+</div>

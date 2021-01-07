@@ -1,0 +1,23 @@
+<div mat-dialog-content>
+  <div class="container">
+    <div mat-dialog-actions class="mr-2 mb-1 d-flex justify-content-between p-0">
+      <p class="font-weight-bold text-left h6 text-truncate" style="max-width:80%;">Give your feedback</p>
+      <mat-icon mat-dialog-close class="text-right text-secondary">cancel</mat-icon>
+    </div>
+    <div class="container d-flex justify-content-center align-items-center flex-column">
+      <mat-form-field appearance="fill">
+        <mat-label>Reason</mat-label>
+        <mat-select>
+          <mat-option value="Reason 1">Reason 1</mat-option>
+          <mat-option value="Reason 2">Reason 2</mat-option>
+          <mat-option value="Reason 3">Reason 3</mat-option>
+          <mat-option value="Reason 4">Reason 4</mat-option>
+          <mat-option value="Reason 5">Reason 5</mat-option>
+          <mat-option value="Reason 6">Reason 6</mat-option>
+          <mat-option value="Reason 7">Reason 7</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-stroked-button (click)="sendFeedback()">Send feedback</button>
+  </div>
+</div>
+
