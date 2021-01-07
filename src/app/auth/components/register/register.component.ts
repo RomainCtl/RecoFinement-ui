@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -9,6 +10,7 @@ import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { ErrorService } from 'src/app/services/error/error.service';
 import { TermsOfUseComponent } from './modal/terms-of-use/terms-of-use.component';
+import { ScrollStrategyOptions, Overlay } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-register',
@@ -33,53 +35,66 @@ export class RegisterComponent implements OnInit {
   passwordError = '';
   passwordConfirmation = '';
 
+  agreedToConditions = false;
+
 
   constructor(
     private _auth: AuthService,
     private _router: Router,
     private cookie: CookieService,
     private errorService: ErrorService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    public overlay: Overlay) { }
 
   ngOnInit(): void {
   }
 
   register(user: UserRegisterDtoRequest): void {
 
+    console.log(this.agreedToConditions)
+
     if (user.password === this.passwordConfirmation) {
       this.passwordError = '';
 
-      this._auth.register(user).then(
-        (result: UserRegisterDtoResponse) => {
-          localStorage.setItem('uuid', result.user.uuid);
-          localStorage.setItem('username', result.user.username);
-          localStorage.setItem('email', result.user.email);
-          this.registerHttpResponse = result;
-          this.cookie.set('user_id', result.user.uuid, {expires: 1, sameSite: 'Lax', path: '/'});
-          this.cookie.set('access_token', this.registerHttpResponse.access_token, { expires: 1, sameSite: 'Lax', path: '/' });
+      if(this.agreedToConditions) {
 
-          // document.cookie = 'access_token=' + this.registerHttpResponse.access_token;
-          this._router.navigate(['register/preferences']);
-        }
-      ).catch(
-        (errors: HttpErrorResponse) => {
-          this.registerHttpResponse = errors.error;
-          if (this.registerHttpResponse.errors) {
-            for (const err of this.registerHttpResponse.errors) {
-              this.errorService.addError(err);
-            }
-          } else {
-            this.errorService.addError(this.registerHttpResponse.message);
+        
+        this._auth.register(user).then(
+          (result: UserRegisterDtoResponse) => {
+            localStorage.setItem('uuid', result.user.uuid);
+            localStorage.setItem('username', result.user.username);
+            localStorage.setItem('email', result.user.email);
+            this.registerHttpResponse = result;
+            this.cookie.set('user_id', result.user.uuid, {expires: 1, sameSite: 'Lax', path: '/'});
+            this.cookie.set('access_token', this.registerHttpResponse.access_token, { expires: 1, sameSite: 'Lax', path: '/' });
+            
+            // document.cookie = 'access_token=' + this.registerHttpResponse.access_token;
+            this._router.navigate(['register/preferences']);
           }
-        }
-      );
+          ).catch(
+            (errors: HttpErrorResponse) => {
+              this.registerHttpResponse = errors.error;
+              if (this.registerHttpResponse.errors) {
+                for (const err of this.registerHttpResponse.errors) {
+                  this.errorService.addError(err);
+                }
+              } else {
+                this.errorService.addError(this.registerHttpResponse.message);
+              }
+            }
+            );
+          } else {
+            this.errorService.addError('You must accept the Terms and Conditions of Use to get registered.');
+          }
     } else {
       this.passwordError = 'Passwords don\'t match';
       this.errorService.addError(this.passwordError);
     }
   }
 
-  showTermsAndConditions(): void {
+  showTermsAndConditions(event: MouseEvent): void {
+    event.preventDefault();
     this.dialog.open(TermsOfUseComponent,
       {
         panelClass: ['shadow-none', 'w-75', 'h-75'],
