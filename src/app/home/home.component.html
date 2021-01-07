@@ -1,35 +1,10 @@
 <p class="display-4 text-center p-3" style="font-size: 7vmin;">Welcome</p>
 <hr>
-<!-- <div *ngIf="!noTracks" class="container">
-  <h1>Listening history</h1>
-  <carousel height=300>
-    <div class="carousel-cell" *ngFor="let history of trackResponse.content">
-      <div>
-        <img mat-card-image [src]="history.track.covert_art_url" alt="Photo of a track">
-        <strong class="text-danger">{{ history.track.title }}</strong>
-        <p>{{ history.track.artist_name }}, <span
-            class="text-muted">{{ history.last_played_date | date:'short' }}</span> </p>
-      </div>
-    </div>
-  </carousel>
-</div>
-<br /> -->
-
 <div *ngIf="!noTracks" class="container">
   <h1>Listening history</h1>
-  <carousel>
-    <div class="carousel-cell relative" *ngFor="let history of trackResponse.content">
-      <img mat-card-image [src]="history.track.covert_art_url" alt="Photo of a track">
-      <div class="overlay d-flex flex-column justify-content-center align-items-center">
-        <strong style="color:white;">{{ history.track.artist_name }}</strong>
-        <span style="color:white;">{{ history.last_played_date | date:'short' }}</span>
-      </div>
-      <div class="overlay_title d-flex flex-column justify-content-end">
-        <div class="p-2 text-center text-truncate">
-          <strong class="text-danger m-2">{{ history.track.title }}</strong>
-        </div>
-      </div>
-    </div>
-  </carousel>
+
+  <div
+    app-slider-history></div>
+
 </div>
 <br />

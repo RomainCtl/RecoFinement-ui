@@ -1,7 +1,8 @@
 import { AuthService } from 'src/app/services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TrackService } from '../services/media/track.service';
 import { TrackHistoryResponseDto } from '../shared/models/DtoResponse/musics/track-history.model';
+import { SliderHistoryComponent } from '../shared/slider/slider-history/slider-history.component';
 
 @Component({
   selector: 'app-home',
@@ -9,6 +10,8 @@ import { TrackHistoryResponseDto } from '../shared/models/DtoResponse/musics/tra
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+
+  @ViewChild(SliderHistoryComponent) historySwiper: SliderHistoryComponent;
 
   constructor(
     private _auth: AuthService,
@@ -41,17 +44,14 @@ export class HomeComponent implements OnInit {
     return this.trackResponse;
   }
 
-  private getHistoryMusics(page ?: number): void {
-    this.trackService.getHistoryTracks(page).then((result: TrackHistoryResponseDto) => {
-      this.trackResponse.content = this.trackResponse.content.concat(result.content);
-      // this.nextPage++;
-    });
-  }
-
-
   get authService(): AuthService {
     return this._auth;
   }
 
+  ngAfterViewInit() {
+    this.trackService.getHistoryTracks(1).then((result: TrackHistoryResponseDto) => {
+      this.historySwiper.history = result.content;
+    });
+  }
 
 }

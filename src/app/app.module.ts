@@ -82,6 +82,7 @@ import { AddMemberComponent } from './auth/components/add-member/add-member.comp
 import { SliderComponent } from './shared/slider/slider/slider.component';
 import { SwiperConfigInterface, SwiperModule, SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { FeedbackComponent } from './shared/feedback/feedback/feedback.component';
+import { SliderHistoryComponent } from './shared/slider/slider-history/slider-history.component';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
   direction: 'horizontal',
@@ -119,7 +120,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     AddGroupComponent,
     AddMemberComponent,
     SliderComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    SliderHistoryComponent
   ],
   imports: [
     CommonModule,

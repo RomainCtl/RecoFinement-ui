@@ -1,0 +1,35 @@
+<div class="swiper-container" [swiper]="historySwiper.params">
+  <div class="swiper-wrapper">
+    <div *ngFor="let item of history; index as indexOfElement" class="swiper-slide">
+      <div class="card" style="width: 12rem;">
+        <div class="container p-0">
+          <ng-container *ngIf="(indexOfElement+1) > historySwiper.params.slidesPerView else slidesInViewPort">
+            <img class="card-img-top swiper-lazy" src="assets/images/loading.gif" [attr.data-src]="item.covert_art_url">
+          </ng-container>
+          <ng-template #slidesInViewPort>
+            <img class="card-img-top" [src]="item.track.covert_art_url">
+          </ng-template>
+          <div class="overlay" style="cursor: pointer;">
+            <div class="icon" >
+              <mat-icon class="fa fa-user text-center w-100 h-100" style="font-size:75px;" aria-hidden="false">
+                play_circle_outline</mat-icon>
+            </div>
+          </div>
+        </div>
+            <div class="card-body p-3 d-flex justify-content-center flex-column" style="max-width: 100%;">
+              <span>
+                <h3 class="card-title text-danger text-truncate"><strong>{{item.track.title}}</strong></h3>
+              </span>
+              <p class="card-text"><strong>{{item.track.artist_name}}</strong></p>
+              <span class="d-flex justify-content-between align-items-center">
+                <button mat-mini-fab color="" class="d-flex justify-content-center align-items-center flex-column"><mat-icon color="primary">preview</mat-icon></button>
+                <button mat-mini-fab color="" class="d-flex justify-content-center align-items-center flex-column"><mat-icon color="warn">visibility_off</mat-icon></button>
+              </span>
+
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+</div>

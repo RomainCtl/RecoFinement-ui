@@ -1,5 +1,3 @@
-<h2>Listening history</h2>
-
 <div *ngIf="!noTracks">
   <p class="display-4 text-center p-3" style="font-size: 7vmin;">Musics you may like</p>
   <hr>
@@ -25,9 +23,9 @@
     There is no musics for your search.
   </div>
   <h1>Popular musics</h1>
-    <div 
-    app-slider 
-    (openPreviewEvent)="openPreview($event)" 
+    <div
+    app-slider
+    (openPreviewEvent)="openPreview($event)"
     (clickSeeMoreEvent)="openPopUp($event)"
     (openFeedbackEvent)="openFeedback($event)"></div>
   <!-- <h1>From [source] recommendation</h1>
