@@ -1,5 +1,5 @@
 import { DialogConfirmationComponent } from './auth/components/preferences/dialog-confirmation/dialog-confirmation.component';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCheckboxDefaultOptions, MatCheckboxModule, MAT_CHECKBOX_DEFAULT_OPTIONS } from '@angular/material/checkbox';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
