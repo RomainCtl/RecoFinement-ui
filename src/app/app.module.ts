@@ -79,8 +79,14 @@ import { TermsOfUseComponent } from './auth/components/register/modal/terms-of-u
 import { GroupManagementComponent } from './auth/components/group-management/group-management.component';
 import { AddGroupComponent } from './auth/components/add-group/add-group.component';
 import { AddMemberComponent } from './auth/components/add-member/add-member.component';
+import { SliderComponent } from './shared/slider/slider/slider.component';
+import { SwiperConfigInterface, SwiperModule, SWIPER_CONFIG } from 'ngx-swiper-wrapper';
+import { FeedbackComponent } from './shared/feedback/feedback/feedback.component';
 
-import { IvyCarouselModule } from 'angular-responsive-carousel';
+const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
+  direction: 'horizontal',
+  slidesPerView: 'auto'
+};
 
 @NgModule({
   declarations: [
@@ -111,7 +117,9 @@ import { IvyCarouselModule } from 'angular-responsive-carousel';
     TermsOfUseComponent,
     GroupManagementComponent,
     AddGroupComponent,
-    AddMemberComponent
+    AddMemberComponent,
+    SliderComponent,
+    FeedbackComponent
   ],
   imports: [
     CommonModule,
@@ -160,8 +168,8 @@ import { IvyCarouselModule } from 'angular-responsive-carousel';
     MatBottomSheetModule,
     MatExpansionModule,
     ReactiveFormsModule,
-    IvyCarouselModule,
-    NgbModule
+    NgbModule,
+    SwiperModule
   ],
   providers: [
     PaginationService,
@@ -170,6 +178,10 @@ import { IvyCarouselModule } from 'angular-responsive-carousel';
       provide: HTTP_INTERCEPTORS,
       useClass: Interceptor,
       multi: true
+    },
+    {
+      provide: SWIPER_CONFIG,
+      useValue: DEFAULT_SWIPER_CONFIG
     },
     AuthGuard,
     AuthReverseGuard
