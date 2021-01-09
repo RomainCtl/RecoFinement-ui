@@ -1,4 +1,4 @@
-import { RedirectConfirmationComponent } from '../shared/modals/redirect-confirmation/redirect-confirmation.component';
+import { RedirectConfirmationComponent } from '../shared-features/modals/redirect-confirmation/redirect-confirmation.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
@@ -6,8 +6,8 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, Htt
 import { Observable, timer } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { ErrorService } from '../services/error/error.service';
-import { AuthService } from '../services/auth.service';
+import { ErrorService } from '../app-view/services/error/error.service';
+import { AuthService } from '../app-view/services/auth.service';
 
 declare var $: any;
 

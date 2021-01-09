@@ -1,6 +1,6 @@
-import { AuthService } from './services/auth.service';
+import { AuthService } from './app-view/services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { ToastService } from './services/notification/toast.service';
+import { ToastService } from './app-view/services/notification/toast.service';
 
 @Component({
   selector: 'app-root',
