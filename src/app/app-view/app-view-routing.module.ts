@@ -17,6 +17,7 @@ import { ProfileComponent } from './user/components/profile/profile.component';
 import { HistoryTracksComponent } from './user/components/user/history-tracks/history-tracks.component';
 import { InterestsComponent } from './user/components/user/interests/interests.component';
 import { ResetPasswordComponent } from './user/components/user/reset-password/reset-password.component';
+import { PrivacyPolicyComponent } from './user/components/privacy-policy/privacy-policy.component';
 
 const routes: Routes = [
   {
@@ -37,6 +38,10 @@ const routes: Routes = [
         path: 'register',
         component: RegisterComponent,
         canActivate: [AuthReverseGuard]
+      },
+      {
+        path: 'privacy-policy',
+        component: PrivacyPolicyComponent,
       },
       {
         path: 'user/profile',

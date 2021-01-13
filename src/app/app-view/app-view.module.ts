@@ -66,6 +66,7 @@ import { MusicsComponent } from './recofinement/musics/musics.component';
 import { PreviewComponent } from './recofinement/musics/preview/preview.component';
 import { SeriesComponent } from './recofinement/series/series.component';
 import { AppViewComponent } from './app-view.component';
+import { PrivacyPolicyComponent } from './user/components/privacy-policy/privacy-policy.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import { AppViewComponent } from './app-view.component';
     GroupManagementComponent,
     AddGroupComponent,
     AddMemberComponent,
-    AppViewComponent
+    AppViewComponent,
+    PrivacyPolicyComponent
   ],
   imports: [
     CommonModule,
