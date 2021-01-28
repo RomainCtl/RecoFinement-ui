@@ -16,6 +16,7 @@ export class TrackService {
   private urlSearchTracks = environment.api_url + '/track/search/';
   private urlUserMeta = environment.api_url + '/track/';
   private urlGetHistoryTracks = environment.api_url + '/track/history?page=';
+  private urlAddTrack= environment.api_url + '/track';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -49,6 +50,10 @@ export class TrackService {
 
   savePlayCount(trackId: number, trackMeta: any): Promise<TrackMetaResponseDto> {
     return this.httpClient.patch<TrackMetaResponseDto>(this.urlUserMeta + trackId + '/meta', trackMeta).toPromise();
+  }
+
+  postNewTrack(payload: any): Promise<any> {
+    return this.httpClient.post<any>(this.urlAddTrack, payload).toPromise();
   }
 
 }
