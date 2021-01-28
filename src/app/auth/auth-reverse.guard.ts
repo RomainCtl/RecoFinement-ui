@@ -10,7 +10,6 @@ export class AuthReverseGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-      console.log('guard')
       if (this._auth.isUserLoggedIn()) {
         this._router.navigate(['app']);
         return false;

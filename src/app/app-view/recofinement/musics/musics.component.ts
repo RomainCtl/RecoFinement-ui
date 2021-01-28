@@ -178,7 +178,6 @@ export class MusicsComponent implements OnInit, AfterViewInit  {
   }
 
   savePlayCount(id: number): void {
-    console.log(id);
     this.trackService.savePlayCount(id, { additional_play_count: 1 });
   }
 
