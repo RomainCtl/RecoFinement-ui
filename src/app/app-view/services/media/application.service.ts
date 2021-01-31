@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 export class ApplicationService {
 
   private urlGetApplications = environment.api_url + '/application?page=';
-  private urlGetPopularApplications = environment.api_url + '/application?page=1';
+  private urlGetPopularApplications = environment.api_url + '/application?page=';
   private urlSearchApplication = environment.api_url + '/application/search/';
   private urlGetGenresApplications = environment.api_url + '/application/genres';
   private urlUserMeta = environment.api_url + '/application/';
@@ -21,8 +21,8 @@ export class ApplicationService {
     return this.httpClient.get<ApplicationResponseDto>(this.urlGetApplications + page).toPromise();
   }
 
-  getPopularApplications(): Promise<any> {
-    return this.httpClient.get<any>(this.urlGetPopularApplications).toPromise();
+  getPopularApplications(page: number = 1): Promise<ApplicationResponseDto> {
+    return this.httpClient.get<ApplicationResponseDto>(this.urlGetPopularApplications + page).toPromise();
   }
 
   searchApplications(searchTerm: string): Promise<ApplicationResponseDto> {

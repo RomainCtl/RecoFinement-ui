@@ -1,3 +1,4 @@
+import { Content } from 'src/app/models/DtoResponse/Content.model';
 import { FeedbackComponent } from '../../../shared-features/feedback/feedback/feedback.component';
 import { SliderComponent } from '../../../shared-features/slider/slider/slider.component';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
@@ -169,10 +170,6 @@ export class MusicsComponent implements OnInit  {
       popupDetails.close();
     });
 
-    popupDetails.afterOpened().subscribe(() => {
-
-    });
-
   }
 
   searchTracks(searchTerm: string): void {
@@ -214,6 +211,24 @@ export class MusicsComponent implements OnInit  {
   deactivateSearch(){
     this.searchInput
     this.searchActivated = false;
+  }
+
+  getRecoFromProfile(): Track[] {
+    return this.recommendedTracksForUser.content.filter(track => {
+      track.reco_engine === 'FromProfile';
+    });
+  }
+
+  getRecoFromCollaborativeFiltering(): Track[] {
+    return this.recommendedTracksForUser.content.filter(track => {
+      track.reco_engine === 'CollaborativeFiltering';
+    })
+  }
+
+  getRecoFromSimilarContent(): Track[] {
+    return this.recommendedTracksForUser.content.filter(track => {
+      track.reco_engine === 'FromSimilarContent';
+    })
   }
 
 }

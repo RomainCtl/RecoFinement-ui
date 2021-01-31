@@ -82,11 +82,7 @@
         *ngIf="popularTracks.content.length > 0"
         [content]="popularTracks.content"
         (openPreviewEvent)="openPreview($event)"
-        (clickSeeMoreEvent)="openPopUp($event)">
-        <div class="progress">
-          <div class="progress-bar progress-bar-striped progress-bar-animated bg-dark" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-      </div>
+        (clickSeeMoreEvent)="openPopUp($event)"></div>
 
 
 
@@ -107,7 +103,7 @@
         [content]="popularSeries.content"
         (openPreviewEvent)="openPreview($event)"
         (clickSeeMoreEvent)="openPopUp($event)"></div>
-        
+
         <div
         app-slider
         title="Most popular games"

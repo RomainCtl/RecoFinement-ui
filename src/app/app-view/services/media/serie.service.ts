@@ -24,7 +24,7 @@ export class SeriesService {
     return this.httpClient.get<SerieMetaResponseDto>(this.urlUserMeta + series_id + '/meta').toPromise();
   }
 
-  getSeries(page: number): Promise<SeriesResponseDto> {
+  getSeries(page: number = 1): Promise<SeriesResponseDto> {
     return this.httpClient.get<SeriesResponseDto>(this.urlGetSeries + page).toPromise();
   }
 

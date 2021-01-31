@@ -1,4 +1,3 @@
-import { HttpCacheService } from './http-cache.sevice';
 import { RedirectConfirmationComponent } from '../shared-features/modals/redirect-confirmation/redirect-confirmation.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -20,7 +19,6 @@ export class Interceptor implements HttpInterceptor {
       private router: Router,
       private dialog: MatDialog,
       private auth: AuthService,
-      private cacheService: HttpCacheService,
       private error: ErrorService,
     ) { }
 
@@ -32,24 +30,10 @@ export class Interceptor implements HttpInterceptor {
             }
         });
 
-        if(req.method !== 'GET') {  
-          console.log(`Invalidating cache: ${req.method} ${req.url}`);  
-          this.cacheService.invalidateCache();  
-          return next.handle(req);  
-        }  
-
-        const cachedResponse: HttpResponse<any> = this.cacheService.get(req.url);  
-
-            // return cached response  
-          if (cachedResponse) {  
-            console.log(`Returning a cached response: ${cachedResponse.url}`);  
-            console.log(cachedResponse);  
-            return of(cachedResponse);  
-          }
 
         return next.handle(authReq).pipe(tap((event: HttpEvent<any>) => {
             if (event instanceof HttpResponse) {
-              this.cacheService.put(req.url, event);  
+              //do sth here
             }
           }, (err: HttpErrorResponse) => {
             if (err.status === 401) {

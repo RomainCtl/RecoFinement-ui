@@ -178,12 +178,4 @@ export class HomeComponent implements OnInit {
       });
   
     }
-
-
-  ngAfterViewInit() {
-    this.trackService.getHistoryTracks(1).then((result: TrackHistoryResponseDto) => {
-      this.historySwiper.history = result.content;
-    });
-  }
-
 }

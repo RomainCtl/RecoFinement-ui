@@ -15,6 +15,7 @@ export class SliderComponent implements OnInit  {
 
   public mySwiper: Swiper;
   public loadedImages = []
+  public loading : boolean = true;
 
 
   @Input()
@@ -46,7 +47,6 @@ export class SliderComponent implements OnInit  {
       slidesPerView: 6,
       spaceBetween: 10,
       autoplay:false,
-      keyboard: true,
       navigation: {
         prevEl: '.swiper-button-prev',
         nextEl: '.swiper-button-next'
@@ -59,9 +59,12 @@ export class SliderComponent implements OnInit  {
         loadPrevNextAmount: 2,
         checkInView: true
       },
-      loop: true,
-      preventClicks: true,
-      passiveListeners: true
+      loop: true
+    })
+
+    let ap = document.querySelector('.swiper-container');
+    ap.addEventListener('load', () => {
+      console.log('swiper loaded')
     })
   }
 

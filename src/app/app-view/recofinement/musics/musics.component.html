@@ -109,28 +109,45 @@
       [content]="popularTracks.content"
       (openPreviewEvent)="openPreview($event)"
       (clickSeeMoreEvent)="openPopUp($event)"></div>
-  
-<!--
+
       <div
       app-slider
-      [title]="recoChoice ? 'Recommended for you' : 'Algo B'"
-      className="from_profile"
-      *ngIf="recommendedTracksForUser.content.length > 0"
-      [content]="recommendedTracksForUser.content"
+      title="From your profile"
+      className="reco_profile"
+      *ngIf="getRecoFromProfile().length > 0"
+      [content]="getRecoFromProfile()"
       (openPreviewEvent)="openPreview($event)"
-      (clickSeeMoreEvent)="openPopUp($event)"
-      (openFeedbackEvent)="openFeedback($event)"></div>
-  
-  
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
       <div
       app-slider
-      [title]="recoChoice ? 'Recommended from your groups' : 'Algo C'"
-      className="from_groups"
+      title="From your groups"
+      className="reco_filtering"
       *ngIf="recommendedTracksFromGroups.content.length > 0"
       [content]="recommendedTracksFromGroups.content"
       (openPreviewEvent)="openPreview($event)"
-      (clickSeeMoreEvent)="openPopUp($event)"
-      (openFeedbackEvent)="openFeedback($event)"></div> -->
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div
+      app-slider
+      title="From similar content"
+      className="reco_content"
+      *ngIf="getRecoFromSimilarContent().length > 0"
+      [content]="getRecoFromSimilarContent()"
+      (openPreviewEvent)="openPreview($event)"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div
+      app-slider
+      title="From collaborative filtering"
+      className="reco_filtering"
+      *ngIf="getRecoFromCollaborativeFiltering().length > 0"
+      [content]="getRecoFromCollaborativeFiltering()"
+      (openPreviewEvent)="openPreview($event)"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+
+  
 
 
 </div>

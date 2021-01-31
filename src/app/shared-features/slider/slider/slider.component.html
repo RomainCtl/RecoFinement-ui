@@ -1,17 +1,18 @@
-<div class="bg-dark text-center text-white overflow-hidden">
+
+<div class="bg-light text-center overflow-hidden">
 
     <div class="py-5">
       <p class="lead display-6">{{ title }}</p>
     </div>
     
-    <div class="d-flex bg-dark text-dark shadow-sm mx-auto py-2" style="width: 100%; height: auto;">
-      <div [class]="this.className" [swiper]="mySwiper.params" class="swiper-container p-2 m-2" style="height: auto;" (reachEnd)="loadMoreSlides($event)">
+    <div class="d-flex bg-light shadow-sm mx-auto py-2" style="width: 100%; height: auto;">
+      <div  [class]="this.className" [swiper]="mySwiper.params" class="swiper-container p-2 m-2" style="height: auto;" performance="true">
         <div class="swiper-wrapper">
-          <div *ngFor="let item of this.content; index as indexOfElement" class="swiper-slide" style="height:auto;">
-            <div class="card border-0 align-self-end" style="width: 15rem;">
+          <div *ngFor="let item of this.content;" class="swiper-slide" style="height:auto;">
+            <div class="card shadow-sm border-0 align-self-middle" style="width: 15rem;">
               <div class="container p-0">
                   <img *ngIf="item.track_id" class="card-img-top swiper-lazy" src="assets/images/loading.gif" [attr.data-src]="item.covert_art_url">
-                  <img *ngIf="item.isbn" class="card-img-top swiper-lazy" src="assets/images/loading.gif" [attr.data-src]="item.image_url_m">
+                  <img *ngIf="item.isbn" class="card-img-top swiper-lazy" src="assets/images/loading.gif" [attr.data-src]="item.image_url_l">
                   <img *ngIf="item.serie_id || item.movie_id || item.app_id" [class]="item.app_id ? 'p-lg-5 p-sm-2' : 'p-0'" class="card-img-top swiper-lazy" src="assets/images/loading.gif" [attr.data-src]="item.cover">
                   <img *ngIf="item.game_id" class="card-img-top swiper-lazy" src="assets/images/loading.gif" [attr.data-src]="item.header_image">
                 <div class="overlay" *ngIf="item.track_id" (click)="openPreview(item)" style="cursor: pointer;">
@@ -40,5 +41,7 @@
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
     </div>
-</div>
 
+    
+
+  </div>

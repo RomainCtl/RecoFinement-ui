@@ -1,3 +1,4 @@
+import { BrowseComponent } from './recofinement/browse/browse/browse.component';
 import { AuthGuard } from './../auth/auth.guard';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -101,6 +102,11 @@ const routes: Routes = [
       {
         path: 'applications',
         component: ApplicationsComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'browse',
+        component: BrowseComponent,
         canActivate: [AuthGuard]
       }
     ]

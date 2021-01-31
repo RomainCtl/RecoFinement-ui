@@ -16,5 +16,6 @@ export class Track {
     url: string;
     covert_art_url: string;
     reco_score: number;
+    reco_engine: string;
     popularity_score: number;
 }
