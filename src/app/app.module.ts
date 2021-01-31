@@ -1,3 +1,4 @@
+import { NotificationComponent } from './shared-features/modals/notification/notification/notification.component';
 import { RecoDashboardRoutingModule } from './dashboard-view/dashboard-view-routing.module';
 import { AppViewRoutingModule } from './app-view/app-view-routing.module';
 import { CommonModule } from '@angular/common';
@@ -13,6 +14,8 @@ import { AuthReverseGuard } from './auth/auth-reverse.guard';
 import { AuthGuard } from './auth/auth.guard';
 import { Interceptor } from './auth/interceptor';
 import { SharedFeaturesModule } from './shared-features/shared-features.module';
+import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { NgbModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [AppComponent],

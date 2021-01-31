@@ -1,9 +1,10 @@
+import { HttpCacheService } from './http-cache.sevice';
 import { RedirectConfirmationComponent } from '../shared-features/modals/redirect-confirmation/redirect-confirmation.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable, timer } from 'rxjs';
+import { Observable, of, timer } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ErrorService } from '../app-view/services/error/error.service';
@@ -19,6 +20,7 @@ export class Interceptor implements HttpInterceptor {
       private router: Router,
       private dialog: MatDialog,
       private auth: AuthService,
+      private cacheService: HttpCacheService,
       private error: ErrorService,
     ) { }
 
@@ -30,9 +32,24 @@ export class Interceptor implements HttpInterceptor {
             }
         });
 
+        if(req.method !== 'GET') {  
+          console.log(`Invalidating cache: ${req.method} ${req.url}`);  
+          this.cacheService.invalidateCache();  
+          return next.handle(req);  
+        }  
+
+        const cachedResponse: HttpResponse<any> = this.cacheService.get(req.url);  
+
+            // return cached response  
+          if (cachedResponse) {  
+            console.log(`Returning a cached response: ${cachedResponse.url}`);  
+            console.log(cachedResponse);  
+            return of(cachedResponse);  
+          }
+
         return next.handle(authReq).pipe(tap((event: HttpEvent<any>) => {
             if (event instanceof HttpResponse) {
-                // do something on response
+              this.cacheService.put(req.url, event);  
             }
           }, (err: HttpErrorResponse) => {
             if (err.status === 401) {

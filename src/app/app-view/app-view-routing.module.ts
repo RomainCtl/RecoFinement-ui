@@ -1,5 +1,5 @@
 import { AuthGuard } from './../auth/auth.guard';
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MusicsComponent } from './recofinement/musics/musics.component';
 import { AppViewComponent } from './app-view.component';

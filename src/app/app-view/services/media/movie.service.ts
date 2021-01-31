@@ -16,7 +16,7 @@ export class MovieService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getPopularMovies(page: number): Promise<MovieResponseDto> {
+  getPopularMovies(page: number = 1): Promise<MovieResponseDto> {
     return this.httpClient.get<any>(this.urlGetPopularMovies + '?page=' + page).toPromise();
   }
 

@@ -21,7 +21,7 @@ import Swiper from 'swiper';
   templateUrl: './musics.component.html',
   styleUrls: ['./musics.component.scss']
 })
-export class MusicsComponent implements OnInit, AfterViewInit  {
+export class MusicsComponent implements OnInit  {
 
   @ViewChild(SliderComponent) musicSwiper: SliderComponent;
 
@@ -34,7 +34,7 @@ export class MusicsComponent implements OnInit, AfterViewInit  {
 
   musicPreviewRef: MatDialogRef < PreviewComponent > ;
 
-  trackResponse: TrackResponseDto = {
+  popularTracks: TrackResponseDto = {
     status: false,
     message: '',
     content: [],
@@ -42,6 +42,36 @@ export class MusicsComponent implements OnInit, AfterViewInit  {
     page: 0,
     total_pages: 0
   };
+
+  recommendedTracksForUser: TrackResponseDto = {
+    status: false,
+    message: '',
+    content: [],
+    number_of_elements: 0,
+    page: 0,
+    total_pages: 0
+  };
+
+  recommendedTracksFromGroups: TrackResponseDto = {
+    status: false,
+    message: '',
+    content: [],
+    number_of_elements: 0,
+    page: 0,
+    total_pages: 0
+  };
+
+  searchResults: TrackResponseDto = {
+    status: false,
+    message: '',
+    content: [],
+    number_of_elements: 0,
+    page: 0,
+    total_pages: 0
+  };
+
+
+  recoChoice: boolean = true;
 
   snackBarConfig: MatSnackBarConfig = {
     horizontalPosition: 'start',
@@ -62,28 +92,31 @@ export class MusicsComponent implements OnInit, AfterViewInit  {
 
   ngOnInit(): void {
     this.trackService.getPopularTracks().then((result: TrackResponseDto) => {
-      this.trackResponse = result;
+      this.popularTracks = result;
       this.apiResponse = true;
       if (result.number_of_elements !== 0) {
         this.noTracks = false;
       }
-      if (this.nextPage !== this.trackResponse.total_pages) {
+      if (this.nextPage !== this.popularTracks.total_pages) {
         this.finished = false;
       }
       this.filteredMusic = this.appCtrl.valueChanges
       .pipe(
         startWith(''),
-        map(track => track ? this._filter(track) : this.tracks.content.slice())
+        map(track => track ? this._filter(track) : this.popularTracks.content.slice())
       );
     });
+
+    this.getRecommendedTracksForUser();
+    this.getRecommendedTracksFromGroups();
   }
   private _filter(value: string): Track[] {
     const filterValue = value.toLowerCase();
-    return this.tracks.content.filter(track => track.title.toLowerCase().indexOf(filterValue) === 0);
+    return this.popularTracks.content.filter(track => track.title.toLowerCase().indexOf(filterValue) === 0);
   }
 
   onScroll(): void {
-    if (this.nextPage <= this.trackResponse.total_pages) {
+    if (this.nextPage <= this.popularTracks.total_pages) {
       this.getMusics(this.nextPage);
     } else {
       if (!this.noTracks) {
@@ -95,8 +128,8 @@ export class MusicsComponent implements OnInit, AfterViewInit  {
 
   private getSearchedTracks(searchTerm: string): void {
     this.trackService.searchTracks(searchTerm).then((result: TrackResponseDto) => {
-      this.trackResponse.content = result.content;
-      if (this.trackResponse.content.length === 0) {
+      this.searchResults.content = result.content;
+      if (this.searchResults.content.length === 0) {
         this.searchEmpty = true;
       } else {
         this.searchEmpty = false;
@@ -104,23 +137,17 @@ export class MusicsComponent implements OnInit, AfterViewInit  {
     });
   }
 
-  get tracks(): TrackResponseDto {
-    return this.trackResponse;
-  }
-
   private getMusics(page ?: number): void {
     this.trackService.getTracks(page).then((result: TrackResponseDto) => {
-      this.trackResponse.content = this.trackResponse.content.concat(result.content);
+      this.popularTracks.content = this.popularTracks.content.concat(result.content);
       this.nextPage++;
     });
   }
 
-  openPreview(index: number): void {
-
-    this.savePlayCount(this.trackResponse.content[index].track_id);
+  openPreview(item: Track): void {
 
     this.bottom.open(PreviewComponent, {
-      data: this.trackResponse.content[index],
+      data: item,
       hasBackdrop: false,
       panelClass: ['shadow-none', 'bg-transparent', 'm-0', 'p-0'],
       scrollStrategy: this.overlay.scrollStrategies.noop(),
@@ -129,10 +156,10 @@ export class MusicsComponent implements OnInit, AfterViewInit  {
 
   }
 
-  openPopUp(index: number): void {
+  openPopUp(item: Track): void {
     const popupDetails = this.dialog.open < PopupComponent,
       Track > (PopupComponent, {
-        data: this.trackResponse.content[index],
+        data: item,
         panelClass: ['shadow-none'],
         hasBackdrop: true,
         backdropClass: 'blur'
@@ -142,19 +169,10 @@ export class MusicsComponent implements OnInit, AfterViewInit  {
       popupDetails.close();
     });
 
-  }
+    popupDetails.afterOpened().subscribe(() => {
 
-  openFeedback(index: number) {
-    const feedbackPopup = this.dialog.open<FeedbackComponent, number> (FeedbackComponent, {
-      data: index,
-      panelClass: ['shadow-none'],
-      hasBackdrop: true,
-      backdropClass: 'blur'
     });
 
-    feedbackPopup.backdropClick().subscribe(() => {
-      feedbackPopup.close();
-    });
   }
 
   searchTracks(searchTerm: string): void {
@@ -165,26 +183,37 @@ export class MusicsComponent implements OnInit, AfterViewInit  {
 
     if (searchTerm.length === 0) {
       this.trackService.getPopularTracks().then((result: TrackResponseDto) => {
-        this.trackResponse = result;
+        this.searchResults = result;
         this.searchActivated = false;
         if (result.number_of_elements !== 0) {
           this.noTracks = false;
         }
-        if (this.nextPage !== this.trackResponse.total_pages) {
+        if (this.nextPage !== this.popularTracks.total_pages) {
           this.finished = false;
         }
       });
     }
   }
 
-  savePlayCount(id: number): void {
-    console.log(id);
-    this.trackService.savePlayCount(id, { additional_play_count: 1 });
-  }
-
-  ngAfterViewInit() {
-    this.trackService.getPopularTracks().then(tracks => {
-      this.musicSwiper.musics = tracks.content;
+  private getRecommendedTracksForUser(): void {
+    this.trackService.getRecommendedTracksForUser().then((result: TrackResponseDto) => {
+      this.recommendedTracksForUser = result;
     })
   }
+
+  private getRecommendedTracksFromGroups(): void {
+    this.trackService.getRecommendedTracksFromGroups().then((result: TrackResponseDto) => {
+      this.recommendedTracksFromGroups = result;
+    })
+  }
+
+  toggleRecommendBy() {
+    this.recoChoice = !this.recoChoice;
+  }
+
+  deactivateSearch(){
+    this.searchInput
+    this.searchActivated = false;
+  }
+
 }
