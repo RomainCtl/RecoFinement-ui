@@ -26,26 +26,5 @@
       t.parentNode.insertBefore(e, t);
     })(document, "script");
     </script>
-
-    <script>
-      void 0 === window._axcb && (window._axcb = []);
-      window._axcb.push(function(axeptio) {
-        axeptio.on("cookies:complete", function(choices) {
-          let button = document.querySelector('#test')
-          if(!choices.login_cookie) {
-            document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
-            document.cookie = 'user_id=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
-            document.cookie = 'importType=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
-
-            button.disabled = true;
-            button.classList.add('disable');
-
-          } else {
-            button.disabled = false;
-            button.classList.remove('disable');
-          }
-        })
-      })
-    </script>
 </body>
 </html>
