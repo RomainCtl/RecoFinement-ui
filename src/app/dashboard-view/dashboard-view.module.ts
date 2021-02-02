@@ -1,3 +1,4 @@
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -34,7 +35,8 @@ import { MatSelectModule } from '@angular/material/select';
     FormsModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatSelectModule
+    MatSelectModule,
+    MatBottomSheetModule
   ]
 })
 export class RecoDashboardModule { }

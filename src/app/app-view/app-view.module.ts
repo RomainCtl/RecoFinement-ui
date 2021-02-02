@@ -1,4 +1,4 @@
-import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -33,7 +33,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { StarRatingModule } from 'angular-star-rating';
 import { CookieService } from 'ngx-cookie-service';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -67,6 +67,8 @@ import { PreviewComponent } from './recofinement/musics/preview/preview.componen
 import { SeriesComponent } from './recofinement/series/series.component';
 import { AppViewComponent } from './app-view.component';
 import { PrivacyPolicyComponent } from './user/components/privacy-policy/privacy-policy.component';
+import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA, MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { BrowseComponent } from './recofinement/browse/browse/browse.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +97,8 @@ import { PrivacyPolicyComponent } from './user/components/privacy-policy/privacy
     AddGroupComponent,
     AddMemberComponent,
     AppViewComponent,
-    PrivacyPolicyComponent
+    PrivacyPolicyComponent,
+    BrowseComponent
   ],
   imports: [
     CommonModule,
@@ -139,6 +142,7 @@ import { PrivacyPolicyComponent } from './user/components/privacy-policy/privacy
     MatExpansionModule,
     ReactiveFormsModule,
     NgbModule,
+    MatSelectModule,
     RecoDashboardModule,
     MatBottomSheetModule
   ],

@@ -1,8 +1,9 @@
 import { Track } from 'src/app/models/DtoResponse/musics/Track.model';
-import { Component, OnInit, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Output, EventEmitter, Input } from '@angular/core';
 
-import Swiper from 'swiper/core'
+import Swiper, { SwiperOptions } from 'swiper/core'
 import { getLocaleDirection } from '@angular/common';
+import { Content } from 'src/app/models/DtoResponse/Content.model';
 
 @Component({
   selector: '[app-slider]',
@@ -12,35 +13,44 @@ import { getLocaleDirection } from '@angular/common';
 export class SliderComponent implements OnInit  {
 
 
-  public musics: Track[] = null;
   public mySwiper: Swiper;
   public loadedImages = []
+  public loading : boolean = true;
+
+
+  @Input()
+  public className: string;
+
+  @Input()
+  public content: any[];
+
+  @Input()
+  public title: string;
 
   @Output()
-  public openPreviewEvent: EventEmitter<number> = new EventEmitter<number>();
+  public openPreviewEvent: EventEmitter<Track> = new EventEmitter<Track>();
 
   @Output()
-  public clickSeeMoreEvent: EventEmitter<number> = new EventEmitter<number>();
+  public clickSeeMoreEvent: EventEmitter<Track> = new EventEmitter<Track>();
 
   @Output()
-  public openFeedbackEvent: EventEmitter<number> = new EventEmitter<number>();
+  public endReachedEvent: EventEmitter<number> = new EventEmitter<number>();
+
+  @Output()
+  public deactivateSearchEvent: EventEmitter<void> = new EventEmitter<void>();
 
   constructor() {}
 
   ngOnInit(): void {
-    this.mySwiper = new Swiper('.popular_music', {
+    this.mySwiper = new Swiper('.' + this.className, {
       direction: this.getDirection(),
       slidesPerView: 6,
-      a11y: { enabled: true },
-      watchSlidesVisibility: true,
-      spaceBetween: 30,
-      autoHeight: true,
-      keyboard: true,
+      spaceBetween: 10,
+      autoplay:false,
       navigation: {
         prevEl: '.swiper-button-prev',
         nextEl: '.swiper-button-next'
       },
-      observer: true,
       preloadImages: false,
       lazy: {
         preloaderClass: 'blur',
@@ -48,12 +58,18 @@ export class SliderComponent implements OnInit  {
         loadOnTransitionStart: true,
         loadPrevNextAmount: 2,
         checkInView: true
-      }
+      },
+      loop: true
+    })
+
+    let ap = document.querySelector('.swiper-container');
+    ap.addEventListener('load', () => {
+      console.log('swiper loaded')
     })
   }
 
-  openPreview(index) {
-    this.openPreviewEvent.emit(index);
+  openPreview(item: Track) {
+    this.openPreviewEvent.emit(item);
   }
 
   imageLoaded(index) {
@@ -65,12 +81,17 @@ export class SliderComponent implements OnInit  {
     return window.innerWidth <= 760 ? 'vertical' : 'horizontal';
   }
 
-  openPopUp(index: number) {
-    this.clickSeeMoreEvent.emit(index);
+  openPopUp(item: Track) {
+    this.clickSeeMoreEvent.emit(item);
   }
 
-  openFeedback(index: number) {
-    this.openFeedbackEvent.emit(index);
+  loadMoreSlides(index: number) {
+    this.endReachedEvent.emit(this.content.length/24 + 1)
+    this.mySwiper.init();
+  }
+
+  deactivateSearch() {
+    this.deactivateSearchEvent.emit();
   }
 
 }

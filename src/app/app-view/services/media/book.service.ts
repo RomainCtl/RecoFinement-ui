@@ -15,7 +15,7 @@ export class BookService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getPopularBooks(page: number): Promise<any> {
+  getPopularBooks(page: number = 1): Promise<any> {
     return this.httpClient.get<any>(this.urlGetPopularBooks + '?page=' + page).toPromise();
   }
 
@@ -23,15 +23,15 @@ export class BookService {
     return this.httpClient.get<BookResponseDto>(this.urlSearchBooks + searchTerm).toPromise();
   }
 
-  getUserMeta(isbn: number): Promise<BookMetaResponseDto> {
-    return this.httpClient.get<BookMetaResponseDto>(this.urlUserMeta + isbn + '/meta').toPromise();
+  getUserMeta(content_id: number): Promise<BookMetaResponseDto> {
+    return this.httpClient.get<BookMetaResponseDto>(this.urlUserMeta + content_id + '/meta').toPromise();
   }
 
-  savePurchasedState(isbn: number, gameMeta: any): Promise<BookMetaResponseDto> {
-    return this.httpClient.patch<BookMetaResponseDto>(this.urlUserMeta + isbn + '/meta', gameMeta).toPromise();
+  savePurchasedState(content_id: number, gameMeta: any): Promise<BookMetaResponseDto> {
+    return this.httpClient.patch<BookMetaResponseDto>(this.urlUserMeta + content_id + '/meta', gameMeta).toPromise();
   }
 
-  saveRating(isbn: number, gameMeta: any): Promise<BookMetaResponseDto> {
-    return this.httpClient.patch<BookMetaResponseDto>(this.urlUserMeta + isbn + '/meta', gameMeta).toPromise();
+  saveRating(content_id: number, gameMeta: any): Promise<BookMetaResponseDto> {
+    return this.httpClient.patch<BookMetaResponseDto>(this.urlUserMeta + content_id + '/meta', gameMeta).toPromise();
   }
 }

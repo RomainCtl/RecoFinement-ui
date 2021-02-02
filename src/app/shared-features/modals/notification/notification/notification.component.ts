@@ -19,6 +19,7 @@ export class NotificationComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.notificationService.show('dangerTpl', { classname: 'bg-danger text-light', delay: 15000 });
   }
 
   isTemplate(toast): boolean {

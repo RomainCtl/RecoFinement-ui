@@ -1,32 +1,47 @@
-<div class="swiper-container popular_music" [swiper]="mySwiper.params">
-    <div class="swiper-wrapper">
-      <div *ngFor="let item of musics; index as indexOfElement" class="swiper-slide">
-        <div class="card" style="width: 12rem;">
-          <div class="container p-0">
-            <ng-container *ngIf="(indexOfElement+1) > mySwiper.params.slidesPerView else slidesInViewPort">
-              <img class="card-img-top swiper-lazy" src="assets/images/loading.gif" [attr.data-src]="item.covert_art_url">
-            </ng-container>
-            <ng-template #slidesInViewPort>
-              <img class="card-img-top" [src]="item.covert_art_url">
-            </ng-template>
-            <div class="overlay" (click)="openPreview(indexOfElement)" style="cursor: pointer;">
-              <div class="icon" >
-                <mat-icon class="fa fa-user text-center w-100 h-100" style="font-size:75px;" aria-hidden="false">
-                  play_circle_outline</mat-icon>
-              </div>
-            </div>
-          </div>
-              <div class="card-body p-3 d-flex justify-content-center flex-column" style="max-width: 100%;">
-                <span>
-                  <h3 class="card-title text-danger text-truncate"><strong>{{item.title}}</strong></h3>
-                </span>
-                <p class="card-text text-truncate" style="max-width: 100%;"><strong>{{item.artist_name}}</strong></p>
-                  <button mat-stroked-button color="primary" class="d-flex justify-content-center align-items-center flex-column" (click)="openPopUp(indexOfElement)">See more</button>
-                  <p class="card-text"><small class="text-danger link" (click)="openFeedback(indexOfElement)">I don't like it.</small></p>
-              </div>
-          </div>
-      </div>
+
+<div class="bg-light text-center overflow-hidden">
+
+    <div class="py-5">
+      <p class="lead display-6">{{ title }}</p>
     </div>
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-button-next"></div>
+    
+    <div class="d-flex bg-light shadow-sm mx-auto py-2" style="width: 100%; height: auto;">
+      <div  [class]="this.className" [swiper]="mySwiper.params" class="swiper-container p-2 m-2" style="height: auto;" performance="true">
+        <div class="swiper-wrapper">
+          <div *ngFor="let item of this.content;" class="swiper-slide" style="height:auto;">
+            <div class="card shadow-sm border-0 align-self-middle" style="width: 15rem;">
+              <div class="container p-0">
+                  <img *ngIf="item.track_id" class="card-img-top swiper-lazy" src="assets/images/loading.gif" [attr.data-src]="item.covert_art_url">
+                  <img *ngIf="item.isbn" class="card-img-top swiper-lazy" src="assets/images/loading.gif" [attr.data-src]="item.image_url_l">
+                  <img *ngIf="item.serie_id || item.movie_id || item.app_id" [class]="item.app_id ? 'p-lg-5 p-sm-2' : 'p-0'" class="card-img-top swiper-lazy" src="assets/images/loading.gif" [attr.data-src]="item.cover">
+                  <img *ngIf="item.game_id" class="card-img-top swiper-lazy" src="assets/images/loading.gif" [attr.data-src]="item.header_image">
+                <div class="overlay" *ngIf="item.track_id" (click)="openPreview(item)" style="cursor: pointer;">
+                  <div class="icon" >
+                    <mat-icon class="fa fa-user text-center w-100 h-100" style="font-size:75px;" aria-hidden="false">
+                      play_circle_outline</mat-icon>
+                  </div>
+                </div>
+              </div>
+                  <div class="card-body p-3 d-flex justify-content-center flex-column" style="max-width: 100%;">
+                    <span>
+                      <h3 *ngIf="item.app_id || item.game_id else default" class="card-title text-danger text-truncate"><strong>{{item.name}}</strong></h3>
+                      <ng-template #default>
+                        <h3 class="card-title text-danger text-truncate"><strong>{{item.title}}</strong></h3>
+                      </ng-template>
+                    </span>
+                    <p *ngIf="item.track_id" class="card-text text-truncate" style="max-width: 100%;"><strong>{{item.artist_name}}</strong></p>
+                    <p *ngIf="item.movie_id" class="card-text text-truncate" style="max-width: 100%;"><strong>{{item.director}}</strong></p>
+                    <p *ngIf="item.app_id" class="card-text text-truncate" style="max-width: 100%;"><strong>{{item.type}}</strong></p>
+                    <p *ngIf="item.game_id" class="card-text text-truncate" style="max-width: 100%;"><strong>{{item.developers}}</strong></p>
+                      <button mat-stroked-button color="primary" class="d-flex justify-content-center align-items-center flex-column" (click)="openPopUp(item)">See more</button>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+
+    
+
   </div>

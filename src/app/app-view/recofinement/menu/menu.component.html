@@ -1,11 +1,11 @@
 <div id="largeMenu" class="row">
-  <nav class="navbar navbar-light bg-light container-fluid p-3">
+  <nav class="navbar navbar-light container-fluid p-1 fixed-top bg-light shadow-sm">
     <div class="col-sm-3">
       <a routerLink="/app" class="navbar-brand">
-        <img src="./assets/images/logo.svg" alt="Logo Recofinement" width="250" />
+        <img src="./assets/images/logo.svg" alt="Logo Recofinement" class="p-1 navbar-brand" width="200"/>
       </a>
     </div>
-    <div class="col-sm-6 text-center h5">
+    <div class="col-sm-6 d-flex justify-content-center align-items-center h5 m-0">
       <button mat-button [routerLink]="['home']" [routerLinkActive]="['mat-primary']"
         [routerLinkActiveOptions]="{exact: true}">Home</button>
       <button mat-button [routerLink]="['musics']" [routerLinkActive]="['mat-primary']">Musics</button>
@@ -14,15 +14,12 @@
       <button mat-button [routerLink]="['games']" [routerLinkActive]="['mat-primary']">Games</button>
       <button mat-button [routerLink]="['books']" [routerLinkActive]="['mat-primary']">Books</button>
       <button mat-button [routerLink]="['applications']" [routerLinkActive]="['mat-primary']">Applications</button>
-      <button mat-button routerLink="/admin" [routerLinkActive]="['mat-primary']" color="warn">Admin Panel</button>
+      <button mat-stroked-button [routerLink]="['browse']" [routerLinkActive]="['mat-primary']" class="me-2 rounded-pill">Browse <mat-icon>search</mat-icon></button>
     </div>
-    <div class="col-sm d-flex justify-content-end">
-      <mat-chip-list>
-        <mat-chip [matMenuTriggerFor]="menu" color="warn" selected style="cursor: pointer;">
-          {{ username }}
-          <mat-icon aria-hidden="false" class="ml-2">person</mat-icon>
-        </mat-chip>
-      </mat-chip-list>
+    <div class="col-sm d-flex justify-content-end space-between h5 m-0">
+      <button mat-stroked-button color="primary" class="me-2 rounded-pill"><mat-icon>notifications</mat-icon></button>
+      <button mat-stroked-button routerLink="/admin" [routerLinkActive]="['mat-primary']" color="warn" class="me-2 rounded-pill">Admin <mat-icon>admin_panel_settings</mat-icon></button>
+      <button mat-stroked-button [matMenuTriggerFor]="menu" color="warn" class="me-2 rounded-pill">{{ username }} <mat-icon>person</mat-icon></button>
       <mat-menu #menu="matMenu" class="mt-4">
         <button mat-menu-item [routerLink]="['user/profile']">Manage profile</button>
         <button mat-menu-item [routerLink]="['user/interest']">My interests</button>

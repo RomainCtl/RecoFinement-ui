@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable, timer } from 'rxjs';
+import { Observable, of, timer } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ErrorService } from '../app-view/services/error/error.service';
@@ -30,9 +30,10 @@ export class Interceptor implements HttpInterceptor {
             }
         });
 
+
         return next.handle(authReq).pipe(tap((event: HttpEvent<any>) => {
             if (event instanceof HttpResponse) {
-                // do something on response
+              //do sth here
             }
           }, (err: HttpErrorResponse) => {
             if (err.status === 401) {

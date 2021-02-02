@@ -1,5 +1,6 @@
 import { Genre } from './Genre.model';
 export class Track {
+    content_id: number;
     track_id: number;
     title: string;
     year: number;
@@ -14,4 +15,7 @@ export class Track {
     spotify_id: string;
     url: string;
     covert_art_url: string;
+    reco_score: number;
+    reco_engine: string;
+    popularity_score: number;
 }

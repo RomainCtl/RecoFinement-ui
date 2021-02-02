@@ -1,3 +1,4 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ToastService } from '../notification/toast.service';
@@ -20,18 +21,22 @@ export class ErrorService {
   msg504error = 'The server did not respond.';
 
   constructor(
-    private toastService: ToastService
+    private snackBar: MatSnackBar
   ) { }
 
   addError(errorMsg: string): void {
     this.dataStore = {error: errorMsg};
     this._errors.next(Object.assign({}, this.dataStore));
 
-    this.toastService.show(errorMsg, {
-      classname: 'text-danger',
-      delay: 10000 ,
-      autohide: true,
-      headertext: 'An error has occured...'
+    this.snackBar.open(errorMsg, 'Okay', {
+      duration: 3000
     });
+
+    // this.toastService.show(errorMsg, {
+    //   classname: 'text-danger',
+    //   delay: 10000 ,
+    //   autohide: true,
+    //   headertext: 'An error has occured...'
+    // });
   }
 }

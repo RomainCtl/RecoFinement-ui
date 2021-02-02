@@ -17,7 +17,7 @@ export class GameService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getPopularGames(page: number): Promise<any> {
+  getPopularGames(page: number = 1): Promise<any> {
     return this.httpClient.get<any>(this.urlGetPopularGames + '?page=' + page).toPromise();
   }
 
