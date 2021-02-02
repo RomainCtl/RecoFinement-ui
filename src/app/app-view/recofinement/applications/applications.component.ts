@@ -1,14 +1,9 @@
-import { Overlay } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable } from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
 import { ApplicationService } from 'src/app/app-view/services/media/application.service';
-import { PopupComponent } from 'src/app/shared-features/modals/popup/popup.component';
 import { ApplicationResponseDto } from 'src/app/models/DtoResponse/applications/application-dto.model';
 import { Application } from 'src/app/models/DtoResponse/applications/application.model';
+import { PopupComponent } from 'src/app/shared-features/modals/popup/popup.component';
 
 @Component({
   selector: 'app-applications',
@@ -19,11 +14,10 @@ export class ApplicationsComponent implements OnInit {
 
   constructor(
     private appService: ApplicationService,
-    private mainSnackBar: MatSnackBar,
     public dialog: MatDialog,
   ) { }
 
-  appResponse: ApplicationResponseDto = {
+  popularApps: ApplicationResponseDto = {
     status: false,
     message: '',
     content: [],
@@ -32,77 +26,53 @@ export class ApplicationsComponent implements OnInit {
     total_pages: 0
   };
 
-  nextPage = 2;
-  finished = true;
-  noApplications = true;
-  apiResponse = false;
+  recommendedAppsForUserFromSimilarContent: ApplicationResponseDto = {
+    status: false,
+    message: '',
+    content: [],
+    number_of_elements: 0,
+    page: 0,
+    total_pages: 0
+  };
 
-  searchEmpty = false;
-  searchActivated = false;
-  searchInput = '';
+  recommendedAppsForUserFromCollaborativeFiltering: ApplicationResponseDto = {
+    status: false,
+    message: '',
+    content: [],
+    number_of_elements: 0,
+    page: 0,
+    total_pages: 0
+  };
 
-  appCtrl = new FormControl();
-  filteredApplications: Observable<Application[]>;
+  recommendedAppsFromGroupsFromSimilarContent: ApplicationResponseDto = {
+    status: false,
+    message: '',
+    content: [],
+    number_of_elements: 0,
+    page: 0,
+    total_pages: 0
+  };
 
   ngOnInit(): void {
-    this.appService.getPopularApplications().then((result: ApplicationResponseDto) => {
-      this.appResponse = result;
-      this.apiResponse = true;
-      if (result.number_of_elements !== 0) {
-        this.noApplications = false;
-      }
-      if (this.nextPage !== this.appResponse.total_pages) {
-        this.finished = false;
-      }
-      this.filteredApplications = this.appCtrl.valueChanges
-      .pipe(
-        startWith(''),
-        map(app => app ? this._filter(app) : this.applications.content.slice())
-      );
+    this.appService.getPopularApplications(1).then((result: ApplicationResponseDto) => {
+      this.popularApps = result;
     });
-  }
-  private _filter(value: string): Application[] {
-    const filterValue = value.toLowerCase();
-    return this.applications.content.filter(app => app.name.toLowerCase().indexOf(filterValue) === 0);
-  }
-
-  private getApplications(page?: number): void {
-    this.appService.getApplications(page).then((result: ApplicationResponseDto) => {
-      this.appResponse.content = this.appResponse.content.concat(result.content);
-      this.nextPage++;
+    this.appService.getRecommendedAppsForUser('FromSimilarContent').then((result: ApplicationResponseDto) => {
+      this.recommendedAppsForUserFromSimilarContent = result;
     });
-  }
-
-  private getSearchedApps(searchTerm: string): void {
-    this.appService.searchApplications(searchTerm).then((result: ApplicationResponseDto) => {
-      this.appResponse.content = result.content;
-      if (this.appResponse.content.length === 0) {
-        this.searchEmpty = true;
-      } else {
-        this.searchEmpty = false;
-      }
+    this.appService.getRecommendedAppsForUser('CollaborativeFiltering').then((result: ApplicationResponseDto) => {
+      this.recommendedAppsForUserFromCollaborativeFiltering = result;
     });
-  }
+    this.appService.getRecommendedAppsFromGroups('FromSimilarContent').then((result: ApplicationResponseDto) => {
+      this.recommendedAppsFromGroupsFromSimilarContent = result;
+    });
 
-  get applications(): ApplicationResponseDto {
-    return this.appResponse;
-  }
-
-  onScroll(): void {
-    if (this.nextPage <= this.appResponse.total_pages) {
-      this.getApplications  (this.nextPage);
-    } else {
-      if (!this.noApplications) {
-        this.mainSnackBar.open('You have reached the end of the Internet!', 'Alright!');
-      }
-      this.finished = true;
-    }
   }
 
 
-  openPopUp(index: number): void {
+  openPopUp(app: Application): void {
     const popupDetails = this.dialog.open<PopupComponent, Application>(PopupComponent, {
-      data: this.appResponse.content[index],
+      data: app,
       panelClass: ['shadow-none'],
       hasBackdrop: true,
       backdropClass: 'blur'
@@ -111,25 +81,5 @@ export class ApplicationsComponent implements OnInit {
     popupDetails.backdropClick().subscribe(() => {
       popupDetails.close();
     });
-  }
-
-  searchApps(searchTerm: string): void {
-    if (searchTerm.length >= 2) {
-      this.searchActivated = true;
-      this.getSearchedApps(searchTerm);
-    }
-
-    if (searchTerm.length === 0) {
-      this.appService.getPopularApplications().then((result: ApplicationResponseDto) => {
-        this.appResponse = result;
-        this.searchActivated = false;
-        if (result.number_of_elements !== 0) {
-          this.noApplications = false;
-        }
-        if (this.nextPage !== this.appResponse.total_pages) {
-          this.finished = false;
-        }
-      });
-    }
   }
 }

@@ -1,6 +1,7 @@
 import { Genre } from '../musics/Genre.model';
 export class Series {
     serie_id: number;
+    reco_engine: string;
     imdbid: string;
     title: string;
     genre: Genre[];

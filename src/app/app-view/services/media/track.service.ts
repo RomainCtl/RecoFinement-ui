@@ -12,8 +12,8 @@ export class TrackService {
 
   private urlGetTracks = environment.api_url + '/track?page=';
   private urlGetPopularTracks = environment.api_url + '/track?page=';
-  private urlGetRecommendedTracksForUser = environment.api_url + '/track/user';
-  private urlGetRecommendedTracksFromGroups = environment.api_url + '/track/groups';
+  private urlGetRecommendedTracks = environment.api_url + '/track/user?reco_engine=';
+  private urlGetRecommendedTracksFromGroups = environment.api_url + '/track/groups?reco_engine=';
   private urlGetGenreTracks = environment.api_url + '/track/genres';
   private urlSearchTracks = environment.api_url + '/track/search/';
   private urlUserMeta = environment.api_url + '/track/';
@@ -30,12 +30,12 @@ export class TrackService {
     return this.httpClient.get<TrackResponseDto>(this.urlGetPopularTracks + page).toPromise();
   }
 
-  getRecommendedTracksForUser(): Promise<TrackResponseDto> {
-    return this.httpClient.get<TrackResponseDto>(this.urlGetRecommendedTracksForUser).toPromise();
+  getRecommendedTracksForUser(profile: string): Promise<TrackResponseDto> {
+    return this.httpClient.get<TrackResponseDto>(this.urlGetRecommendedTracks + profile).toPromise();
   }
 
-  getRecommendedTracksFromGroups(): Promise<TrackResponseDto> {
-    return this.httpClient.get<TrackResponseDto>(this.urlGetRecommendedTracksFromGroups).toPromise();
+  getRecommendedTracksFromGroups(profile: string): Promise<TrackResponseDto> {
+    return this.httpClient.get<TrackResponseDto>(this.urlGetRecommendedTracksFromGroups + profile).toPromise();
   }
 
   getHistoryTracks(page: number): Promise<TrackHistoryResponseDto> {

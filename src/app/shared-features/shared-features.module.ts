@@ -1,3 +1,4 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSliderModule } from '@angular/material/slider';
@@ -24,6 +25,7 @@ import { RedirectConfirmationComponent } from './modals/redirect-confirmation/re
 import { SliderHistoryComponent } from './slider/slider-history/slider-history.component';
 import { SliderComponent } from './slider/slider/slider.component';
 import { NgbToastModule, NgbModule, NgbToast, NgbButtonsModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
@@ -60,7 +62,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     MatChipsModule,
     MatExpansionModule,
     MatSliderModule,
-    MatStepperModule
+    MatStepperModule,
+    NgCircleProgressModule.forRoot()
   ],
   exports: [
     FeedbackComponent, 

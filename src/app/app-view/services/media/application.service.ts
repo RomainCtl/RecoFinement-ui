@@ -10,6 +10,8 @@ import { environment } from 'src/environments/environment';
 export class ApplicationService {
 
   private urlGetApplications = environment.api_url + '/application?page=';
+  private urlGetRecommendedAppsForUser = environment.api_url + '/application/user?reco_engine=';
+  private urlGetRecommendedAppsFromGroups = environment.api_url + '/application/groups?reco_engine=';
   private urlGetPopularApplications = environment.api_url + '/application?page=';
   private urlSearchApplication = environment.api_url + '/application/search/';
   private urlGetGenresApplications = environment.api_url + '/application/genres';
@@ -23,6 +25,14 @@ export class ApplicationService {
 
   getPopularApplications(page: number = 1): Promise<ApplicationResponseDto> {
     return this.httpClient.get<ApplicationResponseDto>(this.urlGetPopularApplications + page).toPromise();
+  }
+
+  getRecommendedAppsForUser(engine: string): Promise<ApplicationResponseDto> {
+    return this.httpClient.get<ApplicationResponseDto>(this.urlGetRecommendedAppsForUser + engine).toPromise();
+  }
+
+  getRecommendedAppsFromGroups(engine: string): Promise<ApplicationResponseDto> {
+    return this.httpClient.get<ApplicationResponseDto>(this.urlGetRecommendedAppsFromGroups + engine).toPromise();
   }
 
   searchApplications(searchTerm: string): Promise<ApplicationResponseDto> {
