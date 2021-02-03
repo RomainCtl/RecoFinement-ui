@@ -11,6 +11,8 @@ import { EpisodeDtoResponse } from 'src/app/models/DtoResponse/series/episode-dt
 export class SeriesService {
 
   private urlGetPopularSerie = environment.api_url + '/serie';
+  private urlGetRecommendedSeriesForUser = environment.api_url + '/serie/user?reco_engine=';
+  private urlGetRecommendedSeriesFromGroups = environment.api_url + '/serie/groups?reco_engine=';
   private urlGetGenreSerie = environment.api_url + '/serie/genres';
   private urlGetEpisodesSeries = environment.api_url + '/serie/';
   private urlUserMeta = environment.api_url + '/serie/';
@@ -28,8 +30,16 @@ export class SeriesService {
     return this.httpClient.get<SeriesResponseDto>(this.urlGetSeries + page).toPromise();
   }
 
-  getPopularSeries(): Promise<any> {
-    return this.httpClient.get<any>(this.urlGetPopularSerie).toPromise();
+  getPopularSeries(): Promise<SeriesResponseDto> {
+    return this.httpClient.get<SeriesResponseDto>(this.urlGetPopularSerie).toPromise();
+  }
+
+  getRecommendedSeriesForUser(engine: string): Promise<SeriesResponseDto> {
+    return this.httpClient.get<SeriesResponseDto>(this.urlGetRecommendedSeriesForUser + engine).toPromise();
+  }
+
+  getRecommendedSeriesFromGroups(engine: string): Promise<SeriesResponseDto> {
+    return this.httpClient.get<SeriesResponseDto>(this.urlGetRecommendedSeriesFromGroups + engine).toPromise();
   }
 
   getGenres(): Promise<any> {

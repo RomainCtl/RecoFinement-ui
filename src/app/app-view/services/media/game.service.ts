@@ -11,6 +11,8 @@ import { environment } from 'src/environments/environment';
 export class GameService {
 
   private urlGetPopularGames = environment.api_url + '/game';
+  private urlGetRecommendedGamesForUser = environment.api_url + '/game/user?reco_engine=';
+  private urlGetRecommendedGamesFromGroups = environment.api_url + '/game/groups?reco_engine=';
   private urlSearchGames = environment.api_url + '/game/search/';
   private urlGetGenreGames = environment.api_url + '/game/genres';
   private urlUserMeta = environment.api_url + '/game/';
@@ -19,6 +21,14 @@ export class GameService {
 
   getPopularGames(page: number = 1): Promise<any> {
     return this.httpClient.get<any>(this.urlGetPopularGames + '?page=' + page).toPromise();
+  }
+
+  getRecommendedGamesForUser(engine: string): Promise<GameResponseDto> {
+    return this.httpClient.get<GameResponseDto>(this.urlGetRecommendedGamesForUser + engine).toPromise();
+  }
+
+  getRecommendedGamesFromGroups(engine: string): Promise<GameResponseDto> {
+    return this.httpClient.get<GameResponseDto>(this.urlGetRecommendedGamesFromGroups + engine).toPromise();
   }
 
   searchGames(searchTerm: string): Promise<GameResponseDto> {

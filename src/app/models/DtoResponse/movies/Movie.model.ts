@@ -6,6 +6,7 @@ export class Movie {
   cover: string;
   language: string;
   movie_id: number;
+  reco_engine: string;
   popularity_score: number;
   writer: string;
   director: string;

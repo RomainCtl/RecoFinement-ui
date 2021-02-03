@@ -22,7 +22,7 @@ export class SliderComponent implements OnInit  {
   public className: string;
 
   @Input()
-  public content: any[];
+  public content: any[] = new Array<any>();
 
   @Input()
   public title: string;
@@ -45,6 +45,7 @@ export class SliderComponent implements OnInit  {
     this.mySwiper = new Swiper('.' + this.className, {
       direction: this.getDirection(),
       slidesPerView: 6,
+      centerInsufficientSlides: this.content.length < 6 ? true : false,
       spaceBetween: 10,
       autoplay:false,
       navigation: {
@@ -52,6 +53,7 @@ export class SliderComponent implements OnInit  {
         nextEl: '.swiper-button-next'
       },
       preloadImages: false,
+      observer:true,
       lazy: {
         preloaderClass: 'blur',
         loadPrevNext: true,
@@ -59,7 +61,7 @@ export class SliderComponent implements OnInit  {
         loadPrevNextAmount: 2,
         checkInView: true
       },
-      loop: true
+      loop: this.content.length > 6 ? true : false
     })
 
     let ap = document.querySelector('.swiper-container');

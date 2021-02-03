@@ -10,6 +10,8 @@ import { environment } from 'src/environments/environment';
 export class BookService {
 
   private urlGetPopularBooks = environment.api_url + '/book';
+  private urlGetRecommendedBooksForUser = environment.api_url + '/book/user?reco_engine=';
+  private urlGetRecommendedBooksFromGroups = environment.api_url + '/book/groups?reco_engine=';
   private urlSearchBooks = environment.api_url + '/book/search/';
   private urlUserMeta = environment.api_url + '/book/';
 
@@ -17,6 +19,14 @@ export class BookService {
 
   getPopularBooks(page: number = 1): Promise<any> {
     return this.httpClient.get<any>(this.urlGetPopularBooks + '?page=' + page).toPromise();
+  }
+
+  getRecommendedBooksForUser(engine: string): Promise<BookResponseDto> {
+    return this.httpClient.get<BookResponseDto>(this.urlGetRecommendedBooksForUser + engine).toPromise();
+  }
+
+  getRecommendedBooksFromGroups(engine: string): Promise<BookResponseDto> {
+    return this.httpClient.get<BookResponseDto>(this.urlGetRecommendedBooksFromGroups + engine).toPromise();
   }
 
   searchBooks(searchTerm: string): Promise<BookResponseDto> {

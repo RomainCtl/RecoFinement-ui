@@ -1,6 +1,7 @@
 export class Game {
     genres: [];
     game_id: number;
+    reco_engine: string;
     steamid: number;
     name: string;
     short_description: string;

@@ -1,105 +1,4 @@
-<!-- <div *ngIf="!noTracks">
-  <div class="container-fluid p-lg-5 text-center">
-    <mat-form-field color="warn" class="col-sm-12 col-md-6 col-lg-4 align-center" appearance="outline">
-      <mat-label>Search a music...</mat-label>
-      <input matInput placeholder="Music name" aria-label="Music" [formControl]="appCtrl"
-      [matAutocomplete]="auto" (ngModelChange)="searchTracks($event)">
-      <mat-icon matSuffix inline>search</mat-icon>
-      <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let option of filteredMusic | async" [value]="option.title">
-          {{ option.title }}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field>  
-  </div>
-</div> -->
-
-
-
 <div class="container-fluid p-0">
-
-  <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-    <ol class="carousel-indicators">
-      <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"></li>
-      <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"></li>
-      <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"></li>
-      <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3"></li>
-      <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="4"></li>
-      <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="5"></li>
-    </ol>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="assets/images/black-and-white-black-headphones.jpg" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-md-block">
-          <h1 class="display-1">Music is life itself</h1>
-          <h2 class="display-4">Browse more than 9 000 musics</h2>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img src="assets/images/black-and-white-black-headphones.jpg" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
-          <figure>
-            <blockquote class="blockquote">
-              <p>Cinema should make you forget you are sitting in a theater.</p>
-            </blockquote>
-            <figcaption class="blockquote-footer">
-              <cite title="Source Title">Roman Polanski</cite>
-            </figcaption>
-          </figure>
-          <h2 class="display-4">Browse more than 50 000 movies</h2>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img src="assets/images/easy-listening.jpg" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Third slide label</h5>
-          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img src="assets/images/easy-listening.jpg" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Third slide label</h5>
-          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img src="assets/images/easy-listening.jpg" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Third slide label</h5>
-          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img src="assets/images/easy-listening.jpg" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>Third slide label</h5>
-          <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-        </div>
-      </div>
-    </div>
-    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </a>
-  </div>
-  <!-- <div *ngIf="this.searchEmpty && this.searchActivated" class="col d-flex justify-content-center text-center p-0 mb-2 text-muted">
-    There is no musics for your search.
-  </div> -->
-
-      <div
-      app-slider
-      title="Search results"
-      className="search_results"
-      *ngIf="searchActivated && !searchEmpty"
-      [content]="searchResults.content"
-      (openPreviewEvent)="openPreview($event)"
-      (clickSeeMoreEvent)="openPopUp($event)"
-      (deactivateSearchEvent)="deactivateSearch()"></div>
 
       <div
       app-slider
@@ -114,17 +13,8 @@
       app-slider
       title="From your profile"
       className="reco_profile"
-      *ngIf="getRecoFromProfile().length > 0"
-      [content]="getRecoFromProfile()"
-      (openPreviewEvent)="openPreview($event)"
-      (clickSeeMoreEvent)="openPopUp($event)"></div>
-
-      <div
-      app-slider
-      title="From your groups"
-      className="reco_filtering"
-      *ngIf="recommendedTracksFromGroups.content.length > 0"
-      [content]="recommendedTracksFromGroups.content"
+      *ngIf="recommendedTracksFromProfile.content.length > 0"
+      [content]="recommendedTracksFromProfile.content"
       (openPreviewEvent)="openPreview($event)"
       (clickSeeMoreEvent)="openPopUp($event)"></div>
 
@@ -132,8 +22,8 @@
       app-slider
       title="From similar content"
       className="reco_content"
-      *ngIf="getRecoFromSimilarContent().length > 0"
-      [content]="getRecoFromSimilarContent()"
+      *ngIf="recommendedTracksFromSimilarContent.content.length > 0"
+      [content]="recommendedTracksFromSimilarContent"
       (openPreviewEvent)="openPreview($event)"
       (clickSeeMoreEvent)="openPopUp($event)"></div>
 
@@ -141,13 +31,27 @@
       app-slider
       title="From collaborative filtering"
       className="reco_filtering"
-      *ngIf="getRecoFromCollaborativeFiltering().length > 0"
-      [content]="getRecoFromCollaborativeFiltering()"
+      *ngIf="recommendedTracksFromCollaborativeFiltering.content.length > 0"
+      [content]="recommendedTracksFromCollaborativeFiltering.content"
       (openPreviewEvent)="openPreview($event)"
       (clickSeeMoreEvent)="openPopUp($event)"></div>
 
+      <div
+      app-slider
+      title="From your friends' profiles"
+      className="reco_friends_profile"
+      *ngIf="recommendedTracksFromGroupsFromProfile.content.length > 0"
+      [content]="recommendedTracksFromGroupsFromProfile.content"
+      (openPreviewEvent)="openPreview($event)"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
 
-  
-
+      <div
+      app-slider
+      title="From what your friends like"
+      className="reco_friends_content"
+      *ngIf="recommendedTracksFromGroupsFromSimilarContent.content.length > 0"
+      [content]="recommendedTracksFromGroupsFromSimilarContent.content"
+      (openPreviewEvent)="openPreview($event)"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
 
 </div>

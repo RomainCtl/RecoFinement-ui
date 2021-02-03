@@ -1,13 +1,10 @@
-import { Book } from '../../../models/DtoResponse/books/Book.model';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Component, OnInit } from '@angular/core';
 import { BookService } from 'src/app/app-view/services/media/book.service';
 import { BookResponseDto } from 'src/app/models/DtoResponse/books/book-dto.model';
 import { PopupComponent } from 'src/app/shared-features/modals/popup/popup.component';
-import { Observable } from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
+import { Book } from '../../../models/DtoResponse/books/Book.model';
 
 @Component({
   selector: 'app-books',
@@ -21,7 +18,7 @@ export class BooksComponent implements OnInit {
     public snackBar: MatSnackBar,
     public dialog: MatDialog) {}
 
-  bookResponse: BookResponseDto = {
+  popularBooks: BookResponseDto = {
     status: false,
     message: '',
     content: [],
@@ -30,76 +27,79 @@ export class BooksComponent implements OnInit {
     total_pages: 0
   };
 
-  searchEmpty = false;
-  searchActivated = false;
-  searchInput = '';
+  recommendedBooksForUserFromProfile: BookResponseDto = {
+    status: false,
+    message: '',
+    content: [],
+    number_of_elements: 0,
+    page: 0,
+    total_pages: 0
+  };
 
-  nextPage = 2;
-  finished = true;
-  booksLeft = true;
-  apiResponse = false;
+  recommendedBooksForUserFromSimilarContent: BookResponseDto = {
+    status: false,
+    message: '',
+    content: [],
+    number_of_elements: 0,
+    page: 0,
+    total_pages: 0
+  };
 
-  appCtrl = new FormControl();
-  filteredBooks: Observable<Book[]>;
+  recommendedBooksForUserFromCollaborativeFiltering: BookResponseDto = {
+    status: false,
+    message: '',
+    content: [],
+    number_of_elements: 0,
+    page: 0,
+    total_pages: 0
+  };
+
+  recommendedBooksFromGroupsFromProfile: BookResponseDto = {
+    status: false,
+    message: '',
+    content: [],
+    number_of_elements: 0,
+    page: 0,
+    total_pages: 0
+  };
+
+  recommendedBooksFromGroupsFromSimilarContent: BookResponseDto = {
+    status: false,
+    message: '',
+    content: [],
+    number_of_elements: 0,
+    page: 0,
+    total_pages: 0
+  };
+
+  recommendedBooksFromGroupsFromCollaborativeFiltering: BookResponseDto = {
+    status: false,
+    message: '',
+    content: [],
+    number_of_elements: 0,
+    page: 0,
+    total_pages: 0
+  };
 
   ngOnInit(): void {
     this.bookService.getPopularBooks(1).then((result: BookResponseDto) => {
-      this.bookResponse = result;
-      this.apiResponse = true;
-      if (result.number_of_elements !== 0) {
-        this.booksLeft = false;
-      }
-      if (this.nextPage !== this.bookResponse.total_pages) {
-        this.finished = false;
-      }
-      this.filteredBooks = this.appCtrl.valueChanges
-      .pipe(
-        startWith(''),
-        map(book => book ? this._filter(book) : this.books.content.slice())
-      );
+      this.popularBooks = result;
     });
-  }
-  private _filter(value: string): Book[] {
-    const filterValue = value.toLowerCase();
-    return this.books.content.filter(book => book.title.toLowerCase().indexOf(filterValue) === 0);
-  }
-
-  onScroll(): void {
-    if (this.nextPage <= this.bookResponse.total_pages) {
-      this.getBooks(this.nextPage);
-    } else {
-      if (!this.booksLeft) {
-        this.snackBar.open('You have reached the end of the Internet!', 'Alright!');
-      }
-      this.finished = true;
-    }
-  }
-
-  get books(): BookResponseDto {
-    return this.bookResponse;
-  }
-
-  private getBooks(page?: number): void {
-    this.bookService.getPopularBooks(page).then((result: BookResponseDto) => {
-      this.bookResponse.content = this.bookResponse.content.concat(result.content);
-      this.nextPage++;
+    this.bookService.getRecommendedBooksForUser('FromSimilarContent').then((result: BookResponseDto) => {
+      this.recommendedBooksForUserFromSimilarContent = result;
     });
-  }
-
-  private getSearchedBooks(searchTerm: string): void {
-    this.bookService.searchBooks(searchTerm).then((result: BookResponseDto) => {
-      this.bookResponse.content = result.content;
-      if (this.bookResponse.content.length === 0) {
-        this.searchEmpty = true;
-      } else {
-        this.searchEmpty = false;
-      }
+    this.bookService.getRecommendedBooksForUser('CollaborativeFiltering').then((result: BookResponseDto) => {
+      this.recommendedBooksForUserFromCollaborativeFiltering = result;
     });
+    this.bookService.getRecommendedBooksFromGroups('FromSimilarContent').then((result: BookResponseDto) => {
+      this.recommendedBooksFromGroupsFromSimilarContent = result;
+    })
   }
 
-  openPopUp(index: number): void {
+
+  openPopUp(book: Book): void {
     const popupDetails = this.dialog.open<PopupComponent, Book>(PopupComponent, {
-      data: this.bookResponse.content[index],
+      data: book,
       panelClass: ['shadow-none'],
       hasBackdrop: true,
       backdropClass: 'blur'
@@ -108,27 +108,6 @@ export class BooksComponent implements OnInit {
     popupDetails.backdropClick().subscribe(() => {
       popupDetails.close();
     });
-  }
-
-  searchBooks(searchTerm: string): void {
-    if (searchTerm.length > 3) {
-      this.searchActivated = true;
-      this.getSearchedBooks(searchTerm);
-    }
-
-    if (searchTerm.length === 0) {
-
-      this.bookService.getPopularBooks(1).then((result: BookResponseDto) => {
-        this.bookResponse = result;
-        this.searchActivated = false;
-        if (result.number_of_elements !== 0) {
-          this.booksLeft = false;
-        }
-        if (this.nextPage !== this.bookResponse.total_pages) {
-          this.finished = false;
-        }
-      });
-    }
   }
 
 }

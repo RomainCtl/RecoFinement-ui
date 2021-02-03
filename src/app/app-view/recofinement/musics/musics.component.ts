@@ -1,21 +1,15 @@
-import { Content } from 'src/app/models/DtoResponse/Content.model';
-import { FeedbackComponent } from '../../../shared-features/feedback/feedback/feedback.component';
-import { SliderComponent } from '../../../shared-features/slider/slider/slider.component';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { TrackService } from 'src/app/app-view/services/media/track.service';
-import { AfterViewInit, Component, Directive, OnInit, ViewChild } from '@angular/core';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
-import { TrackResponseDto } from 'src/app/models/DtoResponse/musics/track-dto.model';
-import { MatBottomSheet } from '@angular/material/bottom-sheet';
-
 import { Overlay } from '@angular/cdk/overlay';
-import { Track } from 'src/app/models/DtoResponse/musics/Track.model';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBarConfig } from '@angular/material/snack-bar';
 import { PreviewComponent } from 'src/app/app-view/recofinement/musics/preview/preview.component';
+import { TrackService } from 'src/app/app-view/services/media/track.service';
+import { TrackResponseDto } from 'src/app/models/DtoResponse/musics/track-dto.model';
+import { Track } from 'src/app/models/DtoResponse/musics/Track.model';
 import { PopupComponent } from 'src/app/shared-features/modals/popup/popup.component';
-import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import Swiper from 'swiper';
+import { SliderComponent } from '../../../shared-features/slider/slider/slider.component';
+
 
 @Component({
   selector: 'app-musics',
@@ -28,7 +22,6 @@ export class MusicsComponent implements OnInit  {
 
   constructor(
     private trackService: TrackService,
-    private mainSnackBar: MatSnackBar,
     public dialog: MatDialog,
     public overlay: Overlay,
     public bottom: MatBottomSheet) { }
@@ -44,7 +37,7 @@ export class MusicsComponent implements OnInit  {
     total_pages: 0
   };
 
-  recommendedTracksForUser: TrackResponseDto = {
+  recommendedTracksFromProfile: TrackResponseDto = {
     status: false,
     message: '',
     content: [],
@@ -53,7 +46,7 @@ export class MusicsComponent implements OnInit  {
     total_pages: 0
   };
 
-  recommendedTracksFromGroups: TrackResponseDto = {
+  recommendedTracksFromGroupsFromProfile: TrackResponseDto = {
     status: false,
     message: '',
     content: [],
@@ -62,7 +55,7 @@ export class MusicsComponent implements OnInit  {
     total_pages: 0
   };
 
-  searchResults: TrackResponseDto = {
+  recommendedTracksFromGroupsFromSimilarContent: TrackResponseDto = {
     status: false,
     message: '',
     content: [],
@@ -71,6 +64,23 @@ export class MusicsComponent implements OnInit  {
     total_pages: 0
   };
 
+  recommendedTracksFromSimilarContent: TrackResponseDto = {
+    status: false,
+    message: '',
+    content: [],
+    number_of_elements: 0,
+    page: 0,
+    total_pages: 0
+  };
+
+  recommendedTracksFromCollaborativeFiltering: TrackResponseDto = {
+    status: false,
+    message: '',
+    content: [],
+    number_of_elements: 0,
+    page: 0,
+    total_pages: 0
+  };
 
   recoChoice: boolean = true;
 
@@ -79,70 +89,25 @@ export class MusicsComponent implements OnInit  {
     panelClass: ['shadow-none', 'm-0', 'p-0', 'w-100']
   };
 
-  nextPage = 2;
-  finished = true;
-  noTracks = true;
-  apiResponse = false;
-
-  searchEmpty = false;
-  searchActivated = false;
-  searchInput = '';
-
-  appCtrl = new FormControl();
-  filteredMusic: Observable<Track[]>;
-
   ngOnInit(): void {
     this.trackService.getPopularTracks().then((result: TrackResponseDto) => {
       this.popularTracks = result;
-      this.apiResponse = true;
-      if (result.number_of_elements !== 0) {
-        this.noTracks = false;
-      }
-      if (this.nextPage !== this.popularTracks.total_pages) {
-        this.finished = false;
-      }
-      this.filteredMusic = this.appCtrl.valueChanges
-      .pipe(
-        startWith(''),
-        map(track => track ? this._filter(track) : this.popularTracks.content.slice())
-      );
     });
-
-    this.getRecommendedTracksForUser();
-    this.getRecommendedTracksFromGroups();
-  }
-  private _filter(value: string): Track[] {
-    const filterValue = value.toLowerCase();
-    return this.popularTracks.content.filter(track => track.title.toLowerCase().indexOf(filterValue) === 0);
-  }
-
-  onScroll(): void {
-    if (this.nextPage <= this.popularTracks.total_pages) {
-      this.getMusics(this.nextPage);
-    } else {
-      if (!this.noTracks) {
-        this.mainSnackBar.open('You have reached the end of the Internet!', 'Alright!');
-      }
-      this.finished = true;
-    }
-  }
-
-  private getSearchedTracks(searchTerm: string): void {
-    this.trackService.searchTracks(searchTerm).then((result: TrackResponseDto) => {
-      this.searchResults.content = result.content;
-      if (this.searchResults.content.length === 0) {
-        this.searchEmpty = true;
-      } else {
-        this.searchEmpty = false;
-      }
+    this.trackService.getRecommendedTracksForUser('FromProfile').then((result: TrackResponseDto) => {
+      this.recommendedTracksFromProfile = result;
     });
-  }
-
-  private getMusics(page ?: number): void {
-    this.trackService.getTracks(page).then((result: TrackResponseDto) => {
-      this.popularTracks.content = this.popularTracks.content.concat(result.content);
-      this.nextPage++;
+    this.trackService.getRecommendedTracksForUser('FromSimilarContent').then((result: TrackResponseDto) => {
+      this.recommendedTracksFromSimilarContent = result;
     });
+    this.trackService.getRecommendedTracksForUser('CollaborativeFiltering').then((result: TrackResponseDto) => {
+      this.recommendedTracksFromSimilarContent = result;
+    });
+    this.trackService.getRecommendedTracksFromGroups('FromProfile').then((result: TrackResponseDto) => {
+      this.recommendedTracksFromGroupsFromProfile = result;
+    })
+    this.trackService.getRecommendedTracksFromGroups('FromSimilarContent').then((result: TrackResponseDto) => {
+      this.recommendedTracksFromGroupsFromSimilarContent = result;
+    })
   }
 
   openPreview(item: Track): void {
@@ -172,63 +137,8 @@ export class MusicsComponent implements OnInit  {
 
   }
 
-  searchTracks(searchTerm: string): void {
-    if (searchTerm.length >= 2) {
-      this.searchActivated = true;
-      this.getSearchedTracks(searchTerm);
-    }
-
-    if (searchTerm.length === 0) {
-      this.trackService.getPopularTracks().then((result: TrackResponseDto) => {
-        this.searchResults = result;
-        this.searchActivated = false;
-        if (result.number_of_elements !== 0) {
-          this.noTracks = false;
-        }
-        if (this.nextPage !== this.popularTracks.total_pages) {
-          this.finished = false;
-        }
-      });
-    }
-  }
-
-  private getRecommendedTracksForUser(): void {
-    this.trackService.getRecommendedTracksForUser().then((result: TrackResponseDto) => {
-      this.recommendedTracksForUser = result;
-    })
-  }
-
-  private getRecommendedTracksFromGroups(): void {
-    this.trackService.getRecommendedTracksFromGroups().then((result: TrackResponseDto) => {
-      this.recommendedTracksFromGroups = result;
-    })
-  }
-
   toggleRecommendBy() {
     this.recoChoice = !this.recoChoice;
-  }
-
-  deactivateSearch(){
-    this.searchInput
-    this.searchActivated = false;
-  }
-
-  getRecoFromProfile(): Track[] {
-    return this.recommendedTracksForUser.content.filter(track => {
-      track.reco_engine === 'FromProfile';
-    });
-  }
-
-  getRecoFromCollaborativeFiltering(): Track[] {
-    return this.recommendedTracksForUser.content.filter(track => {
-      track.reco_engine === 'CollaborativeFiltering';
-    })
-  }
-
-  getRecoFromSimilarContent(): Track[] {
-    return this.recommendedTracksForUser.content.filter(track => {
-      track.reco_engine === 'FromSimilarContent';
-    })
   }
 
 }

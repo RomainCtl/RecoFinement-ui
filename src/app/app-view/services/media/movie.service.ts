@@ -10,6 +10,8 @@ import { environment } from 'src/environments/environment';
 export class MovieService {
 
   private urlGetPopularMovies = environment.api_url + '/movie';
+  private urlGetRecommendedMoviesForUser = environment.api_url + '/movie/user?reco_engine=';
+  private urlGetRecommendedMoviesFromGroups = environment.api_url + '/movie/groups?reco_engine=';
   private urlGetGenreMovies = environment.api_url + '/movie/genres';
   private urlUserMeta = environment.api_url + '/movie/';
   private urlSearchMovies = environment.api_url + '/movie/search/';
@@ -18,6 +20,14 @@ export class MovieService {
 
   getPopularMovies(page: number = 1): Promise<MovieResponseDto> {
     return this.httpClient.get<any>(this.urlGetPopularMovies + '?page=' + page).toPromise();
+  }
+
+  getRecommendedMoviesForUser(profile: string): Promise<MovieResponseDto> {
+    return this.httpClient.get<MovieResponseDto>(this.urlGetRecommendedMoviesForUser + profile).toPromise();
+  }
+
+  getRecommendedMoviesFromGroups(profile: string): Promise<MovieResponseDto> {
+    return this.httpClient.get<MovieResponseDto>(this.urlGetRecommendedMoviesFromGroups + profile).toPromise();
   }
 
   searchMovies(searchTerm: string): Promise<MovieResponseDto> {
