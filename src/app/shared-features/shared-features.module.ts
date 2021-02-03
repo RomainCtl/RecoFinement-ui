@@ -7,7 +7,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatChipsModule } from '@angular/material/chips';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { StarRatingModule } from 'angular-star-rating';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
@@ -26,6 +25,9 @@ import { SliderHistoryComponent } from './slider/slider-history/slider-history.c
 import { SliderComponent } from './slider/slider/slider.component';
 import { NgbToastModule, NgbModule, NgbToast, NgbButtonsModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { AddMediaComponent } from './modals/popup/add-media/add-media.component';
+import { MatInputModule } from '@angular/material/input';
+
 
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
@@ -36,12 +38,13 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 
 @NgModule({
   declarations: [
-    FeedbackComponent, 
+    FeedbackComponent,
     NotificationComponent,
     PopupComponent,
     RedirectConfirmationComponent,
     SliderComponent,
-    SliderHistoryComponent
+    SliderHistoryComponent,
+    AddMediaComponent
   ],
   imports: [
     BrowserModule,
@@ -63,15 +66,17 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     MatExpansionModule,
     MatSliderModule,
     MatStepperModule,
+    MatInputModule,
     NgCircleProgressModule.forRoot()
   ],
   exports: [
-    FeedbackComponent, 
-    NotificationComponent, 
+    FeedbackComponent,
+    NotificationComponent,
     PopupComponent,
     RedirectConfirmationComponent,
     SliderComponent,
-    SliderHistoryComponent
+    SliderHistoryComponent,
+    AddMediaComponent
   ],
   providers: [
     {

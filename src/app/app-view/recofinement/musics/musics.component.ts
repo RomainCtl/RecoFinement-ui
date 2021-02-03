@@ -5,11 +5,12 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBarConfig } from '@angular/material/snack-bar';
 import { PreviewComponent } from 'src/app/app-view/recofinement/musics/preview/preview.component';
 import { TrackService } from 'src/app/app-view/services/media/track.service';
+import { CreateTrackDtoRequest } from 'src/app/models/DtoRequest/add-media/create_track.model';
 import { TrackResponseDto } from 'src/app/models/DtoResponse/musics/track-dto.model';
 import { Track } from 'src/app/models/DtoResponse/musics/Track.model';
+import { AddMediaComponent } from 'src/app/shared-features/modals/popup/add-media/add-media.component';
 import { PopupComponent } from 'src/app/shared-features/modals/popup/popup.component';
 import { SliderComponent } from '../../../shared-features/slider/slider/slider.component';
-
 
 @Component({
   selector: 'app-musics',
@@ -141,4 +142,17 @@ export class MusicsComponent implements OnInit  {
     this.recoChoice = !this.recoChoice;
   }
 
+  openAddMedia(): void {
+    const popupDetails = this.dialog.open < AddMediaComponent,
+      CreateTrackDtoRequest > (AddMediaComponent, {
+        data: new CreateTrackDtoRequest(),
+        panelClass: ['shadow-none', 'w-50'],
+        hasBackdrop: true,
+        backdropClass: 'blur'
+      });
+
+    popupDetails.backdropClick().subscribe(() => {
+      popupDetails.close();
+    });
+  }
 }

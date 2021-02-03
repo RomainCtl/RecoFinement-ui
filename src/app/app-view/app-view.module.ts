@@ -67,7 +67,7 @@ import { PreviewComponent } from './recofinement/musics/preview/preview.componen
 import { SeriesComponent } from './recofinement/series/series.component';
 import { AppViewComponent } from './app-view.component';
 import { PrivacyPolicyComponent } from './user/components/privacy-policy/privacy-policy.component';
-import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA, MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { BrowseComponent } from './recofinement/browse/browse/browse.component';
 
 @NgModule({

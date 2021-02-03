@@ -1,0 +1,70 @@
+<div class="container">
+
+  <div *ngIf="this.item.spotify_id" class="d-flex flex-column justify-content-around align-content-center">
+    <h2 class="text-center ">Add a  new track</h2>
+
+    <form #trackForm="ngForm" (ngSubmit)="addTrack(trackForm.value)" class="d-flex flex-column justify-content-around align-content-center">
+
+      <div class="d-flex flex-row justify-content-around align-content-center">
+        <div class="d-flex flex-column justify-content-around align-content-around">
+          <mat-form-field appearance="legacy">
+            <mat-label>Title</mat-label>
+            <input ngModel matInput name="title" required>
+            <mat-hint>Required</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Year of publication</mat-label>
+            <input ngModel name="year" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Artist</mat-label>
+            <input ngModel name="artist_name" matInput>
+          </mat-form-field>
+        </div>
+
+        <div class="d-flex flex-column justify-content-around">
+          <mat-form-field appearance="legacy">
+            <mat-label>Name of the release</mat-label>
+            <input ngModel name="release" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>MMID</mat-label>
+            <input ngModel name="track_mmid" matInput>
+            <mat-hint>Hint : <a href="http://millionsongdataset.com" target="_blank">millionsongdataset</a></mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>MBID</mat-label>
+            <input ngModel name="track_mbid" matInput>
+            <mat-hint>Hint : <a href="https://musicbrainz.org" target="_blank">musicbrainz</a></mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="d-flex flex-column justify-content-around">
+          <mat-form-field appearance="legacy">
+            <mat-label>Spotify ID</mat-label>
+            <input ngModel name="spotify_id" matInput>
+            <mat-hint>Hint : <a href="https://spotify.com.org" target="_blank">spotify</a></mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Covert</mat-label>
+            <input ngModel name="covert_art_url" matInput>
+            <mat-hint>It must be a URL.</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Genre(s)</mat-label>
+              <mat-select required ngModel name="genres" multiple>
+                <mat-form-field appearance="legacy" class="d-flex justify-content-center mt-2">
+                  <input matInput placeholder="Filter"(keyup)="onKey($event.target.value)">
+                </mat-form-field>
+              <mat-option *ngFor="let genre of this.selectedGenres" [value]="genre.genre_id">{{ genre.name }}</mat-option>
+            </mat-select>
+            <mat-hint>Required</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <button mat-flat-button color="primary" type="submit" class="mt-5">Add a new track</button>
+
+    </form>
+  </div>
+</div>
