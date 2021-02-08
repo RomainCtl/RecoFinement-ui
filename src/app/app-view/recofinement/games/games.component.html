@@ -40,5 +40,16 @@
       [content]="recommendedGamesFromGroupsFromSimilarContent.content"
       (clickSeeMoreEvent)="openPopUp($event)"></div>
 
+      <div class="button-add-game">
+        <button
+        mat-fab color="primary"
+        aria-label="Add a game"
+        matTooltip="Add a game"
+        matTooltipPosition="left"
+        matTooltipHideDelay="1000"
+        (click)="openAddMedia()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
 
 </div>

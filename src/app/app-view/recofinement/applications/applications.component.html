@@ -32,4 +32,16 @@
   [content]="recommendedAppsFromGroupsFromSimilarContent.content"
   (clickSeeMoreEvent)="openPopUp($event)"></div>
 
+  <div class="button-add-application">
+    <button
+    mat-fab color="primary"
+    aria-label="Add an application"
+    matTooltip="Add an application"
+    matTooltipPosition="left"
+    matTooltipHideDelay="1000"
+    (click)="openAddMedia()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
 </div>

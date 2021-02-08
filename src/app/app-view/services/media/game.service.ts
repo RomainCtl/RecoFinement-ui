@@ -16,6 +16,7 @@ export class GameService {
   private urlSearchGames = environment.api_url + '/game/search/';
   private urlGetGenreGames = environment.api_url + '/game/genres';
   private urlUserMeta = environment.api_url + '/game/';
+  private urlAddGame = environment.api_url + '/game';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -49,5 +50,9 @@ export class GameService {
 
   saveRating(gameId: number, gameMeta: any): Promise<GameMetaResponseDto> {
     return this.httpClient.patch<GameMetaResponseDto>(this.urlUserMeta + gameId + '/meta', gameMeta).toPromise();
+  }
+
+  postNewGame(payload: any): Promise<any> {
+    return this.httpClient.post<any>(this.urlAddGame, payload).toPromise();
   }
 }

@@ -16,6 +16,8 @@ export class ApplicationService {
   private urlSearchApplication = environment.api_url + '/application/search/';
   private urlGetGenresApplications = environment.api_url + '/application/genres';
   private urlUserMeta = environment.api_url + '/application/';
+  private urlAddApplication= environment.api_url + '/application';
+
 
   constructor(private httpClient: HttpClient) { }
 
@@ -53,6 +55,10 @@ export class ApplicationService {
 
   saveRating(applicationId: number, applicationMeta: any): Promise<ApplicationMetaResponseDto> {
     return this.httpClient.patch<ApplicationMetaResponseDto>(this.urlUserMeta + applicationId + '/meta', applicationMeta).toPromise();
+  }
+
+  postNewApp(payload: any): Promise<any> {
+    return this.httpClient.post<any>(this.urlAddApplication, payload).toPromise();
   }
 
 }

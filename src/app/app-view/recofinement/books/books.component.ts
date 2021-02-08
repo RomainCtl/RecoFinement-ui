@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BookService } from 'src/app/app-view/services/media/book.service';
+import { CreateBookDtoRequest } from 'src/app/models/DtoRequest/add-media/create_book.model';
 import { BookResponseDto } from 'src/app/models/DtoResponse/books/book-dto.model';
+import { AddMediaComponent } from 'src/app/shared-features/modals/popup/add-media/add-media.component';
 import { PopupComponent } from 'src/app/shared-features/modals/popup/popup.component';
 import { Book } from '../../../models/DtoResponse/books/Book.model';
 
@@ -104,6 +106,20 @@ export class BooksComponent implements OnInit {
       hasBackdrop: true,
       backdropClass: 'blur'
     });
+
+    popupDetails.backdropClick().subscribe(() => {
+      popupDetails.close();
+    });
+  }
+
+  openAddMedia(): void {
+    const popupDetails = this.dialog.open < AddMediaComponent,
+      CreateBookDtoRequest > (AddMediaComponent, {
+        data: new CreateBookDtoRequest(),
+        panelClass: ['shadow-none', 'w-50'],
+        hasBackdrop: true,
+        backdropClass: 'blur'
+      });
 
     popupDetails.backdropClick().subscribe(() => {
       popupDetails.close();

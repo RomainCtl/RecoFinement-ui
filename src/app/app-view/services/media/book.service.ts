@@ -14,6 +14,7 @@ export class BookService {
   private urlGetRecommendedBooksFromGroups = environment.api_url + '/book/groups?reco_engine=';
   private urlSearchBooks = environment.api_url + '/book/search/';
   private urlUserMeta = environment.api_url + '/book/';
+  private urlAddBook = environment.api_url + '/book';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -43,5 +44,9 @@ export class BookService {
 
   saveRating(content_id: number, gameMeta: any): Promise<BookMetaResponseDto> {
     return this.httpClient.patch<BookMetaResponseDto>(this.urlUserMeta + content_id + '/meta', gameMeta).toPromise();
+  }
+
+  postNewBook(payload: any): Promise<any> {
+    return this.httpClient.post<any>(this.urlAddBook, payload).toPromise();
   }
 }

@@ -40,4 +40,16 @@
       [content]="recommendedMoviesFromGroupsFromSimilarContent.content"
       (clickSeeMoreEvent)="openPopUp($event)"></div>
 
+      <div class="button-add-movie">
+        <button
+        mat-fab color="primary"
+        aria-label="Add a movie"
+        matTooltip="Add a movie"
+        matTooltipPosition="left"
+        matTooltipHideDelay="1000"
+        (click)="openAddMedia()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
 </div>

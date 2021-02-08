@@ -63,3 +63,10 @@
   backdrop-filter: blur(6px);
   z-index:2;
 }
+
+.button-add-book {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 9999;
+}

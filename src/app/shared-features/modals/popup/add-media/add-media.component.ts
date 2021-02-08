@@ -1,7 +1,17 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ApplicationService } from 'src/app/app-view/services/media/application.service';
+import { BookService } from 'src/app/app-view/services/media/book.service';
+import { GameService } from 'src/app/app-view/services/media/game.service';
+import { MovieService } from 'src/app/app-view/services/media/movie.service';
+import { SeriesService } from 'src/app/app-view/services/media/serie.service';
 import { TrackService } from 'src/app/app-view/services/media/track.service';
+import { CreateApplicationDtoRequest } from 'src/app/models/DtoRequest/add-media/create_app.model';
+import { CreateBookDtoRequest } from 'src/app/models/DtoRequest/add-media/create_book.model';
+import { CreateGameDtoRequest } from 'src/app/models/DtoRequest/add-media/create_game.model';
+import { CreateMovieDtoRequest } from 'src/app/models/DtoRequest/add-media/create_movie.model';
+import { CreateSerieDtoRequest } from 'src/app/models/DtoRequest/add-media/create_serie.model';
 import { CreateTrackDtoRequest } from 'src/app/models/DtoRequest/add-media/create_track.model';
 
 @Component({
@@ -17,6 +27,11 @@ export class AddMediaComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public item: any,
     private trackService: TrackService,
+    private movieService: MovieService,
+    private serieService: SeriesService,
+    private bookService: BookService,
+    private gameService: GameService,
+    private appService: ApplicationService,
     public snackBar: MatSnackBar,
   ) { }
 
@@ -26,6 +41,24 @@ export class AddMediaComponent implements OnInit {
         this.genres = genres.content.sort(this.compare);
         this.selectedGenres = this.genres;
       });
+    }
+    if (this.item.tmdbid === "") {
+      this.movieService.getGenres().then((genres) => {
+          this.genres = genres.content.sort(this.compare);
+          this.selectedGenres = this.genres;
+      })
+    }
+    if (this.item.android_version === "") {
+      this.appService.getGenres().then((genres) => {
+          this.genres = genres.content.sort(this.compare);
+          this.selectedGenres = this.genres;
+      })
+    }
+    if (this.item.steamid) {
+      this.gameService.getGenres().then((genres) => {
+          this.genres = genres.content.sort(this.compare);
+          this.selectedGenres = this.genres;
+      })
     }
   }
 
@@ -39,7 +72,6 @@ export class AddMediaComponent implements OnInit {
   }
 
   addTrack(values: CreateTrackDtoRequest): void {
-    console.log(values);
     values.year = +values.year;
     values.spotify_id = +values.spotify_id;
 
@@ -50,6 +82,37 @@ export class AddMediaComponent implements OnInit {
     } else {
       this.snackBar.open('Required fields are missing', '', {duration: 5000});
     }
+  }
+
+  addMovie(values: CreateMovieDtoRequest): void {
+    this.movieService.postNewMovie(values).then((result) => {
+      this.snackBar.open(result.message, 'Alright!', {duration: 5000});
+    })
+  }
+
+  addSerie(values: CreateSerieDtoRequest): void {
+    this.serieService.postNewSerie(values).then((result) => {
+      this.snackBar.open(result.message, 'Alright!', {duration: 5000});
+    })
+  }
+
+  addBook(values: CreateBookDtoRequest): void {
+    this.bookService.postNewBook(values).then((result) => {
+      this.snackBar.open(result.message, 'Alright!', {duration: 5000});
+
+    })
+  }
+
+  addGame(values: CreateGameDtoRequest): void {
+    this.gameService.postNewGame(values).then((result) => {
+      this.snackBar.open(result.message, 'Alright!', {duration: 5000});
+    })
+  }
+
+  addApplication(values: CreateApplicationDtoRequest): void {
+    this.appService.postNewApp(values).then((result) => {
+      this.snackBar.open(result.message, 'Alright!', {duration: 5000});
+    })
   }
 
   compare(a, b): any {

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MovieService } from 'src/app/app-view/services/media/movie.service';
+import { CreateMovieDtoRequest } from 'src/app/models/DtoRequest/add-media/create_movie.model';
 import { Movie } from 'src/app/models/DtoResponse/movies/Movie.model';
 import { MovieResponseDto } from 'src/app/models/DtoResponse/movies/movies.model';
+import { AddMediaComponent } from 'src/app/shared-features/modals/popup/add-media/add-media.component';
 import { PopupComponent } from 'src/app/shared-features/modals/popup/popup.component';
 
 @Component({
@@ -90,6 +92,20 @@ export class MoviesComponent implements OnInit {
       hasBackdrop: true,
       backdropClass: 'blur'
     });
+
+    popupDetails.backdropClick().subscribe(() => {
+      popupDetails.close();
+    });
+  }
+
+  openAddMedia(): void {
+    const popupDetails = this.dialog.open < AddMediaComponent,
+      CreateMovieDtoRequest > (AddMediaComponent, {
+        data: new CreateMovieDtoRequest(),
+        panelClass: ['shadow-none', 'w-50'],
+        hasBackdrop: true,
+        backdropClass: 'blur'
+      });
 
     popupDetails.backdropClick().subscribe(() => {
       popupDetails.close();

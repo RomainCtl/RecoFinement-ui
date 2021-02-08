@@ -32,4 +32,16 @@
       [content]="recommendedBooksFromGroupsFromSimilarContent.content"
       (clickSeeMoreEvent)="openPopUp($event)"></div>
 
+      <div class="button-add-book">
+        <button
+        mat-fab color="primary"
+        aria-label="Add a book"
+        matTooltip="Add a book"
+        matTooltipPosition="left"
+        matTooltipHideDelay="1000"
+        (click)="openAddMedia()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
 </div>
