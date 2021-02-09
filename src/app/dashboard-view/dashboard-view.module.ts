@@ -16,12 +16,17 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MenuComponent } from './recofinement/menu/menu.component';
+import { HomeAdminComponent } from './recofinement/home-admin/home-admin.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableModule} from '@angular/material/table';
+
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    MenuComponent
+    MenuComponent,
+    HomeAdminComponent
   ],
   imports: [
     RouterModule,
@@ -38,7 +43,9 @@ import { MenuComponent } from './recofinement/menu/menu.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    MatPaginatorModule,
+    MatTableModule
   ]
 })
 export class RecoDashboardModule { }

@@ -1,0 +1,362 @@
+<div class="container-fluid p-0">
+
+  <div class="bg-light text-center overflow-hidden">
+    <div class="pt-5">
+      <p class="lead display-6">Media Validation</p>
+    </div>
+    <div class="d-flex flex-row justify-content-around">
+      <div class="p-4">
+        <p class="lead display-7">Track Validation</p>
+        <div class="mat-elevation-z8">
+
+          <table mat-table
+                [dataSource]="dataSourceTrack" multiTemplateDataRows
+                class="mat-elevation-z8">
+
+                <ng-container matColumnDef="title">
+                  <th mat-header-cell *matHeaderCellDef> Title </th>
+                  <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="artist_name">
+                  <th mat-header-cell *matHeaderCellDef> Artist </th>
+                  <td mat-cell *matCellDef="let element"> {{element.artist_name}} </td>
+                </ng-container>
+
+            <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+            <ng-container matColumnDef="expandedDetail">
+              <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayTrack.length">
+                <div class="example-element-detail pb-2"
+                    [@detailExpand]="element == expandedElementTrack ? 'expanded' : 'collapsed'">
+                  <div class="example-element-diagram">
+                    <div class="example-element-name"> <img width="50px" src="{{ element.covert_art_url }}"> </div>
+                    <div class="example-element-name"> Release -- {{element.release}} </div>
+                    <div class="example-element-name"> Year -- {{element.year}} </div>
+                  </div>
+                  <div class="example-element-diagram">
+                    <div class="example-element-name"> MBID -- {{element.recording_mbid}} </div>
+                    <div class="example-element-name"> Spotify -- {{element.spotify_id}} </div>
+                    <div class="example-element-name"> MMI -- {{element.track_mmi}}</div>
+                  </div>
+                  <div class="example-element-diagram">
+                    <strong class="example-element-name"> Genres </strong>
+                    <div *ngFor="let genre of element.genres" class="example-element-name"> {{genre}}</div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-center">
+                    <button mat-flat-button color="primary">Accept</button>
+                    <button mat-flat-button color="warn">Refuse</button>
+                  </div>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplayTrack"></tr>
+            <tr mat-row *matRowDef="let element; columns: columnsToDisplayTrack;"
+                class="example-element-row"
+                [class.example-expanded-row]="expandedElementTrack === element"
+                (click)="expandedElementTrack = expandedElementTrack === element ? null : element">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+      <div class="p-4">
+        <p class="lead display-7">Movie Validation</p>
+        <div class="mat-elevation-z8">
+
+          <table mat-table
+                [dataSource]="dataSourceMovie" multiTemplateDataRows
+                class="mat-elevation-z8">
+
+                <ng-container matColumnDef="title">
+                  <th mat-header-cell *matHeaderCellDef> Title </th>
+                  <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="director">
+                  <th mat-header-cell *matHeaderCellDef> Director </th>
+                  <td mat-cell *matCellDef="let element"> {{element.director}} </td>
+                </ng-container>
+
+            <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+            <ng-container matColumnDef="expandedDetail">
+              <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayTrack.length">
+                <div class="example-element-detail pb-2"
+                    [@detailExpand]="element == expandedElementMovie ? 'expanded' : 'collapsed'">
+                  <div class="example-element-diagram">
+                    <div class="example-element-name"> <img width="50px" src="{{ element.cover }}"> </div>
+                    <div class="example-element-name"> Language -- {{element.language}} </div>
+                    <div class="example-element-name"> Actors -- {{element.actors}} </div>
+                  </div>
+                  <div class="example-element-diagram">
+                    <div class="example-element-name"> Year -- {{element.year}} </div>
+                    <div class="example-element-name"> Producers -- {{element.producers}} </div>
+                    <div class="example-element-name"> Writer -- {{element.writer}}</div>
+                  </div>
+                  <div class="example-element-diagram">
+                    <div class="example-element-name"> IMDB -- {{element.imdbid}} </div>
+                    <div class="example-element-name"> TMDB -- {{element.tmdbid}} </div>
+                    <div class="example-element-name"> Plot Outline -- {{element.plot_outline}}</div>
+                  </div>
+                  <div class="example-element-diagram">
+                    <strong class="example-element-name"> Genres </strong>
+                    <div *ngFor="let genre of element.genres" class="example-element-name"> {{genre}}</div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-center">
+                    <button mat-flat-button color="primary">Accept</button>
+                    <button mat-flat-button color="warn">Refuse</button>
+                  </div>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplayMovie"></tr>
+            <tr mat-row *matRowDef="let element; columns: columnsToDisplayMovie;"
+                class="example-element-row"
+                [class.example-expanded-row]="expandedElementMovie === element"
+                (click)="expandedElementMovie = expandedElementMovie === element ? null : element">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+      <div class="p-4">
+        <p class="lead display-7">Serie Validation</p>
+        <div class="mat-elevation-z8">
+
+          <table mat-table
+                [dataSource]="dataSourceSerie" multiTemplateDataRows
+                class="mat-elevation-z8">
+
+                <ng-container matColumnDef="title">
+                  <th mat-header-cell *matHeaderCellDef> Title </th>
+                  <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="writers">
+                  <th mat-header-cell *matHeaderCellDef> Writers </th>
+                  <td mat-cell *matCellDef="let element"> {{element.writers}} </td>
+                </ng-container>
+
+            <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+            <ng-container matColumnDef="expandedDetail">
+              <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayTrack.length">
+                <div class="example-element-detail pb-2"
+                    [@detailExpand]="element == expandedElementSerie ? 'expanded' : 'collapsed'">
+                  <div class="example-element-diagram">
+                    <div class="example-element-name"> <img width="50px" src="{{ element.covert_art_url }}"> </div>
+                    <div class="example-element-name"> Release -- {{element.release}} </div>
+                    <div class="example-element-name"> Year -- {{element.year}} </div>
+                  </div>
+                  <div class="example-element-diagram">
+                    <div class="example-element-name"> MBID -- {{element.recording_mbid}} </div>
+                    <div class="example-element-name"> Spotify -- {{element.spotify_id}} </div>
+                    <div class="example-element-name"> MMI -- {{element.track_mmi}}</div>
+                  </div>
+                  <div class="example-element-diagram">
+                    <strong class="example-element-name"> Genres </strong>
+                    <div *ngFor="let genre of element.genres" class="example-element-name"> {{genre}}</div>
+                  </div>
+                  <div class="d-flex flex-row justify-content-center">
+                    <button mat-flat-button color="primary">Accept</button>
+                    <button mat-flat-button color="warn">Refuse</button>
+                  </div>
+                </div>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="columnsToDisplaySerie"></tr>
+            <tr mat-row *matRowDef="let element; columns: columnsToDisplaySerie;"
+                class="example-element-row"
+                [class.example-expanded-row]="expandedElementSerie === element"
+                (click)="expandedElementSerie = expandedElementSerie === element ? null : element">
+            </tr>
+            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+  </div>
+
+  <div class="d-flex flex-row justify-content-around">
+    <div class="p-4">
+      <p class="lead display-7">Book Validation</p>
+      <div class="mat-elevation-z8">
+
+        <table mat-table
+              [dataSource]="dataSourceBook" multiTemplateDataRows
+              class="mat-elevation-z8">
+
+              <ng-container matColumnDef="title">
+                <th mat-header-cell *matHeaderCellDef> Title </th>
+                <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="author">
+                <th mat-header-cell *matHeaderCellDef> Author </th>
+                <td mat-cell *matCellDef="let element"> {{element.author}} </td>
+              </ng-container>
+
+          <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayTrack.length">
+              <div class="example-element-detail pb-2"
+                  [@detailExpand]="element == expandedElementBook ? 'expanded' : 'collapsed'">
+                <div class="example-element-diagram">
+                  <div class="example-element-name"> <img width="50px" src="{{ element.image_url_s }}"> </div>
+                  <div class="example-element-name"> <img width="50px" src="{{ element.image_url_m }}"> </div>
+                  <div class="example-element-name"> <img width="50px" src="{{ element.image_url_l }}"> </div>
+                </div>
+                <div class="example-element-diagram">
+                  <div class="example-element-name"> Publisher -- {{element.publisher}} </div>
+                  <div class="example-element-name"> ISBN -- {{element.isbn}} </div>
+                  <div class="example-element-name"> year_of_publication -- {{element.year_of_publication}}</div>
+                </div>
+                <div class="d-flex flex-row justify-content-center">
+                  <button mat-flat-button color="primary">Accept</button>
+                  <button mat-flat-button color="warn">Refuse</button>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplayBook"></tr>
+          <tr mat-row *matRowDef="let element; columns: columnsToDisplayBook;"
+              class="example-element-row"
+              [class.example-expanded-row]="expandedElementBook === element"
+              (click)="expandedElementBook = expandedElementBook === element ? null : element">
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+    <div class="p-4">
+      <p class="lead display-7">Game Validation</p>
+      <div class="mat-elevation-z8">
+
+        <table mat-table
+              [dataSource]="dataSourceGame" multiTemplateDataRows
+              class="mat-elevation-z8">
+
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="publishers">
+                <th mat-header-cell *matHeaderCellDef> Publishers </th>
+                <td mat-cell *matCellDef="let element"> {{element.publishers}} </td>
+              </ng-container>
+
+          <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayTrack.length">
+              <div class="example-element-detail pb-2"
+                  [@detailExpand]="element == expandedElementGame ? 'expanded' : 'collapsed'">
+                <div class="example-element-diagram">
+                  <div class="example-element-name"> <img width="50px" src="{{ element.header_image }}"> </div>
+                  <div class="example-element-name"> Steam -- {{element.steamid}} </div>
+                  <div class="example-element-name"> Description -- {{element.short_description}} </div>
+                </div>
+                <div class="example-element-diagram">
+                  <div class="example-element-name"> Website -- {{element.website}} </div>
+                  <div class="example-element-name"> Developers -- {{element.developers}} </div>
+                  <div class="example-element-name"> Price -- {{element.price}}</div>
+                  <div class="example-element-name"> Release Date -- {{element.release_date}}</div>
+                </div>
+                <div class="example-element-diagram">
+                  <strong class="example-element-name"> Genres </strong>
+                  <div *ngFor="let genre of element.genres" class="example-element-name"> {{genre}}</div>
+                </div>
+                <div class="d-flex flex-row justify-content-center">
+                  <button mat-flat-button color="primary">Accept</button>
+                  <button mat-flat-button color="warn">Refuse</button>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplayGame"></tr>
+          <tr mat-row *matRowDef="let element; columns: columnsToDisplayGame;"
+              class="example-element-row"
+              [class.example-expanded-row]="expandedElementGame === element"
+              (click)="expandedElementGame = expandedElementGame === element ? null : element">
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+    <div class="p-4">
+      <p class="lead display-7">Application Validation</p>
+      <div class="mat-elevation-z8">
+
+        <table mat-table
+              [dataSource]="dataSourceApplication" multiTemplateDataRows
+              class="mat-elevation-z8">
+
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="current_version">
+                <th mat-header-cell *matHeaderCellDef> Current Version </th>
+                <td mat-cell *matCellDef="let element"> {{element.current_version}} </td>
+              </ng-container>
+
+          <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+          <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayTrack.length">
+              <div class="example-element-detail pb-2"
+                  [@detailExpand]="element == expandedElementApplication ? 'expanded' : 'collapsed'">
+                <div class="example-element-diagram">
+                  <div class="example-element-name"> <img width="50px" src="{{ element.cover }}"> </div>
+                  <div class="example-element-name"> Size -- {{element.size}} </div>
+                  <div class="example-element-name"> Installs -- {{element.installs}} </div>
+                </div>
+                <div class="example-element-diagram">
+                  <div class="example-element-name"> Type -- {{element.type}} </div>
+                  <div class="example-element-name"> Price -- {{element.price}} </div>
+                  <div class="example-element-name"> Content Rating -- {{element.content_rating}}</div>
+                </div>
+                <div class="example-element-diagram">
+                  <div class="example-element-name"> Last Updated -- {{element.last_updated}} </div>
+                  <div class="example-element-name"> Current Version -- {{element.current_version}} </div>
+                  <div class="example-element-name"> Android Version -- {{element.android_version}}</div>
+                </div>
+                <div class="example-element-diagram">
+                  <strong class="example-element-name"> Genres </strong>
+                  <div *ngFor="let genre of element.genres" class="example-element-name"> {{genre}}</div>
+                </div>
+                <div class="d-flex flex-row justify-content-center">
+                  <button mat-flat-button color="primary">Accept</button>
+                  <button mat-flat-button color="warn">Refuse</button>
+                </div>
+              </div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="columnsToDisplayApps"></tr>
+          <tr mat-row *matRowDef="let element; columns: columnsToDisplayApps;"
+              class="example-element-row"
+              [class.example-expanded-row]="expandedElementApplication === element"
+              (click)="expandedElementApplication = expandedElementApplication === element ? null : element">
+          </tr>
+          <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+</div>
+
+</div>
