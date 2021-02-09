@@ -8,7 +8,7 @@ import { UserService } from 'src/app/app-view/services/user/user.service';
 import { UserDtoResponse } from 'src/app/models/DtoResponse/user.model';
 
 @Component({
-  selector: 'app-menu',
+  selector: 'app-menu-admin',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })

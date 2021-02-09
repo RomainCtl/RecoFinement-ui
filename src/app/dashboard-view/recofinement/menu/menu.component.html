@@ -1,15 +1,13 @@
 <div id="largeMenu" class="row">
-  <nav class="navbar navbar-light bg-light container-fluid p-1 fixed-top bg-light shadow-sm">
+  <nav class="navbar navbar-light container-fluid p-1 fixed-top bg-light shadow-sm">
     <div class="col-sm-3">
-      <a routerLink="/app" class="navbar-brand">
-        <img src="./assets/images/logo.svg" alt="Logo Recofinement" width="250" />
+      <a routerLink="/admin" class="navbar-brand">
+        <img src="./assets/images/logo.svg" alt="Logo Recofinement" class="p-1 navbar-brand" width="200"/>
       </a>
     </div>
-    <div class="col-sm-6 text-center h5">
-      <button mat-button [routerLink]="['media/add']" [routerLinkActive]="['mat-primary']">Add a media</button>
-    </div>
-    <div class="col-sm d-flex justify-content-end">
-      <button mat-stroked-button [routerLink]="['home']" [routerLinkActive]="['mat-primary']" color="primary" class="me-2 rounded-pill">Back to app <mat-icon>exit_to_app</mat-icon></button>
+    <div class="col-sm d-flex justify-content-end space-between h5 m-0">
+      <button mat-stroked-button color="primary" class="me-2 rounded-pill"><mat-icon>notifications</mat-icon></button>
+      <button mat-stroked-button routerLink="/admin" [routerLinkActive]="['mat-primary']" color="warn" class="me-2 rounded-pill">Application <mat-icon>home</mat-icon></button>
       <button mat-stroked-button [matMenuTriggerFor]="menu" color="warn" class="me-2 rounded-pill">{{ username }} <mat-icon>person</mat-icon></button>
       <mat-menu #menu="matMenu" class="mt-4">
         <button mat-menu-item [routerLink]="['user/profile']">Manage profile</button>
@@ -34,11 +32,7 @@
       <mat-menu #smallMenu="matMenu">
         <button mat-menu-item [routerLink]="['home']">
           <mat-icon color="primary">home</mat-icon>
-          <span>Recofinement</span>
-        </button>
-        <button mat-menu-item [routerLink]="['application']">
-          <mat-icon color="primary">local_library</mat-icon>
-          <span>Add a media</span>
+          <span>Panel</span>
         </button>
         <button mat-menu-item [matMenuTriggerFor]="profile">
           <mat-icon color="primary">account_circle</mat-icon>
