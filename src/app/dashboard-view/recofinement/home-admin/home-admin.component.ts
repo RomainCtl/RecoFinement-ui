@@ -2,12 +2,14 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatTableDataSource} from '@angular/material/table';
+import { TrackService } from 'src/app/app-view/services/media/track.service';
 import { CreateApplicationDtoRequest } from 'src/app/models/DtoRequest/add-media/create_app.model';
 import { CreateBookDtoRequest } from 'src/app/models/DtoRequest/add-media/create_book.model';
 import { CreateGameDtoRequest } from 'src/app/models/DtoRequest/add-media/create_game.model';
 import { CreateMovieDtoRequest } from 'src/app/models/DtoRequest/add-media/create_movie.model';
 import { CreateSerieDtoRequest } from 'src/app/models/DtoRequest/add-media/create_serie.model';
-import { CreateTrackDtoRequest } from 'src/app/models/DtoRequest/add-media/create_track.model';
+import { TrackResponseDto } from 'src/app/models/DtoResponse/musics/track-dto.model';
+import { Track } from 'src/app/models/DtoResponse/musics/Track.model';
 
 @Component({
   selector: 'app-home-admin',
@@ -21,7 +23,7 @@ import { CreateTrackDtoRequest } from 'src/app/models/DtoRequest/add-media/creat
     ]),
   ],
 })
-export class HomeAdminComponent implements OnInit {
+export class HomeAdminComponent {
 
   columnsToDisplayTrack: string[] = ['title', 'artist_name'];
   columnsToDisplayMovie: string[] = ['title', 'director'];
@@ -30,21 +32,7 @@ export class HomeAdminComponent implements OnInit {
   columnsToDisplayGame: string[] = ['name', 'publishers'];
   columnsToDisplayApps: string[] = ['name', 'current_version'];
 
-
-  dataSourceTrack = new MatTableDataSource<CreateTrackDtoRequest>([
-    {
-      title: 'test',
-      artist_name: 'test artist',
-      covert_art_url: 'https://cdn.wccftech.com/wp-content/uploads/2018/02/Google.jpg',
-      genres: [1],
-      recording_mbid: '34EFZF',
-      release: 'Coucou',
-      spotify_id: 54,
-      track_mmi: 'JFIEJZ98F',
-      year: 2020
-    }
-  ]);
-
+  dataSourceTrack = new MatTableDataSource<Track>([]);
   dataSourceMovie = new MatTableDataSource<CreateMovieDtoRequest>([]);
   dataSourceSerie = new MatTableDataSource<CreateSerieDtoRequest>([]);
   dataSourceGame = new MatTableDataSource<CreateGameDtoRequest>([]);
@@ -53,20 +41,37 @@ export class HomeAdminComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  expandedElementTrack: CreateTrackDtoRequest | null;
+  expandedElementTrack: Track | null;
   expandedElementMovie: CreateMovieDtoRequest | null;
   expandedElementSerie: CreateSerieDtoRequest | null;
   expandedElementBook: CreateBookDtoRequest | null;
   expandedElementGame: CreateGameDtoRequest | null;
   expandedElementApplication: CreateApplicationDtoRequest | null;
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(
+    private trackService: TrackService,
+  ) {
+    this.getTrackToValidate();
   }
 
-  ngAfterViewInit() {
-    this.dataSourceTrack.paginator = this.paginator;
+  getTrackToValidate(): void {
+    this.trackService.getTrackToValidate().then((track: any) => {
+      this.dataSourceTrack = new MatTableDataSource<Track>(track.content);
+      this.dataSourceTrack.paginator = this.paginator;
+    });
   }
 
+  acceptTrack(trackid: number): void {
+    this.trackService.acceptTrackToAdd(trackid).then((test: any) => {
+      console.log(test);
+      this.getTrackToValidate();
+    });
+  }
+
+  refuseTrack(trackid: number): void {
+    this.trackService.refuseTrackToAdd(trackid).then((test: any) => {
+      console.log(test);
+      this.getTrackToValidate();
+    });
+  }
 }
