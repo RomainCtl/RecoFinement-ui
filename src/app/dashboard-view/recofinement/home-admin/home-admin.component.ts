@@ -1,13 +1,14 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import {MatTableDataSource} from '@angular/material/table';
 import { TrackService } from 'src/app/app-view/services/media/track.service';
-import { CreateApplicationDtoRequest } from 'src/app/models/DtoRequest/add-media/create_app.model';
-import { CreateBookDtoRequest } from 'src/app/models/DtoRequest/add-media/create_book.model';
-import { CreateGameDtoRequest } from 'src/app/models/DtoRequest/add-media/create_game.model';
-import { CreateMovieDtoRequest } from 'src/app/models/DtoRequest/add-media/create_movie.model';
 import { CreateSerieDtoRequest } from 'src/app/models/DtoRequest/add-media/create_serie.model';
+import { Application } from 'src/app/models/DtoResponse/applications/application.model';
+import { Book } from 'src/app/models/DtoResponse/books/Book.model';
+import { Game } from 'src/app/models/DtoResponse/games/Game.model';
+import { Movie } from 'src/app/models/DtoResponse/movies/Movie.model';
 import { TrackResponseDto } from 'src/app/models/DtoResponse/musics/track-dto.model';
 import { Track } from 'src/app/models/DtoResponse/musics/Track.model';
 
@@ -33,44 +34,45 @@ export class HomeAdminComponent {
   columnsToDisplayApps: string[] = ['name', 'current_version'];
 
   dataSourceTrack = new MatTableDataSource<Track>([]);
-  dataSourceMovie = new MatTableDataSource<CreateMovieDtoRequest>([]);
+  dataSourceMovie = new MatTableDataSource<Movie>([]);
   dataSourceSerie = new MatTableDataSource<CreateSerieDtoRequest>([]);
-  dataSourceGame = new MatTableDataSource<CreateGameDtoRequest>([]);
-  dataSourceBook = new MatTableDataSource<CreateBookDtoRequest>([]);
-  dataSourceApplication = new MatTableDataSource<CreateApplicationDtoRequest>([]);
+  dataSourceGame = new MatTableDataSource<Game>([]);
+  dataSourceBook = new MatTableDataSource<Book>([]);
+  dataSourceApplication = new MatTableDataSource<Application>([]);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   expandedElementTrack: Track | null;
-  expandedElementMovie: CreateMovieDtoRequest | null;
+  expandedElementMovie: Movie | null;
   expandedElementSerie: CreateSerieDtoRequest | null;
-  expandedElementBook: CreateBookDtoRequest | null;
-  expandedElementGame: CreateGameDtoRequest | null;
-  expandedElementApplication: CreateApplicationDtoRequest | null;
+  expandedElementBook: Book | null;
+  expandedElementGame: Game | null;
+  expandedElementApplication: Application | null;
 
   constructor(
+    public snackBar: MatSnackBar,
     private trackService: TrackService,
   ) {
     this.getTrackToValidate();
   }
 
   getTrackToValidate(): void {
-    this.trackService.getTrackToValidate().then((track: any) => {
+    this.trackService.getTrackToValidate().then((track: TrackResponseDto) => {
       this.dataSourceTrack = new MatTableDataSource<Track>(track.content);
       this.dataSourceTrack.paginator = this.paginator;
     });
   }
 
   acceptTrack(trackid: number): void {
-    this.trackService.acceptTrackToAdd(trackid).then((test: any) => {
-      console.log(test);
+    this.trackService.acceptTrackToAdd(trackid).then((response: any) => {
+      this.snackBar.open(response.message, 'Alright!', {duration: 5000});
       this.getTrackToValidate();
     });
   }
 
   refuseTrack(trackid: number): void {
-    this.trackService.refuseTrackToAdd(trackid).then((test: any) => {
-      console.log(test);
+    this.trackService.refuseTrackToAdd(trackid).then((response: any) => {
+      this.snackBar.open(response.message, 'Alright!', {duration: 5000});
       this.getTrackToValidate();
     });
   }

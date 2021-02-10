@@ -19,6 +19,7 @@ import { MenuComponent } from './recofinement/menu/menu.component';
 import { HomeAdminComponent } from './recofinement/home-admin/home-admin.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -45,7 +46,8 @@ import {MatTableModule} from '@angular/material/table';
     MatSelectModule,
     MatBottomSheetModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    MatSnackBarModule
   ]
 })
 export class RecoDashboardModule { }
