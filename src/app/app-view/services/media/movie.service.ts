@@ -16,6 +16,8 @@ export class MovieService {
   private urlUserMeta = environment.api_url + '/movie/';
   private urlAddMovie = environment.api_url + '/movie';
   private urlSearchMovies = environment.api_url + '/movie/search/';
+  private urlGetMovieToValidate= environment.api_url + '/movie/additional';
+  private urlMovieValidate= environment.api_url + '/movie/additional/'
 
   constructor(private httpClient: HttpClient) { }
 
@@ -53,5 +55,17 @@ export class MovieService {
 
   postNewMovie(payload: any): Promise<any> {
     return this.httpClient.post<any>(this.urlAddMovie, payload).toPromise();
+  }
+
+  getMovieToValidate(): Promise<MovieResponseDto> {
+    return this.httpClient.get<MovieResponseDto>(this.urlGetMovieToValidate).toPromise();
+  }
+
+  acceptMovieToAdd(movieId: number): Promise<MovieResponseDto> {
+    return this.httpClient.put<MovieResponseDto>(this.urlMovieValidate + movieId, null).toPromise();
+  }
+
+  refuseMovieToAdd(movieId: number): Promise<MovieResponseDto> {
+    return this.httpClient.delete<MovieResponseDto>(this.urlMovieValidate + movieId).toPromise();
   }
 }

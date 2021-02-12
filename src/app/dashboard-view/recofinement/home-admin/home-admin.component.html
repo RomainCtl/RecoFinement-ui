@@ -7,8 +7,8 @@
     <div class="d-flex flex-row justify-content-around">
       <div class="p-4">
         <p class="lead display-7">Track Validation</p>
-        <div class="mat-elevation-z8">
-
+        <p *ngIf="this.dataSourceTrack.filteredData.length === 0" class="text-center text-muted">0 track to validate</p>
+        <div *ngIf="this.dataSourceTrack.filteredData.length !== 0" class="mat-elevation-z8">
           <table mat-table
                 [dataSource]="dataSourceTrack" multiTemplateDataRows
                 class="mat-elevation-z8">
@@ -62,10 +62,11 @@
           <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
         </div>
       </div>
+
       <div class="p-4">
         <p class="lead display-7">Movie Validation</p>
-        <div class="mat-elevation-z8">
-
+        <p *ngIf="this.dataSourceMovie.filteredData.length === 0" class="text-center text-muted">0 movie to validate</p>
+        <div *ngIf="this.dataSourceMovie.filteredData.length !== 0" class="mat-elevation-z8">
           <table mat-table
                 [dataSource]="dataSourceMovie" multiTemplateDataRows
                 class="mat-elevation-z8">
@@ -105,8 +106,8 @@
                     <div *ngFor="let genre of element.genres" class="example-element-name"> {{genre}}</div>
                   </div>
                   <div class="d-flex flex-row justify-content-center">
-                    <button mat-flat-button color="primary">Accept</button>
-                    <button mat-flat-button color="warn">Refuse</button>
+                    <button mat-flat-button color="primary" (click)="this.acceptMovie(element.movie_id)">Accept</button>
+                    <button mat-flat-button color="warn" (click)="this.refuseMovie(element.movie_id)">Refuse</button>
                   </div>
                 </div>
               </td>
@@ -126,7 +127,8 @@
       </div>
       <div class="p-4">
         <p class="lead display-7">Serie Validation</p>
-        <div class="mat-elevation-z8">
+        <p *ngIf="this.dataSourceSerie.filteredData.length === 0" class="text-center text-muted">0 serie to validate</p>
+        <div *ngIf="this.dataSourceSerie.filteredData.length !== 0" class="mat-elevation-z8">
 
           <table mat-table
                 [dataSource]="dataSourceSerie" multiTemplateDataRows
@@ -186,7 +188,8 @@
   <div class="d-flex flex-row justify-content-around">
     <div class="p-4">
       <p class="lead display-7">Book Validation</p>
-      <div class="mat-elevation-z8">
+      <p *ngIf="this.dataSourceBook.filteredData.length === 0" class="text-center text-muted">0 book to validate</p>
+        <div *ngIf="this.dataSourceBook.filteredData.length !== 0" class="mat-elevation-z8">
 
         <table mat-table
               [dataSource]="dataSourceBook" multiTemplateDataRows
@@ -218,8 +221,8 @@
                   <div class="example-element-name"> year_of_publication -- {{element.year_of_publication}}</div>
                 </div>
                 <div class="d-flex flex-row justify-content-center">
-                  <button mat-flat-button color="primary">Accept</button>
-                  <button mat-flat-button color="warn">Refuse</button>
+                  <button mat-flat-button color="primary" (click)="this.acceptBook(element.book_id)">Accept</button>
+                  <button mat-flat-button color="warn" (click)="this.refuseBook(element.book_id)">Refuse</button>
                 </div>
               </div>
             </td>
@@ -239,8 +242,8 @@
     </div>
     <div class="p-4">
       <p class="lead display-7">Game Validation</p>
-      <div class="mat-elevation-z8">
-
+      <p *ngIf="this.dataSourceGame.filteredData.length === 0" class="text-center text-muted">0 game to validate</p>
+      <div *ngIf="this.dataSourceGame.filteredData.length !== 0" class="mat-elevation-z8">
         <table mat-table
               [dataSource]="dataSourceGame" multiTemplateDataRows
               class="mat-elevation-z8">
@@ -276,8 +279,8 @@
                   <div *ngFor="let genre of element.genres" class="example-element-name"> {{genre}}</div>
                 </div>
                 <div class="d-flex flex-row justify-content-center">
-                  <button mat-flat-button color="primary">Accept</button>
-                  <button mat-flat-button color="warn">Refuse</button>
+                  <button mat-flat-button color="primary" (click)="this.acceptGame(element.game_id)">Accept</button>
+                  <button mat-flat-button color="warn" (click)="this.refuseGame(element.game_id)">Refuse</button>
                 </div>
               </div>
             </td>
@@ -297,8 +300,8 @@
     </div>
     <div class="p-4">
       <p class="lead display-7">Application Validation</p>
-      <div class="mat-elevation-z8">
-
+      <p *ngIf="this.dataSourceApplication.filteredData.length === 0" class="text-center text-muted">0 application to validate</p>
+      <div *ngIf="this.dataSourceApplication.filteredData.length !== 0" class="mat-elevation-z8">
         <table mat-table
               [dataSource]="dataSourceApplication" multiTemplateDataRows
               class="mat-elevation-z8">
@@ -338,8 +341,8 @@
                   <div *ngFor="let genre of element.genres" class="example-element-name"> {{genre}}</div>
                 </div>
                 <div class="d-flex flex-row justify-content-center">
-                  <button mat-flat-button color="primary">Accept</button>
-                  <button mat-flat-button color="warn">Refuse</button>
+                  <button mat-flat-button color="primary" (click)="this.acceptApplication(element.app_id)">Accept</button>
+                  <button mat-flat-button color="warn" (click)="this.refuseApplication(element.app_id)">Refuse</button>
                 </div>
               </div>
             </td>

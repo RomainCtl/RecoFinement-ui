@@ -15,6 +15,8 @@ export class BookService {
   private urlSearchBooks = environment.api_url + '/book/search/';
   private urlUserMeta = environment.api_url + '/book/';
   private urlAddBook = environment.api_url + '/book';
+  private urlGetBookToValidate= environment.api_url + '/book/additional';
+  private urlBookValidate= environment.api_url + '/book/additional/'
 
   constructor(private httpClient: HttpClient) { }
 
@@ -48,5 +50,17 @@ export class BookService {
 
   postNewBook(payload: any): Promise<any> {
     return this.httpClient.post<any>(this.urlAddBook, payload).toPromise();
+  }
+
+  getBookToValidate(): Promise<BookResponseDto> {
+    return this.httpClient.get<BookResponseDto>(this.urlGetBookToValidate).toPromise();
+  }
+
+  acceptBookToAdd(bookId: number): Promise<BookResponseDto> {
+    return this.httpClient.put<BookResponseDto>(this.urlBookValidate + bookId, null).toPromise();
+  }
+
+  refuseBookToAdd(bookId: number): Promise<BookResponseDto> {
+    return this.httpClient.delete<BookResponseDto>(this.urlBookValidate + bookId).toPromise();
   }
 }

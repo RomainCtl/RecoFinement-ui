@@ -17,6 +17,8 @@ export class GameService {
   private urlGetGenreGames = environment.api_url + '/game/genres';
   private urlUserMeta = environment.api_url + '/game/';
   private urlAddGame = environment.api_url + '/game';
+  private urlGetGameToValidate= environment.api_url + '/game/additional';
+  private urlGameValidate= environment.api_url + '/game/additional/'
 
   constructor(private httpClient: HttpClient) { }
 
@@ -54,5 +56,17 @@ export class GameService {
 
   postNewGame(payload: any): Promise<any> {
     return this.httpClient.post<any>(this.urlAddGame, payload).toPromise();
+  }
+
+  getGameToValidate(): Promise<GameResponseDto> {
+    return this.httpClient.get<GameResponseDto>(this.urlGetGameToValidate).toPromise();
+  }
+
+  acceptGameToAdd(gameId: number): Promise<GameResponseDto> {
+    return this.httpClient.put<GameResponseDto>(this.urlGameValidate + gameId, null).toPromise();
+  }
+
+  refuseGameToAdd(gameId: number): Promise<GameResponseDto> {
+    return this.httpClient.delete<GameResponseDto>(this.urlGameValidate + gameId).toPromise();
   }
 }
