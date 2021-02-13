@@ -75,7 +75,7 @@ const routes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'musics',
+        path: 'songs',
         component: MusicsComponent,
         canActivate: [AuthGuard]
       },

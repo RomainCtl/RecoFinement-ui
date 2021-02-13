@@ -3,6 +3,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from '../auth/auth.guard';
 import { AddMediaComponent } from './recofinement/add-media/add-media.component';
+import { ProfileManagementComponent } from './recofinement/profile-management/profile-management.component';
 
 const routes: Routes = [
     {
@@ -12,6 +13,11 @@ const routes: Routes = [
           {
             path: 'media/add',
             component: AddMediaComponent,
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'profile/manage',
+            component: ProfileManagementComponent,
             canActivate: [AuthGuard]
           }
         ]

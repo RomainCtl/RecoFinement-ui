@@ -62,9 +62,7 @@ export class RegisterComponent implements OnInit {
           (result: UserRegisterDtoResponse) => {
             localStorage.setItem('uuid', result.user.uuid);
             localStorage.setItem('username', result.user.username);
-            localStorage.setItem('email', result.user.email);
             this.registerHttpResponse = result;
-            this.cookie.set('user_id', result.user.uuid, {expires: 1, sameSite: 'Lax', path: '/'});
             this.cookie.set('access_token', this.registerHttpResponse.access_token, { expires: 1, sameSite: 'Lax', path: '/' });
             
             // document.cookie = 'access_token=' + this.registerHttpResponse.access_token;

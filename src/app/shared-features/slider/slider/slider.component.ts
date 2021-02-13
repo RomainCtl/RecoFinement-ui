@@ -48,6 +48,7 @@ export class SliderComponent implements OnInit  {
       centerInsufficientSlides: this.content.length < 6 ? true : false,
       spaceBetween: 10,
       autoplay:false,
+      allowTouchMove: false,
       navigation: {
         prevEl: '.swiper-button-prev',
         nextEl: '.swiper-button-next'
@@ -61,7 +62,7 @@ export class SliderComponent implements OnInit  {
         loadPrevNextAmount: 2,
         checkInView: true
       },
-      loop: this.content.length > 6 ? true : false
+      loop: false
     })
 
     let ap = document.querySelector('.swiper-container');

@@ -1,38 +1,45 @@
 <div class="container-fluid pt-lg-4">
     <div class="bg-light text-center p-5 rounded">
       <h1>Browse or search anything you want</h1>
+      <mat-button-toggle-group (change)="modeChanged($event)" class="m-3">
+        <mat-button-toggle [checked]="!searchMode" value="Browse">Browse mode</mat-button-toggle>
+        <mat-button-toggle [checked]="searchMode" value="Search">Search mode</mat-button-toggle>
+      </mat-button-toggle-group>
       <p class="lead">Some beautiful paths can't be discovered without getting lost.</p>
-      <mat-form-field appearance="outline" class="me-2" color="primary">
-        <mat-label>Select a media</mat-label>
-        <mat-select (valueChange)="selectValueChange($event);">
-          <mat-option value="track">
-            Music
-          </mat-option>
-          <mat-option value="movie">
-            Movie
-          </mat-option>
-          <mat-option value="series">
-            Series
-          </mat-option>
-          <mat-option value="game">
-            Game
-          </mat-option>
-          <mat-option value="book">
-            Book
-          </mat-option>
-          <mat-option value="application">
-            Application
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field appearance="outline" color="warn" class="me-2">
-        <mat-label>Search...</mat-label>
-        <input #search matInput [disabled]="this.mediaSelected === 'No media'" (keyup.enter)="startSearch(search.value)">
-      </mat-form-field>
-      <button mat-stroked-button color="primary" class="h4 p-2" (click)="startSearch(search.value)"><mat-icon>search</mat-icon></button>
+      <ng-container *ngIf="searchMode">
+
+        <mat-form-field appearance="outline" class="me-2" color="primary">
+          <mat-label>Select a media</mat-label>
+          <mat-select (valueChange)="selectValueChange($event);" [value]="mediaSelected">
+            <mat-option value="track">
+              Songs
+            </mat-option>
+            <mat-option value="movie">
+              Movie
+            </mat-option>
+            <mat-option value="series">
+              Series
+            </mat-option>
+            <mat-option value="game">
+              Game
+            </mat-option>
+            <mat-option value="book">
+              Book
+            </mat-option>
+            <mat-option value="application">
+              Application
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="warn" class="me-2">
+          <mat-label>Search...</mat-label>
+          <input #search matInput [disabled]="this.mediaSelected === 'No media'" [value]="this.searchValue" (keyup.enter)="startSearch(search.value)">
+        </mat-form-field>
+        <button mat-stroked-button color="primary" class="h4 p-2" (click)="startSearch(search.value)"><mat-icon>search</mat-icon></button>
+      </ng-container>
     </div>
-    <mat-tab-group *ngIf="!searchActivated" mat-align-tabs="center" (selectedIndexChange)="updateIndex($event)">
-        <mat-tab label="Musics">
+    <mat-tab-group *ngIf="!searchMode" mat-align-tabs="center" (selectedIndexChange)="updateIndex($event)">
+        <mat-tab label="Songs">
             <div class="container-xl p-5">
                 <ng-container *ngIf="popularTracks.content.length === 0 else tracksTemplate">
                     <div class="d-flex align-items-center justify-content-center h-75">
@@ -221,7 +228,7 @@
               </div>
         </mat-tab>
       </mat-tab-group>
-      <div class="container-xl p-5" *ngIf="searchActivated">
+      <div class="container-xl p-5" *ngIf="searchMode">
           <div class="row">
             <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center text-center p-0"
               *ngFor="let item of searchResults.content">
@@ -253,8 +260,8 @@
             </div>
 
         </div>
-            <div *ngIf="this.searchActivated" class="col d-flex justify-content-center align-items-center flex-column p-5 mb-2">
-             <p class="display-6" *ngIf="this.searchEmpty">There are no results for <i>{{search.value}}</i>.</p>
-             <button mat-stroked-button color="primary" (click)="searchActivated = false">Back to browsing</button>
+            <div *ngIf="this.searchMode && this.searchValue.length > 0" class="col d-flex justify-content-center align-items-center flex-column p-5 mb-2">
+             <p class="display-6" *ngIf="this.searchEmpty">There are no results for <i>{{this.searchValue}}</i>.</p>
+             <button mat-stroked-button color="primary" (click)="searchMode = false">Back to browsing</button>
             </div>
       </div>

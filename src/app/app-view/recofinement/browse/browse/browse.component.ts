@@ -18,6 +18,7 @@ import { BookService } from 'src/app/app-view/services/media/book.service';
 import { Track } from 'src/app/models/DtoResponse/musics/Track.model';
 import { PreviewComponent } from '../../musics/preview/preview.component';
 import { Overlay } from '@angular/cdk/overlay';
+import { MatButtonToggleChange } from '@angular/material/button-toggle';
 
 @Component({
   selector: 'app-browse',
@@ -29,6 +30,7 @@ export class BrowseComponent implements OnInit {
   mediaSelected: string = 'No media';
   searchEmpty : boolean = true;
   searchActivated : boolean = false;
+  searchValue : string = '';
 
 
   series = {
@@ -132,6 +134,7 @@ export class BrowseComponent implements OnInit {
     total_pages: 0
   };
 
+  searchMode = true;
 
   constructor(private dialog: MatDialog,
     private bottom: MatBottomSheet,
@@ -153,6 +156,7 @@ export class BrowseComponent implements OnInit {
   }
 
   startSearch(term: string) {
+    this.searchValue = term;
     if(term.length > 0) {
       switch(this.mediaSelected) {
         case 'track': {
@@ -477,5 +481,12 @@ export class BrowseComponent implements OnInit {
         }
       });
     }
+  }
+
+  modeChanged(mode: MatButtonToggleChange) {
+    mode.value === 'Search' ? this.searchMode = true : this.searchMode = false;
+    console.log('search mode ' + !this.searchMode)
+    console.log('search activated ' + !this.searchActivated)
+    console.log(!this.searchMode || !this.searchActivated)
   }
 }

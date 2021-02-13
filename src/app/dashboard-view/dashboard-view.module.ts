@@ -17,10 +17,15 @@ import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
-
+import { ProfileManagementComponent } from './recofinement/profile-management/profile-management.component';
 
 @NgModule({
-  declarations: [DashboardComponent, MenuComponent, AddMediaComponent],
+  declarations: [
+    DashboardComponent,
+    MenuComponent,
+    AddMediaComponent,
+    ProfileManagementComponent
+  ],
   imports: [
     RouterModule,
     CommonModule,

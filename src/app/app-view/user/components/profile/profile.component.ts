@@ -100,7 +100,7 @@ export class ProfileComponent implements OnInit {
       }
     });
 
-    this.userService.getUserData(this.cookie.get('user_id')).then((result: UserDtoResponse) => {
+    this.userService.getUserData(localStorage.getItem('uuid')).then((result: UserDtoResponse) => {
       this.userData = result;
       this.userData.user.owned_groups.forEach(group => {
         this.groupService.getGroup(group.group_id).then((result: GroupDtoResponse) => {
@@ -155,7 +155,7 @@ export class ProfileComponent implements OnInit {
 
   acceptInvit(invitation: Group): void {
     this.groupService.acceptInvitation(invitation.group_id, this.userData.user.uuid).then(() => {
-      this.userService.getUserData(this.cookie.get('user_id')).then((result: UserDtoResponse) => {
+      this.userService.getUserData(localStorage.getItem('uuid')).then((result: UserDtoResponse) => {
         this.userData = result;
       });
     });
@@ -163,7 +163,7 @@ export class ProfileComponent implements OnInit {
 
   declineInvit(group: Group): void {
     this.groupService.declineInvitation(group.group_id, group.invitations[this.invitationsSent.indexOf(group, 0)].uuid).then(() => {
-      this.userService.getUserData(this.cookie.get('user_id')).then((result: UserDtoResponse) => {
+      this.userService.getUserData(localStorage.getItem('uuid')).then((result: UserDtoResponse) => {
         this.userData = result;
         this.userData.user.owned_groups.forEach(group => {
           this.groupService.getGroup(group.group_id).then((result: GroupDtoResponse) => {
@@ -233,7 +233,7 @@ export class ProfileComponent implements OnInit {
   openAddGroupDialog(): void {
     const dialogRef = this.dialog.open(AddGroupComponent, { backdropClass: 'blur' });
     dialogRef.afterClosed().subscribe(() => {
-      this.userService.getUserData(this.cookie.get('user_id')).then((result: UserDtoResponse) => {
+      this.userService.getUserData(localStorage.getItem('uuid')).then((result: UserDtoResponse) => {
         this.userData = result;
       });
     });
@@ -248,7 +248,7 @@ export class ProfileComponent implements OnInit {
       backdropClass: 'blur'
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.userService.getUserData(this.cookie.get('user_id')).then((result: UserDtoResponse) => {
+      this.userService.getUserData(localStorage.getItem('uuid')).then((result: UserDtoResponse) => {
         this.userData = result;
       });
     });

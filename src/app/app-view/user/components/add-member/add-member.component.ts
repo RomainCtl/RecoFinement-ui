@@ -35,7 +35,7 @@ export class AddMemberComponent implements OnInit {
     if (searchTerm.length > 3 && event.which <= 90 && event.which >= 48) {
       this.isLoading = true;
       this.userService.searchUser(searchTerm).then((result: UserDataDtoResponse) => {
-        result.content = result.content.filter(user => user.uuid !== this.cookie.get('user_id'));
+        result.content = result.content.filter(user => user.uuid !== localStorage.getItem('uuid'));
         this.searchedUsers = result.content;
         this.isLoading = false;
       });
