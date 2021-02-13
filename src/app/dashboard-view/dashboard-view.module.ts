@@ -20,6 +20,7 @@ import { HomeAdminComponent } from './recofinement/home-admin/home-admin.compone
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ProfileAdminComponent } from './recofinement/profile-admin/profile-admin.component';
 
 
 
@@ -27,7 +28,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
   declarations: [
     DashboardComponent,
     MenuComponent,
-    HomeAdminComponent
+    HomeAdminComponent,
+    ProfileAdminComponent
   ],
   imports: [
     RouterModule,

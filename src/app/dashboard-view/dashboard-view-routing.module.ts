@@ -2,6 +2,7 @@ import { DashboardComponent } from './dashboard.component';
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { HomeAdminComponent } from './recofinement/home-admin/home-admin.component';
+import { ProfileAdminComponent } from './recofinement/profile-admin/profile-admin.component';
 import { AuthGuard } from '../auth/auth.guard';
 
 const routes: Routes = [
@@ -17,6 +18,11 @@ const routes: Routes = [
           {
             path:'home',
             component: HomeAdminComponent,
+            canActivate: [AuthGuard]
+          },
+          {
+            path: 'profile',
+            component: ProfileAdminComponent,
             canActivate: [AuthGuard]
           },
         ]

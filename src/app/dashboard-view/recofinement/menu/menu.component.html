@@ -5,6 +5,11 @@
         <img src="./assets/images/logo.svg" alt="Logo Recofinement" class="p-1 navbar-brand" width="200"/>
       </a>
     </div>
+    <div class="col-sm-6 d-flex justify-content-center align-items-center h5 m-0">
+      <button mat-button [routerLink]="['home']" [routerLinkActive]="['mat-primary']"
+        [routerLinkActiveOptions]="{exact: true}">Media validation</button>
+      <button mat-button [routerLink]="['profile']" [routerLinkActive]="['mat-primary']">Profile management</button>
+    </div>
     <div class="col-sm d-flex justify-content-end space-between h5 m-0">
       <button mat-stroked-button color="primary" class="me-2 rounded-pill"><mat-icon>notifications</mat-icon></button>
       <button mat-stroked-button routerLink="/app" [routerLinkActive]="['mat-primary']" color="warn" class="me-2 rounded-pill">Application <mat-icon>home</mat-icon></button>
