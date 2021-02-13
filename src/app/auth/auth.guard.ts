@@ -9,7 +9,6 @@ import { AuthService } from '../app-view/services/auth.service';
 export class AuthGuard implements CanActivate {
   constructor(private _auth: AuthService, private router: Router) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    console.log('guard')
     if (!this._auth.isUserLoggedIn()) {
       this.router.navigate(['app/login']);
       return false;

@@ -16,6 +16,7 @@ export class SeriesService {
   private urlGetGenreSerie = environment.api_url + '/serie/genres';
   private urlGetEpisodesSeries = environment.api_url + '/serie/';
   private urlUserMeta = environment.api_url + '/serie/';
+  private urlAddSerie = environment.api_url + '/serie';
   private urlSearchSeries = environment.api_url + '/serie/search/';
   private urlGetSeries = environment.api_url + '/serie?page=';
 
@@ -60,5 +61,9 @@ export class SeriesService {
 
   saveWatchedEpisodes(seriesId: number, seriesMeta: any): Promise<SerieMetaResponseDto> {
     return this.httpClient.patch<SerieMetaResponseDto>(this.urlUserMeta + seriesId + '/meta', seriesMeta).toPromise();
+  }
+
+  postNewSerie(payload: any): Promise<any> {
+    return this.httpClient.post<any>(this.urlAddSerie, payload).toPromise();
   }
 }

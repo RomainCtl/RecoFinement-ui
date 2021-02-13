@@ -1,0 +1,358 @@
+<div class="container">
+
+  <!-- Add track -->
+  <div *ngIf="this.item.spotify_id" class="d-flex flex-column justify-content-around align-content-center">
+    <h2 class="text-center ">Add a new track</h2>
+
+    <form #trackForm="ngForm" (ngSubmit)="addTrack(trackForm.value)" class="d-flex flex-column justify-content-around align-content-center">
+
+      <div class="d-flex flex-row justify-content-around align-content-center">
+        <div class="d-flex flex-column justify-content-around align-content-around">
+          <mat-form-field appearance="legacy">
+            <mat-label>Title</mat-label>
+            <input ngModel matInput name="title" required>
+            <mat-hint>Required</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Year of publication</mat-label>
+            <input ngModel name="year" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Artist</mat-label>
+            <input ngModel name="artist_name" matInput>
+          </mat-form-field>
+        </div>
+
+        <div class="d-flex flex-column justify-content-around">
+          <mat-form-field appearance="legacy">
+            <mat-label>Name of the release</mat-label>
+            <input ngModel name="release" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>MMID</mat-label>
+            <input ngModel name="track_mmid" matInput>
+            <mat-hint>Hint : <a href="http://millionsongdataset.com" target="_blank">millionsongdataset</a></mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>MBID</mat-label>
+            <input ngModel name="track_mbid" matInput>
+            <mat-hint>Hint : <a href="https://musicbrainz.org" target="_blank">musicbrainz</a></mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="d-flex flex-column justify-content-around">
+          <mat-form-field appearance="legacy">
+            <mat-label>Spotify ID</mat-label>
+            <input ngModel name="spotify_id" matInput>
+            <mat-hint>Hint : <a href="https://spotify.com.org" target="_blank">spotify</a></mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Covert</mat-label>
+            <input ngModel name="covert_art_url" matInput>
+            <mat-hint>It must be a URL.</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Genre(s)</mat-label>
+              <mat-select required ngModel name="genres" multiple>
+                <mat-form-field appearance="legacy" class="d-flex justify-content-center mt-2">
+                  <input matInput placeholder="Filter"(keyup)="onKey($event.target.value)">
+                </mat-form-field>
+              <mat-option *ngFor="let genre of this.selectedGenres" [value]="genre.genre_id">{{ genre.name }}</mat-option>
+            </mat-select>
+            <mat-hint>Required</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <button mat-flat-button color="primary" type="submit" class="mt-5">Add a new track</button>
+
+    </form>
+  </div>
+
+  <!-- Add movie -->
+  <div *ngIf="this.item.tmdbid===''" class="d-flex flex-column justify-content-around align-content-center">
+    <h2 class="text-center ">Add a new movie</h2>
+
+    <form #trackForm="ngForm" (ngSubmit)="addMovie(trackForm.value)" class="d-flex flex-column justify-content-around align-content-center">
+
+      <div class="d-flex flex-row justify-content-around align-content-center">
+        <div class="d-flex flex-column justify-content-around align-content-around">
+          <mat-form-field appearance="legacy">
+            <mat-label>Title</mat-label>
+            <input ngModel matInput name="title" required>
+            <mat-hint>Required</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Language</mat-label>
+            <input ngModel name="language" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Actors</mat-label>
+            <input ngModel name="actors" matInput>
+            <mat-hint>Separator : |</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Year</mat-label>
+            <input ngModel matInput name="year">
+          </mat-form-field>
+        </div>
+
+        <div class="d-flex flex-column justify-content-around">
+          <mat-form-field appearance="legacy">
+            <mat-label>Producers</mat-label>
+            <input ngModel name="producers" matInput>
+            <mat-hint>Separator : |</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Director</mat-label>
+            <input ngModel name="director" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Writter</mat-label>
+            <input ngModel name="writer" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>ID IMDB</mat-label>
+            <input ngModel matInput name="imdbid">
+            <mat-hint>Hint : <a href="https://www.imdb.com/" target="_blank">IMDB</a></mat-hint>
+
+          </mat-form-field>
+        </div>
+
+        <div class="d-flex flex-column justify-content-around">
+          <mat-form-field appearance="legacy">
+            <mat-label>ID TMDB</mat-label>
+            <input ngModel name="tmdbid" matInput>
+            <mat-hint>Hint : <a href="https://www.themoviedb.org/" target="_blank">TMDB</a></mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Cover</mat-label>
+            <input ngModel name="covert" matInput>
+            <mat-hint>It must be a URL.</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Plot Outline</mat-label>
+            <input ngModel matInput name="plot_outline">
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Genre(s)</mat-label>
+              <mat-select required ngModel name="genres" multiple>
+                <mat-form-field appearance="legacy" class="d-flex justify-content-center mt-2">
+                  <input matInput placeholder="Filter"(keyup)="onKey($event.target.value)">
+                </mat-form-field>
+              <mat-option *ngFor="let genre of this.selectedGenres" [value]="genre.genre_id">{{ genre.name }}</mat-option>
+            </mat-select>
+            <mat-hint>Required</mat-hint>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <button mat-flat-button color="primary" type="submit" class="mt-5">Add a new movie</button>
+
+    </form>
+  </div>
+
+  <!-- Add book -->
+  <div *ngIf="this.item.isbn===''" class="d-flex flex-column justify-content-around align-content-center">
+    <h2 class="text-center ">Add a new book</h2>
+
+    <form #trackForm="ngForm" (ngSubmit)="addBook(trackForm.value)" class="d-flex flex-column justify-content-around align-content-center">
+
+      <div class="d-flex flex-row justify-content-around align-content-center">
+        <div class="d-flex flex-column justify-content-around align-content-around">
+          <mat-form-field appearance="legacy">
+            <mat-label>Title</mat-label>
+            <input ngModel matInput name="title" required>
+            <mat-hint>Required</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>ISBN</mat-label>
+            <input ngModel name="isbn" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Author</mat-label>
+            <input ngModel name="author" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Year of publication</mat-label>
+            <input ngModel matInput name="year_of_publication">
+          </mat-form-field>
+        </div>
+
+        <div class="d-flex flex-column justify-content-around">
+          <mat-form-field appearance="legacy">
+            <mat-label>publisher</mat-label>
+            <input ngModel name="publisher" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Cover (size S)</mat-label>
+            <input ngModel name="image_url_s" matInput>
+            <mat-hint>It must be a URL.</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Cover (size M)</mat-label>
+            <input ngModel name="image_url_m" matInput>
+            <mat-hint>It must be a URL.</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Cover (size L)</mat-label>
+            <input ngModel name="image_url_l" matInput>
+            <mat-hint>It must be a URL.</mat-hint>
+          </mat-form-field>
+
+        </div>
+      </div>
+
+      <button mat-flat-button color="primary" type="submit" class="mt-5">Add a new book</button>
+
+    </form>
+  </div>
+
+  <!-- Add book -->
+  <div *ngIf="this.item.android_version===''" class="d-flex flex-column justify-content-around align-content-center">
+    <h2 class="text-center ">Add a new application</h2>
+
+    <form #trackForm="ngForm" (ngSubmit)="addApplication(trackForm.value)" class="d-flex flex-column justify-content-around align-content-center">
+
+      <div class="d-flex flex-row justify-content-around align-content-center">
+        <div class="d-flex flex-column justify-content-around align-content-around">
+          <mat-form-field appearance="legacy">
+            <mat-label>Name</mat-label>
+            <input ngModel matInput name="name" required>
+            <mat-hint>Required</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Size</mat-label>
+            <input ngModel name="size" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Installs</mat-label>
+            <input ngModel name="installs" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Type</mat-label>
+            <input ngModel matInput name="type">
+          </mat-form-field>
+        </div>
+
+        <div class="d-flex flex-column justify-content-around">
+          <mat-form-field appearance="legacy">
+            <mat-label>Price</mat-label>
+            <input ngModel name="price" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Content Rating</mat-label>
+            <input ngModel name="content_rating" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Last Updated</mat-label>
+            <input ngModel name="last_updated" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Current Version</mat-label>
+            <input ngModel name="current_version" matInput>
+          </mat-form-field>
+
+        </div>
+
+        <div class="d-flex flex-column justify-content-around">
+          <mat-form-field appearance="legacy">
+            <mat-label>Android Version</mat-label>
+            <input ngModel name="android_version" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Cover</mat-label>
+            <input ngModel name="cover" matInput>
+            <mat-hint>It must be a URL.</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Genre(s)</mat-label>
+              <mat-select required ngModel name="genres" multiple>
+                <mat-form-field appearance="legacy" class="d-flex justify-content-center mt-2">
+                  <input matInput placeholder="Filter"(keyup)="onKey($event.target.value)">
+                </mat-form-field>
+              <mat-option *ngFor="let genre of this.selectedGenres" [value]="genre.genre_id">{{ genre.name }}</mat-option>
+            </mat-select>
+            <mat-hint>Required</mat-hint>
+          </mat-form-field>
+
+        </div>
+      </div>
+
+      <button mat-flat-button color="primary" type="submit" class="mt-5">Add a new application</button>
+
+    </form>
+  </div>
+
+  <!-- Add Game -->
+  <div *ngIf="this.item.steamid === 0" class="d-flex flex-column justify-content-around align-content-center">
+    <h2 class="text-center ">Add a new game</h2>
+
+    <form #trackForm="ngForm" (ngSubmit)="addGame(trackForm.value)" class="d-flex flex-column justify-content-around align-content-center">
+
+      <div class="d-flex flex-row justify-content-around align-content-center">
+        <div class="d-flex flex-column justify-content-around align-content-around">
+          <mat-form-field appearance="legacy">
+            <mat-label>Name</mat-label>
+            <input ngModel matInput name="name" required>
+            <mat-hint>Required</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>ID Steam</mat-label>
+            <input ngModel name="steamid" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Description</mat-label>
+            <input ngModel name="short_description" matInput>
+          </mat-form-field>
+        </div>
+
+        <div class="d-flex flex-column justify-content-around">
+          <mat-form-field appearance="legacy">
+            <mat-label>Cover</mat-label>
+            <input ngModel name="header_image" matInput>
+            <mat-hint>It must be a URL.</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Website</mat-label>
+            <input ngModel name="website" matInput>
+            <mat-hint>It must be a URL.</mat-hint>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Developers</mat-label>
+            <input ngModel name="developers" matInput>
+          </mat-form-field>
+        </div>
+
+        <div class="d-flex flex-column justify-content-around">
+          <mat-form-field appearance="legacy">
+            <mat-label>Publishers</mat-label>
+            <input ngModel name="publishers" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Price</mat-label>
+            <input ngModel name="price" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Release Date</mat-label>
+            <input ngModel name="release_date" matInput>
+          </mat-form-field>
+          <mat-form-field appearance="legacy">
+            <mat-label>Genre(s)</mat-label>
+              <mat-select required ngModel name="genres" multiple>
+                <mat-form-field appearance="legacy" class="d-flex justify-content-center mt-2">
+                  <input matInput placeholder="Filter"(keyup)="onKey($event.target.value)">
+                </mat-form-field>
+              <mat-option *ngFor="let genre of this.selectedGenres" [value]="genre.genre_id">{{ genre.name }}</mat-option>
+            </mat-select>
+            <mat-hint>Required</mat-hint>
+          </mat-form-field>
+
+        </div>
+      </div>
+
+      <button mat-flat-button color="primary" type="submit" class="mt-5">Add a new game</button>
+
+    </form>
+  </div>
+</div>

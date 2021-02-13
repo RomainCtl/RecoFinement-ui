@@ -22,13 +22,3 @@ input {
 star-rating {
     cursor: pointer;
 }
-
-.disable {
-  pointer-events: none;
-  background-color: gray !important;
-}
-
-
-
-/* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap';

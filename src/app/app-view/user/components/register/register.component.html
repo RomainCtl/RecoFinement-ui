@@ -36,10 +36,10 @@
       </mat-form-field>
     </div>
     <div class="col-sm-12 col-lg-12 d-flex justify-content-center align-items-center flex-column">
-      <button mat-raised-button color="primary" class="h5 mb-2 pr-5 pl-5" type="submit">Register</button>
       <div class="container">
         <span><mat-checkbox color="warn" (change)="agreedToConditions = !agreedToConditions">I agree to Recofinement's <a class="text-danger" style="cursor: pointer;" (click)="showTermsAndConditions($event)">Terms and Conditions of Use</a>.</mat-checkbox></span>
       </div>
+      <button mat-raised-button color="primary" class="h5 mb-2 pr-5 pl-5" type="submit">Register</button>
       <a routerLink="../login">I already have an account!</a>
     </div>
   </div>

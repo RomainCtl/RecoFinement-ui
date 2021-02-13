@@ -14,6 +14,9 @@ export class BookService {
   private urlGetRecommendedBooksFromGroups = environment.api_url + '/book/groups?reco_engine=';
   private urlSearchBooks = environment.api_url + '/book/search/';
   private urlUserMeta = environment.api_url + '/book/';
+  private urlAddBook = environment.api_url + '/book';
+  private urlGetBookToValidate= environment.api_url + '/book/additional';
+  private urlBookValidate= environment.api_url + '/book/additional/'
 
   constructor(private httpClient: HttpClient) { }
 
@@ -43,5 +46,21 @@ export class BookService {
 
   saveRating(content_id: number, gameMeta: any): Promise<BookMetaResponseDto> {
     return this.httpClient.patch<BookMetaResponseDto>(this.urlUserMeta + content_id + '/meta', gameMeta).toPromise();
+  }
+
+  postNewBook(payload: any): Promise<any> {
+    return this.httpClient.post<any>(this.urlAddBook, payload).toPromise();
+  }
+
+  getBookToValidate(): Promise<BookResponseDto> {
+    return this.httpClient.get<BookResponseDto>(this.urlGetBookToValidate).toPromise();
+  }
+
+  acceptBookToAdd(bookId: number): Promise<BookResponseDto> {
+    return this.httpClient.put<BookResponseDto>(this.urlBookValidate + bookId, null).toPromise();
+  }
+
+  refuseBookToAdd(bookId: number): Promise<BookResponseDto> {
+    return this.httpClient.delete<BookResponseDto>(this.urlBookValidate + bookId).toPromise();
   }
 }

@@ -41,4 +41,16 @@
       *ngIf="recommendedSeriesFromGroupsFromProfile.content.length > 0"
       [content]="recommendedSeriesFromGroupsFromProfile.content"
       (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div class="button-add-serie">
+        <button
+        mat-fab color="primary"
+        aria-label="Add a serie"
+        matTooltip="Add a serie"
+        matTooltipPosition="left"
+        matTooltipHideDelay="1000"
+        (click)="openAddMedia()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
 </div>

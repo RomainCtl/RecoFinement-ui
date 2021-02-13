@@ -4,12 +4,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 import { RecoDashboardRoutingModule } from './dashboard-view-routing.module';
-import { MenuComponent } from './recofinement/menu/menu.component';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
-import { AddMediaComponent } from './recofinement/add-media/add-media.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -18,13 +16,21 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { ProfileManagementComponent } from './recofinement/profile-management/profile-management.component';
+import { MenuComponent } from './recofinement/menu/menu.component';
+import { HomeAdminComponent } from './recofinement/home-admin/home-admin.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableModule} from '@angular/material/table';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AddMediaComponent } from '../shared-features/modals/popup/add-media/add-media.component';
+
+
 
 @NgModule({
   declarations: [
     DashboardComponent,
     MenuComponent,
-    AddMediaComponent,
-    ProfileManagementComponent
+    ProfileManagementComponent,
+    HomeAdminComponent
   ],
   imports: [
     RouterModule,
@@ -41,7 +47,10 @@ import { ProfileManagementComponent } from './recofinement/profile-management/pr
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    MatBottomSheetModule
+    MatBottomSheetModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatSnackBarModule
   ]
 })
 export class RecoDashboardModule { }

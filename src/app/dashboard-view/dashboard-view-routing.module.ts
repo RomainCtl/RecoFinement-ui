@@ -1,8 +1,8 @@
 import { DashboardComponent } from './dashboard.component';
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { HomeAdminComponent } from './recofinement/home-admin/home-admin.component';
 import { AuthGuard } from '../auth/auth.guard';
-import { AddMediaComponent } from './recofinement/add-media/add-media.component';
 import { ProfileManagementComponent } from './recofinement/profile-management/profile-management.component';
 
 const routes: Routes = [
@@ -11,8 +11,13 @@ const routes: Routes = [
         component: DashboardComponent,
         children: [
           {
-            path: 'media/add',
-            component: AddMediaComponent,
+            path: '',
+            redirectTo: 'home',
+            pathMatch: 'full'
+          },
+          {
+            path:'home',
+            component: HomeAdminComponent,
             canActivate: [AuthGuard]
           },
           {

@@ -65,3 +65,10 @@
 .bg-search {
   background-color:rgba(0, 0, 0, 0.010);
 }
+
+.button-add-track {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 9999;
+}

@@ -2,6 +2,8 @@ import { Overlay } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBarConfig } from '@angular/material/snack-bar';
+import { CreateSerieDtoRequest } from 'src/app/models/DtoRequest/add-media/create_serie.model';
+import { AddMediaComponent } from 'src/app/shared-features/modals/popup/add-media/add-media.component';
 import { PopupComponent } from 'src/app/shared-features/modals/popup/popup.component';
 import { SeriesResponseDto } from '../../../models/DtoResponse/series/series-dto.model';
 import { Series } from '../../../models/DtoResponse/series/Series.model';
@@ -104,6 +106,20 @@ export class SeriesComponent implements OnInit {
       popupDetails.close();
     });
 
+  }
+
+  openAddMedia(): void {
+    const popupDetails = this.dialog.open < AddMediaComponent,
+      CreateSerieDtoRequest > (AddMediaComponent, {
+        data: new CreateSerieDtoRequest(),
+        panelClass: ['shadow-none', 'w-50'],
+        hasBackdrop: true,
+        backdropClass: 'blur'
+      });
+
+    popupDetails.backdropClick().subscribe(() => {
+      popupDetails.close();
+    });
   }
 
 }

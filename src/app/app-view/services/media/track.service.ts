@@ -19,6 +19,8 @@ export class TrackService {
   private urlUserMeta = environment.api_url + '/track/';
   private urlGetHistoryTracks = environment.api_url + '/track/history?page=';
   private urlAddTrack= environment.api_url + '/track';
+  private urlGetTrackToValidate= environment.api_url + '/track/additional';
+  private urlTrackValidate= environment.api_url + '/track/additional/'
 
   constructor(private httpClient: HttpClient) { }
 
@@ -64,6 +66,18 @@ export class TrackService {
 
   postNewTrack(payload: any): Promise<any> {
     return this.httpClient.post<any>(this.urlAddTrack, payload).toPromise();
+  }
+
+  getTrackToValidate(): Promise<TrackResponseDto> {
+    return this.httpClient.get<TrackResponseDto>(this.urlGetTrackToValidate).toPromise();
+  }
+
+  acceptTrackToAdd(trackId: number): Promise<TrackResponseDto> {
+    return this.httpClient.put<TrackResponseDto>(this.urlTrackValidate + trackId, null).toPromise();
+  }
+
+  refuseTrackToAdd(trackId: number): Promise<TrackResponseDto> {
+    return this.httpClient.delete<TrackResponseDto>(this.urlTrackValidate + trackId).toPromise();
   }
 
 }

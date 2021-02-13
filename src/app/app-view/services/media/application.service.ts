@@ -16,6 +16,10 @@ export class ApplicationService {
   private urlSearchApplication = environment.api_url + '/application/search/';
   private urlGetGenresApplications = environment.api_url + '/application/genres';
   private urlUserMeta = environment.api_url + '/application/';
+  private urlAddApplication= environment.api_url + '/application';
+  private urlGetAppToValidate= environment.api_url + '/track/additional';
+  private urlAppValidate= environment.api_url + '/track/additional/'
+
 
   constructor(private httpClient: HttpClient) { }
 
@@ -53,6 +57,22 @@ export class ApplicationService {
 
   saveRating(applicationId: number, applicationMeta: any): Promise<ApplicationMetaResponseDto> {
     return this.httpClient.patch<ApplicationMetaResponseDto>(this.urlUserMeta + applicationId + '/meta', applicationMeta).toPromise();
+  }
+
+  postNewApp(payload: any): Promise<any> {
+    return this.httpClient.post<any>(this.urlAddApplication, payload).toPromise();
+  }
+
+  getAppsToValidate(): Promise<ApplicationResponseDto> {
+    return this.httpClient.get<ApplicationResponseDto>(this.urlGetAppToValidate).toPromise();
+  }
+
+  acceptAppToAdd(appId: number): Promise<ApplicationResponseDto> {
+    return this.httpClient.put<ApplicationResponseDto>(this.urlAppValidate + appId, null).toPromise();
+  }
+
+  refuseAppToAdd(appId: number): Promise<ApplicationResponseDto> {
+    return this.httpClient.delete<ApplicationResponseDto>(this.urlAppValidate + appId).toPromise();
   }
 
 }

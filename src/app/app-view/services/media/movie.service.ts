@@ -14,7 +14,10 @@ export class MovieService {
   private urlGetRecommendedMoviesFromGroups = environment.api_url + '/movie/groups?reco_engine=';
   private urlGetGenreMovies = environment.api_url + '/movie/genres';
   private urlUserMeta = environment.api_url + '/movie/';
+  private urlAddMovie = environment.api_url + '/movie';
   private urlSearchMovies = environment.api_url + '/movie/search/';
+  private urlGetMovieToValidate= environment.api_url + '/movie/additional';
+  private urlMovieValidate= environment.api_url + '/movie/additional/'
 
   constructor(private httpClient: HttpClient) { }
 
@@ -48,5 +51,21 @@ export class MovieService {
 
   saveWatchedMovie(movie_id: number, movieMeta: any): Promise<MovieMetaResponseDto> {
     return this.httpClient.patch<MovieMetaResponseDto>(this.urlUserMeta + movie_id + '/meta', movieMeta).toPromise();
+  }
+
+  postNewMovie(payload: any): Promise<any> {
+    return this.httpClient.post<any>(this.urlAddMovie, payload).toPromise();
+  }
+
+  getMovieToValidate(): Promise<MovieResponseDto> {
+    return this.httpClient.get<MovieResponseDto>(this.urlGetMovieToValidate).toPromise();
+  }
+
+  acceptMovieToAdd(movieId: number): Promise<MovieResponseDto> {
+    return this.httpClient.put<MovieResponseDto>(this.urlMovieValidate + movieId, null).toPromise();
+  }
+
+  refuseMovieToAdd(movieId: number): Promise<MovieResponseDto> {
+    return this.httpClient.delete<MovieResponseDto>(this.urlMovieValidate + movieId).toPromise();
   }
 }
