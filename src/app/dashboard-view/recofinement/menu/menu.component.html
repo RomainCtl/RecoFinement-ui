@@ -10,10 +10,9 @@
       <button mat-button [routerLink]="['profile/manage']" [routerLinkActive]="['mat-primary']">Profile Management</button>
     </div>
     <div class="col-sm d-flex justify-content-end">
-      <button mat-stroked-button [routerLink]="['home']" [routerLinkActive]="['mat-primary']" color="primary" class="me-2 rounded-pill">Back to app <mat-icon>exit_to_app</mat-icon></button>
-    <div class="col-sm d-flex justify-content-end space-between h5 m-0">
-      <button mat-stroked-button color="primary" class="me-2 rounded-pill"><mat-icon>notifications</mat-icon></button>
-      <button mat-stroked-button routerLink="/app" [routerLinkActive]="['mat-primary']" color="warn" class="me-2 rounded-pill">Application <mat-icon>home</mat-icon></button>
+      <div class="col-sm d-flex justify-content-end space-between h5 m-0">
+        <button mat-stroked-button color="primary" class="me-2 rounded-pill"><mat-icon>notifications</mat-icon></button>
+        <button mat-stroked-button [routerLink]="['home']" [routerLinkActive]="['mat-primary']" color="primary" class="me-2 rounded-pill">Back to app <mat-icon>exit_to_app</mat-icon></button>
       <button mat-stroked-button [matMenuTriggerFor]="menu" color="warn" class="me-2 rounded-pill">{{ username }} <mat-icon>person</mat-icon></button>
       <mat-menu #menu="matMenu" class="mt-4">
         <button mat-menu-item [routerLink]="['user/profile']">Manage profile</button>
