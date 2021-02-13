@@ -8,13 +8,13 @@
     <div class="col-sm-6 d-flex justify-content-center align-items-center h5 m-0">
       <button mat-button [routerLink]="['home']" [routerLinkActive]="['mat-primary']"
         [routerLinkActiveOptions]="{exact: true}">Home</button>
-      <button mat-button [routerLink]="['musics']" [routerLinkActive]="['mat-primary']">Musics</button>
+      <button mat-button [routerLink]="['songs']" [routerLinkActive]="['mat-primary']">Songs</button>
       <button mat-button [routerLink]="['movies']" [routerLinkActive]="['mat-primary']">Movies</button>
       <button mat-button [routerLink]="['series']" [routerLinkActive]="['mat-primary']">Series</button>
       <button mat-button [routerLink]="['games']" [routerLinkActive]="['mat-primary']">Games</button>
       <button mat-button [routerLink]="['books']" [routerLinkActive]="['mat-primary']">Books</button>
       <button mat-button [routerLink]="['applications']" [routerLinkActive]="['mat-primary']">Applications</button>
-      <button mat-stroked-button [routerLink]="['browse']" [routerLinkActive]="['mat-primary']" class="me-2 rounded-pill">Browse <mat-icon>search</mat-icon></button>
+      <button mat-stroked-button [routerLink]="['browse']" [routerLinkActive]="['mat-primary']" class="me-2 rounded-pill">Search <mat-icon>search</mat-icon></button>
     </div>
     <div class="col-sm d-flex justify-content-end space-between h5 m-0">
       <button mat-stroked-button color="primary" class="me-2 rounded-pill"><mat-icon>notifications</mat-icon></button>
@@ -50,9 +50,9 @@
           <span>Librairies</span>
         </button>
         <mat-menu #librairies="matMenu">
-          <button mat-menu-item [routerLink]="['musics']">
+          <button mat-menu-item [routerLink]="['songs']">
             <mat-icon color="primary">library_music</mat-icon>
-            <span>Musics</span>
+            <span>Songs</span>
           </button>
           <button mat-menu-item [routerLink]="['movies']">
             <mat-icon color="primary">movie</mat-icon>

@@ -4,6 +4,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { HomeAdminComponent } from './recofinement/home-admin/home-admin.component';
 import { ProfileAdminComponent } from './recofinement/profile-admin/profile-admin.component';
 import { AuthGuard } from '../auth/auth.guard';
+import { ProfileManagementComponent } from './recofinement/profile-management/profile-management.component';
 
 const routes: Routes = [
     {

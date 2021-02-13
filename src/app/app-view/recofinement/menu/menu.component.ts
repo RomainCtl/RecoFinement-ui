@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-menu',
@@ -28,14 +28,13 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getUserData(this.cookie.get('user_id')).then((result: UserDtoResponse) => {
-      this.username = result.user.username;
-    });
+      this.username = this.userService.getUsername();
   }
 
   logOut(): void {
     this.bottom.dismiss();
     this.dialog.closeAll();
+    localStorage.clear();
     this._auth.logout();
   }
 

@@ -1,3 +1,4 @@
+import { CookieService } from 'ngx-cookie-service';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserDataDtoResponse } from 'src/app/models/DtoResponse/user-data.model';
@@ -13,10 +14,21 @@ export class UserService {
   private urlGenreUser = environment.api_url + '/user/genre';
   private urlExportUserData = environment.api_url + '/user/export';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private cookie: CookieService) { }
 
   getUserData(uuid: string): Promise<UserDtoResponse> {
     return this.httpClient.get<UserDtoResponse>(this.urlGetUser + '/' + uuid).toPromise();
+  }
+
+  getUsername(): string {
+    if(localStorage.getItem('username') === null) {
+      this.httpClient.get<UserDtoResponse>(this.urlGetUser + '/' + localStorage.getItem('uuid')).toPromise().then(result => {
+        localStorage.setItem('username', result.user.username);
+        return result.user.username;
+      })
+    } else {
+      return localStorage.getItem('username');
+    }
   }
 
   exportUserData(): Promise<any> {

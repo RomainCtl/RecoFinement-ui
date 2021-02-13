@@ -27,9 +27,7 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getUserData(this.cookie.get('user_id')).then((result: UserDtoResponse) => {
-      this.username = result.user.username;
-    });
+    this.username = this.userService.getUsername();
   }
 
   logOut(): void {

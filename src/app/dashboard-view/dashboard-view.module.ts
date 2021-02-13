@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { ProfileManagementComponent } from './recofinement/profile-management/profile-management.component';
 import { MenuComponent } from './recofinement/menu/menu.component';
 import { HomeAdminComponent } from './recofinement/home-admin/home-admin.component';
 import {MatPaginatorModule} from '@angular/material/paginator';

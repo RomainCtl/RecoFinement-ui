@@ -47,7 +47,8 @@ export class LoginComponent implements OnInit {
     .then(
       (result: UserLoginDtoResponse) => {
         this.loginHttpResponse = result;
-        this.cookie.set('user_id', result.user.uuid, {expires: 1, sameSite: 'Lax', path: '/'});
+        localStorage.setItem('uuid', result.user.uuid);
+        localStorage.setItem('username', result.user.username);
         this.cookie.set('access_token', this.loginHttpResponse.access_token, {expires: 1, sameSite: 'Lax', path: '/'});
         this._router.navigate(['app']);
       }
