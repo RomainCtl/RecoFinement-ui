@@ -9,11 +9,12 @@ import { Component, OnInit } from '@angular/core';
 export class ProfileManagementComponent implements OnInit {
 
   profile_uuid: string = '';
+  message:string = '';
 
   constructor(private socketService: SocketService) { }
 
   ngOnInit(): void {
-
+    this.message = this.socketService.serverResponse.message;
   }
 
   startRecommendations() {
