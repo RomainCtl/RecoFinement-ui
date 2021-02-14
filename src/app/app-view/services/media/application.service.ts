@@ -17,8 +17,8 @@ export class ApplicationService {
   private urlGetGenresApplications = environment.api_url + '/application/genres';
   private urlUserMeta = environment.api_url + '/application/';
   private urlAddApplication= environment.api_url + '/application';
-  private urlGetAppToValidate= environment.api_url + '/track/additional';
-  private urlAppValidate= environment.api_url + '/track/additional/'
+  private urlGetAppToValidate= environment.api_url + '/application/additional';
+  private urlAppValidate= environment.api_url + '/application/additional/'
 
   private urlGetAppToProfile= environment.api_url + '/profile/';
   private urlGetHistoryAppToProfile= '/history/';

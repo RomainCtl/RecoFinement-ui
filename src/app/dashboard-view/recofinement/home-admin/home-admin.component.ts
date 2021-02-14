@@ -1,5 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {MatTableDataSource} from '@angular/material/table';
@@ -32,14 +32,14 @@ import { Track } from 'src/app/models/DtoResponse/musics/Track.model';
     ]),
   ],
 })
-export class HomeAdminComponent {
+export class HomeAdminComponent implements AfterViewInit {
 
-  columnsToDisplayTrack: string[] = ['title', 'artist_name'];
-  columnsToDisplayMovie: string[] = ['title', 'director'];
-  columnsToDisplaySerie: string[] = ['title', 'writers'];
-  columnsToDisplayBook: string[] = ['title', 'author'];
-  columnsToDisplayGame: string[] = ['name', 'publishers'];
-  columnsToDisplayApps: string[] = ['name', 'current_version'];
+  columnsToDisplayTrack: string[] = ['title', 'artist_name', 'year', 'release', 'track_mmid', 'recording_mbid', 'spotify_id', 'covert_art_url', 'genres', 'btn'];
+  columnsToDisplayMovie: string[] = ['title', 'language', 'actors', 'year', 'producers', 'director', 'writer', 'imdbid', 'tmdbid', 'cover', 'btn'];
+  columnsToDisplaySerie: string[] = ['title', 'imdbid', 'start_year', 'end_year', 'writers', 'directors', 'actors', 'btn'];
+  columnsToDisplayBook: string[] = ['title', 'isbn', 'author', 'year_of_publication', 'publisher', 'image_url_s', 'image_url_m', 'image_url_l', 'btn'];
+  columnsToDisplayGame: string[] = ['name', 'steamid', 'short_description', 'header_image', 'website', 'developers', 'publishers', 'price', 'release_date', 'btn'];
+  columnsToDisplayApps: string[] = ['name', 'size', 'installs', 'type', 'price', 'last_updated', 'current_version', 'android_version', 'btn'];
 
   dataSourceTrack = new MatTableDataSource<Track>([]);
   dataSourceMovie = new MatTableDataSource<Movie>([]);
@@ -72,10 +72,18 @@ export class HomeAdminComponent {
     this.getAppToValidate();
   }
 
+  ngAfterViewInit(): void {
+    this.dataSourceTrack.paginator = this.paginator;
+    this.dataSourceMovie.paginator = this.paginator;
+    this.dataSourceGame.paginator = this.paginator;
+    this.dataSourceBook.paginator = this.paginator;
+    this.dataSourceApplication.paginator = this.paginator;
+  }
+
   getTrackToValidate(): void {
     this.trackService.getTrackToValidate().then((track: TrackResponseDto) => {
-      this.dataSourceTrack = new MatTableDataSource<Track>(track.content);
-      this.dataSourceTrack.paginator = this.paginator;
+      this.dataSourceTrack.data = track.content;
+      setTimeout(() => this.dataSourceTrack.paginator = this.paginator);
     });
   }
 
@@ -95,8 +103,8 @@ export class HomeAdminComponent {
 
   getMovieToValidate(): void {
     this.movieService.getMovieToValidate().then((movie: MovieResponseDto) => {
-      this.dataSourceMovie = new MatTableDataSource<Movie>(movie.content);
-      this.dataSourceMovie.paginator = this.paginator;
+      this.dataSourceMovie.data = movie.content;
+      setTimeout(() => this.dataSourceMovie.paginator = this.paginator);
     });
   }
 
@@ -116,8 +124,8 @@ export class HomeAdminComponent {
 
   getBookToValidate(): void {
     this.bookService.getBookToValidate().then((book: BookResponseDto) => {
-      this.dataSourceBook = new MatTableDataSource<Book>(book.content);
-      this.dataSourceBook.paginator = this.paginator;
+      this.dataSourceBook.data = book.content;
+      setTimeout(() => this.dataSourceBook.paginator = this.paginator);
     });
   }
 
@@ -137,8 +145,8 @@ export class HomeAdminComponent {
 
   getGameToValidate(): void {
     this.gameService.getGameToValidate().then((game: GameResponseDto) => {
-      this.dataSourceGame = new MatTableDataSource<Game>(game.content);
-      this.dataSourceGame.paginator = this.paginator;
+      this.dataSourceGame.data = game.content;
+      setTimeout(() => this.dataSourceGame.paginator = this.paginator);
     });
   }
 
@@ -158,8 +166,8 @@ export class HomeAdminComponent {
 
   getAppToValidate(): void {
     this.appService.getAppsToValidate().then((app: ApplicationResponseDto) => {
-      this.dataSourceApplication = new MatTableDataSource<Application>(app.content);
-      this.dataSourceApplication.paginator = this.paginator;
+      this.dataSourceApplication.data = app.content;
+      setTimeout(() => this.dataSourceApplication.paginator = this.paginator);
     });
   }
 
