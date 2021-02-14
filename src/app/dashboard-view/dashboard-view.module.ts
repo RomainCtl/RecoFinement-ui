@@ -26,6 +26,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatStepperModule } from '@angular/material/stepper';
 import { PopupContentComponent } from './recofinement/profile-admin/popup-content/popup-content.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 
 
@@ -60,6 +61,7 @@ import { PopupContentComponent } from './recofinement/profile-admin/popup-conten
     MatListModule,
     MatDividerModule,
     MatStepperModule,
+    MatTooltipModule
     ]
 })
 export class RecoDashboardModule { }

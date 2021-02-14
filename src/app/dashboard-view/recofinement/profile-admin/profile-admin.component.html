@@ -15,12 +15,12 @@
             <mat-list-item>
               <div class="col-6">{{profile.profilename}}</div>
               <div class="col-6">
-                <button *ngIf="this.mode === 'Create'" mat-icon-button (click)="this.editProfile(profile);"><mat-icon>edit</mat-icon></button>
-                <button *ngIf="this.mode === 'Edit'" mat-icon-button (click)="this.resetForm();"><mat-icon>edit_off</mat-icon></button>
-                <button mat-icon-button (click)="this.contentsProfile(profile);"><mat-icon>add_circle_outline</mat-icon></button>
-                <button mat-icon-button (click)="this.historyProfile(profile);"><mat-icon>history</mat-icon></button>
-                <button mat-icon-button color="warn" (click)="this.deleteProfile(profile.uuid);"><mat-icon>delete</mat-icon></button>
-                <button mat-icon-button color="primary" (click)="this.startRecommendations(profile.uuid)"><mat-icon>play_circle_outline</mat-icon></button>
+                <button *ngIf="this.mode === 'Create'" matTooltip="Edit the profile" mat-icon-button (click)="this.editProfile(profile);"><mat-icon>edit</mat-icon></button>
+                <button *ngIf="this.mode === 'Edit'" matTooltip="Cancel edition" mat-icon-button (click)="this.resetForm();"><mat-icon>edit_off</mat-icon></button>
+                <button mat-icon-button matTooltip="Show medias of profile" (click)="this.contentsProfile(profile);"><mat-icon>add_circle_outline</mat-icon></button>
+                <button mat-icon-button matTooltip="Show history recommendation" (click)="this.historyProfile(profile);"><mat-icon>history</mat-icon></button>
+                <button mat-icon-button matTooltip="Delete your profile" color="warn" (click)="this.deleteProfile(profile.uuid);"><mat-icon>delete</mat-icon></button>
+                <button mat-icon-button matTooltip="Launch recommendation" color="primary" (click)="this.startRecommendations(profile.uuid)"><mat-icon>play_circle_outline</mat-icon></button>
               </div>
             </mat-list-item>
             <mat-divider></mat-divider>
