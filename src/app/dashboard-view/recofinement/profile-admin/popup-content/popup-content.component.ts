@@ -7,7 +7,7 @@ import { GameService } from 'src/app/app-view/services/media/game.service';
 import { MovieService } from 'src/app/app-view/services/media/movie.service';
 import { SeriesService } from 'src/app/app-view/services/media/serie.service';
 import { TrackService } from 'src/app/app-view/services/media/track.service';
-import { ProfileService } from 'src/app/app-view/services/profile/profile.service';
+import { ProfileService } from 'src/app/dashboard-view/services/profile/profile.service';
 import { ApplicationResponseDto } from 'src/app/models/DtoResponse/applications/application-dto.model';
 import { BookResponseDto } from 'src/app/models/DtoResponse/books/book-dto.model';
 import { GameResponseDto } from 'src/app/models/DtoResponse/games/games.model';

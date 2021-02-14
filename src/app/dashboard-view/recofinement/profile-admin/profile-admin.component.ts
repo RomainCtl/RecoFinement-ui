@@ -10,7 +10,7 @@ import { GameService } from 'src/app/app-view/services/media/game.service';
 import { MovieService } from 'src/app/app-view/services/media/movie.service';
 import { SeriesService } from 'src/app/app-view/services/media/serie.service';
 import { TrackService } from 'src/app/app-view/services/media/track.service';
-import { ProfileService } from 'src/app/app-view/services/profile/profile.service';
+import { ProfileService } from 'src/app/dashboard-view/services/profile/profile.service';
 import { SocketService } from '../../services/socket.service';
 import { PopupContentComponent } from './popup-content/popup-content.component';
 
