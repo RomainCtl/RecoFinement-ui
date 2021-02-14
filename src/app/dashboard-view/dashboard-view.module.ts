@@ -11,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatTabsModule} from '@angular/material/tabs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
@@ -22,6 +22,10 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableModule} from '@angular/material/table';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ProfileAdminComponent } from './recofinement/profile-admin/profile-admin.component';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatStepperModule } from '@angular/material/stepper';
+import { PopupContentComponent } from './recofinement/profile-admin/popup-content/popup-content.component';
 
 
 
@@ -30,12 +34,14 @@ import { ProfileAdminComponent } from './recofinement/profile-admin/profile-admi
     DashboardComponent,
     MenuComponent,
     HomeAdminComponent,
-    ProfileAdminComponent
+    ProfileAdminComponent,
+    PopupContentComponent
   ],
   imports: [
     RouterModule,
     CommonModule,
     RecoDashboardRoutingModule,
+    ReactiveFormsModule,
     MatMenuModule,
     MatIconModule,
     MatChipsModule,
@@ -50,7 +56,10 @@ import { ProfileAdminComponent } from './recofinement/profile-admin/profile-admi
     MatBottomSheetModule,
     MatPaginatorModule,
     MatTableModule,
-    MatSnackBarModule
-  ]
+    MatSnackBarModule,
+    MatListModule,
+    MatDividerModule,
+    MatStepperModule,
+    ]
 })
 export class RecoDashboardModule { }

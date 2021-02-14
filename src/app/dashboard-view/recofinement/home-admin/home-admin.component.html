@@ -10,8 +10,7 @@
         <p *ngIf="this.dataSourceTrack.filteredData.length === 0" class="text-center text-muted">0 track to validate</p>
         <div *ngIf="this.dataSourceTrack.filteredData.length !== 0" class="mat-elevation-z8">
           <table mat-table
-                [dataSource]="dataSourceTrack" multiTemplateDataRows
-                class="mat-elevation-z8">
+                [dataSource]="dataSourceTrack" multiTemplateDataRows>
 
                 <ng-container matColumnDef="title">
                   <th mat-header-cell *matHeaderCellDef> Title </th>
@@ -68,8 +67,7 @@
         <p *ngIf="this.dataSourceMovie.filteredData.length === 0" class="text-center text-muted">0 movie to validate</p>
         <div *ngIf="this.dataSourceMovie.filteredData.length !== 0" class="mat-elevation-z8">
           <table mat-table
-                [dataSource]="dataSourceMovie" multiTemplateDataRows
-                class="mat-elevation-z8">
+                [dataSource]="dataSourceMovie" multiTemplateDataRows>
 
                 <ng-container matColumnDef="title">
                   <th mat-header-cell *matHeaderCellDef> Title </th>
@@ -131,8 +129,7 @@
         <div *ngIf="this.dataSourceSerie.filteredData.length !== 0" class="mat-elevation-z8">
 
           <table mat-table
-                [dataSource]="dataSourceSerie" multiTemplateDataRows
-                class="mat-elevation-z8">
+                [dataSource]="dataSourceSerie" multiTemplateDataRows>
 
                 <ng-container matColumnDef="title">
                   <th mat-header-cell *matHeaderCellDef> Title </th>
@@ -192,8 +189,7 @@
         <div *ngIf="this.dataSourceBook.filteredData.length !== 0" class="mat-elevation-z8">
 
         <table mat-table
-              [dataSource]="dataSourceBook" multiTemplateDataRows
-              class="mat-elevation-z8">
+              [dataSource]="dataSourceBook" multiTemplateDataRows>
 
               <ng-container matColumnDef="title">
                 <th mat-header-cell *matHeaderCellDef> Title </th>
@@ -245,8 +241,7 @@
       <p *ngIf="this.dataSourceGame.filteredData.length === 0" class="text-center text-muted">0 game to validate</p>
       <div *ngIf="this.dataSourceGame.filteredData.length !== 0" class="mat-elevation-z8">
         <table mat-table
-              [dataSource]="dataSourceGame" multiTemplateDataRows
-              class="mat-elevation-z8">
+              [dataSource]="dataSourceGame" multiTemplateDataRows>
 
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef> Name </th>
@@ -303,8 +298,7 @@
       <p *ngIf="this.dataSourceApplication.filteredData.length === 0" class="text-center text-muted">0 application to validate</p>
       <div *ngIf="this.dataSourceApplication.filteredData.length !== 0" class="mat-elevation-z8">
         <table mat-table
-              [dataSource]="dataSourceApplication" multiTemplateDataRows
-              class="mat-elevation-z8">
+              [dataSource]="dataSourceApplication" multiTemplateDataRows>
 
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef> Name </th>

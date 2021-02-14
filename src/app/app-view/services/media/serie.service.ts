@@ -20,6 +20,10 @@ export class SeriesService {
   private urlSearchSeries = environment.api_url + '/serie/search/';
   private urlGetSeries = environment.api_url + '/serie?page=';
 
+  private urlGetSerieToProfile= environment.api_url + '/profile/';
+  private urlGetHistorySerieToProfile= '/history/';
+
+
 
   constructor(private httpClient: HttpClient) { }
 
@@ -65,5 +69,13 @@ export class SeriesService {
 
   postNewSerie(payload: any): Promise<any> {
     return this.httpClient.post<any>(this.urlAddSerie, payload).toPromise();
+  }
+
+  getSerieToProfile(uuid: string): Promise<any> {
+    return this.httpClient.get(this.urlGetSerieToProfile + uuid + '/serie/meta').toPromise();
+  }
+
+  getHistorySerieToProfile(uuid: string, history_id: string): Promise<any> {
+    return this.httpClient.get(this.urlGetSerieToProfile + uuid + this.urlGetHistorySerieToProfile + history_id + '/serie/result').toPromise();
   }
 }

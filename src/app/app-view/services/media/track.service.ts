@@ -20,7 +20,10 @@ export class TrackService {
   private urlGetHistoryTracks = environment.api_url + '/track/history?page=';
   private urlAddTrack= environment.api_url + '/track';
   private urlGetTrackToValidate= environment.api_url + '/track/additional';
-  private urlTrackValidate= environment.api_url + '/track/additional/'
+  private urlTrackValidate= environment.api_url + '/track/additional/';
+
+  private urlGetTrackToProfile= environment.api_url + '/profile/';
+  private urlGetHistoryTrackToProfile= '/history/';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -78,6 +81,14 @@ export class TrackService {
 
   refuseTrackToAdd(trackId: number): Promise<TrackResponseDto> {
     return this.httpClient.delete<TrackResponseDto>(this.urlTrackValidate + trackId).toPromise();
+  }
+
+  getTrackToProfile(uuid: string): Promise<any> {
+    return this.httpClient.get(this.urlGetTrackToProfile + uuid + '/track/meta').toPromise();
+  }
+
+  getHistoryTrackToProfile(uuid: string, history_id: string): Promise<any> {
+    return this.httpClient.get(this.urlGetTrackToProfile + uuid + this.urlGetHistoryTrackToProfile + history_id + '/track/result').toPromise();
   }
 
 }

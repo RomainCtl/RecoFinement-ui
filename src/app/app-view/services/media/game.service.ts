@@ -1,5 +1,4 @@
 import { GameMetaResponseDto } from '../../../models/DtoResponse/games/game-meta.model';
-import { GameMeta } from '../../../models/DtoResponse/games/GameMeta.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GameResponseDto } from 'src/app/models/DtoResponse/games/games.model';
@@ -19,6 +18,10 @@ export class GameService {
   private urlAddGame = environment.api_url + '/game';
   private urlGetGameToValidate= environment.api_url + '/game/additional';
   private urlGameValidate= environment.api_url + '/game/additional/'
+
+  private urlGetGameToProfile= environment.api_url + '/profile/';
+  private urlGetHistoryGameToProfile= '/history/';
+
 
   constructor(private httpClient: HttpClient) { }
 
@@ -68,5 +71,13 @@ export class GameService {
 
   refuseGameToAdd(gameId: number): Promise<GameResponseDto> {
     return this.httpClient.delete<GameResponseDto>(this.urlGameValidate + gameId).toPromise();
+  }
+
+  getGameToProfile(uuid: string): Promise<any> {
+    return this.httpClient.get(this.urlGetGameToProfile + uuid + '/game/meta').toPromise();
+  }
+
+  getHistoryGameToProfile(uuid: string, history_id: string): Promise<any> {
+    return this.httpClient.get(this.urlGetGameToProfile + uuid + this.urlGetHistoryGameToProfile + history_id + '/game/result').toPromise();
   }
 }

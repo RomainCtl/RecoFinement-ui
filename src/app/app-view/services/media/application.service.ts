@@ -20,6 +20,10 @@ export class ApplicationService {
   private urlGetAppToValidate= environment.api_url + '/track/additional';
   private urlAppValidate= environment.api_url + '/track/additional/'
 
+  private urlGetAppToProfile= environment.api_url + '/profile/';
+  private urlGetHistoryAppToProfile= '/history/';
+
+
 
   constructor(private httpClient: HttpClient) { }
 
@@ -73,6 +77,14 @@ export class ApplicationService {
 
   refuseAppToAdd(appId: number): Promise<ApplicationResponseDto> {
     return this.httpClient.delete<ApplicationResponseDto>(this.urlAppValidate + appId).toPromise();
+  }
+
+  getApplicationToProfile(uuid: string): Promise<any> {
+    return this.httpClient.get(this.urlGetAppToProfile + uuid + '/application/meta').toPromise();
+  }
+
+  getHistoryApplicationToProfile(uuid: string, history_id: string): Promise<any> {
+    return this.httpClient.get(this.urlGetAppToProfile + uuid + this.urlGetHistoryAppToProfile + history_id + '/application/result').toPromise();
   }
 
 }

@@ -18,6 +18,10 @@ export class BookService {
   private urlGetBookToValidate= environment.api_url + '/book/additional';
   private urlBookValidate= environment.api_url + '/book/additional/'
 
+  private urlGetBookToProfile= environment.api_url + '/profile/';
+  private urlGetHistoryBookToProfile= '/history/';
+
+
   constructor(private httpClient: HttpClient) { }
 
   getPopularBooks(page: number = 1): Promise<any> {
@@ -62,5 +66,13 @@ export class BookService {
 
   refuseBookToAdd(bookId: number): Promise<BookResponseDto> {
     return this.httpClient.delete<BookResponseDto>(this.urlBookValidate + bookId).toPromise();
+  }
+
+  getBookToProfile(uuid: string): Promise<any> {
+    return this.httpClient.get(this.urlGetBookToProfile + uuid + '/book/meta').toPromise();
+  }
+
+  getHistoryBookToProfile(uuid: string, history_id: string): Promise<any> {
+    return this.httpClient.get(this.urlGetBookToProfile + uuid + this.urlGetHistoryBookToProfile + history_id + '/book/result').toPromise();
   }
 }

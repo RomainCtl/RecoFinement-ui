@@ -36,6 +36,7 @@ export class Interceptor implements HttpInterceptor {
               //do sth here
             }
           }, (err: HttpErrorResponse) => {
+            console.error(err);
             if (err.status === 401) {
               if (this.auth.isUserLoggedIn()) {
                 const dialogRef = this.dialog.open(RedirectConfirmationComponent, {

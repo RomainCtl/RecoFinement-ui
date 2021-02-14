@@ -19,6 +19,10 @@ export class MovieService {
   private urlGetMovieToValidate= environment.api_url + '/movie/additional';
   private urlMovieValidate= environment.api_url + '/movie/additional/'
 
+  private urlGetMovieToProfile= environment.api_url + '/profile/';
+  private urlGetHistoryMovieToProfile= '/history/';
+
+
   constructor(private httpClient: HttpClient) { }
 
   getPopularMovies(page: number = 1): Promise<MovieResponseDto> {
@@ -67,5 +71,13 @@ export class MovieService {
 
   refuseMovieToAdd(movieId: number): Promise<MovieResponseDto> {
     return this.httpClient.delete<MovieResponseDto>(this.urlMovieValidate + movieId).toPromise();
+  }
+
+  getMovieToProfile(uuid: string): Promise<any> {
+    return this.httpClient.get(this.urlGetMovieToProfile + uuid + '/movie/meta').toPromise();
+  }
+
+  getHistoryMovieToProfile(uuid: string, history_id: string): Promise<any> {
+    return this.httpClient.get(this.urlGetMovieToProfile + uuid + this.urlGetHistoryMovieToProfile + history_id + '/movie/result').toPromise();
   }
 }

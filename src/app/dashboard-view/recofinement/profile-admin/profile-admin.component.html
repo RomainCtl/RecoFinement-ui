@@ -1,1 +1,476 @@
-<p>profile-admin works!</p>
+<div class="container-fluid p-0">
+
+  <div class="bg-light text-center overflow-hidden">
+    <div class="pt-5">
+      <p class="lead display-6">Profile Management</p>
+    </div>
+
+    <div class="container mt-5">
+      <div class="row">
+
+        <mat-list class="col-6">
+          <p class="lead display-8">My profiles</p>
+          <mat-divider></mat-divider>
+          <ng-container *ngFor="let profile of this.listProfiles">
+            <mat-list-item>
+              <div class="col-6">{{profile.profilename}}</div>
+              <div class="col-6">
+                <button *ngIf="this.mode === 'Create'" mat-icon-button (click)="this.editProfile(profile);"><mat-icon>edit</mat-icon></button>
+                <button *ngIf="this.mode === 'Edit'" mat-icon-button (click)="this.resetForm();"><mat-icon>edit_off</mat-icon></button>
+                <button mat-icon-button (click)="this.contentsProfile(profile);"><mat-icon>add_circle_outline</mat-icon></button>
+                <button mat-icon-button (click)="this.historyProfile(profile);"><mat-icon>history</mat-icon></button>
+                <button mat-icon-button color="warn" (click)="this.deleteProfile(profile.uuid);"><mat-icon>delete</mat-icon></button>
+                <button mat-icon-button color="primary" (click)="this.startRecommendations(profile.uuid)"><mat-icon>play_circle_outline</mat-icon></button>
+              </div>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+          </ng-container>
+        </mat-list>
+
+        <!-- FIXME A enlever-->
+        {{this.messageExec}}
+
+        <div class="col-6">
+          <p class="lead display-8">{{this.mode}} a profile</p>
+            <div>
+              <mat-vertical-stepper [linear]="false" #stepper>
+                <mat-step>
+                  <ng-template matStepLabel>Name profile</ng-template>
+                  <mat-form-field class="example-full-width col-6 ">
+                    <mat-label>Name</mat-label>
+                    <input [(ngModel)]="new_profilename" matInput placeholder="Ex. Rock Profile" required>
+                  </mat-form-field>
+
+                </mat-step>
+                <mat-step class="row">
+                  <ng-template matStepLabel>Some genres</ng-template>
+                  <div class="col-12">
+                    <mat-form-field class="col-5" appearance="legacy">
+                      <mat-label>Track genre(s)</mat-label>
+                        <mat-select [(ngModel)]="genre_track" multiple>
+                          <mat-form-field appearance="legacy" class="d-flex justify-content-center mt-2">
+                            <input matInput placeholder="Filter"(keyup)="onKeyTrack($event.target.value)">
+                          </mat-form-field>
+                        <mat-option *ngFor="let genre of this.selectedGenresTrack" [value]="genre.genre_id">{{ genre.name }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="offset-1 col-5" appearance="legacy">
+                      <mat-label>Movie genre(s)</mat-label>
+                        <mat-select [(ngModel)]="genre_movie" multiple>
+                          <mat-form-field appearance="legacy" class="d-flex justify-content-center mt-2">
+                            <input matInput placeholder="Filter"(keyup)="onKeyMovie($event.target.value)">
+                          </mat-form-field>
+                        <mat-option *ngFor="let genre of this.selectedGenresMovie" [value]="genre.genre_id">{{ genre.name }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-12">
+                    <mat-form-field class="col-5" appearance="legacy">
+                      <mat-label>Serie genre(s)</mat-label>
+                        <mat-select [(ngModel)]="genre_serie" multiple>
+                          <mat-form-field appearance="legacy" class="d-flex justify-content-center mt-2">
+                            <input matInput placeholder="Filter"(keyup)="onKeySerie($event.target.value)">
+                          </mat-form-field>
+                        <mat-option *ngFor="let genre of this.selectedGenresSerie" [value]="genre.genre_id">{{ genre.name }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="offset-1 col-5" appearance="legacy">
+                      <mat-label>Book genre(s)</mat-label>
+                        <mat-select multiple disabled>
+                          <mat-form-field appearance="legacy" class="d-flex justify-content-center mt-2">
+                            <input matInput placeholder="Filter">
+                          </mat-form-field>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-12">
+                    <mat-form-field class="col-5" appearance="legacy">
+                      <mat-label>Game genre(s)</mat-label>
+                        <mat-select [(ngModel)]="genre_game" multiple>
+                          <mat-form-field appearance="legacy" class="d-flex justify-content-center mt-2">
+                            <input matInput placeholder="Filter"(keyup)="onKeyGame($event.target.value)">
+                          </mat-form-field>
+                        <mat-option *ngFor="let genre of this.selectedGenresGame" [value]="genre.genre_id">{{ genre.name }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="offset-1 col-5" appearance="legacy">
+                      <mat-label>Application genre(s)</mat-label>
+                        <mat-select [(ngModel)]="genre_app" multiple>
+                          <mat-form-field appearance="legacy" class="d-flex justify-content-center mt-2">
+                            <input matInput placeholder="Filter"(keyup)="onKeyApps($event.target.value)">
+                          </mat-form-field>
+                        <mat-option *ngFor="let genre of this.selectedGenresApplication" [value]="genre.genre_id">{{ genre.name }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </mat-step>
+              </mat-vertical-stepper>
+              <button mat-flat-button class="btn btn-block col-12" color="primary" type="submit" (click)="this.createProfile()" [disabled]="!this.new_profilename">{{this.mode}} profile</button>
+            </div>
+        </div>
+        <div *ngIf="this.printMode !== ''" class="row mt-5 mb-6">
+          <div class="col-12">
+            <p class="lead display-8"><strong>{{this.printMode}} of {{this.selectedProfile.profilename}}</strong></p>
+            <div *ngIf="this.printMode === 'Contents'" class="row">
+              <div class="col-12">
+                <button matSuffix mat-flat-button color="primary" (click)="this.searchDialog()">Add a content</button>
+              </div>
+              <div class="col-6">
+                <mat-form-field class="col-12">
+                  <mat-label>Track filter</mat-label>
+                  <input matInput (keyup)="applyFilterTrack($event)" #input>
+                </mat-form-field>
+
+                <table mat-table [dataSource]="dataSourceTrack" class=" col-12" aria-describedby="list of tracks">
+                  <ng-container matColumnDef="type" class="col-6">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <strong>Music</strong> </th>
+                    <td mat-cell *matCellDef="let element"> {{element.track.title}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="Rating" class="col-1">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <em>Rating</em> </th>
+                    <td mat-cell *matCellDef="let element"><input type="number" [ngModel]="element.rating" (ngModelChange)="saveMetaRate($event, element)" matInput [value]="element.rating"><br />{{element.last_rating_date | date: 'MM/dd/yyyy'}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="Review" class="col-1">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <em>Review</em> </th>
+                    <td mat-cell *matCellDef="let element"><input type="number" [ngModel]="element.review_see_count" (ngModelChange)="saveMetaReview($event, element)" matInput [value]="element.review_see_count">{{element.last_review_see_date | date: 'MM/dd/yyyy'}}<br /></td>
+                  </ng-container>
+                  <ng-container matColumnDef="Count" class="col-1">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <em>Count</em> </th>
+                    <td mat-cell *matCellDef="let element"><input type="number" [ngModel]="element.count" (ngModelChange)="saveMetaCount($event, element)" matInput [value]="element.count"><br />{{element.last_count_increment | date: 'MM/dd/yyyy'}}</td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumnsContent"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumnsContent;"></tr>
+
+                  <!-- Row shown when there is no matching data. -->
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-6">
+                <mat-form-field class="col-12">
+                  <mat-label>Movie filter</mat-label>
+                  <input matInput (keyup)="applyFilterMovie($event)" #input>
+                </mat-form-field>
+
+                <table mat-table [dataSource]="dataSourceMovie" class=" col-12"  aria-describedby="list of movies">
+                  <ng-container matColumnDef="type" class="col-6">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <strong>Movie</strong> </th>
+                    <td mat-cell *matCellDef="let element"> {{element.movie.title}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="Rating" class="col-1">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <em>Rating</em> </th>
+                    <td mat-cell *matCellDef="let element"><input type="number" [ngModel]="element.rating" (ngModelChange)="saveMetaRate($event, element)" matInput [value]="element.rating"><br />{{element.last_rating_date | date: 'MM/dd/yyyy'}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="Review" class="col-1">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <em>Review</em> </th>
+                    <td mat-cell *matCellDef="let element"><input type="number" [ngModel]="element.review_see_count" (ngModelChange)="saveMetaReview($event, element)" matInput [value]="element.review_see_count">{{element.last_review_see_date | date: 'MM/dd/yyyy'}}<br /></td>
+                  </ng-container>
+                  <ng-container matColumnDef="Count" class="col-1">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <em>Count</em> </th>
+                    <td mat-cell *matCellDef="let element"><input type="number" [ngModel]="element.count" (ngModelChange)="saveMetaCount($event, element)" matInput [value]="element.count"><br />{{element.last_count_increment | date: 'MM/dd/yyyy'}}</td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumnsContent"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumnsContent;"></tr>
+
+                  <!-- Row shown when there is no matching data. -->
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-6">
+                <mat-form-field class="col-12">
+                  <mat-label>Serie filter</mat-label>
+                  <input matInput (keyup)="applyFilterSerie($event)" #input>
+                </mat-form-field>
+
+                <table mat-table [dataSource]="dataSourceSerie" class=" col-12"  aria-describedby="list of series">
+                  <ng-container matColumnDef="type" class="col-6">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <strong>Serie</strong> </th>
+                    <td mat-cell *matCellDef="let element"> {{element.serie.title}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="Rating" class="col-1">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <em>Rating</em> </th>
+                    <td mat-cell *matCellDef="let element"><input type="number" [ngModel]="element.rating" (ngModelChange)="saveMetaRate($event, element)" matInput [value]="element.rating"><br />{{element.last_rating_date | date: 'MM/dd/yyyy'}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="Review" class="col-1">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <em>Review</em> </th>
+                    <td mat-cell *matCellDef="let element"><input type="number" [ngModel]="element.review_see_count" (ngModelChange)="saveMetaReview($event, element)" matInput [value]="element.review_see_count">{{element.last_review_see_date | date: 'MM/dd/yyyy'}}<br /></td>
+                  </ng-container>
+                  <ng-container matColumnDef="Count" class="col-1">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <em>Count</em> </th>
+                    <td mat-cell *matCellDef="let element"><input type="number" [ngModel]="element.count" (ngModelChange)="saveMetaCount($event, element)" matInput [value]="element.count"><br />{{element.last_count_increment | date: 'MM/dd/yyyy'}}</td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumnsContent"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumnsContent;"></tr>
+
+                  <!-- Row shown when there is no matching data. -->
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-6">
+                <mat-form-field class="col-12">
+                  <mat-label>Book filter</mat-label>
+                  <input matInput (keyup)="applyFilterBook($event)" #input>
+                </mat-form-field>
+
+                <table mat-table [dataSource]="dataSourceBook" class=" col-12"  aria-describedby="list of books">
+                  <ng-container matColumnDef="type" class="col-6">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <strong>Book</strong> </th>
+                    <td mat-cell *matCellDef="let element"> {{element.book.title}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="Rating" class="col-1">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <em>Rating</em> </th>
+                    <td mat-cell *matCellDef="let element"><input type="number" [ngModel]="element.rating" (ngModelChange)="saveMetaRate($event, element)" matInput [value]="element.rating"><br />{{element.last_rating_date | date: 'MM/dd/yyyy'}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="Review" class="col-1">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <em>Review</em> </th>
+                    <td mat-cell *matCellDef="let element"><input type="number" [ngModel]="element.review_see_count" (ngModelChange)="saveMetaReview($event, element)" matInput [value]="element.review_see_count">{{element.last_review_see_date | date: 'MM/dd/yyyy'}}<br /></td>
+                  </ng-container>
+                  <ng-container matColumnDef="Count" class="col-1">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <em>Count</em> </th>
+                    <td mat-cell *matCellDef="let element"><input type="number" [ngModel]="element.count" (ngModelChange)="saveMetaCount($event, element)" matInput [value]="element.count"><br />{{element.last_count_increment | date: 'MM/dd/yyyy'}}</td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumnsContent"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumnsContent;"></tr>
+
+                  <!-- Row shown when there is no matching data. -->
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-6">
+                <mat-form-field class="col-12">
+                  <mat-label>Game filter</mat-label>
+                  <input matInput (keyup)="applyFilterGame($event)" #input>
+                </mat-form-field>
+
+                <table mat-table [dataSource]="dataSourceGame" class=" col-12"  aria-describedby="list of games">
+                  <ng-container matColumnDef="type" class="col-6">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <strong>Game</strong> </th>
+                    <td mat-cell *matCellDef="let element"> {{element.game.name}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="Rating" class="col-1">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <em>Rating</em> </th>
+                    <td mat-cell *matCellDef="let element"><input type="number" [ngModel]="element.rating" (ngModelChange)="saveMetaRate($event, element)" matInput [value]="element.rating"><br />{{element.last_rating_date | date: 'MM/dd/yyyy'}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="Review" class="col-1">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <em>Review</em> </th>
+                    <td mat-cell *matCellDef="let element"><input type="number" [ngModel]="element.review_see_count" (ngModelChange)="saveMetaReview($event, element)" matInput [value]="element.review_see_count">{{element.last_review_see_date | date: 'MM/dd/yyyy'}}<br /></td>
+                  </ng-container>
+                  <ng-container matColumnDef="Count" class="col-1">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <em>Count</em> </th>
+                    <td mat-cell *matCellDef="let element"><input type="number" [ngModel]="element.count" (ngModelChange)="saveMetaCount($event, element)" matInput [value]="element.count"><br />{{element.last_count_increment | date: 'MM/dd/yyyy'}}</td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumnsContent"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumnsContent;"></tr>
+
+                  <!-- Row shown when there is no matching data. -->
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                  </tr>
+                </table>
+              </div>
+              <div class="col-6">
+                <mat-form-field class="col-12">
+                  <mat-label>Application filter</mat-label>
+                  <input matInput (keyup)="applyFilterApp($event)" #input>
+                </mat-form-field>
+
+                <table mat-table [dataSource]="dataSourceApplication" class=" col-12"  aria-describedby="list of apps">
+                  <ng-container matColumnDef="type" class="col-6">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <strong>Application</strong> </th>
+                    <td mat-cell *matCellDef="let element"> {{element.application.name}} </td>
+                  </ng-container>
+                  <ng-container matColumnDef="Rating" class="col-1">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <em>Rating</em> </th>
+                    <td mat-cell *matCellDef="let element"><input type="number" [ngModel]="element.rating" (ngModelChange)="saveMetaRate($event, element)" matInput [value]="element.rating"><br />{{element.last_rating_date | date: 'MM/dd/yyyy'}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="Review" class="col-1">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <em>Review</em> </th>
+                    <td mat-cell *matCellDef="let element"><input type="number" [ngModel]="element.review_see_count" (ngModelChange)="saveMetaReview($event, element)" matInput [value]="element.review_see_count">{{element.last_review_see_date | date: 'MM/dd/yyyy'}}<br /></td>
+                  </ng-container>
+                  <ng-container matColumnDef="Count" class="col-1">
+                    <th mat-header-cell *matHeaderCellDef scope="col"> <em>Count</em> </th>
+                    <td mat-cell *matCellDef="let element"><input type="number" [ngModel]="element.count" (ngModelChange)="saveMetaCount($event, element)" matInput [value]="element.count"><br />{{element.last_count_increment | date: 'MM/dd/yyyy'}}</td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumnsContent"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumnsContent;"></tr>
+
+                  <!-- Row shown when there is no matching data. -->
+                  <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+            <div *ngIf="this.printMode === 'History'">
+              <div>
+                <mat-form-field appearance="legacy">
+                  <mat-label>Select history</mat-label>
+                    <mat-select [(ngModel)]="this.historySelected" name="history" (ngModelChange)="this.selectHistory()">
+                    <mat-option *ngFor="let history of this.historyRunning" [value]="history.id">{{ history.occured_at | date: 'MM/dd/yyyy - HH:mm'}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div class="d-flex justify-content-center mt-4">
+                <div *ngIf="this.historySelected" style="width:90%">
+                  <p class="lead display-9">Proposed recommendations</p>
+                  <div class="d-flex flex-column justify-content-center">
+                    <table mat-table [dataSource]="this.dataSourceTrackRecommendation"  aria-describedby="list of tracks reco">
+
+                      <ng-container matColumnDef="music">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> <strong>Music</strong> </th>
+                        <td mat-cell *matCellDef="let element"> {{element.track.title}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="artist_name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> Artist </th>
+                        <td mat-cell *matCellDef="let element"> {{element.track.artist_name}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="rating">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> Rating </th>
+                        <td mat-cell *matCellDef="let element"> {{element.track.rating}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="score">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> Recommandation score </th>
+                        <td mat-cell *matCellDef="let element">{{element.score}}</td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayedColumnsTrackReco"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumnsTrackReco;"></tr>
+                    </table>
+                    <mat-paginator class="mb-4" [length]="this.dataSourceTrackRecommendation.data.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+
+                    <table mat-table [dataSource]="this.dataSourceMovieRecommendation"  aria-describedby="list of movies reco">
+                      <ng-container matColumnDef="movie">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> <strong>Movie</strong> </th>
+                        <td mat-cell *matCellDef="let element"> {{element.movie.title}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="writer">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> Writer </th>
+                        <td mat-cell *matCellDef="let element"> {{element.movie.writer}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="rating">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> Rating </th>
+                        <td mat-cell *matCellDef="let element"> {{element.movie.rating}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="score">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> Recommandation score </th>
+                        <td mat-cell *matCellDef="let element">{{element.score}}</td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayedColumnsMovieReco"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumnsMovieReco;"></tr>
+                    </table>
+                    <mat-paginator class="mb-4" [length]="this.dataSourceMovieRecommendation.data.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+
+                    <table mat-table [dataSource]="this.dataSourceSerieRecommendation"  aria-describedby="list of serie reco">
+                      <ng-container matColumnDef="serie">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> <strong>Serie</strong> </th>
+                        <td mat-cell *matCellDef="let element"> {{element.serie.title}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="writers">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> Writers </th>
+                        <td mat-cell *matCellDef="let element"> {{element.serie.writers}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="rating">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> Rating </th>
+                        <td mat-cell *matCellDef="let element"> {{element.serie.rating}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="score">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> Recommandation score </th>
+                        <td mat-cell *matCellDef="let element">{{element.score}}</td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayedColumnsSerieReco"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumnsSerieReco;"></tr>
+                    </table>
+                    <mat-paginator class="mb-4" [length]="this.dataSourceSerieRecommendation.data.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+
+                    <table mat-table [dataSource]="this.dataSourceBookRecommendation"  aria-describedby="list of books reco">
+                      <ng-container matColumnDef="book">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> <strong>Book</strong> </th>
+                        <td mat-cell *matCellDef="let element"> {{element.book.title}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="publisher">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> Publisher </th>
+                        <td mat-cell *matCellDef="let element"> {{element.book.publisher}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="rating">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> Rating </th>
+                        <td mat-cell *matCellDef="let element"> {{element.book.rating}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="score">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> Recommandation score </th>
+                        <td mat-cell *matCellDef="let element">{{element.score}}</td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayedColumnsBookReco"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumnsBookReco;"></tr>
+                    </table>
+                    <mat-paginator class="mb-4" [length]="this.dataSourceBookRecommendation.data.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+
+                    <table mat-table [dataSource]="this.dataSourceGameRecommendation"  aria-describedby="list of games reco">
+                      <ng-container matColumnDef="game">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> <strong>Game</strong> </th>
+                        <td mat-cell *matCellDef="let element"> {{element.game.name}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="developers">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> Developers </th>
+                        <td mat-cell *matCellDef="let element"> {{element.game.developers}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="rating">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> Rating </th>
+                        <td mat-cell *matCellDef="let element"> {{element.game.rating}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="score">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> Recommandation score </th>
+                        <td mat-cell *matCellDef="let element">{{element.score}}</td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayedColumnsGameReco"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumnsGameReco;"></tr>
+                    </table>
+                    <mat-paginator class="mb-4" [length]="this.dataSourceGameRecommendation.data.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+
+                    <table mat-table [dataSource]="this.dataSourceApplicationRecommendation"  aria-describedby="list of apps reco">
+                      <ng-container matColumnDef="application">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> <strong>Application</strong> </th>
+                        <td mat-cell *matCellDef="let element"> {{element.application.name}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="current_version">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> Current version </th>
+                        <td mat-cell *matCellDef="let element"> {{element.application.current_version}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="rating">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> Rating </th>
+                        <td mat-cell *matCellDef="let element"> {{element.application.rating}} </td>
+                      </ng-container>
+                      <ng-container matColumnDef="score">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header scope="col"> Recommandation score </th>
+                        <td mat-cell *matCellDef="let element">{{element.score}}</td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayedColumnsApplicationReco"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumnsApplicationReco;"></tr>
+                    </table>
+                    <mat-paginator class="mb-4" [length]="this.dataSourceApplicationRecommendation.data.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
