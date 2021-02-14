@@ -33,6 +33,10 @@ export class ProfileService {
     return this.http.put(this.urlManageProfile + "/" + uuid + "/genre/" + id_genre, '').toPromise();
   }
 
+  deleteGenreToProfile(uuid: string, id_genre: string): Promise<any> {
+    return this.http.delete(this.urlManageProfile + "/" + uuid + "/genre/" + id_genre).toPromise();
+  }
+
   getGenreToProfile(uuid: string): Promise<any> {
     return this.http.get(this.urlManageProfile + "/" + uuid + "/genre").toPromise();
   }

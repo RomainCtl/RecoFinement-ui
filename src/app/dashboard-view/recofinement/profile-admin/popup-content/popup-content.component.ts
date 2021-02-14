@@ -195,7 +195,6 @@ export class PopupContentComponent implements OnInit {
   }
 
   updateIndex(index: number) {
-    console.log(index)
     this.tabIndex = index;
     switch(this.tabIndex) {
       case 0: {

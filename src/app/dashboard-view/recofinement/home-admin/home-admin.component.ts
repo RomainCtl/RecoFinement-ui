@@ -97,7 +97,6 @@ export class HomeAdminComponent {
     this.movieService.getMovieToValidate().then((movie: MovieResponseDto) => {
       this.dataSourceMovie = new MatTableDataSource<Movie>(movie.content);
       this.dataSourceMovie.paginator = this.paginator;
-      console.log(this.dataSourceMovie);
     });
   }
 

@@ -27,9 +27,6 @@
           </ng-container>
         </mat-list>
 
-        <!-- FIXME A enlever-->
-        {{this.messageExec}}
-
         <div class="col-6">
           <p class="lead display-8">{{this.mode}} a profile</p>
             <div>
@@ -47,7 +44,7 @@
                   <div class="col-12">
                     <mat-form-field class="col-5" appearance="legacy">
                       <mat-label>Track genre(s)</mat-label>
-                        <mat-select [(ngModel)]="genre_track" multiple>
+                        <mat-select [formControl]="trackGenreForm" multiple>
                           <mat-form-field appearance="legacy" class="d-flex justify-content-center mt-2">
                             <input matInput placeholder="Filter"(keyup)="onKeyTrack($event.target.value)">
                           </mat-form-field>
@@ -57,7 +54,7 @@
 
                     <mat-form-field class="offset-1 col-5" appearance="legacy">
                       <mat-label>Movie genre(s)</mat-label>
-                        <mat-select [(ngModel)]="genre_movie" multiple>
+                        <mat-select [formControl]="movieGenreForm" multiple>
                           <mat-form-field appearance="legacy" class="d-flex justify-content-center mt-2">
                             <input matInput placeholder="Filter"(keyup)="onKeyMovie($event.target.value)">
                           </mat-form-field>
@@ -68,7 +65,7 @@
                   <div class="col-12">
                     <mat-form-field class="col-5" appearance="legacy">
                       <mat-label>Serie genre(s)</mat-label>
-                        <mat-select [(ngModel)]="genre_serie" multiple>
+                        <mat-select [formControl]="serieGenreForm" multiple>
                           <mat-form-field appearance="legacy" class="d-flex justify-content-center mt-2">
                             <input matInput placeholder="Filter"(keyup)="onKeySerie($event.target.value)">
                           </mat-form-field>
@@ -88,7 +85,7 @@
                   <div class="col-12">
                     <mat-form-field class="col-5" appearance="legacy">
                       <mat-label>Game genre(s)</mat-label>
-                        <mat-select [(ngModel)]="genre_game" multiple>
+                        <mat-select [formControl]="gameGenreForm" multiple>
                           <mat-form-field appearance="legacy" class="d-flex justify-content-center mt-2">
                             <input matInput placeholder="Filter"(keyup)="onKeyGame($event.target.value)">
                           </mat-form-field>
@@ -98,7 +95,7 @@
 
                     <mat-form-field class="offset-1 col-5" appearance="legacy">
                       <mat-label>Application genre(s)</mat-label>
-                        <mat-select [(ngModel)]="genre_app" multiple>
+                        <mat-select [formControl]="applicationGenreForm" multiple>
                           <mat-form-field appearance="legacy" class="d-flex justify-content-center mt-2">
                             <input matInput placeholder="Filter"(keyup)="onKeyApps($event.target.value)">
                           </mat-form-field>

@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -34,19 +34,29 @@ export class ProfileAdminComponent implements OnInit, AfterViewInit {
   printMode:string;
 
   genresTrack = [];
+  preselectGenresTrack = [];
   selectedGenresTrack = [];
+  trackGenreForm: FormControl;
 
   genresMovie = [];
   selectedGenresMovie = [];
+  preselectGenresMovie = [];
+  movieGenreForm: FormControl;
 
   genresSerie = [];
   selectedGenresSerie = [];
+  preselectGenresSerie = [];
+  serieGenreForm: FormControl;
 
   genresGame = [];
   selectedGenresGame = [];
+  preselectGenresGame = [];
+  gameGenreForm: FormControl;
 
   genresApplication = [];
   selectedGenresApplication = [];
+  preselectGenresApplication = [];
+  applicationGenreForm: FormControl;
 
   listProfiles: any[];
   selectedProfile: any;
@@ -84,10 +94,7 @@ export class ProfileAdminComponent implements OnInit, AfterViewInit {
   historyRunning: any[];
   historySelected: any;
 
-  messageExec: string = '';
-
   constructor(
-    private formBuilder: FormBuilder,
     private snackbar: MatSnackBar,
     public dialog: MatDialog,
     private trackService: TrackService,
@@ -111,7 +118,6 @@ export class ProfileAdminComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.messageExec = this.socketService.serverResponse.message;
     this.getProfiles();
     this.getAllGenres();
     this.resetForm();
@@ -216,37 +222,54 @@ export class ProfileAdminComponent implements OnInit, AfterViewInit {
   createProfile(): void {
     if(this.mode === 'Create') {
       this.profileService.createNewProfile(this.new_profilename).then((res) => {
-        if(this.genre_track.length !== 0 ) {
-          for(let genre of this.genre_track) {
+        if(this.trackGenreForm.value.length !== 0 ) {
+          for(let genre of this.trackGenreForm.value) {
             this.profileService.addGenreToProfile(res.profile.uuid, genre);
           }
         }
-        if(this.genre_movie.length !== 0 ) {
-          for(let genre of this.genre_movie) {
+        if(this.movieGenreForm.value.length !== 0 ) {
+          for(let genre of this.movieGenreForm.value) {
             this.profileService.addGenreToProfile(res.profile.uuid, genre);
           }
         }
-        if(this.genre_serie.length !== 0) {
-          for(let genre of this.genre_serie) {
-            this.profileService.addGenreToProfile(res.profile.lastProfile.uuid, genre);
+        if(this.serieGenreForm.value.length !== 0 ) {
+          for(let genre of this.serieGenreForm.value) {
+            this.profileService.addGenreToProfile(res.profile.uuid, genre);
           }
         }
-        if(this.genre_game.length !== 0 ) {
-          for(let genre of this.genre_game) {
-            this.profileService.addGenreToProfile(res.profile.lastProfile.uuid, genre);
+        if(this.gameGenreForm.value.length !== 0 ) {
+          for(let genre of this.gameGenreForm.value) {
+            this.profileService.addGenreToProfile(res.profile.uuid, genre);
           }
         }
-        if(this.genre_app.length !== 0 ) {
-          for(let genre of this.genre_app) {
-            this.profileService.addGenreToProfile(res.profile.lastProfile.uuid, genre);
+        if(this.applicationGenreForm.value.length !== 0 ) {
+          for(let genre of this.applicationGenreForm.value) {
+            this.profileService.addGenreToProfile(res.profile.uuid, genre);
           }
         }
+        this.resetForm();
         this.getProfiles();
       });
     } else if(this.mode === 'Edit') {
-      this.profileService.editProfile(this.selectedProfile.uuid, this.new_profilename).then((res) => {
+      this.profileService.editProfile(this.selectedProfile.uuid, this.new_profilename).then(() => {
+        this.profileService.getGenreToProfile(this.selectedProfile.uuid).then((res) => {
+          let genres = res.content;
+          let new_genres = this.trackGenreForm.value.concat(this.movieGenreForm.value).concat(this.serieGenreForm.value).concat(this.gameGenreForm.value).concat(this.applicationGenreForm.value);
 
-        this.getProfiles();
+          for(let genre of new_genres) {
+            if (!genres.find(elem => elem.genre_id === genre)) {
+              this.profileService.addGenreToProfile(this.selectedProfile.uuid, genre);
+            }
+          }
+          for(let genre of genres) {
+            if (!new_genres.find(elem => elem === genre.genre_id)) {
+              this.profileService.deleteGenreToProfile(this.selectedProfile.uuid, genre.genre_id);
+            }
+          }
+
+          this.resetForm();
+          this.getProfiles();
+        });
       });
     } else {
       this.snackbar.open('Name is required', '', {
@@ -262,37 +285,42 @@ export class ProfileAdminComponent implements OnInit, AfterViewInit {
       this.trackService.getGenres().then((genres: any) => {
         for(let genre of res.content) {
           if(genres.content.find(elem => elem.genre_id === genre.genre_id)) {
-            this.genre_track.push(genre.genre_id);
+            this.preselectGenresTrack.push(genre.genre_id);
           }
         }
+        this.trackGenreForm = new FormControl(this.preselectGenresTrack);
       });
       this.movieService.getGenres().then((genres: any) => {
         for(let genre of res.content) {
           if(genres.content.find(elem => elem.genre_id === genre.genre_id)) {
-            this.genre_movie.push(genre.genre_id);
+            this.preselectGenresMovie.push(genre.genre_id);
           }
         }
+        this.movieGenreForm = new FormControl(this.preselectGenresMovie);
       });
       this.serieService.getGenres().then((genres: any) => {
         for(let genre of res.content) {
           if(genres.content.find(elem => elem.genre_id === genre.genre_id)) {
-            this.genre_serie.push(genre.genre_id);
+            this.preselectGenresSerie.push(genre.genre_id);
           }
         }
+        this.serieGenreForm = new FormControl(this.preselectGenresSerie);
       });
       this.gameService.getGenres().then((genres: any) => {
         for(let genre of res.content) {
           if(genres.content.find(elem => elem.genre_id === genre.genre_id)) {
-            this.genre_game.push(genre.genre_id);
+            this.preselectGenresGame.push(genre.genre_id);
           }
         }
+        this.gameGenreForm = new FormControl(this.preselectGenresGame);
       });
       this.applicationService.getGenres().then((genres: any) => {
         for(let genre of res.content) {
           if(genres.content.find(elem => elem.genre_id === genre.genre_id)) {
-            this.genre_app.push(genre.genre_id);
+            this.preselectGenresApplication.push(genre.genre_id);
           }
         }
+        this.applicationGenreForm = new FormControl(this.preselectGenresApplication);
       });
     });
     this.mode = "Edit";
@@ -302,6 +330,7 @@ export class ProfileAdminComponent implements OnInit, AfterViewInit {
   deleteProfile(uuid: string): void {
     this.profileService.deleteProfile(uuid).then(() => {
       this.printMode = "";
+      this.resetForm();
       this.getProfiles();
     });
   }
@@ -323,7 +352,6 @@ export class ProfileAdminComponent implements OnInit, AfterViewInit {
     this.historySelected = null;
     this.printMode = 'History';
 
-
     this.getHistoryRunning();
   }
 
@@ -339,27 +367,22 @@ export class ProfileAdminComponent implements OnInit, AfterViewInit {
       setTimeout(() => this.dataSourceTrackRecommendation.paginator = this.paginator);
     });
     this.movieService.getHistoryMovieToProfile(this.selectedProfile.uuid, this.historySelected).then((res) => {
-      console.log(res);
       this.dataSourceMovieRecommendation.data = res.content;
       setTimeout(() => this.dataSourceMovieRecommendation.paginator = this.paginator);
     });
     this.serieService.getHistorySerieToProfile(this.selectedProfile.uuid, this.historySelected).then((res) => {
-      console.log(res);
       this.dataSourceSerieRecommendation.data = res.content;
       setTimeout(() => this.dataSourceSerieRecommendation.paginator = this.paginator);
     });
     this.gameService.getHistoryGameToProfile(this.selectedProfile.uuid, this.historySelected).then((res) => {
-      console.log(res);
       this.dataSourceGameRecommendation.data = res.content;
       setTimeout(() => this.dataSourceGameRecommendation.paginator = this.paginator);
     });
     this.bookService.getHistoryBookToProfile(this.selectedProfile.uuid, this.historySelected).then((res) => {
-      console.log(res);
       this.dataSourceBookRecommendation.data = res.content;
       setTimeout(() => this.dataSourceBookRecommendation.paginator = this.paginator);
     });
     this.applicationService.getHistoryApplicationToProfile(this.selectedProfile.uuid, this.historySelected).then((res) => {
-      console.log(res);
       this.dataSourceApplicationRecommendation.data = res.content;
       setTimeout(() => this.dataSourceApplicationRecommendation.paginator = this.paginator);
     });
@@ -368,12 +391,19 @@ export class ProfileAdminComponent implements OnInit, AfterViewInit {
   resetForm(): void {
     this.mode = "Create";
 
+    this.trackGenreForm = new FormControl([]);
+    this.movieGenreForm = new FormControl([]);
+    this.serieGenreForm = new FormControl([]);
+    this.gameGenreForm = new FormControl([]);
+    this.applicationGenreForm = new FormControl([]);
+
+    this.preselectGenresTrack = [];
+    this.preselectGenresMovie = [];
+    this.preselectGenresSerie = [];
+    this.preselectGenresGame = [];
+    this.preselectGenresApplication = [];
+
     this.new_profilename = "";
-    this.genre_track = [];
-    this.genre_movie = [];
-    this.genre_serie = [];
-    this.genre_game = [];
-    this.genre_app = [];
   }
 
   applyFilterTrack(event: Event) {
