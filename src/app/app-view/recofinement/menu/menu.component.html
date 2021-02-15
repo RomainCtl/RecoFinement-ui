@@ -22,7 +22,7 @@
       <mat-menu #menu="matMenu" class="mt-4">
         <button mat-menu-item [routerLink]="['user/profile']">Manage profile</button>
         <button mat-menu-item [routerLink]="['user/interest']">My interests</button>
-        <button mat-menu-item [routerLink]="['user/history/tracks']">Music history</button>
+        <button mat-menu-item [routerLink]="['user/history/tracks']">Listening history</button>
         <button mat-menu-item (click)="logOut()">Sign out</button>
       </mat-menu>
     </div>
@@ -97,7 +97,7 @@
           </button>
           <button mat-menu-item [routerLink]="['user/history/tracks']">
             <mat-icon color="primary">history</mat-icon>
-            <span>Music history</span>
+            <span>Listening history</span>
           </button>
         </mat-menu>
         <button mat-menu-item (click)="logOut()">

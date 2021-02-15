@@ -50,7 +50,7 @@
                 </ng-container>
                 <ng-template #tracksTemplate>
                 <div class="row">
-                    <mat-paginator [length]="popularTracks.total_pages" [pageIndex]="tracks.pageIndex" (page)="trackPageChanges($event)" pageSize="24"></mat-paginator>
+                    <mat-paginator  class="bg-light" [length]="popularTracks.total_pages" [pageIndex]="tracks.pageIndex" (page)="trackPageChanges($event)" pageSize="24"></mat-paginator>
                   <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center text-center p-0"
                     *ngFor="let track of popularTracks.content">
                     <div class="card align-self-end m-3 p-0 shadow" style="width: 18rem;">
@@ -72,7 +72,7 @@
                     </div>
                   </div>
                 </div>
-                <mat-paginator [length]="popularTracks.total_pages" [pageIndex]="tracks.pageIndex" (page)="trackPageChanges($event)" pageSize="24"></mat-paginator>
+                <mat-paginator  class="bg-light" [length]="popularTracks.total_pages" [pageIndex]="tracks.pageIndex" (page)="trackPageChanges($event)" pageSize="24"></mat-paginator>
                 </ng-template>
               </div>
         </mat-tab>
@@ -87,7 +87,7 @@
                 </ng-container>
                 <ng-template #moviesTemplate>
                     <div class="row">
-                    <mat-paginator [length]="popularMovies.total_pages" [pageIndex]="movies.pageIndex" (page)="moviePageChanges($event)" pageSize="24"></mat-paginator>
+                    <mat-paginator  class="bg-light" [length]="popularMovies.total_pages" [pageIndex]="movies.pageIndex" (page)="moviePageChanges($event)" pageSize="24"></mat-paginator>
                     <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center text-center p-0"
                         *ngFor="let movie of popularMovies.content">
                         <div class="card align-self-end m-3 p-0 shadow" style="width: 18rem;">
@@ -102,7 +102,7 @@
                         </div>
                     </div>
                     </div>
-                    <mat-paginator [length]="popularMovies.total_pages" [pageIndex]="movies.pageIndex" (page)="moviePageChanges($event)" pageSize="24"></mat-paginator>
+                    <mat-paginator  class="bg-light" [length]="popularMovies.total_pages" [pageIndex]="movies.pageIndex" (page)="moviePageChanges($event)" pageSize="24"></mat-paginator>
                 </ng-template>
               </div>
         </mat-tab>
@@ -117,7 +117,7 @@
                 </ng-container>
                 <ng-template #seriesTemplate>
                 <div class="row">
-                <mat-paginator [length]="popularSeries.total_pages" [pageIndex]="series.pageIndex" (page)="seriesPageChanges($event)" pageSize="24"></mat-paginator>
+                <mat-paginator class="bg-light" [length]="popularSeries.total_pages" [pageIndex]="series.pageIndex" (page)="seriesPageChanges($event)" pageSize="24"></mat-paginator>
                   <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center text-center p-0"
                     *ngFor="let series of popularSeries.content">
                     <div class="card align-self-end m-3 p-0 shadow" style="width: 18rem;">
@@ -133,7 +133,7 @@
                     </div>
                   </div>
                 </div>
-                <mat-paginator [length]="popularSeries.total_pages" [pageIndex]="series.pageIndex" (page)="seriesPageChanges($event)" pageSize="24"></mat-paginator>
+                <mat-paginator class="bg-light" [length]="popularSeries.total_pages" [pageIndex]="series.pageIndex" (page)="seriesPageChanges($event)" pageSize="24"></mat-paginator>
                 </ng-template>
               </div>
         </mat-tab>
@@ -148,7 +148,7 @@
                 </ng-container>
                 <ng-template #gamesTemplate>
                 <div class="row">
-                <mat-paginator [length]="popularGames.total_pages" [pageIndex]="games.pageIndex" (page)="gamePageChanges($event)" [pageSize]="popularGames.number_of_elements"></mat-paginator>
+                <mat-paginator class="bg-light" [length]="popularGames.total_pages" [pageIndex]="games.pageIndex" (page)="gamePageChanges($event)" [pageSize]="popularGames.number_of_elements"></mat-paginator>
                   <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center text-center p-0"
                     *ngFor="let game of popularGames.content">
                     <div class="card align-self-end m-3 p-0 shadow" style="width: 18rem;">
@@ -163,7 +163,7 @@
                     </div>
                   </div>
                 </div>
-                <mat-paginator [length]="popularGames.total_pages" [pageIndex]="games.pageIndex" (page)="gamePageChanges($event)" [pageSize]="popularGames.number_of_elements"></mat-paginator>
+                <mat-paginator class="bg-light" [length]="popularGames.total_pages" [pageIndex]="games.pageIndex" (page)="gamePageChanges($event)" [pageSize]="popularGames.number_of_elements"></mat-paginator>
                 </ng-template>
               </div>
         </mat-tab>
@@ -178,7 +178,7 @@
                 </ng-container>
                 <ng-template #booksTemplate>
                 <div class="row">
-                <mat-paginator [length]="popularBooks.total_pages" [pageIndex]="books.pageIndex" (page)="bookPageChanges($event)" [pageSize]="popularBooks.number_of_elements"></mat-paginator>
+                <mat-paginator  class="bg-light" [length]="popularBooks.total_pages" [pageIndex]="books.pageIndex" (page)="bookPageChanges($event)" [pageSize]="popularBooks.number_of_elements"></mat-paginator>
                   <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center text-center p-0"
                     *ngFor="let book of popularBooks.content">
                     <div class="card align-self-end m-3 p-0 shadow" style="width: 18rem;">
@@ -193,7 +193,7 @@
                     </div>
                   </div>
                 </div>
-                <mat-paginator [length]="popularBooks.total_pages" [pageIndex]="books.pageIndex" (page)="bookPageChanges($event)" [pageSize]="popularBooks.number_of_elements"></mat-paginator>
+                <mat-paginator  class="bg-light" [length]="popularBooks.total_pages" [pageIndex]="books.pageIndex" (page)="bookPageChanges($event)" [pageSize]="popularBooks.number_of_elements"></mat-paginator>
                 </ng-template>
               </div>
         </mat-tab>
@@ -208,7 +208,7 @@
                 </ng-container>
                 <ng-template #appsTemplate>
                 <div class="row">
-                <mat-paginator [length]="popularApps.total_pages" [pageIndex]="apps.pageIndex" (page)="appsPageChanges($event)" [pageSize]="popularApps.number_of_elements"></mat-paginator>
+                <mat-paginator  class="bg-light" [length]="popularApps.total_pages" [pageIndex]="apps.pageIndex" (page)="appsPageChanges($event)" [pageSize]="popularApps.number_of_elements"></mat-paginator>
                   <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center text-center p-0"
                     *ngFor="let app of popularApps.content">
                     <div class="card align-self-end m-3 p-0 shadow" style="width: 18rem;">
@@ -223,7 +223,7 @@
                     </div>
                   </div>
                 </div>
-                <mat-paginator [length]="popularApps.total_pages" [pageIndex]="apps.pageIndex" (page)="appsPageChanges($event)" [pageSize]="popularApps.number_of_elements"></mat-paginator>
+                <mat-paginator  class="bg-light" [length]="popularApps.total_pages" [pageIndex]="apps.pageIndex" (page)="appsPageChanges($event)" [pageSize]="popularApps.number_of_elements"></mat-paginator>
                 </ng-template>
               </div>
         </mat-tab>
