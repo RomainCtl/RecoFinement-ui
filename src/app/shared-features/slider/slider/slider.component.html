@@ -9,17 +9,17 @@
             <div *ngFor="let item of this.content;" class="swiper-slide" style="height:auto;">
               <div class="card shadow-sm border-0 align-self-middle" style="width: 15rem;">
                 <div class="container p-0">
-                    <img *ngIf="item.track_id" class="card-img-top swiper-lazy" src="assets/images/loading.gif" [attr.data-src]="item.covert_art_url">
+                    <img *ngIf="item.track ? item.track.track_id : item.track_id" class="card-img-top swiper-lazy" src="assets/images/loading.gif" [attr.data-src]="item.track ? item.track.covert_art_url : item.covert_art_url">
                     <img *ngIf="item.isbn" class="card-img-top swiper-lazy" src="assets/images/loading.gif" [attr.data-src]="item.image_url_l">
                     <img *ngIf="item.serie_id || item.movie_id || item.app_id" [class]="item.app_id ? 'p-lg-5 p-sm-2' : 'p-0'" class="card-img-top swiper-lazy" src="assets/images/loading.gif" [attr.data-src]="item.cover">
                     <img *ngIf="item.game_id" class="card-img-top swiper-lazy" src="assets/images/loading.gif" [attr.data-src]="item.header_image">
-                  <div class="overlay" *ngIf="item.track_id && !this.preferences" (click)="openPreview(item)" style="cursor: pointer;">
+                  <div class="overlay" *ngIf="(item.track ? item.track.track_id : item.track_id) && !this.preferences" (click)="openPreview(item.track ? item.track : item)" style="cursor: pointer;">
                     <div class="icon" >
                       <mat-icon class="fa fa-user text-center w-100 h-100" style="font-size:75px;" aria-hidden="false">
                         play_circle_outline</mat-icon>
                     </div>
                   </div>
-                  <div class="spinner" *ngIf="!title.startsWith('Most popular') && !this.preferences">
+                  <div class="spinner" *ngIf="!title.startsWith('Most popular') && !this.preferences && !this.history">
                       <circle-progress
                       [percent]="item.reco_score*100"
                       [radius]="24"
@@ -42,14 +42,14 @@
                       <span>
                         <h3 *ngIf="item.app_id || item.game_id else default" class="card-title text-danger text-truncate"><strong>{{item.name}}</strong></h3>
                         <ng-template #default>
-                          <h3 class="card-title text-danger text-truncate"><strong>{{item.title}}</strong></h3>
+                          <h3 class="card-title text-danger text-truncate"><strong>{{item.title || item.track.title}}</strong></h3>
                         </ng-template>
                       </span>
-                      <p *ngIf="item.track_id" class="card-text text-truncate" style="max-width: 100%;"><strong>{{item.artist_name}}</strong></p>
+                      <p *ngIf="item.track ? item.track.track_id : item.track_id" class="card-text text-truncate" style="max-width: 100%;"><strong>{{item.track ? item.track.artist_name : item.artist_name}}</strong></p>
                       <p *ngIf="item.movie_id" class="card-text text-truncate" style="max-width: 100%;"><strong>{{item.director}}</strong></p>
                       <p *ngIf="item.app_id" class="card-text text-truncate" style="max-width: 100%;"><strong>{{item.type}}</strong></p>
                       <p *ngIf="item.game_id" class="card-text text-truncate" style="max-width: 100%;"><strong>{{item.developers}}</strong></p>
-                        <button *ngIf="!this.preferences" mat-stroked-button color="primary" class="d-flex justify-content-center align-items-center flex-column" (click)="openPopUp(item)">See more</button>
+                        <button *ngIf="!this.preferences" mat-stroked-button color="primary" class="d-flex justify-content-center align-items-center flex-column" (click)="openPopUp(item.track ? item.track : item)">See more</button>
                         <app-rating
                           *ngIf="this.preferences"
                           [media]="item.track_id || item.movie_id || item.app_id || item.game_id || item.serie_id"

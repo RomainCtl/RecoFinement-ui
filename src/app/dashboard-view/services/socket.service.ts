@@ -17,7 +17,7 @@ export class SocketService {
     }
   }
 
-  private socket: Socket = io('http://127.0.0.1:4040/recommend', { transportOptions: {
+  private socket: Socket = io(environment.socket_url, { transportOptions: {
     polling: {
       extraHeaders: {
         token: document.cookie ? document.cookie.split('; ').filter(cookie => cookie.startsWith('access_token'))[0].split('=')[1] : ''

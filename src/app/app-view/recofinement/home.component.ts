@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
     private overlay: Overlay
   ) {  }
 
-  trackResponse: TrackHistoryResponseDto = {
+  trackHistory: TrackHistoryResponseDto = {
     status: false,
     message: '',
     content: [],
@@ -106,16 +106,11 @@ export class HomeComponent implements OnInit {
     total_pages: 0
   };
 
-  apiResponse = false;
-  noTracks = true;
+
 
   ngOnInit(): void {
-    this.trackService.getHistoryTracks(1).then((result: TrackHistoryResponseDto) => {
-      this.trackResponse = result;
-      this.apiResponse = true;
-      if (result.number_of_elements !== 0) {
-        this.noTracks = false;
-      }
+    this.trackService.getHistoryTracks().then((result: TrackHistoryResponseDto) => {
+      this.trackHistory = result;
     });
 
     this.trackService.getPopularTracks().then((result: TrackResponseDto) => {
@@ -142,10 +137,6 @@ export class HomeComponent implements OnInit {
       this.popularApplications = result;
     });
 
-  }
-
-  get tracksHistory(): TrackHistoryResponseDto {
-    return this.trackResponse;
   }
 
   get authService(): AuthService {

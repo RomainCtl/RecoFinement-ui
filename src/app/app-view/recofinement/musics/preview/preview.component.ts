@@ -20,7 +20,7 @@ export class PreviewComponent implements OnInit, AfterViewInit {
   }
 
   savePlayCount(id: number): void {
-    this.trackService.savePlayCount(id, { additional_play_count: 1 });
+    this.trackService.savePlayCount(id, { additional_count: 1 });
   }
 
   ngOnInit(): void {}

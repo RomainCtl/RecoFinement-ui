@@ -5,6 +5,11 @@ import Swiper, { SwiperOptions } from 'swiper/core'
 import { getLocaleDirection } from '@angular/common';
 import { Content } from 'src/app/models/DtoResponse/Content.model';
 
+interface ContentHistory {
+    last_played_date: string,
+    track: Track[]
+};
+
 @Component({
   selector: '[app-slider]',
   templateUrl: './slider.component.html',
@@ -22,7 +27,7 @@ export class SliderComponent implements OnInit  {
   public className: string;
 
   @Input()
-  public content: any[] = new Array<any>();
+  public content: any[] | ContentHistory[] = [];
 
   @Input()
   public title: string;
@@ -31,7 +36,10 @@ export class SliderComponent implements OnInit  {
   public type: string;
 
   @Input()
-  public preferences: boolean;
+  public preferences: boolean = false;
+
+  @Input()
+  public history: boolean = false;
 
   @Output()
   public openPreviewEvent: EventEmitter<Track> = new EventEmitter<Track>();
@@ -92,22 +100,8 @@ export class SliderComponent implements OnInit  {
     this.openPreviewEvent.emit(item);
   }
 
-  imageLoaded(index) {
-    this.loadedImages.push(index)
-    console.log(this.loadedImages)
-  }
-
   openPopUp(item: Track) {
     this.clickSeeMoreEvent.emit(item);
-  }
-
-  loadMoreSlides(index: number) {
-    this.endReachedEvent.emit(this.content.length/24 + 1)
-    this.mySwiper.init();
-  }
-
-  deactivateSearch() {
-    this.deactivateSearchEvent.emit();
   }
 
 }

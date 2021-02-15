@@ -17,28 +17,28 @@
       </div>
       <div class="carousel-item">
         <img src="assets/images/home_movies.jpg" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
+        <div class="carousel-caption d-md-block">
           <h1 class="display-1">Cinema should make you forget you are sitting in a theater.</h1>
           <h2 class="display-4">Browse more than 50 000 movies.</h2>
         </div>
       </div>
       <div class="carousel-item">
         <img src="assets/images/home_games.jpg" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
+        <div class="carousel-caption d-md-block">
           <h1 class="display-1">Just play. Have fun. Enjoy the game.</h1>
           <h2 class="display-2">More than 5000 games waiting to be played.</h2>
         </div>
       </div>
       <div class="carousel-item">
         <img src="assets/images/home_books.jpg" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
+        <div class="carousel-caption d-md-block">
           <h1 class="display-1">A room without books is like a body without a soul.</h1>
           <h2 class="display-2">More than 270 000 books waiting to be read.</h2>
         </div>
       </div>
       <div class="carousel-item">
         <img src="assets/images/home_apps.jpg" class="d-block w-100" alt="...">
-        <div class="carousel-caption d-none d-md-block">
+        <div class="carousel-caption d-md-block">
           <h1 class="display-1">Get the right app.</h1>
           <h2 class="display-2">Browse more than 9000 apps.</h2>
         </div>
@@ -54,11 +54,15 @@
     </a>
   </div>
 
-  <div *ngIf="!noTracks" class="container">
-    <h1>Listening history</h1>
-    <div app-slider-history></div>
-  </div>
-
+        <div
+        app-slider
+        title="Listening history"
+        className="song_history"
+        *ngIf="trackHistory.content.length > 0"
+        [content]="trackHistory.content"
+        [history]="true"
+        (openPreviewEvent)="openPreview($event)"
+        (clickSeeMoreEvent)="openPopUp($event)"></div>
 
         <div
         app-slider

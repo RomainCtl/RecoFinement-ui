@@ -43,7 +43,7 @@ export class TrackService {
     return this.httpClient.get<TrackResponseDto>(this.urlGetRecommendedTracksFromGroups + profile).toPromise();
   }
 
-  getHistoryTracks(page: number): Promise<TrackHistoryResponseDto> {
+  getHistoryTracks(page: number = 1): Promise<TrackHistoryResponseDto> {
     return this.httpClient.get<TrackHistoryResponseDto>(this.urlGetHistoryTracks + page).toPromise();
   }
 
