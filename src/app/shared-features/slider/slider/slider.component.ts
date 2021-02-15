@@ -49,10 +49,8 @@ export class SliderComponent implements OnInit  {
 
   ngOnInit(): void {
     this.mySwiper = new Swiper('.' + this.className, {
-      direction: this.getDirection(),
-      slidesPerView: 6,
+      direction: 'horizontal',
       centerInsufficientSlides: this.content.length < 6 ? true : false,
-      spaceBetween: 10,
       autoplay:false,
       allowTouchMove: false,
       navigation: {
@@ -68,12 +66,25 @@ export class SliderComponent implements OnInit  {
         loadPrevNextAmount: 2,
         checkInView: true
       },
-      loop: false
-    })
-
-    let ap = document.querySelector('.swiper-container');
-    ap.addEventListener('load', () => {
-      console.log('swiper loaded')
+      loop: false,
+      breakpoints: {
+        1040: {
+          slidesPerView: 6,
+          spaceBetween: 20
+        },
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 30
+        },
+        640: {
+          slidesPerView: 1,
+          spaceBetween: 20
+        },
+        320: {
+          slidesPerView: 1,
+          spaceBetween: 0
+        }
+      }
     })
   }
 
@@ -84,10 +95,6 @@ export class SliderComponent implements OnInit  {
   imageLoaded(index) {
     this.loadedImages.push(index)
     console.log(this.loadedImages)
-  }
-
-  getDirection() {
-    return window.innerWidth <= 760 ? 'vertical' : 'horizontal';
   }
 
   openPopUp(item: Track) {

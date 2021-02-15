@@ -44,7 +44,7 @@
           <mat-icon color="primary">home</mat-icon>
           <span>Home</span>
         </button>
-        <button mat-menu-item routerLink="/admin">
+        <button mat-menu-item *ngIf="this.isUserAdmin()" routerLink="/admin">
           <mat-icon color="primary">admin_panel_settings</mat-icon>
           <span>Admin</span>
         </button>

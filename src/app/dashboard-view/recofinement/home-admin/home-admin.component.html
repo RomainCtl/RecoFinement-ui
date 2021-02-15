@@ -7,7 +7,7 @@
 
     <mat-tab-group mat-align-tabs="center">
       <mat-tab label="Track Validation">
-        <p *ngIf="this.dataSourceTrack.filteredData.length === 0" class="text-center text-muted mt-4">0 track to validate</p>
+        <p *ngIf="this.dataSourceTrack.filteredData.length === 0" class="text-center text-muted mt-4">No tracks to validate</p>
         <div *ngIf="this.dataSourceTrack.filteredData.length !== 0" class="container">
 
           <mat-table [dataSource]="dataSourceTrack">
@@ -63,7 +63,7 @@
         </div>
       </mat-tab>
       <mat-tab label="Movie Validation">
-        <p *ngIf="this.dataSourceMovie.filteredData.length === 0" class="text-center text-muted mt-4">0 movie to validate</p>
+        <p *ngIf="this.dataSourceMovie.filteredData.length === 0" class="text-center text-muted mt-4">No movies to validate</p>
         <div *ngIf="this.dataSourceMovie.filteredData.length !== 0" class="container">
           <mat-table [dataSource]="dataSourceMovie">
             <ng-container matColumnDef="title">
@@ -120,7 +120,7 @@
         </div>
       </mat-tab>
       <mat-tab label="Serie Validation" disabled>
-        <p *ngIf="this.dataSourceSerie.filteredData.length === 0" class="text-center text-muted mt-4">0 serie to validate</p>
+        <p *ngIf="this.dataSourceSerie.filteredData.length === 0" class="text-center text-muted mt-4">No series to validate</p>
         <div *ngIf="this.dataSourceSerie.filteredData.length !== 0" class="container">
           <mat-table [dataSource]="dataSourceSerie">
             <ng-container matColumnDef="title">
@@ -165,7 +165,7 @@
         </div>
       </mat-tab>
       <mat-tab label="Book Validation">
-        <p *ngIf="this.dataSourceBook.filteredData.length === 0" class="text-center text-muted mt-4">0 book to validate</p>
+        <p *ngIf="this.dataSourceBook.filteredData.length === 0" class="text-center text-muted mt-4">No books to validate</p>
         <div *ngIf="this.dataSourceBook.filteredData.length !== 0" class="container">
           <mat-table [dataSource]="dataSourceBook">
             <ng-container matColumnDef="title">
@@ -214,7 +214,7 @@
         </div>
       </mat-tab>
       <mat-tab label="Game Validation">
-        <p *ngIf="this.dataSourceGame.filteredData.length === 0" class="text-center text-muted mt-4">0 game to validate</p>
+        <p *ngIf="this.dataSourceGame.filteredData.length === 0" class="text-center text-muted mt-4">No games to validate</p>
         <div *ngIf="this.dataSourceGame.filteredData.length !== 0" class="container">
           <mat-table [dataSource]="dataSourceGame">
             <ng-container matColumnDef="name">
@@ -267,7 +267,7 @@
         </div>
       </mat-tab>
       <mat-tab label="Application Validation">
-        <p *ngIf="this.dataSourceApplication.filteredData.length === 0" class="text-center text-muted mt-4">0 application to validate</p>
+        <p *ngIf="this.dataSourceApplication.filteredData.length === 0" class="text-center text-muted mt-4">No applications to validate</p>
         <div *ngIf="this.dataSourceApplication.filteredData.length !== 0" class="container">
           <mat-table [dataSource]="dataSourceApplication">
             <ng-container matColumnDef="name">
