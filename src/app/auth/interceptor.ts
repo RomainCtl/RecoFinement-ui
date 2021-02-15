@@ -46,7 +46,7 @@ export class Interceptor implements HttpInterceptor {
                     setTimeout(() => {
                         dialogRef.close();
                         this.cookie.delete('access_token', '/');
-                        this.router.navigate(['/login']);
+                        this.router.navigate(['app/login']);
                     }, 3000);
                 });
                 this.error.addError(this.error.msg401error);
@@ -54,6 +54,7 @@ export class Interceptor implements HttpInterceptor {
                 this.error.addError(err.error.message);
               }
             } else if (err.status === 400) {
+              console.log(err)
               err.error.errors.forEach(element => {
                 this.error.addError(element);
               });

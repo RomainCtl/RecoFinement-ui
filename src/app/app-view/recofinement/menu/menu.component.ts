@@ -4,9 +4,10 @@ import { UserService } from 'src/app/app-view/services/user/user.service';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Navigation } from 'swiper';
 
 @Component({
   selector: 'app-menu',
@@ -29,6 +30,10 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
       this.username = this.userService.getUsername();
+  }
+
+  isUserAdmin(): boolean{
+    return this._auth.isUserAdmin();
   }
 
   logOut(): void {

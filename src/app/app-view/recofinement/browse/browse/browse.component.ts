@@ -134,7 +134,7 @@ export class BrowseComponent implements OnInit {
     total_pages: 0
   };
 
-  searchMode = true;
+  searchMode = false;
 
   constructor(private dialog: MatDialog,
     private bottom: MatBottomSheet,

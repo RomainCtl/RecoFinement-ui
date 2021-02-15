@@ -17,8 +17,7 @@
       <button mat-stroked-button [routerLink]="['browse']" [routerLinkActive]="['mat-primary']" class="me-2 rounded-pill">Search <mat-icon>search</mat-icon></button>
     </div>
     <div class="col-sm d-flex justify-content-end space-between h5 m-0">
-      <button mat-stroked-button color="primary" class="me-2 rounded-pill"><mat-icon>notifications</mat-icon></button>
-      <button mat-stroked-button routerLink="/admin" [routerLinkActive]="['mat-primary']" color="warn" class="me-2 rounded-pill">Admin <mat-icon>admin_panel_settings</mat-icon></button>
+      <button *ngIf="this.isUserAdmin()" mat-stroked-button routerLink="/admin" [routerLinkActive]="['mat-primary']" color="warn" class="me-2 rounded-pill">Admin <mat-icon>admin_panel_settings</mat-icon></button>
       <button mat-stroked-button [matMenuTriggerFor]="menu" color="warn" class="me-2 rounded-pill">{{ username }} <mat-icon>person</mat-icon></button>
       <mat-menu #menu="matMenu" class="mt-4">
         <button mat-menu-item [routerLink]="['user/profile']">Manage profile</button>
@@ -44,6 +43,10 @@
         <button mat-menu-item [routerLink]="['home']">
           <mat-icon color="primary">home</mat-icon>
           <span>Home</span>
+        </button>
+        <button mat-menu-item routerLink="/admin">
+          <mat-icon color="primary">admin_panel_settings</mat-icon>
+          <span>Admin</span>
         </button>
         <button mat-menu-item [matMenuTriggerFor]="librairies">
           <mat-icon color="primary">local_library</mat-icon>
@@ -75,6 +78,10 @@
             <span>Applications</span>
           </button>
         </mat-menu>
+        <button mat-menu-item [routerLink]="['browse']">
+          <mat-icon color="primary">search</mat-icon>
+          <span>Search</span>
+        </button>
         <button mat-menu-item [matMenuTriggerFor]="profile">
           <mat-icon color="primary">account_circle</mat-icon>
           <span>My profile</span>

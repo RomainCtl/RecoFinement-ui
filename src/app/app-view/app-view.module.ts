@@ -83,7 +83,6 @@ import { BrowseComponent } from './recofinement/browse/browse/browse.component';
     RegisterComponent,
     PreferenceComponent,
     CardPreferenceComponent,
-    RatingComponent,
     DialogConfirmationComponent,
     ProfileComponent,
     PreviewComponent,

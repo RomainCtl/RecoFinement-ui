@@ -1,3 +1,4 @@
+import { SocketService } from './../../dashboard-view/services/socket.service';
 import { CookieService } from 'ngx-cookie-service';
 import { UserRegisterDtoResponse } from '../../models/DtoResponse/user-register.model';
 import { UserRegisterDtoRequest } from '../../models/DtoRequest/user-register.model';
@@ -7,6 +8,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserLoginDtoResponse } from '../../models/DtoResponse/user-login.model';
 import { environment } from 'src/environments/environment';
+import jwt_decode from 'jwt-decode';
+
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +26,7 @@ export class AuthService {
 
   redirectUrl: string;
 
-  constructor(private http: HttpClient, private router: Router, private cookie: CookieService) { }
+  constructor(private http: HttpClient, private router: Router, private cookie: CookieService, private socketService: SocketService) { }
 
   login(user: UserLoginDtoRequest): Promise<UserLoginDtoResponse> {
     return this.http.post<UserLoginDtoResponse>(this._loginUrl, user).toPromise();
@@ -41,6 +44,15 @@ export class AuthService {
     return this.preferenceState;
   }
 
+  isUserAdmin(): boolean {
+    if(document.cookie) {
+      let access_token: any = jwt_decode(document.cookie.split('; ').filter(cookie => cookie.startsWith('access_token'))[0].split('=')[1]);
+      return access_token.user_claims.permissions.includes('access_sandbox');
+    } else {
+      return false;
+    }
+  }
+
   setPreferences(state: boolean): void {
     this.preferenceState = state;
   }
@@ -48,6 +60,7 @@ export class AuthService {
   logout(): void {
     this.http.post(this._logoutUrl, null).toPromise().then(() => {
       this.cookie.delete('access_token', '/');
+      this.socketService.disconnect();
       this.router.navigate(['app/login']);
     }).catch(error => {
       console.log(error);

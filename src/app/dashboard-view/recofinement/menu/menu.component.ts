@@ -1,3 +1,5 @@
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SocketService } from './../../services/socket.service';
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,6 +8,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { AuthService } from 'src/app/app-view/services/auth.service';
 import { UserService } from 'src/app/app-view/services/user/user.service';
 import { UserDtoResponse } from 'src/app/models/DtoResponse/user.model';
+import { throwToolbarMixedModesError } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-menu-admin',
@@ -20,14 +23,17 @@ export class MenuComponent implements OnInit {
   constructor(
     private _auth: AuthService,
     private userService: UserService,
-    private cookie: CookieService,
-    private _router: Router,
+    private socketService: SocketService,
+    private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private bottom: MatBottomSheet) {
   }
 
   ngOnInit(): void {
     this.username = this.userService.getUsername();
+    if(this.socketService.serverResponse.message.split(', ')[0] === '200') {
+      this.snackBar.open(this.socketService.serverResponse.message, null, { duration: 3000, horizontalPosition: 'start'});
+    }
   }
 
   logOut(): void {

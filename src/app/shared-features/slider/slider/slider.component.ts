@@ -27,6 +27,12 @@ export class SliderComponent implements OnInit  {
   @Input()
   public title: string;
 
+  @Input()
+  public type: string;
+
+  @Input()
+  public preferences: boolean;
+
   @Output()
   public openPreviewEvent: EventEmitter<Track> = new EventEmitter<Track>();
 

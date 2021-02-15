@@ -273,7 +273,8 @@ export class ProfileAdminComponent implements OnInit, AfterViewInit {
       });
     } else {
       this.snackbar.open('Name is required', '', {
-        duration: 3000
+        duration: 3000,
+        horizontalPosition: 'start'
       });
     }
   }

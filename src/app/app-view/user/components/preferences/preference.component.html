@@ -1,139 +1,67 @@
-<main>
+<div class="container-fluid">
 
   <div class="py-5 text-center jumbotron">
     <h1 class="mat-h1">My preferences</h1>
     <p class="lead">Please select media that you have already seen and/or liked. Your choices will then help us improve the recommendations made.</p>
   </div>
 
-  <section>
-    <mat-horizontal-stepper [linear]="true" #stepper>
-      <mat-step label="Music">
-        <div class="container">
-          <div class="row">
-            <p class="font-weight-bold col-sm-12 text-center text-uppercase mat-h2">Musics</p>
-            <ng-container *ngFor="let music of musics" class="container-xl">
-                <app-card-preference
-                    [id]="music.track_id"
-                    [title]="music.title"
-                    [subtitle]="music.artist_name"
-                    [info]=""
-                    [cover]="music.covert_art_url"
-                    [type]="'music'"
-                ></app-card-preference>
-            </ng-container>
-          </div>
-        </div>
-        <aside>
-          <button mat-raised-button matStepperNext color="primary">Next</button>
-        </aside>
-      </mat-step>
-      <mat-step label="Movies">
-        <div class="container">
-          <div class="row">
-            <p class="font-weight-bold col-12 text-center text-uppercase mat-h2">Movies</p>
-            <ng-container *ngFor="let movie of movies">
-              <app-card-preference
-              [id]="movie.movie_id"
-              [title]="movie.title"
-              [subtitle]="movie.director"
-              [info]=""
-              [cover]="movie.cover"
-              [type]="'movie'"
-              ></app-card-preference>
-            </ng-container>
-          </div>
-        </div>
-        <aside>
-          <button mat-raised-button matStepperPrevious color="primary">Back</button>
-          <button mat-raised-button matStepperNext color="primary">Next</button>
-        </aside>
-      </mat-step>
-      <mat-step label="Series">
-        <div class="container">
-          <div class="row">
-            <p class="font-weight-bold col-12 text-center text-uppercase mat-h2">Series</p>
-            <ng-container *ngFor="let serie of series">
-              <app-card-preference class="d-flex"
-              [id]="serie.serie_id"
-              [title]="serie.title"
-              [subtitle]=""
-              [info]=""
-              [cover]="serie.cover ? serie.cover : 'assets/images/placeholder.png'"
-              [type]="'serie'"
-              ></app-card-preference>
-            </ng-container>
-          </div>
-        </div>
-        <aside>
-          <button mat-raised-button matStepperPrevious color="primary">Back</button>
-          <button mat-raised-button matStepperNext color="primary">Next</button>
-        </aside>
-      </mat-step>
-      <mat-step label="Books">
-        <div class="container">
-          <div class="row">
-            <p class="font-weight-bold col-12 text-center text-uppercase mat-h2">books</p>
-            <ng-container *ngFor="let book of books">
-              <app-card-preference class="d-flex"
-              [id]="book.isbn"
-              [title]="book.title"
-              [subtitle]="book.author"
-              [cover]="book.image_url_l ? book.image_url_l : 'assets/images/placeholder.png'"
-              [info]="book.publisher"
-              [type]="'book'"
-              ></app-card-preference>
-            </ng-container>
-          </div>
-        </div>
-        <aside>
-          <button mat-raised-button matStepperPrevious color="primary">Back</button>
-          <button mat-raised-button matStepperNext color="primary">Next</button>
-        </aside>
-      </mat-step>
-      <mat-step label="Games">
-        <div class="container">
-          <div class="row">
-            <p class="font-weight-bold col-12 text-center text-uppercase mat-h2">games</p>
-            <ng-container *ngFor="let game of games">
-              <app-card-preference
-              [id]="game.game_id"
-              [title]="game.name"
-              [subtitle]="game.publishers"
-              [cover]="game.header_image ? game.header_image : 'assets/images/placeholder.png'"
-              [info]=""
-              [type]="'game'"
-              ></app-card-preference>
-            </ng-container>
-          </div>
-        </div>
-        <aside>
-          <button mat-raised-button matStepperPrevious color="primary">Back</button>
-          <button mat-raised-button matStepperNext color="primary">Next</button>
-        </aside>
-      </mat-step>
-      <mat-step label="Applications">
-        <div class="container">
-          <div class="row">
-            <p class="font-weight-bold col-12 text-center text-uppercase mat-h2">applications</p>
-            <ng-container *ngFor="let application of applications" class="container-xl">
-              <app-card-preference
-                  [id]="application.app_id"
-                  [title]="application.name"
-                  [subtitle]=""
-                  [cover]="application.cover ? application.cover : 'assets/images/placeholder.png'"
-                  [info]=""
-                  [type]="'application'"
-              ></app-card-preference>
-            </ng-container>
-          </div>
-        </div>
-        <aside>
-          <button mat-raised-button matStepperPrevious color="primary">Back</button>
-        </aside>
-        <aside>
-          <button mat-raised-button color="primary" (click)="openDialog()">Finish</button>
-        </aside>
-      </mat-step>
-    </mat-horizontal-stepper>
-  </section>
-</main>
+    <div
+    app-slider
+    title="Songs"
+    className="popular_music"
+    *ngIf="musics.length > 0"
+    [content]="musics"
+    [preferences]="true"
+    [type]="'music'"></div>
+
+    <div
+    app-slider
+    title="Movies"
+    className="popular_movies"
+    *ngIf="movies.length > 0"
+    [content]="movies"
+    [preferences]="true"
+    [type]="'movie'"></div>
+
+    <div
+    app-slider
+    title="Series"
+    className="popular_series"
+    *ngIf="series.length > 0"
+    [content]="series"
+    [preferences]="true"
+    [type]="'serie'"></div>
+
+    <div
+    app-slider
+    title="Books"
+    className="popular_book"
+    *ngIf="books.length > 0"
+    [content]="books"
+    [preferences]="true"
+    [type]="'book'"></div>
+
+    <div
+    app-slider
+    title="Games"
+    className="popular_game"
+    *ngIf="games.length > 0"
+    [content]="games"
+    [preferences]="true"
+    [type]="'game'"></div>
+
+    <div
+    app-slider
+    title="Applications"
+    className="popular_apps"
+    *ngIf="applications.length > 0"
+    [content]="applications"
+    [preferences]="true"
+    [type]="'application'"></div>
+
+    <div class="container justify-content-center align-items-center d-flex flex-column my-3 py-3">
+      <button mat-stroked-button (click)="openDialog()">Submit preferences</button>
+    </div>
+
+
+</div>

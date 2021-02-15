@@ -20,6 +20,8 @@ export class CardPreferenceComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
+    console.log(this.type === 'application')
     // tslint:disable-next-line:typedef only-arrow-functions
     $(document).ready(function() {
       let maxHeightHeader = 0;

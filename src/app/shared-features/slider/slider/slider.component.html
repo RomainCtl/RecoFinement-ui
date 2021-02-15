@@ -13,13 +13,13 @@
                     <img *ngIf="item.isbn" class="card-img-top swiper-lazy" src="assets/images/loading.gif" [attr.data-src]="item.image_url_l">
                     <img *ngIf="item.serie_id || item.movie_id || item.app_id" [class]="item.app_id ? 'p-lg-5 p-sm-2' : 'p-0'" class="card-img-top swiper-lazy" src="assets/images/loading.gif" [attr.data-src]="item.cover">
                     <img *ngIf="item.game_id" class="card-img-top swiper-lazy" src="assets/images/loading.gif" [attr.data-src]="item.header_image">
-                  <div class="overlay" *ngIf="item.track_id" (click)="openPreview(item)" style="cursor: pointer;">
+                  <div class="overlay" *ngIf="item.track_id && !this.preferences" (click)="openPreview(item)" style="cursor: pointer;">
                     <div class="icon" >
                       <mat-icon class="fa fa-user text-center w-100 h-100" style="font-size:75px;" aria-hidden="false">
                         play_circle_outline</mat-icon>
                     </div>
                   </div>
-                  <div class="spinner" *ngIf="!title.startsWith('Most popular')">
+                  <div class="spinner" *ngIf="!title.startsWith('Most popular') && !this.preferences">
                       <circle-progress
                       [percent]="item.reco_score*100"
                       [radius]="24"
@@ -49,8 +49,13 @@
                       <p *ngIf="item.movie_id" class="card-text text-truncate" style="max-width: 100%;"><strong>{{item.director}}</strong></p>
                       <p *ngIf="item.app_id" class="card-text text-truncate" style="max-width: 100%;"><strong>{{item.type}}</strong></p>
                       <p *ngIf="item.game_id" class="card-text text-truncate" style="max-width: 100%;"><strong>{{item.developers}}</strong></p>
-                        <button mat-stroked-button color="primary" class="d-flex justify-content-center align-items-center flex-column" (click)="openPopUp(item)">See more</button>
-                    </div>
+                        <button *ngIf="!this.preferences" mat-stroked-button color="primary" class="d-flex justify-content-center align-items-center flex-column" (click)="openPopUp(item)">See more</button>
+                        <app-rating
+                          *ngIf="this.preferences"
+                          [media]="item.track_id || item.movie_id || item.app_id || item.game_id || item.serie_id"
+                          [type]="this.type">
+                        </app-rating>
+                      </div>
                 </div>
               </div>
             </div>

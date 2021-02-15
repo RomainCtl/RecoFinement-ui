@@ -1,3 +1,4 @@
+import { RatingComponent } from './../app-view/user/components/preferences/rating/rating.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -44,7 +45,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     RedirectConfirmationComponent,
     SliderComponent,
     SliderHistoryComponent,
-    AddMediaComponent
+    AddMediaComponent,
+    RatingComponent
   ],
   imports: [
     BrowserModule,

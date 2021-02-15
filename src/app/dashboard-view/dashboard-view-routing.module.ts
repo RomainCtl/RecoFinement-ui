@@ -1,3 +1,4 @@
+import { AdminGuard } from './../auth/admin.guard';
 import { DashboardComponent } from './dashboard.component';
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
@@ -18,12 +19,12 @@ const routes: Routes = [
           {
             path:'home',
             component: HomeAdminComponent,
-            canActivate: [AuthGuard]
+            canActivate: [AuthGuard, AdminGuard]
           },
           {
             path: 'profile',
             component: ProfileAdminComponent,
-            canActivate: [AuthGuard]
+            canActivate: [AuthGuard, AdminGuard]
           },
         ]
     }

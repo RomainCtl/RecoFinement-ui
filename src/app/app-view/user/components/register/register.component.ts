@@ -65,8 +65,7 @@ export class RegisterComponent implements OnInit {
             this.registerHttpResponse = result;
             this.cookie.set('access_token', this.registerHttpResponse.access_token, { expires: 1, sameSite: 'Lax', path: '/' });
             
-            // document.cookie = 'access_token=' + this.registerHttpResponse.access_token;
-            this._router.navigate(['register/preferences']);
+            this._router.navigate(['app/register/preferences']);
           }
           ).catch(
             (errors: HttpErrorResponse) => {

@@ -29,7 +29,8 @@ export class ErrorService {
     this._errors.next(Object.assign({}, this.dataStore));
 
     this.snackBar.open(errorMsg, 'Okay', {
-      duration: 3000
+      duration: 3000,
+      horizontalPosition: 'start'
     });
 
     // this.toastService.show(errorMsg, {
