@@ -6,9 +6,7 @@
 
   <ng-container *ngIf="tracksHistory.content.length === 0 else tracksTemplate">
       <div class="d-flex align-items-center justify-content-center h-75">
-          <div class="spinner-border text-danger" style="width: 3rem; height: 3rem;" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
+          <p class="text-muted">Nothing to show here, try to listen some songs first.</p>
         </div>
   </ng-container>
   <ng-template #tracksTemplate>
@@ -29,6 +27,10 @@
         <div class="card-body p-3 d-flex justify-content-center flex-column">
           <h3 class="card-title text-danger text-truncate" style="max-width: 100%;"><strong>{{item.track.title}}</strong></h3>
           <p class="card-text text-truncate" style="max-width: 100%;"><strong>{{item.track.artist_name}}</strong></p>
+          <h2>
+            <span class="badge bg-secondary text-light">{{item.last_played_date | date}}</span>
+          </h2>
+
 
           <button mat-stroked-button color="primary" (click)="openPopUp(item.track)">See more</button>
         </div>

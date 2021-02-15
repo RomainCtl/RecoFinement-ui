@@ -61,14 +61,14 @@ export class ProfileAdminComponent implements OnInit, AfterViewInit {
   listProfiles: any[];
   selectedProfile: any;
 
-  displayedColumnsContent: string[] = ['type', 'Rating', 'Review', 'Count'];
+  displayedColumnsContent: string[] = ['type', 'Rating', 'Review', 'Count', 'Algorithm'];
 
-  displayedColumnsTrackReco: string[] = ['music', 'artist_name', 'rating', 'score'];
-  displayedColumnsMovieReco: string[] = ['movie', 'writer', 'rating', 'score'];
-  displayedColumnsSerieReco: string[] = ['serie', 'writers', 'rating', 'score'];
-  displayedColumnsBookReco: string[] = ['book', 'publisher', 'rating', 'score'];
-  displayedColumnsGameReco: string[] = ['game', 'developers', 'rating', 'score'];
-  displayedColumnsApplicationReco: string[] = ['application', 'current_version', 'rating', 'score'];
+  displayedColumnsTrackReco: string[] = ['music', 'artist_name', 'rating', 'score', 'engine'];
+  displayedColumnsMovieReco: string[] = ['movie', 'writer', 'rating', 'score', 'engine'];
+  displayedColumnsSerieReco: string[] = ['serie', 'writers', 'rating', 'score', 'engine'];
+  displayedColumnsBookReco: string[] = ['book', 'publisher', 'rating', 'score', 'engine'];
+  displayedColumnsGameReco: string[] = ['game', 'developers', 'rating', 'score', 'engine'];
+  displayedColumnsApplicationReco: string[] = ['application', 'current_version', 'rating', 'score', 'engine'];
 
   dataSourceTrackRecommendation:MatTableDataSource<any>;
   dataSourceMovieRecommendation:MatTableDataSource<any>;

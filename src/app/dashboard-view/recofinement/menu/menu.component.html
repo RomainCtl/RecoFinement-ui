@@ -8,15 +8,15 @@
     <div class="col-sm-6 d-flex justify-content-center align-items-center h5 m-0">
       <button mat-button [routerLink]="['home']" [routerLinkActive]="['mat-primary']"
         [routerLinkActiveOptions]="{exact: true}">Media validation</button>
-      <button mat-button [routerLink]="['profile']" [routerLinkActive]="['mat-primary']">Profile management</button>
+      <button mat-button [routerLink]="['profile']" [routerLinkActive]="['mat-primary']">Sandbox</button>
     </div>
     <div class="col-sm d-flex justify-content-end space-between h5 m-0">
       <button mat-stroked-button routerLink="/app" [routerLinkActive]="['mat-primary']" color="warn" class="me-2 rounded-pill">Application <mat-icon>home</mat-icon></button>
       <button mat-stroked-button [matMenuTriggerFor]="menu" color="warn" class="me-2 rounded-pill">{{ username }} <mat-icon>person</mat-icon></button>
       <mat-menu #menu="matMenu" class="mt-4">
-        <button mat-menu-item [routerLink]="['user/profile']">Manage profile</button>
-        <button mat-menu-item [routerLink]="['user/interest']">My interests</button>
-        <button mat-menu-item [routerLink]="['user/history/tracks']">Music history</button>
+        <button mat-menu-item routerLink="/app/user/profile">Manage profile</button>
+        <button mat-menu-item routerLink="/app/user/interest">My interests</button>
+        <button mat-menu-item routerLink="/app/user/history/tracks">Listening history</button>
         <button mat-menu-item (click)="logOut()">Sign out</button>
       </mat-menu>
     </div>
@@ -44,7 +44,7 @@
         </button>
         <button mat-menu-item [routerLink]="['profile']">
           <mat-icon color="primary">account_circle</mat-icon>
-          <span>Profile management</span>
+          <span>Sandbox</span>
         </button>
         <button mat-menu-item (click)="logOut()">
           <mat-icon color="warn">exit_to_app</mat-icon>
