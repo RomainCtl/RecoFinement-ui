@@ -61,7 +61,7 @@ export class ProfileAdminComponent implements OnInit, AfterViewInit {
   listProfiles: any[];
   selectedProfile: any;
 
-  displayedColumnsContent: string[] = ['type', 'Rating', 'Review', 'Count', 'Algorithm'];
+  displayedColumnsContent: string[] = ['type', 'Rating', 'Review', 'Count'];
 
   displayedColumnsTrackReco: string[] = ['music', 'artist_name', 'rating', 'score', 'engine'];
   displayedColumnsMovieReco: string[] = ['movie', 'writer', 'rating', 'score', 'engine'];
