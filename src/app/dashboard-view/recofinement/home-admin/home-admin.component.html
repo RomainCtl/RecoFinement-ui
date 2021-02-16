@@ -21,7 +21,7 @@
             </ng-container>
             <ng-container matColumnDef="year">
               <mat-header-cell *matHeaderCellDef> Year </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.year}} </mat-cell>
+              <mat-cell *matCellDef="let element"> {{element.year === 0 ? '': element.year }} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="release">
               <mat-header-cell *matHeaderCellDef> Release </mat-header-cell>
@@ -37,7 +37,7 @@
             </ng-container>
             <ng-container matColumnDef="spotify_id">
               <mat-header-cell *matHeaderCellDef> Spotify </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.spotify_id}} </mat-cell>
+              <mat-cell *matCellDef="let element"> {{element.spotify_id === '0' ? '': element.spotify_id }} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="covert_art_url">
               <mat-header-cell *matHeaderCellDef> Cover </mat-header-cell>
@@ -183,7 +183,7 @@
             </ng-container>
             <ng-container matColumnDef="year_of_publication">
               <mat-header-cell *matHeaderCellDef> Year of publication </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.year_of_publication}} </mat-cell>
+              <mat-cell *matCellDef="let element"> {{element.year_of_publication === 0 ? '': element.year_of_publication }} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="image_url_s">
               <mat-header-cell *matHeaderCellDef> Image S </mat-header-cell>
@@ -219,7 +219,7 @@
             </ng-container>
             <ng-container matColumnDef="steamid">
               <mat-header-cell *matHeaderCellDef> Steam </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.steamid}} </mat-cell>
+              <mat-cell *matCellDef="let element"> {{element.steamid === 0 ? '': element.steamid }} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="short_description">
               <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
