@@ -23,7 +23,7 @@
       title="From similar content"
       className="reco_content"
       *ngIf="recommendedTracksFromSimilarContent.content.length > 0"
-      [content]="recommendedTracksFromSimilarContent"
+      [content]="recommendedTracksFromSimilarContent.content"
       (openPreviewEvent)="openPreview($event)"
       (clickSeeMoreEvent)="openPopUp($event)"></div>
 

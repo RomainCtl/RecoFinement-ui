@@ -52,7 +52,7 @@
                         <button *ngIf="!this.preferences" mat-stroked-button color="primary" class="d-flex justify-content-center align-items-center flex-column" (click)="openPopUp(item.track ? item.track : item)">See more</button>
                         <app-rating
                           *ngIf="this.preferences"
-                          [media]="item.track_id || item.movie_id || item.app_id || item.game_id || item.serie_id"
+                          [media]="item.content_id"
                           [type]="this.type">
                         </app-rating>
                       </div>
