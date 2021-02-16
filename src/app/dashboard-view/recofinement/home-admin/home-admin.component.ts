@@ -1,6 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
-import {MatPaginator} from '@angular/material/paginator';
+import { Component } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {MatTableDataSource} from '@angular/material/table';
 import { ApplicationService } from 'src/app/app-view/services/media/application.service';
@@ -32,7 +31,7 @@ import { Track } from 'src/app/models/DtoResponse/musics/Track.model';
     ]),
   ],
 })
-export class HomeAdminComponent implements AfterViewInit {
+export class HomeAdminComponent {
 
   columnsToDisplayTrack: string[] = ['title', 'artist_name', 'year', 'release', 'track_mmid', 'recording_mbid', 'spotify_id', 'covert_art_url', 'genres', 'btn'];
   columnsToDisplayMovie: string[] = ['title', 'language', 'actors', 'year', 'producers', 'director', 'writer', 'imdbid', 'tmdbid', 'cover', 'btn'];
@@ -47,8 +46,6 @@ export class HomeAdminComponent implements AfterViewInit {
   dataSourceGame = new MatTableDataSource<Game>([]);
   dataSourceBook = new MatTableDataSource<Book>([]);
   dataSourceApplication = new MatTableDataSource<Application>([]);
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   expandedElementTrack: Track | null;
   expandedElementMovie: Movie | null;
@@ -72,18 +69,9 @@ export class HomeAdminComponent implements AfterViewInit {
     this.getAppToValidate();
   }
 
-  ngAfterViewInit(): void {
-    this.dataSourceTrack.paginator = this.paginator;
-    this.dataSourceMovie.paginator = this.paginator;
-    this.dataSourceGame.paginator = this.paginator;
-    this.dataSourceBook.paginator = this.paginator;
-    this.dataSourceApplication.paginator = this.paginator;
-  }
-
   getTrackToValidate(): void {
     this.trackService.getTrackToValidate().then((track: TrackResponseDto) => {
       this.dataSourceTrack.data = track.content;
-      setTimeout(() => this.dataSourceTrack.paginator = this.paginator);
     });
   }
 
@@ -104,7 +92,6 @@ export class HomeAdminComponent implements AfterViewInit {
   getMovieToValidate(): void {
     this.movieService.getMovieToValidate().then((movie: MovieResponseDto) => {
       this.dataSourceMovie.data = movie.content;
-      setTimeout(() => this.dataSourceMovie.paginator = this.paginator);
     });
   }
 
@@ -125,7 +112,6 @@ export class HomeAdminComponent implements AfterViewInit {
   getBookToValidate(): void {
     this.bookService.getBookToValidate().then((book: BookResponseDto) => {
       this.dataSourceBook.data = book.content;
-      setTimeout(() => this.dataSourceBook.paginator = this.paginator);
     });
   }
 
@@ -146,7 +132,6 @@ export class HomeAdminComponent implements AfterViewInit {
   getGameToValidate(): void {
     this.gameService.getGameToValidate().then((game: GameResponseDto) => {
       this.dataSourceGame.data = game.content;
-      setTimeout(() => this.dataSourceGame.paginator = this.paginator);
     });
   }
 
@@ -167,7 +152,6 @@ export class HomeAdminComponent implements AfterViewInit {
   getAppToValidate(): void {
     this.appService.getAppsToValidate().then((app: ApplicationResponseDto) => {
       this.dataSourceApplication.data = app.content;
-      setTimeout(() => this.dataSourceApplication.paginator = this.paginator);
     });
   }
 
