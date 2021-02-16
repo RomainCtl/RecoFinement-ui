@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -19,7 +19,7 @@ import { PopupContentComponent } from './popup-content/popup-content.component';
   templateUrl: './profile-admin.component.html',
   styleUrls: ['./profile-admin.component.scss']
 })
-export class ProfileAdminComponent implements OnInit, AfterViewInit {
+export class ProfileAdminComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -59,9 +59,12 @@ export class ProfileAdminComponent implements OnInit, AfterViewInit {
   applicationGenreForm: FormControl;
 
   listProfiles: any[];
-  selectedProfile: any;
 
-  displayedColumnsContent: string[] = ['type', 'Rating', 'Review', 'Count', 'Algorithm'];
+  selectedProfile: any = {
+    profilename: ""
+  };
+
+  displayedColumnsContent: string[] = ['type', 'Rating', 'Review', 'Count'];
 
   displayedColumnsTrackReco: string[] = ['music', 'artist_name', 'rating', 'score', 'engine'];
   displayedColumnsMovieReco: string[] = ['movie', 'writer', 'rating', 'score', 'engine'];
@@ -121,15 +124,6 @@ export class ProfileAdminComponent implements OnInit, AfterViewInit {
     this.getProfiles();
     this.getAllGenres();
     this.resetForm();
-  }
-
-  ngAfterViewInit(): void {
-    this.dataSourceTrackRecommendation.paginator = this.paginator;
-    this.dataSourceMovieRecommendation.paginator = this.paginator;
-    this.dataSourceSerieRecommendation.paginator = this.paginator;
-    this.dataSourceGameRecommendation.paginator = this.paginator;
-    this.dataSourceBookRecommendation.paginator = this.paginator;
-    this.dataSourceApplicationRecommendation.paginator = this.paginator;
   }
 
   getAllGenres(): void {
@@ -365,27 +359,21 @@ export class ProfileAdminComponent implements OnInit, AfterViewInit {
   selectHistory(): void {
     this.trackService.getHistoryTrackToProfile(this.selectedProfile.uuid, this.historySelected).then((res) => {
       this.dataSourceTrackRecommendation.data = res.content;
-      setTimeout(() => this.dataSourceTrackRecommendation.paginator = this.paginator);
     });
     this.movieService.getHistoryMovieToProfile(this.selectedProfile.uuid, this.historySelected).then((res) => {
       this.dataSourceMovieRecommendation.data = res.content;
-      setTimeout(() => this.dataSourceMovieRecommendation.paginator = this.paginator);
     });
     this.serieService.getHistorySerieToProfile(this.selectedProfile.uuid, this.historySelected).then((res) => {
       this.dataSourceSerieRecommendation.data = res.content;
-      setTimeout(() => this.dataSourceSerieRecommendation.paginator = this.paginator);
     });
     this.gameService.getHistoryGameToProfile(this.selectedProfile.uuid, this.historySelected).then((res) => {
       this.dataSourceGameRecommendation.data = res.content;
-      setTimeout(() => this.dataSourceGameRecommendation.paginator = this.paginator);
     });
     this.bookService.getHistoryBookToProfile(this.selectedProfile.uuid, this.historySelected).then((res) => {
       this.dataSourceBookRecommendation.data = res.content;
-      setTimeout(() => this.dataSourceBookRecommendation.paginator = this.paginator);
     });
     this.applicationService.getHistoryApplicationToProfile(this.selectedProfile.uuid, this.historySelected).then((res) => {
       this.dataSourceApplicationRecommendation.data = res.content;
-      setTimeout(() => this.dataSourceApplicationRecommendation.paginator = this.paginator);
     });
   }
 
