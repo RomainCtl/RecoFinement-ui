@@ -21,7 +21,7 @@
             </ng-container>
             <ng-container matColumnDef="year">
               <mat-header-cell *matHeaderCellDef> Year </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.year}} </mat-cell>
+              <mat-cell *matCellDef="let element"> {{element.year === 0 ? '': element.year }} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="release">
               <mat-header-cell *matHeaderCellDef> Release </mat-header-cell>
@@ -37,7 +37,7 @@
             </ng-container>
             <ng-container matColumnDef="spotify_id">
               <mat-header-cell *matHeaderCellDef> Spotify </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.spotify_id}} </mat-cell>
+              <mat-cell *matCellDef="let element"> {{element.spotify_id === '0' ? '': element.spotify_id }} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="covert_art_url">
               <mat-header-cell *matHeaderCellDef> Cover </mat-header-cell>
@@ -59,7 +59,6 @@
             <mat-header-row *matHeaderRowDef="columnsToDisplayTrack"></mat-header-row>
             <mat-row *matRowDef="let row; columns: columnsToDisplayTrack;"></mat-row>
           </mat-table>
-          <mat-paginator class="mb-4" [length]="this.dataSourceTrack.data.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
         </div>
       </mat-tab>
       <mat-tab label="Movie Validation">
@@ -116,7 +115,6 @@
             <mat-header-row *matHeaderRowDef="columnsToDisplayMovie"></mat-header-row>
             <mat-row *matRowDef="let row; columns: columnsToDisplayMovie;"></mat-row>
           </mat-table>
-          <mat-paginator class="mb-4" [length]="this.dataSourceMovie.data.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
         </div>
       </mat-tab>
       <mat-tab label="Serie Validation" disabled>
@@ -161,7 +159,6 @@
             <mat-header-row *matHeaderRowDef="columnsToDisplaySerie"></mat-header-row>
             <mat-row *matRowDef="let row; columns: columnsToDisplaySerie;"></mat-row>
           </mat-table>
-          <mat-paginator class="mb-4" [length]="this.dataSourceSerie.data.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
         </div>
       </mat-tab>
       <mat-tab label="Book Validation">
@@ -186,7 +183,7 @@
             </ng-container>
             <ng-container matColumnDef="year_of_publication">
               <mat-header-cell *matHeaderCellDef> Year of publication </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.year_of_publication}} </mat-cell>
+              <mat-cell *matCellDef="let element"> {{element.year_of_publication === 0 ? '': element.year_of_publication }} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="image_url_s">
               <mat-header-cell *matHeaderCellDef> Image S </mat-header-cell>
@@ -210,7 +207,6 @@
             <mat-header-row *matHeaderRowDef="columnsToDisplayBook"></mat-header-row>
             <mat-row *matRowDef="let row; columns: columnsToDisplayBook;"></mat-row>
           </mat-table>
-          <mat-paginator class="mb-4" [length]="this.dataSourceBook.data.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
         </div>
       </mat-tab>
       <mat-tab label="Game Validation">
@@ -223,7 +219,7 @@
             </ng-container>
             <ng-container matColumnDef="steamid">
               <mat-header-cell *matHeaderCellDef> Steam </mat-header-cell>
-              <mat-cell *matCellDef="let element"> {{element.steamid}} </mat-cell>
+              <mat-cell *matCellDef="let element"> {{element.steamid === 0 ? '': element.steamid }} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="short_description">
               <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
@@ -263,7 +259,6 @@
             <mat-header-row *matHeaderRowDef="columnsToDisplayGame"></mat-header-row>
             <mat-row *matRowDef="let row; columns: columnsToDisplayGame;"></mat-row>
           </mat-table>
-          <mat-paginator class="mb-4" [length]="this.dataSourceGame.data.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
         </div>
       </mat-tab>
       <mat-tab label="Application Validation">
@@ -312,7 +307,6 @@
             <mat-header-row *matHeaderRowDef="columnsToDisplayApps"></mat-header-row>
             <mat-row *matRowDef="let row; columns: columnsToDisplayApps;"></mat-row>
           </mat-table>
-          <mat-paginator class="mb-4" [length]="this.dataSourceApplication.data.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
         </div>
       </mat-tab>
     </mat-tab-group>
