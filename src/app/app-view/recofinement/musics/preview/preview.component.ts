@@ -23,7 +23,8 @@ export class PreviewComponent implements OnInit, AfterViewInit {
     this.trackService.savePlayCount(id, { additional_count: 1 });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   ngAfterViewInit() {
     this.savePlayCount(this.track.track_id);
