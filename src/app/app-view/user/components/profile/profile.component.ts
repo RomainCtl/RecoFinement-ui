@@ -1,3 +1,4 @@
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { GroupDtoResponse } from '../../../../models/DtoResponse/group.model';
 import { Invitation } from '../../../../models/invitation.model';
 import { AddMemberComponent } from '../add-member/add-member.component';
@@ -35,6 +36,7 @@ export class ProfileComponent implements OnInit {
     private userService: UserService,
     private externalService: ExternalService,
     public dialog: MatDialog,
+    private bottom: MatBottomSheet,
     private router: Router,
     private snackBar: MatSnackBar,
     private cookie: CookieService,
@@ -148,8 +150,11 @@ export class ProfileComponent implements OnInit {
   deleteUser(): void {
     if (confirm('Are you sure you want to delete your account ? All your preferences and groups will also be deleted')) {
       this.userService.deleteUser(this.userData.user.uuid);
+      localStorage.clear();
+      this.bottom.dismiss();
+      this.dialog.closeAll();
       this.cookie.delete('access_token', '/');
-      this.router.navigate(['/login']);
+      this.router.navigate(['app/login']);
     }
   }
 
