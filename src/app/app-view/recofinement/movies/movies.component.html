@@ -1,0 +1,55 @@
+<div class="container-fluid p-0">
+
+      <div
+      app-slider
+      title="Most popular movies"
+      className="popular_movies"
+      *ngIf="popularMovies.content.length > 0"
+      [content]="popularMovies.content"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div
+      app-slider
+      title="From your profile"
+      className="reco_profile"
+      *ngIf="recommendedMoviesForUserFromProfile.content.length > 0"
+      [content]="recommendedMoviesForUserFromProfile.content"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div
+      app-slider
+      title="From similar content"
+      className="reco_content"
+      *ngIf="recommendedMoviesForUserFromSimilarContent.content.length > 0"
+      [content]="recommendedMoviesForUserFromSimilarContent.content"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div
+      app-slider
+      title="From your friends' profile"
+      className="reco_friends_profile"
+      *ngIf="recommendedMoviesFromGroupsFromProfile.content.length > 0"
+      [content]="recommendedMoviesFromGroupsFromProfile.content"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div
+      app-slider
+      title="From what your friends like"
+      className="reco_friends_content"
+      *ngIf="recommendedMoviesFromGroupsFromSimilarContent.content.length > 0"
+      [content]="recommendedMoviesFromGroupsFromSimilarContent.content"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div class="button-add-movie">
+        <button
+        mat-fab color="primary"
+        aria-label="Add a movie"
+        matTooltip="Add a movie"
+        matTooltipPosition="left"
+        matTooltipHideDelay="1000"
+        (click)="openAddMedia()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+</div>

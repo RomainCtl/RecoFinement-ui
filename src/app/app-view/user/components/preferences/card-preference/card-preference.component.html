@@ -1,0 +1,16 @@
+<div class="col-sm-12 col-md-6 col-lg-3 text-center">
+  <div class="card m-3 p-0 shadow" style="width: 18rem;">
+    <div class="container p-0">
+      <img [src]="this.cover" [class]="this.type !== 'application' ? 'card-img-top' : 'card-img-top p-5'">
+    </div>
+    <div class="card-body p-3 d-flex justify-content-center flex-column">
+      <h3 class="card-title text-danger"><strong>{{this.title.split('(')[0].split(':')[0].split(', The')[0]}}</strong></h3>
+      <p class="card-text"><strong>{{this.subtitle}}</strong></p>
+      <p class="card-text text-muted"><strong>{{this.info}}</strong></p>
+      <!-- <app-rating
+      [media]="this.id"
+      [type]="this.type">
+    </app-rating> -->
+    </div>
+  </div>
+</div>

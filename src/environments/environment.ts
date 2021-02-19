@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
+  socket_url: 'http://localhost:4040/recommend',
   api_url: 'http://localhost:4040/api',
+  ui_url: 'http://localhost:4200/recofinement'
 };
 
 /*

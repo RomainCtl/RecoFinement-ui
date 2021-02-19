@@ -1,13 +1,13 @@
-import { RedirectConfirmationComponent } from '../shared/modals/redirect-confirmation/redirect-confirmation.component';
+import { RedirectConfirmationComponent } from '../shared-features/modals/redirect-confirmation/redirect-confirmation.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Observable, timer } from 'rxjs';
+import { Observable, of, timer } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { ErrorService } from '../services/error/error.service';
-import { AuthService } from '../services/auth.service';
+import { ErrorService } from '../app-view/services/error/error.service';
+import { AuthService } from '../app-view/services/auth.service';
 
 declare var $: any;
 
@@ -30,11 +30,13 @@ export class Interceptor implements HttpInterceptor {
             }
         });
 
+
         return next.handle(authReq).pipe(tap((event: HttpEvent<any>) => {
             if (event instanceof HttpResponse) {
-                // do something on response
+              //do sth here
             }
           }, (err: HttpErrorResponse) => {
+            console.error(err);
             if (err.status === 401) {
               if (this.auth.isUserLoggedIn()) {
                 const dialogRef = this.dialog.open(RedirectConfirmationComponent, {
@@ -44,7 +46,7 @@ export class Interceptor implements HttpInterceptor {
                     setTimeout(() => {
                         dialogRef.close();
                         this.cookie.delete('access_token', '/');
-                        this.router.navigate(['/login']);
+                        this.router.navigate(['app/login']);
                     }, 3000);
                 });
                 this.error.addError(this.error.msg401error);
@@ -52,6 +54,7 @@ export class Interceptor implements HttpInterceptor {
                 this.error.addError(err.error.message);
               }
             } else if (err.status === 400) {
+              console.log(err)
               err.error.errors.forEach(element => {
                 this.error.addError(element);
               });

@@ -1,0 +1,56 @@
+<div class="container-fluid p-0">
+
+
+      <div
+      app-slider
+      title="Most popular series"
+      className="popular_series"
+      *ngIf="popularSeries.content.length > 0"
+      [content]="popularSeries.content"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div
+      app-slider
+      title="From your profile"
+      className="reco_profile"
+      *ngIf="recommendedSeriesForUserFromProfile.content.length > 0"
+      [content]="recommendedSeriesForUserFromProfile.content"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div
+      app-slider
+      title="From similar content"
+      className="reco_content"
+      *ngIf="recommendedSeriesForUserFromSimilarContent.content.length > 0"
+      [content]="recommendedSeriesForUserFromSimilarContent.content"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+
+      <div
+      app-slider
+      title="From your friends' profiles"
+      className="reco_friends_groups"
+      *ngIf="recommendedSeriesFromGroupsFromProfile.content.length > 0"
+      [content]="recommendedSeriesFromGroupsFromProfile.content"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div
+      app-slider
+      title="From what your friends like"
+      className="reco_friends_content"
+      *ngIf="recommendedSeriesFromGroupsFromProfile.content.length > 0"
+      [content]="recommendedSeriesFromGroupsFromProfile.content"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <!-- <div class="button-add-serie">
+        <button
+        mat-fab color="primary"
+        aria-label="Add a serie"
+        matTooltip="Add a serie"
+        matTooltipPosition="left"
+        matTooltipHideDelay="1000"
+        (click)="openAddMedia()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div> -->
+</div>

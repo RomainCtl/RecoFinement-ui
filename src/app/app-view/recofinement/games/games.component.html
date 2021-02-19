@@ -1,0 +1,55 @@
+<div class="container-fluid p-0">
+
+      <div
+      app-slider
+      title="Most popular games"
+      className="popular_games"
+      *ngIf="popularGames.content.length > 0"
+      [content]="popularGames.content"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div
+      app-slider
+      title="From your profile"
+      className="reco_profile"
+      *ngIf="recommendedGamesForUserFromProfile.content.length > 0"
+      [content]="recommendedGamesForUserFromProfile.content"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div
+      app-slider
+      title="From similar content"
+      className="reco_content"
+      *ngIf="recommendedGamesForUserFromSimilarContent.content.length > 0"
+      [content]="recommendedGamesForUserFromSimilarContent.content"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div
+      app-slider
+      title="From your friends' profiles"
+      className="reco_friends_profile"
+      *ngIf="recommendedGamesFromGroupsFromProfile.content.length > 0"
+      [content]="recommendedGamesFromGroupsFromProfile.content"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div
+      app-slider
+      title="From what your friends like"
+      className="reco_friends_content"
+      *ngIf="recommendedGamesFromGroupsFromSimilarContent.content.length > 0"
+      [content]="recommendedGamesFromGroupsFromSimilarContent.content"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div class="button-add-game">
+        <button
+        mat-fab color="primary"
+        aria-label="Add a game"
+        matTooltip="Add a game"
+        matTooltipPosition="left"
+        matTooltipHideDelay="1000"
+        (click)="openAddMedia()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+</div>

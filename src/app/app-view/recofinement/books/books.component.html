@@ -1,0 +1,47 @@
+<div class="container-fluid p-0">
+
+      <div
+      app-slider
+      title="Most popular books"
+      className="popular_books"
+      *ngIf="popularBooks.content.length > 0"
+      [content]="popularBooks.content"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div
+      app-slider
+      title="From similar content"
+      className="reco_content"
+      *ngIf="recommendedBooksForUserFromSimilarContent.content.length > 0"
+      [content]="recommendedBooksForUserFromSimilarContent.content"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div
+      app-slider
+      title="From what similar people like"
+      className="reco_filtering"
+      *ngIf="recommendedBooksForUserFromCollaborativeFiltering.content.length > 0"
+      [content]="recommendedBooksForUserFromCollaborativeFiltering.content"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div
+      app-slider
+      title="From what your friends like"
+      className="reco_friends_profile"
+      *ngIf="recommendedBooksFromGroupsFromSimilarContent.content.length > 0"
+      [content]="recommendedBooksFromGroupsFromSimilarContent.content"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div class="button-add-book">
+        <button
+        mat-fab color="primary"
+        aria-label="Add a book"
+        matTooltip="Add a book"
+        matTooltipPosition="left"
+        matTooltipHideDelay="1000"
+        (click)="openAddMedia()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+
+</div>

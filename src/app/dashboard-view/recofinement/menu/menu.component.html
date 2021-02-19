@@ -1,0 +1,56 @@
+<div id="largeMenu" class="row">
+  <nav class="navbar navbar-light container-fluid p-1 fixed-top bg-light shadow-sm">
+    <div class="col-sm-3">
+      <a routerLink="/admin" class="navbar-brand">
+        <img src="./assets/images/logo.svg" alt="Logo Recofinement" class="p-1 navbar-brand" width="200"/>
+      </a>
+    </div>
+    <div class="col-sm-6 d-flex justify-content-center align-items-center h5 m-0">
+      <button mat-button [routerLink]="['home']" [routerLinkActive]="['mat-primary']"
+        [routerLinkActiveOptions]="{exact: true}">Media validation</button>
+      <button mat-button [routerLink]="['profile']" [routerLinkActive]="['mat-primary']">Sandbox</button>
+    </div>
+    <div class="col-sm d-flex justify-content-end space-between h5 m-0">
+      <button mat-stroked-button routerLink="/app" [routerLinkActive]="['mat-primary']" color="warn" class="me-2 rounded-pill">Application <mat-icon>home</mat-icon></button>
+      <button mat-stroked-button [matMenuTriggerFor]="menu" color="warn" class="me-2 rounded-pill">{{ username }} <mat-icon>person</mat-icon></button>
+      <mat-menu #menu="matMenu" class="mt-4">
+        <button mat-menu-item routerLink="/app/user/profile">Manage profile</button>
+        <button mat-menu-item routerLink="/app/user/interest">My interests</button>
+        <button mat-menu-item routerLink="/app/user/history/tracks">Listening history</button>
+        <button mat-menu-item (click)="logOut()">Sign out</button>
+      </mat-menu>
+    </div>
+  </nav>
+</div>
+<div id="smallMenu" class="row">
+  <nav class="navbar navbar-light bg-light container-fluid p-3">
+    <div class="col">
+      <a routerLink="/app" class="navbar-brand">
+        <img src="./assets/images/logo.svg" alt="Logo Recofinement" style="width:80%;"/>
+      </a>
+    </div>
+    <div class="col d-flex justify-content-end">
+      <button mat-icon-button [matMenuTriggerFor]="smallMenu" class="m-4" aria-label="Example icon-button with a menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #smallMenu="matMenu">
+        <button mat-menu-item routerLink="/app/home">
+          <mat-icon color="warn">home</mat-icon>
+          <span>Application</span>
+        </button>
+        <button mat-menu-item [routerLink]="['home']">
+          <mat-icon color="primary">add</mat-icon>
+          <span>Add media</span>
+        </button>
+        <button mat-menu-item [routerLink]="['profile']">
+          <mat-icon color="primary">account_circle</mat-icon>
+          <span>Sandbox</span>
+        </button>
+        <button mat-menu-item (click)="logOut()">
+          <mat-icon color="warn">exit_to_app</mat-icon>
+          <span>Sign out</span>
+        </button>
+      </mat-menu>
+    </div>
+  </nav>
+</div>

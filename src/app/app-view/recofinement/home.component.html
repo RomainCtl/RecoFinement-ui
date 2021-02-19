@@ -1,0 +1,124 @@
+<div class="container-fluid p-0 pb-5">
+  <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"></li>
+      <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"></li>
+      <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"></li>
+      <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3"></li>
+      <li data-bs-target="#carouselExampleCaptions" data-bs-slide-to="4"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="assets/images/home_musics.jpg" class="d-block w-100" alt="...">
+        <div class="carousel-caption">
+          <h1 class="display-1">Music is life itself.</h1>
+          <h2 class="display-4 d-none">Browse more than 9 000 songs.</h2>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="assets/images/home_movies.jpg" class="d-block w-100" alt="...">
+        <div class="carousel-caption">
+          <h1 class="display-1">Cinema should make you forget you are sitting in a theater.</h1>
+          <h2 class="display-4 d-none">Browse more than 50 000 movies.</h2>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="assets/images/home_games.jpg" class="d-block w-100" alt="...">
+        <div class="carousel-caption">
+          <h1 class="display-1">Just play. Have fun. Enjoy the game.</h1>
+          <h2 class="display-2 d-none">More than 5000 games waiting to be played.</h2>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="assets/images/home_books.jpg" class="d-block w-100" alt="...">
+        <div class="carousel-caption">
+          <h1 class="display-1">A room without books is like a body without a soul.</h1>
+          <h2 class="display-2 d-none">More than 270 000 books waiting to be read.</h2>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="assets/images/home_apps.jpg" class="d-block w-100" alt="...">
+        <div class="carousel-caption">
+          <h1 class="display-1">Get the right app.</h1>
+          <h2 class="display-2 d-none">Browse more than 9000 apps.</h2>
+        </div>
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </a>
+  </div>
+
+        <div
+        app-slider
+        title="Listening history"
+        className="song_history"
+        *ngIf="trackHistory.content.length > 0"
+        [content]="trackHistory.content"
+        [history]="true"
+        (openPreviewEvent)="openPreview($event)"
+        (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+        <div
+        app-slider
+        title="Most popular songs"
+        className="popular_music"
+        *ngIf="popularTracks.content.length > 0"
+        [content]="popularTracks.content"
+        (openPreviewEvent)="openPreview($event)"
+        (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+
+
+        <div
+        app-slider
+        title="Most popular movies"
+        className="popular_movies"
+        *ngIf="popularMovies.content.length > 0"
+        [content]="popularMovies.content"
+        (openPreviewEvent)="openPreview($event)"
+        (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+        <div
+        app-slider
+        title="Most popular series"
+        className="popular_series"
+        *ngIf="popularSeries.content.length > 0"
+        [content]="popularSeries.content"
+        (openPreviewEvent)="openPreview($event)"
+        (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+        <div
+        app-slider
+        title="Most popular games"
+        className="popular_games"
+        *ngIf="popularGames.content.length > 0"
+        [content]="popularGames.content"
+        (openPreviewEvent)="openPreview($event)"
+        (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+        <div
+        app-slider
+        title="Most popular books"
+        className="popular_books"
+        *ngIf="popularBooks.content.length > 0"
+        [content]="popularBooks.content"
+        (openPreviewEvent)="openPreview($event)"
+        (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+
+        <div
+        app-slider
+        title="Most popular apps"
+        className="popular_apps"
+        *ngIf="popularApplications.content.length > 0"
+        [content]="popularApplications.content"
+        (openPreviewEvent)="openPreview($event)"
+        (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+</div>

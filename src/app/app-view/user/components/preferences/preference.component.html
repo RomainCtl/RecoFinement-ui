@@ -1,0 +1,67 @@
+<div class="container-fluid">
+
+  <div class="py-5 text-center jumbotron">
+    <h1 class="mat-h1">My preferences</h1>
+    <p class="lead">Please select media that you have already seen and/or liked. Your choices will then help us improve the recommendations made.</p>
+  </div>
+
+    <div
+    app-slider
+    title="Songs"
+    className="popular_music"
+    *ngIf="musics.length > 0"
+    [content]="musics"
+    [preferences]="true"
+    [type]="'music'"></div>
+
+    <div
+    app-slider
+    title="Movies"
+    className="popular_movies"
+    *ngIf="movies.length > 0"
+    [content]="movies"
+    [preferences]="true"
+    [type]="'movie'"></div>
+
+    <div
+    app-slider
+    title="Series"
+    className="popular_series"
+    *ngIf="series.length > 0"
+    [content]="series"
+    [preferences]="true"
+    [type]="'serie'"></div>
+
+    <div
+    app-slider
+    title="Books"
+    className="popular_book"
+    *ngIf="books.length > 0"
+    [content]="books"
+    [preferences]="true"
+    [type]="'book'"></div>
+
+    <div
+    app-slider
+    title="Games"
+    className="popular_game"
+    *ngIf="games.length > 0"
+    [content]="games"
+    [preferences]="true"
+    [type]="'game'"></div>
+
+    <div
+    app-slider
+    title="Applications"
+    className="popular_apps"
+    *ngIf="applications.length > 0"
+    [content]="applications"
+    [preferences]="true"
+    [type]="'application'"></div>
+
+    <div class="container justify-content-center align-items-center d-flex flex-column my-3 py-3">
+      <button mat-stroked-button (click)="openDialog()">Submit preferences</button>
+    </div>
+
+
+</div>

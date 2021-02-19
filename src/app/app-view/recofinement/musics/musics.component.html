@@ -1,0 +1,68 @@
+<div class="container-fluid p-0">
+
+      <div
+      app-slider
+      title="Most popular musics"
+      className="popular_music"
+      *ngIf="popularTracks.content.length > 0"
+      [content]="popularTracks.content"
+      (openPreviewEvent)="openPreview($event)"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div
+      app-slider
+      title="From your profile"
+      className="reco_profile"
+      *ngIf="recommendedTracksFromProfile.content.length > 0"
+      [content]="recommendedTracksFromProfile.content"
+      (openPreviewEvent)="openPreview($event)"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div
+      app-slider
+      title="From similar content"
+      className="reco_content"
+      *ngIf="recommendedTracksFromSimilarContent.content.length > 0"
+      [content]="recommendedTracksFromSimilarContent.content"
+      (openPreviewEvent)="openPreview($event)"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div
+      app-slider
+      title="From collaborative filtering"
+      className="reco_filtering"
+      *ngIf="recommendedTracksFromCollaborativeFiltering.content.length > 0"
+      [content]="recommendedTracksFromCollaborativeFiltering.content"
+      (openPreviewEvent)="openPreview($event)"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div
+      app-slider
+      title="From your friends' profiles"
+      className="reco_friends_profile"
+      *ngIf="recommendedTracksFromGroupsFromProfile.content.length > 0"
+      [content]="recommendedTracksFromGroupsFromProfile.content"
+      (openPreviewEvent)="openPreview($event)"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div
+      app-slider
+      title="From what your friends like"
+      className="reco_friends_content"
+      *ngIf="recommendedTracksFromGroupsFromSimilarContent.content.length > 0"
+      [content]="recommendedTracksFromGroupsFromSimilarContent.content"
+      (openPreviewEvent)="openPreview($event)"
+      (clickSeeMoreEvent)="openPopUp($event)"></div>
+
+      <div class="button-add-track">
+        <button
+        mat-fab color="primary"
+        aria-label="Add a track"
+        matTooltip="Add a track"
+        matTooltipPosition="left"
+        matTooltipHideDelay="1000"
+        (click)="openAddMedia()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+</div>

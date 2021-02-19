@@ -1,0 +1,267 @@
+<div class="container-fluid pt-lg-4">
+    <div class="bg-light text-center p-5 rounded">
+      <h1>Browse or search anything you want</h1>
+      <mat-button-toggle-group (change)="modeChanged($event)" class="m-3">
+        <mat-button-toggle [checked]="!searchMode" value="Browse">Browse mode</mat-button-toggle>
+        <mat-button-toggle [checked]="searchMode" value="Search">Search mode</mat-button-toggle>
+      </mat-button-toggle-group>
+      <p class="lead">Some beautiful paths can't be discovered without getting lost.</p>
+      <ng-container *ngIf="searchMode">
+
+        <mat-form-field appearance="outline" class="me-2" color="primary">
+          <mat-label>Select a media</mat-label>
+          <mat-select (valueChange)="selectValueChange($event);" [value]="mediaSelected">
+            <mat-option value="track">
+              Songs
+            </mat-option>
+            <mat-option value="movie">
+              Movie
+            </mat-option>
+            <mat-option value="series">
+              Series
+            </mat-option>
+            <mat-option value="game">
+              Game
+            </mat-option>
+            <mat-option value="book">
+              Book
+            </mat-option>
+            <mat-option value="application">
+              Application
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="warn" class="me-2">
+          <mat-label>Search...</mat-label>
+          <input #search matInput [disabled]="this.mediaSelected === 'No media'" [value]="this.searchValue" (keyup.enter)="startSearch(search.value)">
+        </mat-form-field>
+        <button mat-stroked-button color="primary" class="h4 p-2" (click)="startSearch(search.value)"><mat-icon>search</mat-icon></button>
+      </ng-container>
+    </div>
+    <mat-tab-group *ngIf="!searchMode" mat-align-tabs="center" (selectedIndexChange)="updateIndex($event)">
+        <mat-tab label="Songs">
+            <div class="container-xl p-5">
+                <ng-container *ngIf="popularTracks.content.length === 0 else tracksTemplate">
+                    <div class="d-flex align-items-center justify-content-center h-75">
+                        <div class="spinner-border text-danger" style="width: 3rem; height: 3rem;" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      </div>
+                </ng-container>
+                <ng-template #tracksTemplate>
+                <div class="row">
+                    <mat-paginator  class="bg-light" [length]="popularTracks.total_pages" [pageIndex]="tracks.pageIndex" (page)="trackPageChanges($event)" pageSize="24"></mat-paginator>
+                  <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center text-center p-0"
+                    *ngFor="let track of popularTracks.content">
+                    <div class="card align-self-end m-3 p-0 shadow" style="width: 18rem;">
+                      <div class="container p-0">
+                        <img [src]="track.covert_art_url ? track.covert_art_url : 'assets/images/placeholder.png'" class="card-img-top">
+                        <div class="overlay" (click)="openPreview(track)" style="cursor: pointer;">
+                            <div class="icon" >
+                              <mat-icon class="fa fa-user text-center w-100 h-100" style="font-size:75px;" aria-hidden="false">
+                                play_circle_outline</mat-icon>
+                            </div>
+                          </div>
+                    </div>
+                      <div class="card-body p-3 d-flex justify-content-center flex-column">
+                        <h3 class="card-title text-danger text-truncate" style="max-width: 100%;"><strong>{{track.title}}</strong></h3>
+                        <p class="card-text text-truncate" style="max-width: 100%;"><strong>{{track.artist_name}}</strong></p>
+
+                        <button mat-stroked-button color="primary" (click)="openPopUp(track)">See more</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <mat-paginator  class="bg-light" [length]="popularTracks.total_pages" [pageIndex]="tracks.pageIndex" (page)="trackPageChanges($event)" pageSize="24"></mat-paginator>
+                </ng-template>
+              </div>
+        </mat-tab>
+        <mat-tab label="Movies">
+            <div class="container-xl p-5">
+                <ng-container *ngIf="popularMovies.content.length === 0 else moviesTemplate">
+                    <div class="d-flex align-items-center justify-content-center h-75">
+                        <div class="spinner-border text-danger" style="width: 3rem; height: 3rem;" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      </div>
+                </ng-container>
+                <ng-template #moviesTemplate>
+                    <div class="row">
+                    <mat-paginator  class="bg-light" [length]="popularMovies.total_pages" [pageIndex]="movies.pageIndex" (page)="moviePageChanges($event)" pageSize="24"></mat-paginator>
+                    <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center text-center p-0"
+                        *ngFor="let movie of popularMovies.content">
+                        <div class="card align-self-end m-3 p-0 shadow" style="width: 18rem;">
+                        <div class="container p-0">
+                            <img [src]="movie.cover ? movie.cover : 'assets/images/placeholder.png'" class="card-img-top">
+                        </div>
+                        <div class="card-body p-3 d-flex justify-content-center flex-column">
+                            <h3 class="card-title text-danger text-truncate" style="max-width: 100%;"><strong>{{movie.title}}</strong></h3>
+                            <p class="card-text text-truncate" style="max-width: 100%;"><strong>{{movie.director}}</strong></p>
+                            <button mat-stroked-button color="primary" (click)="openPopUp(movie)">See more</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    <mat-paginator  class="bg-light" [length]="popularMovies.total_pages" [pageIndex]="movies.pageIndex" (page)="moviePageChanges($event)" pageSize="24"></mat-paginator>
+                </ng-template>
+              </div>
+        </mat-tab>
+        <mat-tab label="Series">
+            <div class="container-xl p-5">
+                <ng-container *ngIf="popularSeries.content.length === 0 else seriesTemplate">
+                    <div class="d-flex align-items-center justify-content-center h-75">
+                        <div class="spinner-border text-danger" style="width: 3rem; height: 3rem;" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      </div>
+                </ng-container>
+                <ng-template #seriesTemplate>
+                <div class="row">
+                <mat-paginator class="bg-light" [length]="popularSeries.total_pages" [pageIndex]="series.pageIndex" (page)="seriesPageChanges($event)" pageSize="24"></mat-paginator>
+                  <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center text-center p-0"
+                    *ngFor="let series of popularSeries.content">
+                    <div class="card align-self-end m-3 p-0 shadow" style="width: 18rem;">
+                      <div class="container p-0">
+                        <img [src]="series.cover ? series.cover : 'assets/images/placeholder.png'" class="card-img-top" data-src="assets/images/loading.gif">
+                      </div>
+                      <div class="card-body p-3 d-flex justify-content-center flex-column">
+                        <h3 class="card-title text-danger text-truncate" style="max-width: 100%;"><strong>{{series.title}}</strong></h3>
+                        <p class="card-text text-truncate" style="max-width: 100%;"><strong>{{series.directors}}</strong></p>
+
+                        <button mat-stroked-button color="primary" (click)="openPopUp(series)">See more</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <mat-paginator class="bg-light" [length]="popularSeries.total_pages" [pageIndex]="series.pageIndex" (page)="seriesPageChanges($event)" pageSize="24"></mat-paginator>
+                </ng-template>
+              </div>
+        </mat-tab>
+        <mat-tab label="Games">
+            <div class="container-xl p-5">
+                <ng-container *ngIf="popularGames.content.length === 0 else gamesTemplate">
+                    <div class="d-flex align-items-center justify-content-center h-75">
+                        <div class="spinner-border text-danger" style="width: 3rem; height: 3rem;" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      </div>
+                </ng-container>
+                <ng-template #gamesTemplate>
+                <div class="row">
+                <mat-paginator class="bg-light" [length]="popularGames.total_pages" [pageIndex]="games.pageIndex" (page)="gamePageChanges($event)" [pageSize]="popularGames.number_of_elements"></mat-paginator>
+                  <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center text-center p-0"
+                    *ngFor="let game of popularGames.content">
+                    <div class="card align-self-end m-3 p-0 shadow" style="width: 18rem;">
+                      <div class="container p-0">
+                        <img [src]="game.header_image ? game.header_image : 'assets/images/placeholder.png'" class="card-img-top" data-src="assets/images/loading.gif">
+                      </div>
+                      <div class="card-body p-3 d-flex justify-content-center flex-column">
+                        <h3 class="card-title text-danger text-truncate" style="max-width: 100%;"><strong>{{game.name}}</strong></h3>
+                        <p class="card-text text-truncate" style="max-width: 100%;"><strong>{{game.publishers}}</strong></p>
+                        <button mat-stroked-button color="primary" (click)="openPopUp(game)">See more</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <mat-paginator class="bg-light" [length]="popularGames.total_pages" [pageIndex]="games.pageIndex" (page)="gamePageChanges($event)" [pageSize]="popularGames.number_of_elements"></mat-paginator>
+                </ng-template>
+              </div>
+        </mat-tab>
+        <mat-tab label="Books">
+            <div class="container-xl p-5">
+                <ng-container *ngIf="popularBooks.content.length === 0 else booksTemplate">
+                    <div class="d-flex align-items-center justify-content-center h-75">
+                        <div class="spinner-border text-danger" style="width: 3rem; height: 3rem;" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      </div>
+                </ng-container>
+                <ng-template #booksTemplate>
+                <div class="row">
+                <mat-paginator  class="bg-light" [length]="popularBooks.total_pages" [pageIndex]="books.pageIndex" (page)="bookPageChanges($event)" [pageSize]="popularBooks.number_of_elements"></mat-paginator>
+                  <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center text-center p-0"
+                    *ngFor="let book of popularBooks.content">
+                    <div class="card align-self-end m-3 p-0 shadow" style="width: 18rem;">
+                      <div class="container p-0">
+                        <img [src]="book.image_url_l ? book.image_url_l : 'assets/images/placeholder.png'" class="card-img-top">
+                      </div>
+                      <div class="card-body p-3 d-flex justify-content-center flex-column">
+                        <h3 class="card-title text-danger text-truncate" style="max-width: 100%;"><strong>{{book.title}}</strong></h3>
+                        <p class="card-text text-truncate" style="max-width: 100%;"><strong>{{book.author}}</strong></p>
+                        <button mat-stroked-button color="primary" (click)="openPopUp(book)">See more</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <mat-paginator  class="bg-light" [length]="popularBooks.total_pages" [pageIndex]="books.pageIndex" (page)="bookPageChanges($event)" [pageSize]="popularBooks.number_of_elements"></mat-paginator>
+                </ng-template>
+              </div>
+        </mat-tab>
+        <mat-tab label="Applications">
+            <div class="container-xl p-5">
+                <ng-container *ngIf="popularApps.content.length === 0 else appsTemplate">
+                    <div class="d-flex align-items-center justify-content-center h-75">
+                        <div class="spinner-border text-danger" style="width: 3rem; height: 3rem;" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      </div>
+                </ng-container>
+                <ng-template #appsTemplate>
+                <div class="row">
+                <mat-paginator  class="bg-light" [length]="popularApps.total_pages" [pageIndex]="apps.pageIndex" (page)="appsPageChanges($event)" [pageSize]="popularApps.number_of_elements"></mat-paginator>
+                  <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center text-center p-0"
+                    *ngFor="let app of popularApps.content">
+                    <div class="card align-self-end m-3 p-0 shadow" style="width: 18rem;">
+                      <div class="container p-0">
+                        <img [src]="app.cover ? app.cover : 'assets/images/placeholder.png'" class="card-img-top p-5">
+                      </div>
+                      <div class="card-body p-3 d-flex justify-content-center flex-column">
+                        <h3 class="card-title text-danger text-truncate" style="max-width: 100%;"><strong>{{app.name}}</strong></h3>
+                        <p class="card-text text-truncate" style="max-width: 100%;"><strong>{{app.type}}</strong></p>
+                        <button mat-stroked-button color="primary" (click)="openPopUp(app)">See more</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <mat-paginator  class="bg-light" [length]="popularApps.total_pages" [pageIndex]="apps.pageIndex" (page)="appsPageChanges($event)" [pageSize]="popularApps.number_of_elements"></mat-paginator>
+                </ng-template>
+              </div>
+        </mat-tab>
+      </mat-tab-group>
+      <div class="container-xl p-5" *ngIf="searchMode">
+          <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-3 d-flex justify-content-center text-center p-0"
+              *ngFor="let item of searchResults.content">
+              <div class="card align-self-end m-3 p-0 shadow" style="width: 18rem;">
+                <div class="container p-0">
+                    <img *ngIf="item.track_id" class="card-img-top swiper-lazy" [src]="item.covert_art_url ? item.covert_art_url : 'assets/images/placeholder.png'">
+                    <img *ngIf="item.isbn" class="card-img-top swiper-lazy" [src]="item.image_url_l ? item.image_url_l : 'assets/images/placeholder.png'">
+                    <img *ngIf="item.serie_id || item.movie_id || item.app_id" [class]="item.app_id ? 'p-lg-5 p-sm-2' : 'p-0'" class="card-img-top swiper-lazy" [src]="item.cover ? item.cover : 'assets/images/placeholder.png'">
+                    <img *ngIf="item.game_id" class="card-img-top swiper-lazy" [src]="item.header_image ? item.header_image : 'assets/images/placeholder.png'">
+                    <div class="overlay" *ngIf="item.track_id" (click)="openPreview(item)" style="cursor: pointer;">
+                        <div class="icon" >
+                          <mat-icon class="fa fa-user text-center w-100 h-100" style="font-size:75px;" aria-hidden="false">
+                            play_circle_outline</mat-icon>
+                        </div>
+                      </div>
+                </div>
+                <div class="card-body p-3 d-flex justify-content-center flex-column">
+                    <h3 *ngIf="item.app_id || item.game_id else default" class="card-title text-danger text-truncate"><strong>{{item.name}}</strong></h3>
+                    <ng-template #default>
+                      <h3 class="card-title text-danger text-truncate"><strong>{{item.title}}</strong></h3>
+                    </ng-template>
+                  <p *ngIf="item.track_id" class="card-text text-truncate" style="max-width: 100%;"><strong>{{item.artist_name}}</strong></p>
+                    <p *ngIf="item.movie_id" class="card-text text-truncate" style="max-width: 100%;"><strong>{{item.director}}</strong></p>
+                    <p *ngIf="item.app_id" class="card-text text-truncate" style="max-width: 100%;"><strong>{{item.type}}</strong></p>
+                    <p *ngIf="item.game_id" class="card-text text-truncate" style="max-width: 100%;"><strong>{{item.developers}}</strong></p>
+                  <button mat-stroked-button color="primary" (click)="openPopUp(item)">See more</button>
+                </div>
+              </div>
+            </div>
+
+        </div>
+            <div *ngIf="this.searchMode && this.searchValue.length > 0" class="col d-flex justify-content-center align-items-center flex-column p-5 mb-2">
+             <p class="display-6" *ngIf="this.searchEmpty">There are no results for <i>{{this.searchValue}}</i>.</p>
+             <button mat-stroked-button color="primary" (click)="searchMode = false">Back to browsing</button>
+            </div>
+      </div>

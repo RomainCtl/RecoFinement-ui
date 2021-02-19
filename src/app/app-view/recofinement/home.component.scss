@@ -1,0 +1,37 @@
+.relative {
+  position: relative;
+}
+
+.btn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.overlay_title {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .3s ease;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.carousel-cell:hover .overlay {
+  opacity: 1;
+}
+
+.bg-slider {
+  background-color:rgba(0, 0, 0, 0.010);
+}
